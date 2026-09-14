@@ -8,8 +8,7 @@
 
 ## Contents
 
-### `Slides/`
-Lecture decks exactly as uploaded (some as `.pptx`, some as compressed `.pdf`):
+### `Slides/` — lecture decks (as uploaded: some `.pptx`, some compressed `.pdf`)
 
 | Deck | Format | Module / topic |
 | --- | --- | --- |
@@ -22,83 +21,94 @@ Lecture decks exactly as uploaded (some as `.pptx`, some as compressed `.pdf`):
 | `Mod 2-Lecture 1-compressed.pdf` | pdf | Mechanical separations; screening and screen effectiveness — material balance and overall effectiveness |
 | `Mod 2-Lecture 2.pptx` | pptx | Filtration — media, filter aids, cake filtration, Kozeny–Carman / Burke–Plummer / Ergun |
 
-### `Notes/`
+### `Tutorials/` — tutorial sheets (as uploaded)
+
+| Sheet | Date | Problems |
+| --- | --- | --- |
+| `Tutorial 3.pptx` | 01-09-2026 | sieve analysis of a crushed solid (six parts); shape factor and sphericity of an irregular particle |
+| `Tutorial 4_7_9_2026.pptx` | 07-09-2026 | crusher power when capacity and product size change; energy per kg of material (Kick's law) |
+
+### `Tests/` — test papers with the instructor's solutions (as uploaded)
+
+| Paper | Date | Problem |
+| --- | --- | --- |
+| `Quiz1_Soln.pdf` | Quiz-1, 03-09-2026 | mixing index of a binary solid mixture (ten samples) |
+| `TT1_Solution.pdf` | Tutorial Test 1, 07-09-2026 | Bond work index from a plant power draw; power for a finer product |
+
+### `Notes/` — written here
+
 - `SP2-notes.tex` — short notes + formula sheet, covering Module 1 Lectures 1–6 and Module 2
   Lectures 1–2. Definitions, the derivation steps (including the hand-worked Lecture 3, Lecture 5
   and Mod 2 Lecture 1 derivations), every formula on the slides, and the practice problems.
 - `SP2-Short-Notes-and-Formula-Sheet.pdf` — 13-page A4 PDF compiled from `SP2-notes.tex`.
-- `SP2-problems-and-solutions.tex` — **every numerical question that appears in the slides, with its
-  solution**, plus the provenance rules used to keep the two kinds of statement apart.
-- `SP2-Problems-and-Solutions.pdf` — 11-page A4 PDF compiled from `SP2-problems-and-solutions.tex`.
+- `SP2-Problems-and-Solutions.tex` — **every numerical question in the uploaded slides, tutorials and
+  tests, with its solution** (Q1–Q11, each followed by its `Ans` block, segregated by source).
+- `SP2-Problems-and-Solutions.pdf` — 14-page A4 PDF compiled from `SP2-Problems-and-Solutions.tex`.
+- `sp2-sizing-curves.png` — the differential and cumulative size-distribution figure used by Q6,
+  plotted here from the sieve table printed on `Tutorials/Tutorial 3.pptx` slide 2.
 - `sp2-answers-check.py` — the arithmetic record. Reproduces every derived number in the solutions
   document, in the same order; stdlib-only, run `python3 sp2-answers-check.py`.
 
-Rebuild either PDF after editing its `.tex` with any XeLaTeX-capable TeX distribution, e.g.
-`latexmk -xelatex SP2-notes.tex` or `tectonic SP2-problems-and-solutions.tex`. Packages used:
+Rebuild either PDF after editing its `.tex` with any LaTeX distribution, e.g.
+`tectonic SP2-Problems-and-Solutions.tex` or `latexmk -xelatex SP2-notes.tex`. Packages used:
 `geometry`, `amsmath`, `amssymb`, `mathtools`, `xcolor`, `booktabs`, `tabularx`, `array`, `multirow`,
 `enumitem`, `fancyhdr`, `tcolorbox` (`breakable,skins`), `siunitx`, `hyperref`.
 
 **Both documents are LaTeX in, PDF out. Keep the `.tex` whenever the PDF is edited or replaced** —
 the `.tex` is the editable copy; the PDF is a build product.
 
-### Practice problems collected in the notes
-1. Screen analysis of a clay catalyst (Mod 1, Lec. 3)
-2. Screen analysis of crushed quartz (Mod 1, Lec. 3)
-3. Mixing index in a muller mixer (Mod 1, Lec. 4)
-4. Crusher power by Rittinger's law (Mod 1, Lec. 5)
-5. Screen effectiveness of a quartz mixture (Mod 2, Lec. 1) — answers: `D/F` = 0.42, `B/F` = 0.58, `E` ≈ 67 %
+## Source and delivered files (the rule)
 
-Worked solutions to all five are in `Notes/SP2-Problems-and-Solutions.pdf`; the notes state the
-problem, that document solves it.
+Everything in this repository is one of two kinds:
 
-## Problems & solutions (`Notes/SP2-Problems-and-Solutions.pdf`)
+- **Source** — the files as uploaded by the course: all of `Slides/`, `Tutorials/` and `Tests/`.
+  These are the source of truth. Question text, given data, notation, formulas and the **method of
+  solution** all come from them.
+- **Delivered** — the files created here: `Notes/SP2-notes.tex`, `Notes/SP2-Problems-and-Solutions.tex`,
+  their PDFs, the figure `sp2-sizing-curves.png`, the checker `sp2-answers-check.py`, and this README.
+  They are derived work.
 
-Every numerical that appears on any of the eight decks, segregated by module, lecture and slide, and
-numbered `Q1`, `Q2`, … with a matching `Ans` block:
+Rules that follow:
+
+1. **Nothing delivered is presented as source.** A question is quoted from the source; the solution is
+   worked only with the method taught in that source, and each question names the slide, tutorial or
+   test it comes from.
+2. **No outside method.** Where a source gives a particular route (e.g. Rittinger rather than Bond, the
+   slide's own form of the mixing-index variance), that route is used, even when another textbook
+   method would also work.
+3. **Every derived number is reproducible**: run `python3 sp2-answers-check.py` and compare.
+4. **Where the source is silent or self-inconsistent, say so** — do not fill the gap with a guessed
+   number. Two examples in the solutions document: the volume shape factor `a` is not given in Q1
+   (the answer is written as a function of `a`, with the values for the common choices shown), and the
+   shape factor / sphericity data of Q7 do not agree among themselves whichever shape factor is
+   assumed (`Φ_s > 1`, impossible) — the document reports the formula result and says why.
+5. Answers are reported to the precision the input data supports, with the unrounded value shown where
+   that is useful.
+
+## Questions answered in `Notes/SP2-Problems-and-Solutions.pdf`
 
 | ID | Source | Topic | Answer summary |
 | --- | --- | --- | --- |
 | Q1 | Mod 1 Lec 3, slide 10 | Clay catalyst | `A_w` = 1.2354×10⁶ mm²/g, `D̄_s` = 8.09 µm, `N_w` = 4.133×10⁹/`a` per g |
-| Q2 | Mod 1 Lec 3, slides 11–12 (also Lec 2 slide 17) | Crushed quartz | `A_w` = 3282 mm²/g, `N_w` = 4148/g, `D̄_v` = 0.484 mm, `D̄_s` = 1.208 mm, `D̄_w` = 1.677 mm, `N_i` = 2074/g, 50 % of particles |
-| Q3 | Mod 1 Lec 4, slide 19 | Muller mixer mixing index | `s` = 1.04 wt %, `σ₀` = 0.30, `I_p` = 28.9 |
-| Q4 | Mod 1 Lec 5, slide 20 | Rittinger crushing power | `K_R` = 2.1875×10⁻³ kW h m/t, `P₂` = 31.25 kW (26.25 kW net) |
-| Q5 | Mod 2 Lec 1, slide 16 | 10-mesh screen effectiveness | `D/F` = 0.42, `B/F` = 0.58, `E_A` = 0.759, `E_B` = 0.881, `E` = 0.669 |
+| Q2 | Mod 1 Lec 3, slides 11–12 (also Lec 2 slide 17) | Crushed quartz | `A_w` = 3282 mm²/g, `N_w` = 4148/g, `D̄_v` = 0.484 mm, `D̄_s` = 1.208 mm, `D̄_w` = 1.677 mm, `N_i` = 2074, 50.0 % of the particles |
+| Q3 | Mod 1 Lec 4, slide 19 | Müller-mixer mixing index | `s` = 1.0397 wt %, `σ₀` = 0.30, `I_p` = 28.9 |
+| Q4 | Mod 1 Lec 5, slide 20 | Rittinger crushing power | `K_R` = 2.1875×10⁻³ kW h m/t, net 26.25 kW, **total 31.25 kW** |
+| Q5 | Mod 2 Lec 1, slide 16 | 10-mesh screen effectiveness | `D/F` = 0.42, `B/F` = 0.58, `E_A` = 0.759, `E_B` = 0.881, **`E` = 0.669** |
+| Q6 | Tutorial 3, problem 1 | Sieve analysis of a crushed solid | `D₅₀` = 1.339 mm (log-interpolated 1.317 mm), 1.881×10⁶ particles in 600 g (3135/g), `A_w` = 2.31 m²/g, `D̄_vs` = 1.040 mm |
+| Q7 | Tutorial 3, problem 2 | Shape factor and sphericity | `a` = 0.593, `D̄_vs` = 2.18 mm; from the slide's own surface-area datum `Φ_s` = 1.45 — **not physically possible**; the slide's numbers are reported as they stand and the contradiction is explained |
+| Q8 | Tutorial 4, problem 1 | Crusher power at a new duty | `K_R` = 52.78 (same units as Q4), **`P₂` = 1.06 kW**; Kick's-law alternative 0.92 kW |
+| Q9 | Tutorial 4, problem 2 | Energy per kg (Kick's law) | **`E` = 8.05 kJ/kg** |
+| Q10 | `Tests/Quiz1_Soln.pdf` | Mixing index of a binary mixture | `I_s` = 15.6 from the unrounded `s` = 0.03197, 16.1 with the instructor's rounded `s` = 0.031 (instructor's boxed value 16.12) |
+| Q11 | `Tests/TT1_Solution.pdf` | Bond work index | **`W_i` = 12.78 kWh/t**, `E₂` = 2.623 kWh/t, `P₂` = 367.2 kW (instructor's boxed value 367.22 kW) |
 
-### What is trusted, and in what order
+### Practice problems collected in the notes
 
-1. **The uploaded decks in `Slides/` — the source of truth.** Questions, given data, formulas and
-   methods all come from them. The solutions use the method taught in the lecture that set the
-   question; no outside method is substituted.
-2. **The reference texts** (McCabe/Smith/Harriott; Swain/Patra/Roy) — used only to confirm a standard
-   form or a published answer.
-3. **Anything generated in this repository — lowest precedence, always.** Verified by
-   `sp2-answers-check.py` rather than by hand.
-
-### Provenance tags used in the solutions document
-
-| Tag | Meaning |
-| --- | --- |
-| `SOURCE` | transcribed from the uploaded decks — trusted |
-| `DERIVED` | generated here (algebra, arithmetic, unit conversion) — verify before relying on it |
-| `VERIFY` | an independent re-computation used to check an answer |
-| `TEXT` | from a cited textbook; secondary confirmation only |
-| `FLAG` | an ambiguity, a missing datum, or an assumption — every place the slides are silent is flagged, never filled in silently |
-
-Rules that follow from this:
-
-- Nothing generated may be presented as slide content: generated material sits in a coloured
-  `DERIVED`/`VERIFY` box, source material in a green `SOURCE` box.
-- If a `SOURCE` box and a `DERIVED` box ever disagree, the source wins and the solution is recomputed.
-- Where a datum is missing from the slides (e.g. the volume shape factor `a` in Q1), the solution says
-  so and parameterises or flags it instead of inventing a value.
-- No arithmetic is done by hand: every derived number is reproduced by `sp2-answers-check.py`, which is
-  kept beside the `.tex` files.
-- Answers are reported to the precision the input data supports, with the unrounded value shown where
-  that is useful.
+The five practice problems printed in `Notes/SP2-notes.tex` are Q1–Q5 above; the questions documents
+solves them, the notes state them.
 
 ### Slides checked and carrying no question
 
 Mod 1 Lec 5 slides 7–18, Mod 1 Lec 3 slides 3–8, Mod 2 Lec 1 slides 11–15 (hand-written derivations,
 no question posed); Mod 1 Lec 1 slides 11/18 and Mod 2 Lec 2 slide 16 (conceptual text only); slides
 that merely link demonstration videos or show data tables, diagrams and graphs. No question was
-invented to fill the list, and no slide that poses a question was left out.
+invented to fill the list, and no slide, tutorial or test that poses a question was left out.

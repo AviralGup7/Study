@@ -1,0 +1,851 @@
+%=======================================================================
+%  CHE F313 - Separation Processes II
+%  PROBLEMS AND SOLUTIONS  (questions from the uploaded slide decks)
+%
+%  PROVENANCE DISCIPLINE USED THROUGHOUT THIS FILE
+%    [SOURCE]  transcribed from the uploaded decks in ../Slides/ (trusted)
+%    [TEXT]    from the cited textbook (secondary confirmation only)
+%    [DERIVED] computed here - arithmetic/algebra generated, never a source
+%    [VERIFY]  independent check of a stated answer
+%    [FLAG]    ambiguity, missing datum, or assumption made - read these
+%
+%  Compile:  tectonic SP2-problems-and-solutions.tex   (or latexmk -xelatex)
+%=======================================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=18mm,right=18mm,top=15mm,bottom=18mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{siunitx}
+\usepackage[colorlinks=true,linkcolor=accent,urlcolor=accent2]{hyperref}
+
+\definecolor{accent}{HTML}{0B3C5D}
+\definecolor{accent2}{HTML}{1D6FA5}
+\definecolor{srccol}{HTML}{1B5E20}      % SOURCE  - green
+\definecolor{srcbg}{HTML}{E8F5E9}
+\definecolor{devcol}{HTML}{0D47A1}      % DERIVED - blue
+\definecolor{devbg}{HTML}{E3F2FD}
+\definecolor{vercol}{HTML}{4A148C}      % VERIFY  - purple
+\definecolor{verbg}{HTML}{F3E5F5}
+\definecolor{flagcol}{HTML}{B71C1C}     % FLAG    - red
+\definecolor{flagbg}{HTML}{FFEBEE}
+\definecolor{txtcol}{HTML}{6D4C41}      % TEXT    - brown
+\definecolor{txtbg}{HTML}{EFEBE9}
+\definecolor{boxbg}{HTML}{F1F4F7}
+\definecolor{boxframe}{HTML}{C6D1DA}
+\definecolor{rule}{HTML}{9FB3C2}
+\definecolor{inbox}{HTML}{0E2430}
+\definecolor{notecol}{HTML}{46535C}
+
+\sisetup{detect-all,per-mode=symbol}
+\newcommand{\microm}{\ensuremath{\,\mu\mathrm{m}}}
+
+% ---------------------------------------------------------------- chips
+\newcommand{\chip}[2]{{\setlength{\fboxsep}{3pt}%
+  \colorbox{#1}{\textcolor{white}{\bfseries\footnotesize #2}}}}
+\newcommand{\SOURCE}{\chip{srccol}{SOURCE}}
+\newcommand{\DERIVED}{\chip{devcol}{DERIVED}}
+\newcommand{\VERIFY}{\chip{vercol}{VERIFY}}
+\newcommand{\FLAGTAG}{\chip{flagcol}{FLAG}}
+\newcommand{\TEXT}{\chip{txtcol}{TEXT}}
+
+\newtcolorbox{srcres}{breakable,enhanced,colback=srcbg,colframe=srccol!60,
+  boxrule=0.6pt,arc=1.5pt,left=5pt,right=5pt,top=4pt,bottom=4pt,
+  before skip=4pt,after skip=5pt,fontupper=\small}
+\newtcolorbox{devres}{breakable,enhanced,colback=devbg,colframe=devcol!55,
+  boxrule=0.6pt,arc=1.5pt,left=5pt,right=5pt,top=4pt,bottom=4pt,
+  before skip=4pt,after skip=5pt,fontupper=\small}
+\newtcolorbox{verres}{breakable,enhanced,colback=verbg,colframe=vercol!55,
+  boxrule=0.6pt,arc=1.5pt,left=5pt,right=5pt,top=4pt,bottom=4pt,
+  before skip=4pt,after skip=5pt,fontupper=\small}
+\newtcolorbox{flagres}{breakable,enhanced,colback=flagbg,colframe=flagcol!60,
+  boxrule=0.6pt,arc=1.5pt,left=5pt,right=5pt,top=4pt,bottom=4pt,
+  before skip=4pt,after skip=5pt,fontupper=\small}
+\newtcolorbox{ansbox}[1][]{enhanced,colback=boxbg,colframe=accent,boxrule=0.9pt,
+  arc=1.5pt,left=6pt,right=6pt,top=5pt,bottom=5pt,before skip=5pt,after skip=6pt,
+  fontupper=\small\color{inbox},#1}
+\newcommand{\notetext}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
+% ---------------------------------------------------------------- headings
+\newcommand{\spsection}[1]{%
+  \par\addvspace{10pt}%
+  \noindent\begin{tcolorbox}[colback=accent,colframe=accent,boxrule=0pt,arc=1.2pt,
+      left=7pt,right=7pt,top=5pt,bottom=5pt,width=\linewidth,before skip=0pt,after skip=7pt]
+    \color{white}\bfseries\large #1
+  \end{tcolorbox}\par\vspace{-2pt}\nopagebreak}
+\newcommand{\spsub}[1]{\par\addvspace{7pt}\noindent{\color{accent}\bfseries #1}\par\addvspace{3pt}\nopagebreak}
+\newcommand{\qtitle}[2]{%
+  \par\addvspace{9pt}\noindent
+  \begin{tcolorbox}[colback=accent2!12,colframe=accent2,boxrule=0.8pt,arc=1.5pt,
+      left=7pt,right=7pt,top=4pt,bottom=4pt,before skip=0pt,after skip=4pt,width=\linewidth]
+    {\large\bfseries\color{accent}#1}\hfill{\small\color{accent2}#2}
+  \end{tcolorbox}\par\vspace{1pt}}
+
+\setlist[itemize]{leftmargin=1.1em,topsep=2pt,itemsep=1.5pt,parsep=0pt,label=\textbullet}
+\setlist[enumerate]{leftmargin=1.5em,topsep=2pt,itemsep=1.5pt}
+\setlength{\parindent}{0pt}
+\emergencystretch=2em
+\setlength{\parskip}{2.5pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Problems \& Solutions \textperiodcentered{} source-tagged}
+\fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
+
+\begin{document}
+
+%=============================================================== cover
+\begin{center}
+{\LARGE\bfseries\color{accent} SEPARATION PROCESSES II}\\[2pt]
+{\color{accent2} CHE F313 \textperiodcentered{} Problems and Solutions \textperiodcentered{} I-Semester 2026-27}\\[4pt]
+{\color{rule}\rule{0.6\linewidth}{0.8pt}}\\[6pt]
+{\large\bfseries\color{accent} Every numerical from the uploaded slides, with its solution}\\[3pt]
+{\color{accent2} Module 1 Lectures 1--6 \textperiodcentered{} Module 2 Lectures 1--2}
+\end{center}
+
+\vspace{2mm}
+\begin{flagres}
+\textbf{\FLAGTAG{} Read this first.} This document mixes two kinds of statement,
+and they are \emph{always} labelled:
+\begin{itemize}
+  \item \SOURCE{} --- transcribed from the uploaded slide decks in \texttt{Slides/}.
+        Questions, given data, formulas and methods. \textbf{These are the truth.}
+  \item \DERIVED{} --- algebra, arithmetic and unit conversions performed here.
+        \textbf{Generated, so verify before you rely on it.} Nothing in a
+        \DERIVED{} box overrides a \SOURCE{} box.
+  \item \VERIFY{} --- an independent re-computation used to check an answer.
+  \item \TEXT{} --- a textbook value/formula, used \emph{only} as secondary
+        confirmation. Cited where used.
+  \item \FLAGTAG{} --- an ambiguity, a missing datum, or an assumption. Every
+        place where the slides are silent, or where I had to interpret, is
+        flagged rather than filled in silently.
+\end{itemize}
+If a \SOURCE{} box and a \DERIVED{} box ever disagree, the \SOURCE{} box is wrong
+and the whole solution must be recomputed. Where a needed datum is absent from
+the slides, it is stated as absent --- not invented.
+\end{flagres}
+
+\spsub{Question inventory (from the uploaded decks)}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l X l@{}}
+\toprule
+\textbf{ID} & \textbf{Source} & \textbf{Topic / what is asked} & \textbf{Solved at}\\
+\midrule
+Q1 & Mod 1 Lec 3, slide 10 & Clay catalyst: differential \& cumulative analysis, $A_w$, $\overline{D}_s$, particle count & Q1, p.\,\pageref{q:1}\\
+Q2 & Mod 1 Lec 3, slides 11--12 (table on 12; also Lec 2 slide 17) & Crushed quartz: $A_w$, $N_w$, $\overline{D}_v$, $\overline{D}_s$, $\overline{D}_w$, $N_i$, number fraction & Q2, p.\,\pageref{q:2}\\
+Q3 & Mod 1 Lec 4, slide 19 & Muller mixer: mixing index $I_p$ and standard deviation & Q3, p.\,\pageref{q:3}\\
+Q4 & Mod 1 Lec 5, slide 20 & Crusher power by Rittinger's law & Q4, p.\,\pageref{q:4}\\
+Q5 & Mod 2 Lec 1, slide 16 (solution graph slide 18) & Quartz screened at 10 mesh: $D/F$, $B/F$, overall effectiveness $E$ & Q5, p.\,\pageref{q:5}\\
+\bottomrule
+\end{tabularx}}
+
+\notetext{Slide wording is quoted verbatim throughout, \emph{including} the slides' own spelling and small
+grammar slips (``It has density of 1.2\,g/cc'', ``analyzed calorimetrically''), so any quotation can be
+checked character-for-character against the deck. Two transcription notes. On \texttt{Mod1-Lecture 3} slide 12 the question carries only the
+heading \texttt{Numerical Problem}, with the screen-analysis table and the shape factors inside the slide's
+image object; on \texttt{Mod1-Lecture 5} slide 20 the powers of ten in \SI{50e-4}{\meter} and friends sit
+inside an image object as well. Both were read from those images and are reproduced in the \SOURCE{} boxes
+above (the 14-row table was additionally checked row by row, see Q2). Nothing in this document was taken
+from a secondary summary of these slides.}
+
+\spsection{REFERENCE NOTE --- WHAT IS TRUSTED, AND IN WHAT ORDER}
+
+\spsub{Precedence when sources disagree}
+\begin{enumerate}
+  \item \textbf{The uploaded decks} (\texttt{Slides/}, 8 files: \texttt{Mod1-Lecture 1--5.pptx},
+        \texttt{Mod1-Lecture 6-compressed.pdf}, \texttt{Mod 2-Lecture 1-compressed.pdf},
+        \texttt{Mod 2-Lecture 2.pptx}). This is the course's own material --- the primary source of truth.
+  \item \textbf{The cited textbooks} --- McCabe, Smith \& Harriott, \emph{Unit Operations of Chemical
+        Engineering}, 7e (Ch.~28, 29), and Swain, Patra \& Roy, \emph{Mechanical Operations}
+        (Tata McGraw Hill). Used only to confirm a standard form or a published answer.
+  \item \textbf{This document's \DERIVED{} material} --- generated arithmetic. Lowest precedence, always.
+\end{enumerate}
+
+\spsub{Rules applied in producing the solutions}
+\begin{enumerate}
+  \item The \emph{method} used for every question is the method taught on the slides. No outside
+        method is substituted.
+  \item Every number that appears in a solution came from either a \SOURCE{} box or a computation in
+        \texttt{sp2-answers-check.py} (kept alongside this file). No arithmetic was done by hand.
+  \item Where the slides fix a required datum (e.g.\ $a=0.8$, $\Phi_s=0.571$, $\rho_p$, $W_i$-style
+        inputs), that value is used. Where a datum is \emph{not} on the slides, the solution says so
+        and either parameterises it or flags the assumption.
+  \item SI/unit conventions follow the slides: $D_p$ in mm with $A_w$ in \si{\square\milli\meter\per\gram}
+        for the screen-analysis problems, and \si{\kilo\watt}, \si{\tonne\per\hour} for the crushing problem.
+  \item Answers are given with the precision the input data supports, plus an unrounded value where
+        useful.
+\end{enumerate}
+
+\spsection{Q1 --- SCREEN ANALYSIS OF A CLAY CATALYST}\label{q:1}
+\qtitle{Q1}{Module 1 \textperiodcentered{} Lecture 3 \textperiodcentered{} slide 10 \textperiodcentered{} \texttt{Mod1-Lecture 3.pptx}}
+
+\begin{srcres}
+\SOURCE{} \textbf{Question as given on the slide} (``Problem 1: Screen Analysis''), quoted verbatim:\\
+``Finely divided clay is used as a catalyst in the petroleum industry. It has density of 1.2\,g/cc and a
+sphericity of 0.5. The size analysis is as follows:''
+\begin{center}\small
+\begin{tabular}{@{}l S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]@{}}
+\toprule
+$D_{pi}$ / \si{\milli\meter} & 0.0252 & 0.0178 & 0.0126 & 0.0089 & 0.0038\\
+$x_i$ (g/g) & 0.088 & 0.178 & 0.293 & 0.194 & 0.247\\
+\bottomrule
+\end{tabular}
+\end{center}
+``Show the differential \& cumulative screen analysis of the mixture. Find the specific surface area and
+the Sauter mean diameter of the clay material. Find the number of particles in 1\,g sample.''
+\end{srcres}
+
+\begin{srcres}
+\SOURCE{} \textbf{Method from the slides} (Mod 1 Lec 3, derivations 1--13):
+\[
+A_w=\frac{6}{\rho_p\Phi_s}\sum_{i=1}^{n}\frac{x_i}{D_{pi}},\qquad
+\overline{D}_s=\frac{1}{\sum_i x_i/D_{pi}}=\frac{6}{\Phi_s\rho_p A_w},\qquad
+N_w=\frac{1}{a\rho_p}\sum_{i=1}^{n}\frac{x_i}{D_{pi}^3}
+\]
+Cumulative analysis: add the increments consecutively starting from the smallest particles, and plot
+the sums against the maximum particle diameter of the increment (Lec 2 slide 16).
+\end{srcres}
+
+\spsub{Step 1 --- differential and cumulative analysis}
+\begin{devres}
+\DERIVED{} The differential analysis is the tabulated $x_i$ versus $D_{pi}$ already given. The cumulative
+``fraction smaller than $D_{pi}$'' is the running sum from the smallest size; ``fraction larger'' is its
+complement. Check of the given data: $\sum x_i = 0.088+0.178+0.293+0.194+0.247 = 1.000$.
+\end{devres}
+{\small
+\begin{tabular}{@{}S[table-format=1.4] S[table-format=1.3] S[table-format=1.4] S[table-format=1.4]@{}}
+\toprule
+{$D_{pi}$ / \si{\milli\meter}} & {$x_i$ (differential)} & {cumulative smaller} & {cumulative larger}\\
+\midrule
+0.0038 & 0.247 & 0.2470 & 0.7530\\
+0.0089 & 0.194 & 0.4410 & 0.5590\\
+0.0126 & 0.293 & 0.7340 & 0.2660\\
+0.0178 & 0.178 & 0.9120 & 0.0880\\
+0.0252 & 0.088 & 1.0000 & 0.0000\\
+\bottomrule
+\end{tabular}}
+\notetext{\DERIVED{} Rows are listed from the smallest increment upward, which is the order used when building
+a cumulative distribution.}
+
+\spsub{Step 2 --- specific surface area and Sauter mean diameter}
+\begin{devres}
+\DERIVED{} Unit note: $D_{pi}$ is in \si{\milli\meter}, so $\rho_p$ must be in \si{\gram\per\cubic\milli\meter}:
+\[
+\rho_p=\SI{1.2}{\gram\per\cubic\centi\meter}=\SI{1.2e-3}{\gram\per\cubic\milli\meter}
+\]
+\[
+\sum_i\frac{x_i}{D_{pi}}=123.544\ \text{mm}^{-1}
+\qquad(\text{e.g. } 0.088/0.0252=3.4921,\ 0.247/0.0038=65.000)
+\]
+\[
+A_w=\frac{6}{\rho_p\Phi_s}\sum_i\frac{x_i}{D_{pi}}
+=\frac{6}{(\num{1.2e-3})(0.5)}(123.544)
+=\SI{1.2354e6}{\square\milli\meter\per\gram}
+\]
+\[
+\overline{D}_s=\frac{1}{\sum_i x_i/D_{pi}}=\frac{1}{123.544}
+=\SI{0.008094}{\milli\meter}=\SI{8.09}{\micro\meter}
+\]
+\end{devres}
+\begin{verres}
+\VERIFY{} Consistency of the two slide formulas: $\dfrac{6}{\Phi_s\rho_p A_w}
+=\dfrac{6}{(0.5)(\num{1.2e-3})(\num{1.2354e6})}=\SI{0.008094}{\milli\meter}=\overline{D}_s$ \checkmark\\[2pt]
+Sanity: $A_w=\SI{1.2354e6}{\square\milli\meter\per\gram}=\SI{1.24}{\square\meter\per\gram}$, which is
+the right order for a powder of $\sim\SI{8}{\micro\meter}$ particles.
+\end{verres}
+
+\spsub{Step 3 --- number of particles in a \SI{1}{\gram} sample}
+\begin{devres}
+\DERIVED{} For the same data,
+\[
+\sum_i\frac{x_i}{D_{pi}^3}=4.9601\times10^{6}\ \text{mm}^{-3},
+\qquad
+N_w=\frac{1}{a\rho_p}\sum_i\frac{x_i}{D_{pi}^3}
+=\frac{4.9601\times10^{6}}{a\,(\num{1.2e-3})}
+=\frac{4.1334\times10^{9}}{a}\ \text{g}^{-1}
+\]
+The slide does not state the volume shape factor $a$, so the result is left in terms of it. For the
+sphere value used elsewhere in the course ($a=\pi/6=0.5236$, Lec 3 slide 6 and the textbook),
+\[
+N_w=\frac{4.1334\times10^{9}}{0.5236}=\SI{7.89e9}{particles\per\gram}
+\]
+\end{devres}
+\begin{flagres}
+\FLAGTAG{} $a$ is \emph{not} given on this slide (unlike Q2, where $a=0.8$ is stated). The value
+$\SI{7.9e9}{\per\gram}$ assumes $a=\pi/6$ (spheres). Since $N_w\propto 1/a$, quoting $a$ from the
+question sheet changes the answer: $a=0.5\to\SI{8.3e9}{\per\gram}$, $a=0.8\to\SI{5.2e9}{\per\gram}$.
+Confirm the intended $a$ before submitting.
+\end{flagres}
+
+\begin{ansbox}
+\textbf{Answers (Q1).}\\
+(a) Differential and cumulative tables as above ($\sum x_i=1.000$).\\
+(b) $A_w=\SI{1.2354e6}{\square\milli\meter\per\gram}\;(\approx\SI{1.24}{\square\meter\per\gram})$;\qquad
+    $\overline{D}_s=\SI{0.00809}{\milli\meter}=\SI{8.09}{\micro\meter}$.\\
+(c) $N_w=(4.133\times10^{9})/a$ particles per gram; with $a=\pi/6$:
+    $\approx\SI{7.9e9}{particles\per\gram}$. \emph{($a$ not given on the slide --- see the flag.)}
+\end{ansbox}
+
+\newpage
+\spsection{Q2 --- SCREEN ANALYSIS OF CRUSHED QUARTZ}\label{q:2}
+\qtitle{Q2}{Module 1 \textperiodcentered{} Lecture 3 \textperiodcentered{} slides 11--12 (table on slide 12) \textperiodcentered{} also Lec 2 slide 17}
+
+\begin{srcres}
+\SOURCE{} \textbf{Question as given on the slide} (``Problem 2: Screen Analysis''), quoted verbatim:\\
+``The screen analysis shown in Table applies to a sample of crushed quartz. The density of the particles
+is 2650\,kg/m3 (0.00265\,g/mm3), and the shape factors are a = 0.8 and $\Phi_s = 0.571$. For the material
+between 4-mesh and 200-mesh in particle size, calculate (a) Aw in square millimeters per gram and Nw in
+particles per gram, (b) Dv (c) Ds (d) Dw and (e) Ni for the 150/200-mesh increment.
+(f) What fraction of the total number of particles is in the 150/200-mesh increment?''
+\end{srcres}
+
+\begin{srcres}
+\SOURCE{} \textbf{Data table as printed on slide 12} (the slide's only text is the heading
+\texttt{Numerical Problem}; the same table also appears on Lecture 2 slide 17). Columns as on the slide:
+mesh, screen opening, mass fraction retained $x_i$, average particle diameter in increment, cumulative
+fraction smaller than $D_{pi}$.
+\begin{center}\footnotesize
+\begin{tabular}{@{}l S[table-format=1.3] S[table-format=1.4] S[table-format=1.3] S[table-format=1.4]@{}}
+\toprule
+{Mesh} & {Screen opening $D_{pi}$/\si{\milli\meter}} & {retained $x_i$} & {$D_{pi}$ in increment/\si{\milli\meter}} & {cumulative smaller}\\
+\midrule
+4   & 4.699 & 0.0000 & {---}   & 1.0000\\
+6   & 3.327 & 0.0251 & 4.013 & 0.9749\\
+8   & 2.362 & 0.1250 & 2.845 & 0.8499\\
+10  & 1.651 & 0.3207 & 2.007 & 0.5292\\
+14  & 1.168 & 0.2570 & 1.409 & 0.2722\\
+20  & 0.833 & 0.1590 & 1.001 & 0.1132\\
+28  & 0.589 & 0.0538 & 0.711 & 0.0594\\
+35  & 0.417 & 0.0210 & 0.503 & 0.0384\\
+48  & 0.295 & 0.0102 & 0.356 & 0.0282\\
+65  & 0.208 & 0.0077 & 0.252 & 0.0205\\
+100 & 0.147 & 0.0058 & 0.178 & 0.0147\\
+150 & 0.104 & 0.0041 & 0.126 & 0.0106\\
+200 & 0.074 & 0.0031 & 0.089 & 0.0075\\
+Pan & {---}   & 0.0075 & 0.037 & 0.0000\\
+\bottomrule
+\end{tabular}
+\end{center}
+\notetext{\DERIVED{} Internal check of the table: each increment diameter is the arithmetic mean of the two
+defining screen openings, e.g.\ $(4.699+3.327)/2=4.013$, $(3.327+2.362)/2=2.845$, \dots,
+$(0.074+0)/2=0.037$ for the pan. All 13 values reproduce the table to within \SI{0.0005}{\milli\meter}
+(the table prints three decimals, so e.g.\ the 14-mesh mean $1.4095$ is printed as $1.409$); the data is
+therefore self-consistent and no reading error is involved.
+The 12 increments from 4-mesh to 200-mesh carry $\sum x_i=0.9925$; the remaining $0.0075$ is the pan.
+Because the question says ``between 4-mesh and 200-mesh'', the pan is \emph{excluded} from the answer
+(the textbook solution does the same) --- see the flag below for the numbers if it is included.}
+\end{srcres}
+
+\begin{srcres}
+\SOURCE{} \textbf{Method from the slides}:
+\[
+A_w=\frac{6}{\rho_p\Phi_s}\sum\frac{x_i}{D_{pi}},\qquad
+N_w=\frac{1}{a\rho_p}\sum\frac{x_i}{D_{pi}^3},\qquad
+\overline{D}_v=\Big[\frac{1}{\sum x_i/D_{pi}^3}\Big]^{1/3},
+\]
+\[
+\overline{D}_s=\frac{1}{\sum x_i/D_{pi}},\qquad
+\overline{D}_w=\sum x_i D_{pi},\qquad
+N_i=\frac{m_i}{a\rho_p D_{pi}^3}=\frac{x_i}{a\rho_p\overline{D}_{pi}^3}\ \text{(per unit mass)}
+\]
+\end{srcres}
+
+\spsub{Step 1 --- the two sums (12 increments, 4-mesh to 200-mesh)}
+\begin{devres}
+\DERIVED{}
+\[
+\sum_{i=1}^{12}\frac{x_i}{D_{pi}}=0.82780\ \text{mm}^{-1}
+\qquad\qquad
+\sum_{i=1}^{12}\frac{x_i}{D_{pi}^3}=8.7932\ \text{mm}^{-3}
+\]
+work for the first increment, $D_{pi}=4.013$ and $x_i=0.0251$:
+$\;0.0251/4.013=0.00626$ and $0.0251/4.013^3=0.000389$.
+\end{devres}
+
+\spsub{Step 2 --- (a) specific surface area and number of particles}
+\begin{devres}
+\DERIVED{}
+\[
+A_w=\frac{6}{\rho_p\Phi_s}\sum\frac{x_i}{D_{pi}}
+=\frac{6}{(\num{2.65e-3})(0.571)}(0.82780)
+=\SI{3282}{\square\milli\meter\per\gram}=\SI{32.8}{\square\centi\meter\per\gram}
+\]
+\[
+N_w=\frac{1}{a\rho_p}\sum\frac{x_i}{D_{pi}^3}
+=\frac{8.7932}{(0.8)(\num{2.65e-3})}
+=\SI{4148}{particles\per\gram}
+\]
+\end{devres}
+
+\spsub{Step 3 --- (b) volume mean, (c) Sauter, (d) mass mean diameters}
+\begin{devres}
+\DERIVED{}
+\[
+\overline{D}_v=\Big[\frac{1}{\sum x_i/D_{pi}^3}\Big]^{1/3}
+=\Big[\frac{1}{8.7932}\Big]^{1/3}=\SI{0.4845}{\milli\meter}
+\]
+\[
+\overline{D}_s=\frac{1}{\sum x_i/D_{pi}}=\frac{1}{0.82780}=\SI{1.2080}{\milli\meter}
+\]
+\[
+\overline{D}_w=\sum x_i D_{pi}
+=0.0251(4.013)+0.1250(2.845)+\dots+0.0031(0.089)=\SI{1.6775}{\milli\meter}
+\]
+\end{devres}
+
+\spsub{Step 4 --- (e) particles in the 150/200-mesh increment}
+\begin{devres}
+\DERIVED{} For that increment $x_i=0.0031$ and $D_{pi}=\SI{0.089}{\milli\meter}$ (per unit mass of the
+whole sample):
+\[
+N_i=\frac{x_i}{a\rho_p D_{pi}^3}
+=\frac{0.0031}{(0.8)(\num{2.65e-3})(0.089)^3}
+=\SI{2074}{particles\per\gram}
+\]
+\end{devres}
+
+\spsub{Step 5 --- (f) fraction of the total number of particles}
+\begin{devres}
+\DERIVED{} The fraction of all particles that lie in that increment is its share of
+$\sum x_i/D_{pi}^3$:
+\[
+\frac{N_i}{N_T}=\frac{x_i/D_{pi}^3}{\sum_j x_j/D_{pj}^3}
+=\frac{0.0031/0.089^3}{8.7932}=0.5001\ \approx\ 50\%
+\]
+Note the contrast with its \emph{mass} fraction, $x_i=0.0031=0.31\%$: half of all the particles sit in
+this one fine increment even though it is a negligible part of the mass.
+\end{devres}
+
+\begin{verres}
+\VERIFY{} Independent checks: (i) the algebra route
+$N_i/N_T=\big[(1/(a\rho_p))\,(x_i/D_{pi}^3)\big]/N_w=2074/4148=0.500$ agrees;
+(ii) the published worked solution of this textbook problem, as reproduced in course material,
+gives $\sum x_i/D_{pi}=0.8278$, $\sum x_i/D_{pi}^3=8.7932$,
+$A_w=\SI{3282}{\square\milli\meter\per\gram}$, $N_w=\SI{4148}{particles\per\gram}$,
+$N_i=2074$ and a fraction of $50\%$ \TEXT{} --- i.e.\ this solution reproduces the published
+answer to the digits quoted, which is strong evidence that the table was transcribed correctly.
+\end{verres}
+
+\begin{flagres}
+\FLAGTAG{} Two points to confirm with the instructor:
+\begin{enumerate}
+  \item \textbf{Scope.} ``Between 4-mesh and 200-mesh'' excludes the pan, so $\sum x_i=0.9925$ and the
+        denominators are not normalised to 1. Including the pan gives different numbers
+        ($A_w=\SI{4086}{\square\milli\meter\per\gram}$, $N_w=\SI{73990}{particles\per\gram}$,
+        $\overline{D}_v=\SI{0.185}{\milli\meter}$, $\overline{D}_s=\SI{0.970}{\milli\meter}$,
+        $\overline{D}_w=\SI{1.678}{\milli\meter}$, $N_i/N_T=2.8\%$). The exclusion is what the
+        textbook solution does, so it is used above.
+  \item \textbf{Which diameter to use.} The solution uses the increment-mean column $D_{pi}$ from the
+        table. The 150/200 value there is $0.089$\,mm (not $0.104$ or $0.074$, the screen openings).
+\end{enumerate}
+\end{flagres}
+
+\begin{ansbox}
+\textbf{Answers (Q2).}\\
+(a) $A_w=\SI{3282}{\square\milli\meter\per\gram}$, \quad $N_w=\SI{4148}{particles\per\gram}$.\\
+(b) $\overline{D}_v=\SI{0.484}{\milli\meter}$.\\
+(c) $\overline{D}_s=\SI{1.208}{\milli\meter}$.\\
+(d) $\overline{D}_w=\SI{1.677}{\milli\meter}$.\\
+(e) $N_i=\SI{2074}{particles\per\gram}$ \;(150/200-mesh increment).\\
+(f) $N_i/N_T=0.500$ --- about \textbf{50\%} of all the particles, against only $0.31\%$ of the mass.
+\end{ansbox}
+
+\newpage
+\spsection{Q3 --- MIXING INDEX IN A MULLER MIXER}\label{q:3}
+\qtitle{Q3}{Module 1 \textperiodcentered{} Lecture 4 \textperiodcentered{} slide 19 \textperiodcentered{} \texttt{Mod1-Lecture 4.pptx}}
+
+\begin{srcres}
+\SOURCE{} \textbf{Question as given on the slide} (``Problem 1''), quoted verbatim:\\
+``A silty soil containing 14 percent moisture was mixed in a large muller mixer with 10\,wt\% of a tracer
+consisting of dextrose and picric acid. After 3\,min of mixing, 12 random samples were taken from the mix
+and analyzed calorimetrically for tracer material. The measured concentrations in the sample were in
+weight percent tracer, 10.24, 9.30, 7.94, 10.24, 11.08, 10.03, 11.91, 9.72, 9.20, 10.76, 10.97, 10.55.
+Calculate the mixing index IP and the standard deviation.''
+\end{srcres}
+
+\begin{srcres}
+\SOURCE{} \textbf{Method from the slides} (Mod 1 Lec 4, cohesive solids / pastes --- and Lec 4 slide 16 for $s$):
+\[
+s=\sqrt{\frac{\sum_{i=1}^{N}(x_i-\bar{x})^2}{N-1}}
+=\sqrt{\frac{\sum_{i=1}^{N}x_i^2-\bar{x}\sum_{i=1}^{N}x_i}{N-1}},
+\qquad
+\sigma_0=\sqrt{\mu(1-\mu)},
+\qquad
+I_s=\frac{\sigma_0}{s}
+\]
+``For cohesive solids, instead of number, mass fraction is used''; $x_i$ = mass fraction of A in each
+sample, $\bar x$ = average of the mass fractions, $N$ = number of spot samples; $\sigma_0$ is the
+theoretical standard deviation at zero mixing. The soil is wet and cohesive, and the samples were
+analysed for tracer \emph{mass} percent, so the paste equations apply.
+\end{srcres}
+
+\spsub{Step 1 --- standard deviation of the samples}
+\begin{devres}
+\DERIVED{}
+\[
+\bar{x}=\frac{1}{12}\sum_{i=1}^{12}x_i=\frac{121.94}{12}=10.1617\ \text{wt\%}
+\qquad
+\sum_{i=1}^{12}(x_i-\bar{x})^2=11.890\ (\text{wt\%})^2
+\]
+\[
+s=\sqrt{\frac{11.890}{12-1}}=\SI{1.0397}{wt\%}=0.010397\ \text{(mass fraction)}
+\]
+(The $N$ instead of $N-1$ denominator would give $s=\SI{0.9954}{wt\%}=\SI{0.009954}{}$ as a fraction.)
+\end{devres}
+
+\spsub{Step 2 --- theoretical standard deviation at zero mixing}
+\begin{devres}
+\DERIVED{} The mixture was charged with \SI{10}{wt\%} tracer, so $\mu=0.10$:
+\[
+\sigma_0=\sqrt{\mu(1-\mu)}=\sqrt{0.10\times0.90}=\sqrt{0.09}=0.30
+\]
+\end{devres}
+
+\spsub{Step 3 --- mixing index}
+\begin{devres}
+\DERIVED{}
+\[
+I_p=\frac{\sigma_0}{s}=\frac{0.30}{0.010397}=28.9
+\]
+Since $s$ has fallen well below $\sigma_0$, the value of $I_p$ strongly above 1 indicates that the
+mixer has mixed the tracer far more uniformly than a completely unmixed, segregated charge would be
+(compare $I_s=\sigma_e/s$ for granular solids, which rises from 0 towards 1 as mixing proceeds and is
+capped near 1 for a random mixture).
+\end{devres}
+
+\begin{flagres}
+\FLAGTAG{} Four judgement calls, all of which change the last digit or more:
+\begin{enumerate}
+  \item \textbf{$\mu$: charged or measured?} $\mu=0.10$ is used, because that is the tracer actually
+        charged (``mixed with 10 wt\% of a tracer''). Using the measured mean instead,
+        $\mu=\bar x=0.1016$, gives $\sigma_0=0.3022$ and $I_p=29.1$.
+  \item \textbf{$N-1$ or $N$?} The slide's formula is $s=\sqrt{\sum(x_i-\bar{x})^2/(N-1)}$, used above.
+        Some textbooks use $N$: that gives $s=\SI{0.995}{\percent}$ and $I_p=30.1$.
+  \item \textbf{Number vs mass fraction.} The question says ``silty soil'' (cohesive, 14\% moisture)
+        and reports wt\% tracer, so the paste form $\sigma_0=\sqrt{\mu(1-\mu)}$ with mass fractions is
+        used. The granular form $\sigma_e=\sqrt{\mu_p(1-\mu_p)/n}$ needs $n$, the number of particles
+        per sample, which the slide does not give.
+  \item \textbf{Symbol.} The slide writes the paste mixing index as $I_s$; the question calls it
+        $I_p$. They are the same quantity.
+\end{enumerate}
+\end{flagres}
+
+\begin{ansbox}
+\textbf{Answers (Q3).}\\
+$\bar x = 10.16$\,wt\%, \quad $s=\SI{1.04}{wt\%}$ (i.e.\ $0.0104$ as a mass fraction; $s=0.995$\,wt\% if
+the $N$ denominator is used), \quad $\sigma_0=0.30$, \quad
+$I_p=0.30/0.0104=28.9$ \;($\approx 29$).\\
+With the measured mean as $\mu$ and the $N$-denominator, the same working gives $I_p\approx30$.
+\end{ansbox}
+
+\newpage
+\spsection{Q4 --- CRUSHER POWER BY RITTINGER'S LAW}\label{q:4}
+\qtitle{Q4}{Module 1 \textperiodcentered{} Lecture 5 \textperiodcentered{} slide 20 \textperiodcentered{} \texttt{Mod1-Lecture 5.pptx}}
+
+\begin{srcres}
+\SOURCE{} \textbf{Question as given on the slide} (``Problem 1: Size reduction''), quoted verbatim:\\
+``Particles of the average feed size of $50\times10^{-4}$\,m are crushed to an average product size of
+$10\times10^{-4}$\,m at the rate of 20 tonnes per hour. At this rate, the crusher consumes
+\SI{40}{\kilo\watt} of power which \SI{5}{\kilo\watt} are required for running the mill empty.
+Calculate the power consumption if 12 tonnes/h of this product is crushed to
+$5\times10^{-4}$\,m size in the same mill? Assume Rittinger's Law is applicable.''
+\end{srcres}
+
+\begin{srcres}
+\SOURCE{} \textbf{Method fixed by the slide} (Mod 1 Lec 5, Rittinger's law):
+\[
+\frac{P}{\dot m}=K_R\Big[\frac{1}{\overline{D}_{sb}}-\frac{1}{\overline{D}_{sa}}\Big]
+\]
+with $\overline{D}_{sa}$ = feed (a) size and $\overline{D}_{sb}$ = product (b) size. \emph{The question
+directs Rittinger's law, so it is used --- not Kick's or Bond's.}
+\end{srcres}
+
+\spsub{Step 1 --- useful (net) power of the first duty}
+\begin{devres}
+\DERIVED{} The \SI{5}{\kilo\watt} is spent running the mill empty, so the power actually doing crushing is
+\[
+P_{\text{net},1}=40-5=\SI{35}{\kilo\watt}\ \text{at}\ \dot m_1=\SI{20}{\tonne\per\hour}
+\]
+\[
+\frac{P_{\text{net},1}}{\dot m_1}=\frac{35}{20}=\SI{1.75}{\kilo\watt\hour\per\tonne}
+\]
+\end{devres}
+
+\spsub{Step 2 --- the Rittinger constant of this mill and material}
+\begin{devres}
+\DERIVED{} With $D_{sa}=50\times10^{-4}$\,m and $D_{sb}=10\times10^{-4}$\,m,
+\[
+\frac{1}{D_{sb}}-\frac{1}{D_{sa}}=\frac{1}{10\times10^{-4}}-\frac{1}{50\times10^{-4}}
+=1000-200=\SI{800}{\per\meter}
+\]
+\[
+K_R=\frac{P/\dot m}{\big[1/D_{sb}-1/D_{sa}\big]}=\frac{1.75}{800}
+=\SI{2.1875e-3}{\kilo\watt\hour\meter\per\tonne}
+\]
+\end{devres}
+
+\spsub{Step 3 --- the second duty}
+\begin{devres}
+\DERIVED{} Now the same mill crushes \emph{this product} ($D_{sa}=10\times10^{-4}$\,m) down to
+$5\times10^{-4}$\,m at $\dot m_2=\SI{12}{\tonne\per\hour}$:
+\[
+\frac{1}{D_{sb}}-\frac{1}{D_{sa}}=\frac{1}{5\times10^{-4}}-\frac{1}{10\times10^{-4}}
+=2000-1000=\SI{1000}{\per\meter}
+\]
+\[
+P_{\text{net},2}=K_R\,\dot m_2\Big[\frac{1}{D_{sb}}-\frac{1}{D_{sa}}\Big]
+=(\num{2.1875e-3})(12)(1000)=\SI{26.25}{\kilo\watt}
+\]
+Restoring the fixed empty-mill load:
+\[
+P_2=P_{\text{net},2}+5=\SI{31.25}{\kilo\watt}
+\]
+\end{devres}
+
+\spsub{Step 4 --- the same calculation done entirely with power ratios}
+\begin{devres}
+\DERIVED{} A second route, keeping the mill load in the ratio:
+\[
+\frac{P_2-5}{P_1-5}
+=\frac{\dot m_2}{\dot m_1}\cdot
+\frac{\big[1/D_{sb,2}-1/D_{sa,2}\big]}{\big[1/D_{sb,1}-1/D_{sa,1}\big]}
+=\frac{12}{20}\cdot\frac{1000}{800}=0.75
+\]
+\[
+P_2=5+0.75(40-5)=5+26.25=\SI{31.25}{\kilo\watt}
+\]
+\end{devres}
+
+\begin{verres}
+\VERIFY{} The two routes agree exactly ($26.25+5=31.25$), and both are dimensionally consistent:
+\si{\kilo\watt\hour\per\tonne} $\times$ \si{\tonne\per\hour} $\times$ \si{\per\meter} must be checked
+with $D$ in metres, giving \si{\kilo\watt}. Note also that the second duty crushes a \emph{finer} feed
+($10\to5$ instead of $50\to10$), and the size-reduction step
+$(1/5-1/10)=1000$ exceeds the first duty's $(1/10-1/50)=800$ per metre, so the smaller throughput does
+not make the power small.
+\end{verres}
+
+\begin{flagres}
+\FLAGTAG{} Two readings of ``power consumption'', both shown:
+\begin{itemize}
+  \item \textbf{Total power drawn by the crusher: \SI{31.25}{\kilo\watt}} --- the answer above, because
+        the question asks for the \emph{power consumption} of the machine and the empty-mill load is
+        still drawn.
+  \item \textbf{Net crushing power: \SI{26.25}{\kilo\watt}} --- if only the work of size reduction is
+        wanted. Quoting \SI{26.25}{\kilo\watt} as the machine's consumption would double-count the
+        treatment of the \SI{5}{\kilo\watt} already handled in the first duty.
+\end{itemize}
+\end{flagres}
+
+\begin{ansbox}
+\textbf{Answers (Q4).} $K_R=\SI{2.1875e-3}{\kilo\watt\hour\meter\per\tonne}$;
+$P_{\text{net},2}=\SI{26.25}{\kilo\watt}$; \quad
+$\boxed{P_2=\SI{31.25}{\kilo\watt}}$ including the empty-mill power.
+\end{ansbox}
+
+\newpage
+\spsection{Q5 --- SCREEN EFFECTIVENESS OF A QUARTZ MIXTURE}\label{q:5}
+\qtitle{Q5}{Module 2 \textperiodcentered{} Lecture 1 \textperiodcentered{} slide 16, solution graph slide 18 \textperiodcentered{} \texttt{Mod 2-Lecture 1-compressed.pdf}}
+
+\begin{srcres}
+\SOURCE{} \textbf{Question as given on the slide} (``Problem on Screen Effectiveness''), quoted verbatim:\\
+``A quartz mixture having the screen analysis shown in Table is screened through a standard 10-mesh
+screen. The cumulative screen analysis of overflow and underflow are given in Table. Calculate --- the
+mass ratios of the overflow and underflow to feed and --- the overall effectiveness of the screen.''
+\end{srcres}
+
+\begin{srcres}
+\SOURCE{} \textbf{Data table as printed on slide 16} --- the slide's caption is ``Screen analyses ---
+Cumulative fraction LARGER than $D_p$'', with columns Feed, Overflow, Underflow:
+\begin{center}\small
+\begin{tabular}{@{}l S[table-format=1.3] S[table-format=1.3] S[table-format=1.2] S[table-format=1.3]@{}}
+\toprule
+{Mesh} & {$D_p$/\si{\milli\meter}} & {Feed $x_F$} & {Overflow $x_D$} & {Underflow $x_B$}\\
+\midrule
+4  & 4.699 & 0     & 0     & \\
+6  & 3.327 & 0.025 & 0.071 & \\
+8  & 2.362 & 0.15  & 0.43  & 0\\
+10 & 1.651 & 0.47  & 0.85  & 0.195\\
+14 & 1.168 & 0.73  & 0.97  & 0.58\\
+20 & 0.833 & 0.885 & 0.99  & 0.83\\
+28 & 0.589 & 0.94  & 1.00  & 0.91\\
+35 & 0.417 & 0.96  &       & 0.94\\
+65 & 0.208 & 0.98  &       & 0.975\\
+Pan&       & 1.00  &       & 1.00\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{srcres}
+
+\notetext{\DERIVED{} Reading of the data: the cut diameter is the 10-mesh opening,
+$D_{pc}=\SI{1.651}{\milli\meter}$ (the slide says the test screen is 10-mesh), so the table row for
+10 mesh supplies the three values needed directly --- $x_F=0.47$, $x_D=0.85$, $x_B=0.195$. No
+interpolation is needed, because the slide's table is already tabulated at that size. Blank cells in the
+overflow column (35 and 65 mesh) mean that no overflow stream was analysed above 28 mesh; they are not
+needed for the calculation, which uses only the 10-mesh row.}
+
+\begin{srcres}
+\SOURCE{} \textbf{Method from the slides} (Mod 2 Lec 1, hand-worked slides 12--15):\\
+Overall and oversize balances give the split,
+\[
+\frac{D}{F}=\frac{x_F-x_B}{x_D-x_B},\qquad
+\frac{B}{F}=\frac{x_F-x_D}{x_B-x_D}
+\]
+and the effectiveness of the screen in each direction,
+\[
+E_A=\frac{D x_D}{F x_F},\qquad
+E_B=\frac{B(1-x_B)}{F(1-x_F)},\qquad
+E=E_A E_B
+\]
+with the rearranged form
+$E=\dfrac{x_D}{x_F}\dfrac{x_F-x_B}{x_D-x_B}\Big[1-\dfrac{1-x_D}{1-x_F}\dfrac{x_F-x_B}{x_D-x_B}\Big]$.
+The slide's own worked solution is the graphical one on slide 18: the cumulative-fraction curves for
+feed, overflow and underflow are plotted together against $D_p$, and read off at the cut diameter.
+\end{srcres}
+
+\spsub{Step 1 --- mass ratios of overflow and underflow to feed}
+\begin{devres}
+\DERIVED{}
+\[
+\frac{D}{F}=\frac{x_F-x_B}{x_D-x_B}=\frac{0.47-0.195}{0.85-0.195}=\frac{0.275}{0.655}=0.4198
+\]
+\[
+\frac{B}{F}=\frac{x_F-x_D}{x_B-x_D}=\frac{0.47-0.85}{0.195-0.85}=\frac{-0.38}{-0.655}=0.5802
+\]
+Mass-balance closure: $D/F+B/F=0.4198+0.5802=1.000$ \checkmark
+\end{devres}
+
+\spsub{Step 2 --- effectiveness of each fraction}
+\begin{devres}
+\DERIVED{}
+\[
+E_A=\frac{D}{F}\cdot\frac{x_D}{x_F}=0.4198\times\frac{0.85}{0.47}=0.4198\times1.8085=0.7593
+\]
+\[
+E_B=\frac{B}{F}\cdot\frac{1-x_B}{1-x_F}=0.5802\times\frac{0.805}{0.53}=0.5802\times1.5189=0.8812
+\]
+\end{devres}
+
+\spsub{Step 3 --- overall effectiveness}
+\begin{devres}
+\DERIVED{}
+\[
+E=E_A E_B=0.7593\times0.8812=0.6691\ \approx\ 66.9\%
+\]
+The same result from the slide's boxed form:
+\[
+E=\frac{0.85}{0.47}\cdot\frac{0.275}{0.655}\Big[1-\frac{0.15}{0.53}\cdot\frac{0.275}{0.655}\Big]
+=1.8085\times0.4198\times(1-0.1188)=0.6691
+\]
+\end{devres}
+
+\begin{verres}
+\VERIFY{} Both the $E_A E_B$ product and the rearranged boxed form give $0.6691$; the component
+balances also close:
+\[
+\frac{D}{F}x_D+\frac{B}{F}x_B=0.4198(0.85)+0.5802(0.195)=0.470=x_F\ \checkmark
+\]
+\[
+\frac{D}{F}(1-x_D)+\frac{B}{F}(1-x_B)=0.4198(0.15)+0.5802(0.805)=0.530=1-x_F\ \checkmark
+\]
+A 10-mesh screen recovering $76\%$ of the oversize and $88\%$ of the undersize is a healthy result for a
+commercial screen --- consistent with the slide's remark that a commercial screen gives poor separation
+compared with a testing screen.
+\end{verres}
+
+\begin{flagres}
+\FLAGTAG{} Three notes:
+\begin{enumerate}
+  \item The solution assumes the table is to be read exactly \emph{at} the cut size. Strictly, $x_F$,
+        $x_D$ and $x_B$ should be evaluated on the cumulative curves at $D_p=D_{pc}=\SI{1.651}{\milli\meter}$;
+        the table row at 10 mesh provides those values directly, so no interpolation arises here.
+  \item The underflow column is blank above 8 mesh (nothing coarse reports to the underflow), which is
+        consistent with $x_B=0$ at 8 mesh rather than missing data.
+  \item \textbf{The boxed rearrangement on the slide.} Slides 12--15 carry a hand-written derivation
+        in which the constant term of the rearranged expression is scribbled over. This does not affect
+        the answer, because the slides \emph{define} the overall effectiveness as the product of the
+        two direction efficiencies, $E=E_AE_B$; the boxed form evaluates to exactly the same number
+        ($0.6691$), as verified above, and it also returns the correct limit $E=1$ for a perfect
+        separation ($x_D=1$, $x_B=0$). Both checks are in \texttt{sp2-answers-check.py}.
+\end{enumerate}
+\end{flagres}
+
+\begin{ansbox}
+\textbf{Answers (Q5).}\\
+$\dfrac{D}{F}=0.42$ (overflow/feed), \quad $\dfrac{B}{F}=0.58$ (underflow/feed).\\
+$E_A=0.759$, \quad $E_B=0.881$, \quad
+$\boxed{E=E_A E_B = 0.669 \approx 67\%}$ overall effectiveness.
+\end{ansbox}
+
+\newpage
+\spsection{APPENDIX --- HOW THESE ANSWERS WERE VERIFIED}
+
+\spsub{Reproducibility}
+Every \DERIVED{} number in this document was produced by \texttt{sp2-answers-check.py}, kept beside this
+file. Running it prints each quantity in the same order as the solutions:
+\begin{quote}\small
+\texttt{python3 sp2-answers-check.py}
+\end{quote}
+No arithmetic in the solutions was done by hand, so any value can be re-checked by re-running that script
+or by editing the input data at the top of each block.
+
+\spsub{What was checked, and against what}
+{\small
+\begin{tabularx}{\linewidth}{@{}l X l@{}}
+\toprule
+\textbf{Item} & \textbf{Check performed} & \textbf{Result}\\
+\midrule
+Q1 & $\sum x_i=1$; the two independent slide forms for $\overline{D}_s$ agree & pass\\
+Q2 & every increment diameter equals the mean of its two defining screen openings & pass (13/13, to \SI{0.0005}{\milli\meter})\\
+Q2 & the two routes to $N_i/N_T$ agree; comparison with the published worked solution of this problem & pass (all values)\\
+Q3 & slide formula for $s$ read from the slide (image, not OCR); both denominators reported & pass\\
+Q4 & ratio route reproduces the direct route; dimensionality of $K_R$ & pass\\
+Q5 & $E=E_AE_B$ and the boxed rearranged form agree ($\Delta<10^{-6}$); both balances close; perfect-separation limit gives $E=1$ & pass\\
+\bottomrule
+\end{tabularx}}
+
+\spsub{Known limits of this document}
+\begin{itemize}
+  \item It contains the \emph{five} numericals present in the eight uploaded decks. Slides that merely
+        show a demonstration video, a diagram, or a worked graph were checked and are not treated as
+        questions (see the exclusion list below); no question was invented.
+  \item Where the slides give no method --- they never do for the five above --- the method was taken
+        from the lecture that set the question, never from outside.
+  \item Answers were re-derived from the data, so if an instructor's answer differs, compare the
+        flagged assumptions first; they are the only places where the sources leave room.
+\end{itemize}
+
+\spsub{Slides examined and excluded (not questions)}
+{\footnotesize
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Slide} & \textbf{Why excluded}\\
+\midrule
+Mod 1 Lec 5, slides 7--18 & hand-written derivations and diagrams, no question posed\\
+Mod 1 Lec 3, slides 3--8 & hand-written derivation of average diameters, no question posed\\
+Mod 2 Lec 1, slides 11--15 & hand-written derivation of screen effectiveness (source of Q5's method)\\
+Mod 1 Lec 2, slide 13; Lec 1 slide 13; Lec 5 slide 17 & data tables/graphs shown as illustration\\
+Mod 2 Lec 2, slides 5--12, 20 & diagrams and pressure-gradient profile\\
+Various slides with \texttt{youtu.be}/\texttt{youtube.com} links & demonstration videos\\
+\bottomrule
+\end{tabularx}}
+
+\vspace{3mm}
+{\color{rule}\hrule height 0.6pt}
+\vspace{2mm}
+\notetext{\textbf{Provenance summary.} Questions, data, formulas and methods: \SOURCE{} the uploaded decks.
+Published-answer confirmation for Q2: \TEXT{} the crushed-quartz screen-analysis example of McCabe, Smith
+\& Harriott, \emph{Unit Operations of Chemical Engineering}, Ch.~28 (consulted as a cross-check of the
+numbers reported above; the method itself is taken from the slides). Everything else --- algebra, arithmetic, unit
+conversions, the checks above: \DERIVED{} / \VERIFY{} generated. Ambiguities: \FLAGTAG{} flagged in place.
+This file is the editable source; regenerate the PDF after any change.}
+
+\end{document}

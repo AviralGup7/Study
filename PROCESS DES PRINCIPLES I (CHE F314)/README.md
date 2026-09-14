@@ -20,6 +20,11 @@
 
 ### `Notes/` — written here
 
+- `PDP-Short-Notes-and-Formula-Sheet.tex` — short notes + formula sheet, one compact section per
+  deck: the hierarchy of decisions, the synthesis steps and HDA/VCM case-study numbers, heuristics
+  H1–H4, the Kremser equation and its simplifications, the TAC optimum, the approach-temperature
+  and back-of-envelope distillation rules, and the EIA composite-curve/pinch/area formulas.
+- `PDP-Short-Notes-and-Formula-Sheet.pdf` — 2-page A4 PDF compiled from that `.tex`.
 - `PDP-Problems-and-Solutions.tex` — **every question or problem posed in the decks above, with its
   solution**, worked only with the method and the data given in the decks (P1–P7, in four parts:
   numerical/heuristic problems, the solvent-recovery case study, the flow-sheet synthesis problems, the
@@ -33,16 +38,17 @@ Rebuild the PDF after editing the `.tex` with any LaTeX distribution, e.g.
 Packages used: `geometry`, `fontenc`, `amsmath`, `amssymb`, `mathtools`, `xcolor`, `booktabs`,
 `tabularx`, `array`, `enumitem`, `fancyhdr`, `tcolorbox` (`breakable,skins`), `siunitx`, `hyperref`.
 
-**LaTeX in, PDF out. Keep the `.tex` whenever the PDF is edited or replaced** — the `.tex` is the
-editable copy; the PDF is a build product.
+**LaTeX in, PDF out. Keep the `.tex` whenever either PDF is edited or replaced** — the `.tex` is
+the editable copy; the PDF is a build product.
 
 ## Source and delivered files (the rule)
 
 - **Source** — the files as uploaded by the course: everything in `Slides/`. These are the source of
   truth. Question text, given data, notation, formulas and the **method of solution** all come from
   them.
-- **Delivered** — the files created here: `Notes/PDP-Problems-and-Solutions.tex`, its PDF, the checker
-  `Notes/pdp-answers-check.py`, and this README. They are derived work.
+- **Delivered** — the files created here: `Notes/PDP-Short-Notes-and-Formula-Sheet.tex`,
+  `Notes/PDP-Problems-and-Solutions.tex`, their PDFs, the checker `Notes/pdp-answers-check.py`,
+  and this README. They are derived work.
 
 Rules that follow:
 

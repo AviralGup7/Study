@@ -1,0 +1,490 @@
+%=======================================================================
+%  CHE F313 - Separation Processes II : Short Notes & Formula Sheet
+%  Built from the Module 1 (Lectures 1-5) and Module 2 (Lecture 2) decks.
+%  Compile with XeLaTeX/tectonic:  node compile.mjs <texfiles> SP2-notes.tex SP2-notes.pdf
+%=======================================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=18mm,right=18mm,top=15mm,bottom=18mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{siunitx}
+\usepackage[colorlinks=true,linkcolor=accent,urlcolor=accent2,citecolor=accent]{hyperref}
+
+%--------------------------------------------------------------- palette
+\definecolor{accent}{HTML}{0B3C5D}     % dark blue - section bars
+\definecolor{accent2}{HTML}{1D6FA5}    % mid blue   - subheads
+\definecolor{boxbg}{HTML}{F1F4F7}      % formula box fill
+\definecolor{boxframe}{HTML}{C6D1DA}   % formula box border
+\definecolor{rule}{HTML}{9FB3C2}
+\definecolor{inbox}{HTML}{0E2430}      % formula text
+\definecolor{notecol}{HTML}{46535C}    % small-print notes
+
+\sisetup{detect-all,per-mode=symbol}
+\newcommand{\microm}{\ensuremath{\,\mu\mathrm{m}}}  % siunitx \micro loses its glyph under this XeTeX setup
+
+%--------------------------------------------------------------- headings
+\newcommand{\spsection}[1]{%
+  \par\addvspace{10pt}%
+  \noindent\begin{tcolorbox}[
+      colback=accent,colframe=accent,boxrule=0pt,arc=1.2pt,
+      left=7pt,right=7pt,top=5pt,bottom=5pt,width=\linewidth,
+      before skip=0pt,after skip=7pt]
+    \color{white}\bfseries\large #1
+  \end{tcolorbox}\par\vspace{-2pt}\nopagebreak
+}
+\newcommand{\spsub}[1]{\par\addvspace{7pt}\noindent{\color{accent}\bfseries #1}\par\addvspace{3pt}\nopagebreak}
+
+%--------------------------------------------------------------- boxes
+\newtcolorbox{formulabox}[1][]{%
+  breakable,enhanced,colback=boxbg,colframe=boxframe,boxrule=0.5pt,arc=1.5pt,
+  left=5pt,right=5pt,top=4.5pt,bottom=4.5pt,before skip=4pt,after skip=6pt,
+  fontupper=\small\color{inbox},#1}
+\newtcolorbox{daybox}[1][]{%
+  breakable,enhanced,colback=white,colframe=boxframe,boxrule=0.5pt,arc=1.5pt,
+  left=5pt,right=5pt,top=4.5pt,bottom=4.5pt,before skip=4pt,after skip=6pt,
+  fontupper=\small\color{notecol},#1}
+
+\newcommand{\notetext}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
+%--------------------------------------------------------------- lists
+\setlist[itemize]{leftmargin=1.1em,topsep=2pt,itemsep=1.5pt,parsep=0pt,label=\textbullet}
+\setlist[itemize,2]{leftmargin=1.5em,topsep=1pt,itemsep=1pt,label=--}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+
+%--------------------------------------------------------------- footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Separation Processes II --- Short Notes \& Formula Sheet}
+\fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
+
+\begin{document}
+
+%=============================================================== cover
+\begin{center}
+{\LARGE\bfseries\color{accent} SEPARATION PROCESSES II}\\[2pt]
+{\color{accent2} CHE F313 \textperiodcentered{} BITS Pilani \textperiodcentered{} I-Semester 2026-27}\\[4pt]
+{\color{rule}\rule{0.6\linewidth}{0.8pt}}\\[6pt]
+{\Large\bfseries\color{accent} Short Notes \& Formula Sheet}\\[4pt]
+{\color{accent2} Module 1 --- Properties and Handling of Particulate Solids (Ch.~28)\\
+ Module 2 --- Mechanical Separations (Ch.~29)}
+\end{center}
+
+\vspace{2mm}
+\begin{daybox}
+\textbf{Compiled from:} Mod1-Lecture 1 \dots{} Lecture 5 (Module 1) \textperiodcentered{} Mod~2-Lecture 2 (Module 2) --- course slide decks.\\[2pt]
+\textbf{Reference texts:} McCabe, Smith \& Harriott, \emph{Unit Operations of Chemical Engineering}, 7e (Ch.~28, 29); Swain, Patra \& Roy, \emph{Mechanical Operations}, Tata McGraw Hill.
+\end{daybox}
+
+\spsub{What is inside}
+\begin{tabularx}{\linewidth}{@{}Xr@{}}
+\toprule
+\textbf{\color{accent}Module 1 --- Properties \& Handling of Particulate Solids} & \textbf{Lecture}\\
+\midrule
+Introduction and characterisation of solid particles & 1\\
+Screening and screen analysis & 2\\
+Mixed particle sizes, average diameters and specific surface --- derivations & 3\\
+Particulate masses: properties, storage, conveying and mixing & 4\\
+Size reduction (comminution): energy laws and work index & 5\\
+\midrule
+\textbf{\color{accent}Module 2 --- Mechanical Separations} & \\
+\midrule
+Filtration: media, filter aids, cake filtration and pressure drop & 2\\
+Practice problems set from the slides & ---\\
+\bottomrule
+\end{tabularx}
+
+\spsub{Notation used throughout}
+{\small
+\begin{tabularx}{\linewidth}{@{}l X l X@{}}
+\toprule
+$D_p$ & particle diameter (equivalent or nominal) & $A_w$ & specific surface area of the mixture (\si{\square\meter\per\kilogram})\\
+$\overline{D}_s$ & volume--surface (Sauter) mean diameter & $N_w$ & number of particles per unit mass\\
+$\overline{D}_v$ & volume mean diameter & $N_i,\,N_T$ & particles in fraction $i$, total number\\
+$\overline{D}_N$ & arithmetic (number) mean diameter & $x_i$ & mass fraction of fraction $i$\\
+$\overline{D}_w$ & mass mean diameter & $a$ & volume shape factor, $v_p=aD_p^3$\\
+$\Phi_s$ & sphericity of the particle & $W_i$ & Bond work index (\si{\kilo\watt\hour}/short ton)\\
+$\rho_p$ & density of the particle & $\eta_c,\,\eta_m$ & crushing, mechanical efficiency\\
+$s_p,\,v_p$ & surface area, volume of one particle & $\varepsilon$ & porosity of the bed / cake\\
+\bottomrule
+\end{tabularx}}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 1 --- Introduction and Characterisation of Solid Particles}
+
+\spsub{Why particulate solids matter}
+\begin{itemize}
+  \item Solids are more difficult to handle than liquids or gases; of all the shapes and sizes found in solids, the small particle is the most important from a chemical-engineering standpoint.
+  \item Designing processes and equipment for streams containing solids needs an understanding of the characteristics of masses of particulate solids.
+  \item Most important properties of pieces of solids: density (mass per unit volume), hardness (resistance to scratching), fragility (how easily a particle crumbles), tenacity (resistance to collisions).
+\end{itemize}
+
+\spsub{Characterisation: size, shape and density}
+\begin{itemize}
+  \item Every particle is characterised by size $D_p$, shape and density $\rho_p$.
+  \item \textbf{Density}: particles of homogeneous solids have the same density as the bulk material; particles from a composite solid (e.g.\ metal-bearing ore) have various densities, usually different from the bulk.
+  \item \textbf{Size}: for regular (equidimensional) particles size and shape are easily specified (spheres, cubes); non-equidimensional particles are characterised by the \emph{second longest major dimension}; for needle-like particles $D_p$ refers to the thickness, not the length; for irregular particles (sand grains, mica flakes) size and shape must be defined arbitrarily.
+  \item \textbf{Equivalent (nominal) diameter}: the size of a spherical particle having the same controlling characteristic as the particle considered. The controlling characteristic depends on the system and the process:
+  \begin{itemize}
+    \item surface area controls (irregular catalyst particle) $\rightarrow$ surface diameter $D_{ps}$;
+    \item mass/volume controls (gravitational free settling in a liquid) $\rightarrow$ volume diameter $D_{pv}$;
+    \item both area and volume control $\rightarrow$ volume--surface (Sauter) diameter $D_{vs}$.
+  \end{itemize}
+\end{itemize}
+
+\begin{formulabox}
+\begin{align*}
+\text{Surface diameter:}\quad & s_p=\pi D_{ps}^2 &&\Longrightarrow\quad D_{ps}=\sqrt{\frac{s_p}{\pi}}\\[2pt]
+\text{Volume diameter:}\quad & v_p=\frac{\pi D_{pv}^3}{6} &&\Longrightarrow\quad D_{pv}=\left(\frac{6v_p}{\pi}\right)^{1/3}\\[2pt]
+\text{Sauter diameter:}\quad & D_{vs}=\frac{6v_p}{s_p} &&\Longrightarrow\quad \frac{s_p}{v_p}=\frac{\pi D_{vs}^2}{\pi D_{vs}^3/6}=\frac{6}{D_{vs}}\\[2pt]
+\text{Sphericity:}\quad & \Phi_s=\frac{6v_p}{D_p\,s_p} &&\Longrightarrow\quad \Phi_s = 1 \text{ for a sphere}
+\end{align*}
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering\small
+Screen-average size: $D_p=\tfrac12\bigl(\text{aperture of the screen it passes}+\text{aperture of the screen that retains it}\bigr)$
+\end{minipage}
+\end{center}
+\end{formulabox}
+
+\notetext{Sphericity $=$ (surface-area-to-volume ratio of a sphere of the same diameter) $\div$ (surface-area-to-volume ratio of the particle). It is independent of particle size and is tabulated for common shapes in Table~28.1 of the text. For granular materials the exact $v_p$ and $s_p$ cannot be measured, so $D_p$ is the nominal size from screen analysis or microscopy.}
+
+\spsub{Size ranges and measurement}
+\begin{itemize}
+  \item Coarse particles: inches or millimetres; fine: screen size; very fine: micrometres or nanometres; ultrafine: sometimes described by surface area per unit mass (\si{\square\meter\per\gram}).
+  \item Screening $>50\microm$; sedimentation and elutriation $>1\microm$; permeability method $\approx1\microm$.
+  \item Instrumental analysers: electronic particle counter (Coulter counter), laser-diffraction analysers, X-ray or photo-sedimentometers, dynamic light-scattering techniques.
+\end{itemize}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 2 --- Screening and Screen Analysis}
+
+\spsub{Screen geometry}
+\begin{formulabox}
+\begin{align*}
+\text{Mesh number} &= \text{number of openings per linear inch}\\
+\text{Clear opening (inch)} &= \frac{1}{\text{mesh number}}-\text{wire thickness}\\
+p &= w+d
+\qquad (p=\text{pitch},\; w=\text{aperture width},\; d=\text{wire diameter})
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+  \item \textbf{Aperture width} $w$: distance between two adjacent warp or weft wires, measured in the projected plane at the mid positions.
+  \item \textbf{Warp}: wires running lengthwise of the woven cloth; \textbf{weft}: wires running across.
+  \item Standard series: BSS (British Standard Screen), IMM (Institute of Mining \& Metallurgy), U.S.\ Tyler mesh (Appendix 5 of the text), U.S.\ ASTM.
+\end{itemize}
+
+\spsub{Notation and experimental procedure}
+\begin{itemize}
+  \item $14/20$ means ``through 14 mesh and on 20 mesh''; $-14+20$ means ``passes 14 and is retained on 20''.
+  \item Minus ($-$) material / undersize passes the screen; plus ($+$) material / oversize is retained on it.
+  \item A set of standard screens is stacked with the smallest mesh at the bottom and the largest at the top. The sample goes on the top screen and the stack is shaken mechanically for a definite time ($\sim\SI{20}{\minute}$). Each increment is removed and weighed, and the masses are converted to mass fractions or percentages of the total sample. Particles passing the finest screen are caught in the bottom pan.
+\end{itemize}
+
+\spsub{The standard screen series}
+\begin{formulabox}
+\begin{align*}
+\text{Base:}\quad & \text{opening of the 200-mesh screen} = \SI{0.074}{\milli\meter}\\
+\text{Ratio:}\quad & \text{area of the openings of a screen} = 2\times\text{area of the next smaller screen}\\
+\Longrightarrow\quad & \text{mesh-dimension ratio} = \sqrt{2} = 1.41\\
+\text{Intermediate screens:}\quad & \text{mesh dimension} = \sqrt[4]{2} = 1.189 \text{ times the next smaller standard screen}
+\end{align*}
+\end{formulabox}
+
+\spsub{Differential vs cumulative analysis}
+\begin{itemize}
+  \item \textbf{Differential analysis} tabulates the mass (or number) fraction in each size increment against the average particle size (or size range) of the increment.
+  \item \textbf{Cumulative analysis} adds the individual increments consecutively, starting with the increment containing the smallest particles, and plots the cumulative sums against the maximum particle diameter of the increment.
+  \item Methods based on the cumulative analysis are more precise in principle, since the assumption that all particles in a fraction are of equal size is not needed; measurement accuracy rarely justifies it, so calculations are nearly always based on the differential analysis.
+  \item For mixtures of particles of various sizes and densities: sort the mixture into fractions of constant density and approximately constant size, weigh each fraction (or count the particles), apply the area and number equations to each fraction and add the results.
+\end{itemize}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 3 --- Mixed Particle Sizes: Derivations and Average Diameters}
+
+\spsub{Basis}
+\begin{itemize}
+  \item A sample of uniform particles of diameter $D_p$ is separated into a number of fractions, each fraction $i$ consisting of particles of average size $D_{pi}$ and constant density $\rho_p$.
+  \item $m$ = total mass of the sample; $m_i$ = mass of the $i$-th fraction; $x_i=m_i/m$ = mass fraction of the $i$-th increment.
+  \item Other symbols: $v_p$ = volume of one particle, $s_p$ = surface area of one particle, $N$ = number of particles.
+\end{itemize}
+
+\spsub{Step 1 --- surface area and specific surface area}
+\begin{formulabox}
+\begin{align*}
+(1)\quad \text{Sphericity:}\quad & \Phi_s=\frac{6v_p}{D_p s_p}
+   &&\Longrightarrow\quad s_p=\frac{6v_p}{D_p\Phi_s}\\[2pt]
+(2)\quad \text{Number of particles:}\quad & N=\frac{m}{\rho_p v_p}\\[2pt]
+(3)\quad \text{Total surface area:}\quad & A=Ns_p=\frac{m}{\rho_p v_p}\cdot\frac{6v_p}{\Phi_s D_p}
+   =\frac{6m}{\rho_p\Phi_s D_p}\\[2pt]
+(4)\quad \text{Area of the }i\text{-th fraction:}\quad & A_i=\frac{6m_i}{\rho_p\Phi_s D_{pi}}\\[2pt]
+(5)\quad \text{Specific surface area:}\quad & \frac{A_i}{m_i}=\frac{6}{\rho_p\Phi_s D_{pi}}\\[2pt]
+(6)\quad \text{Net specific surface area}\quad & A_w=\frac{6x_1}{\rho_p\Phi_s D_{p1}}+\frac{6x_2}{\rho_p\Phi_s D_{p2}}+\dots
+   =\frac{6}{\rho_p\Phi_s}\sum_{i=1}^{n}\frac{x_i}{D_{pi}}\\[2pt]
+(7)\quad & A_w=\frac{6}{\Phi_s\rho_p\overline{D}_s}\\[2pt]
+(8)\quad \text{Volume--surface (Sauter) mean:}\quad & \boxed{\;\overline{D}_s=\frac{1}{\displaystyle\sum_{i=1}^{n}\frac{x_i}{D_{pi}}}
+   =\frac{6}{\Phi_s\rho_p A_w}\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Step 2 --- number of particles (volume shape factor)}
+\begin{itemize}
+  \item Write the volume of a particle as $v_p=aD_p^3$, where $a$ is the \textbf{volume shape factor} ($a=\pi/6$ for a sphere); $a$ is constant and independent of size.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+(9)\quad & N=\frac{m}{a\rho_p D_p^3}\\[2pt]
+(10)\quad & N_i=\frac{m_i}{a\rho_p D_{pi}^3} &&\text{(the }i\text{-th fraction)}\\[2pt]
+(11)\quad & \frac{N_i}{m_i}=\frac{1}{a\rho_p D_{pi}^3} &&\text{(specific number)}\\[2pt]
+(12)\quad & N_w=\frac{1}{a\rho_p}\sum_{i=1}^{n}\frac{x_i}{D_{pi}^3} &&\text{(particles per unit mass)}\\[2pt]
+(13)\quad & N_w=\frac{1}{a\rho_p\overline{D}_v^3}
+   &&\Longrightarrow\quad \overline{D}_v=\left[\frac{1}{\sum x_i/D_{pi}^3}\right]^{1/3}
+   =\left(\frac{1}{N_w a\rho_p}\right)^{1/3}
+\end{align*}
+\end{formulabox}
+
+\spsub{Summary of average particle sizes (from the slides)}
+\begin{formulabox}
+\begin{align*}
+\text{Sauter (volume--surface):}\quad & \overline{D}_s=\frac{6}{\Phi_s\rho_p A_w}=\frac{1}{\sum_{i=1}^{n}\dfrac{x_i}{D_{pi}}}\\[3pt]
+\text{Volume mean:}\quad & \overline{D}_v=\left[\frac{1}{\sum x_i/D_{pi}^3}\right]^{1/3}\\[3pt]
+\text{Arithmetic mean:}\quad & \overline{D}_N=\frac{\sum N_iD_{pi}}{\sum N_i}=\frac{\sum N_iD_{pi}}{N_T}\\[3pt]
+\text{Mass mean:}\quad & \overline{D}_w=\sum_{i=1}^{n}x_iD_{pi}\\[3pt]
+\text{Particles per unit mass:}\quad & N_w=\frac{1}{a\rho_p}\sum_{i=1}^{n}\frac{x_i}{D_{pi}^3}
+\end{align*}
+\end{formulabox}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 4 --- Particulate Masses: Properties, Storage, Conveying, Mixing}
+
+\spsub{Properties of particulate masses}
+\begin{itemize}
+  \item Masses of dry, non-sticky solid particles have many of the properties of a fluid, but differ as follows:
+  \begin{itemize}
+    \item the pressure is not the same in all directions;
+    \item a shear stress applied at the surface of a mass is transmitted throughout a static mass of particles unless failure occurs;
+    \item the density of the mass varies with the degree of packing of the grains;
+    \item before a tightly packed mass can flow it must increase in volume, so that interlocking grains can move past one another;
+    \item when granular solids are piled on a flat surface the sides of the pile are at a definite reproducible angle with the horizontal (angle of repose; the related angle of internal friction is also used).
+  \end{itemize}
+  \item By flow properties, particulate solids are divided into \textbf{non-cohesive} materials (grain, dry sand, plastic chips) that flow readily out of a bin or silo, and \textbf{cohesive} solids (wet clay) characterised by reluctance to flow through openings.
+\end{itemize}
+
+\spsub{Bulk storage, bins and silos}
+\begin{itemize}
+  \item Coarse solids (gravel, coal) are stored outside in large piles unprotected from the weather; outdoor storage can cause dusting or leaching of soluble material. Solids too valuable or too soluble to expose are stored in bins, hoppers or silos.
+  \item In a bin or silo the lateral pressure exerted on the walls at any point is \emph{less} than that predicted from the head of material above that point.
+  \item Wall--solid friction, whose effect is felt throughout the mass because of interlocking, offsets the weight of the solid and reduces the pressure on the floor; the vertical pressure on the floor or packing support is much smaller than that of a column of liquid of the same density and height.
+  \item Solids are best discharged through an opening in the floor: flow through a side opening is uncertain, increases the lateral pressure on the other side while flowing, and a bottom outlet is less likely to clog and does not induce abnormally high wall pressures.
+\end{itemize}
+
+\spsub{Conveying}
+\begin{itemize}
+  \item Belt conveyors and bucket elevators, closed-belt conveyors with zipper-like fasteners, drag and flight conveyors --- all include a return leg carrying the empty belt or chain from the discharge back to the loading point.
+  \item Vibrating, pneumatic and screw conveyors have no return leg but operate only over relatively short distances.
+\end{itemize}
+
+\spsub{Mixing of solids --- statistical measures of mixer performance}
+\begin{itemize}
+  \item Mixing of solids, free-flowing or cohesive, resembles to some extent the mixing of low-viscosity liquids: two or more separate components are intermingled to form a more or less uniform product. Some equipment used for blending liquids can occasionally be used for solids.
+  \item Mixing is harder to define for solids and pastes than for liquids; quantitative measures are based on statistical procedures applied to spot samples taken from the mix at various times. A mixture in which one component is randomly distributed through another is said to be \textbf{completely mixed}.
+\end{itemize}
+\begin{formulabox}
+\textbf{Granular non-cohesive solids} --- $N$ spot samples, each of $n$ particles:
+\begin{align*}
+s &= \sqrt{\frac{\sum_{i=1}^{N}(x_i-\bar{x})^2}{N-1}}
+   &&\text{standard deviation of the sample analyses}\\[2pt]
+\sigma_e &= \sqrt{\frac{\mu_p(1-\mu_p)}{n}}
+   &&\text{theoretical s.d.\ for a completely random mixture}\\[2pt]
+I_s &= \frac{\sigma_e}{s} &&\text{mixing index (increases as mixing proceeds)}
+\end{align*}
+\vspace{2pt}
+\textbf{Cohesive solids and pastes} --- mass fractions instead of numbers:
+\begin{align*}
+\sigma_0 &= \sqrt{\mu(1-\mu)} &&\text{theoretical s.d.\ at zero mixing}\\
+I_s &= \frac{\sigma_0}{s} &&\text{mixing index for pastes}
+\end{align*}
+\end{formulabox}
+\notetext{$x_i$ = fraction of component A in each sample (number fraction for non-cohesive, mass fraction for cohesive); $\bar{x}$ = average of the measured fractions; $\mu_p$ = overall number fraction of A in the mixture; $\mu$ = overall mass fraction of A. $s$ diminishes towards zero and $I_s$ increases as mixing proceeds, so a low $s$ (high $I_s$) means good mixing.}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 5 --- Size Reduction (Comminution)}
+
+\spsub{Purpose, mechanisms, influencing factors}
+\begin{itemize}
+  \item Cutting or breaking solids into smaller pieces is called \textbf{comminution}. Reasons: to get a workable size, to increase reactivity, to separate unwanted ingredients by mechanical methods, to handle and dispose easily.
+  \item Objectives: increase the surface area, because in most chemical reactions and some unit operations (drying, adsorption, leaching) the reaction or transfer is directly proportional to the area of contact between the solid and the second phase; produce particles of the desired shape, size or size range and specific surface; separate unwanted particles effectively; dispose of solid wastes easily; mix solid particles more intimately; improve handling, storage and transportation characteristics.
+  \item \textbf{Mechanisms}: compression (nutcracker --- coarse reduction of hard solids, very few fines); impact (hammer --- coarse, medium and fine products); attrition or rubbing (file --- very fine products); cutting or shear (a pair of shears --- definite particle size with few or no fines).
+  \item \textbf{Properties of solids affecting size reduction}: hardness (affects power consumption and wear of the machine); toughness (resistance to impact, the reverse of friability or brittleness); structure (granular, e.g.\ coal or rock, or fibrous); friability (tendency to fracture during normal handling); moisture content; explosive nature (must be ground wet or in an inert environment); soapiness (a low coefficient of friction of the surface makes crushing more difficult); heat sensitivity (heat generated during size reduction can cause loss of heat-sensitive components).
+  \item \textbf{Process factors}: moisture and sticky material in the equipment feed; fines in the feed; segregation of feed particles in the crushing chamber; lack of feed control; wrong motor size; insufficient crusher discharge area; insufficient capacity of the crusher discharge conveyor; extremely hard material; surface energy of solids; power consumption; selection of an appropriate crushing chamber.
+\end{itemize}
+
+\spsub{Energy and power requirement}
+\begin{itemize}
+  \item The cost of power is a major expense in crushing and grinding. During size reduction the feed particles are first distorted and strained; the work to strain them is stored temporarily in the solid as mechanical energy of stress, like energy in a coiled spring. As more force is applied the particles distort beyond their ultimate strength and suddenly rupture into fragments, generating new surface.
+  \item Since a unit area of solid has a definite surface energy, creating new surface requires work, supplied by the release of stress energy when the particle breaks. By conservation of energy, all stress energy in excess of the new surface energy created must appear as heat.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Crushing efficiency:}\quad & \eta_c=\frac{\text{surface energy created}}{\text{energy absorbed by the solids}}
+  =\frac{e_s(A_{wb}-A_{wa})}{W_n}\\[3pt]
+\text{Mechanical efficiency:}\quad & \eta_m=\frac{\text{energy absorbed by solids}}{\text{total energy input}}=\frac{W_n}{W}\\[3pt]
+\text{Hence}\quad & W=\frac{W_n}{\eta_m}=\frac{e_s(A_{wb}-A_{wa})}{\eta_c\eta_m}
+\end{align*}
+\vspace{2pt}
+{\small
+$e_s$ = surface energy per unit area (\si{\joule\per\square\meter}); \quad
+$A_w$ = specific surface area (\si{\square\meter\per\kilogram}): $A_{wb}$ product, $A_{wa}$ feed; \quad
+$W_n$ = energy absorbed by unit mass of material (\si{\joule\per\kilogram}).}
+\vspace{3pt}
+\begin{align*}
+\text{Power required by the machine }(\dot m = \text{feed rate}):\quad
+P &= \dot m W
+   = \frac{6\dot m e_s}{\eta_c\eta_m\rho_p}
+     \left[\frac{1}{\Phi_{sb}\overline{D}_{sb}}-\frac{1}{\Phi_{sa}\overline{D}_{sa}}\right]
+\end{align*}
+{\small using $A_w=\dfrac{6}{\Phi_s\overline{D}_s\rho_p}$ for product ($b$) and feed ($a$), with $\rho_a=\rho_b=\rho_p$.}
+\end{formulabox}
+
+\spsub{The three empirical laws}
+\begin{itemize}
+  \item \textbf{Rittinger (1867)}: the work required in crushing is proportional to the new surface created.
+  \item \textbf{Kick (1885)}: the work required for crushing a given mass of material is constant for the same reduction ratio $=$ (initial particle size)/(final particle size).
+  \item \textbf{Bond (1952)}: the work required to form particles of size $D_p$ from a very large feed is proportional to the square root of the surface-to-volume ratio of the product.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Rittinger:}\quad & \frac{P}{\dot m}=K_R\left[\frac{1}{\overline{D}_{sb}}-\frac{1}{\overline{D}_{sa}}\right],
+   \qquad K_R=\frac{6e_s}{\Phi_s\rho_p}\quad(\text{1}/K_R=\text{Rittinger's number})\\[2pt]
+& \text{valid for fine grinding, feed}<\SI{0.05}{\milli\meter}\text{ with }\Phi_{sb}=\Phi_{sa}\\[4pt]
+\text{Kick:}\quad & \frac{P}{\dot m}=K_k\ln\frac{\overline{D}_{sa}}{\overline{D}_{sb}}\\[4pt]
+\text{Bond:}\quad & \frac{P}{\dot m}\propto\sqrt{\frac{s_p}{v_p}}=\sqrt{\frac{6}{\Phi_sD_p}}
+   =K\sqrt{\frac{6}{\Phi_s}}\sqrt{\frac{1}{D_p}}=\frac{K_b}{\sqrt{D_p}}\\[3pt]
+& \frac{P}{\dot m}=K_b\left[\frac{1}{\sqrt{D_{pb}}}-\frac{1}{\sqrt{D_{pa}}}\right]\\[3pt]
+& \xrightarrow[\text{very large feed}]{\;1/\sqrt{D_{pa}}\to 0\;}\quad
+   \frac{P}{\dot m}=\frac{K_b}{\sqrt{D_{pb}}},\qquad K_b=0.3162\,W_i\\[3pt]
+& \frac{P}{\dot m}=0.3162\,W_i\left[\frac{1}{\sqrt{D_{pb}}}-\frac{1}{\sqrt{D_{pa}}}\right]
+   \qquad (D_p \text{ in mm}, \; P \text{ in kW}, \; \dot m \text{ in tonne/h})
+\end{align*}
+\end{formulabox}
+\notetext{$K_b$ = Bond constant, depends on the type of machine and on the material being crushed; $K_b=W_i\sqrt{100\times10^{-6}}=0.3162W_i$, which follows from the 100\microm definition of $W_i$. Both Kick's and Rittinger's laws apply to limited ranges of particle size.}
+
+\spsub{Work index and the generalised law}
+\begin{itemize}
+  \item \textbf{Work index} $W_i$: the gross energy requirement in kilowatt-hours per short ton (2000\,lb) of feed needed to reduce a very large feed to such a size that 80\% of the product passes a 100\microm screen; units \si{\kilo\watt\hour} per short ton. \quad 1 short ton $=2000$\,lb $=\SI{908}{\kilogram}$.
+  \item Work indices include friction in the crusher (Table 28.2 of the text). For dry grinding $W_i$ should be multiplied by $4/3$.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Generalised differential law:}\quad
+dW=d\!\left(\frac{P}{\dot m}\right) &= -K\,\frac{d\overline{D}_s}{\overline{D}_s^{\,n}}\\[4pt]
+n=1 \;\rightarrow\; \text{Kick:}\qquad
+W &= -K\ln\overline{D}_s
+   =K\left\{\ln\frac{1}{\overline{D}_{sb}}-\ln\frac{1}{\overline{D}_{sa}}\right\}
+   =K\ln\frac{\overline{D}_{sa}}{\overline{D}_{sb}}\\[4pt]
+n=2 \;\rightarrow\; \text{Rittinger:}\qquad
+W &= K\left[\frac{1}{\overline{D}_{sb}}-\frac{1}{\overline{D}_{sa}}\right]\\[4pt]
+n=3 \;\rightarrow\; \text{Bond:}\qquad
+W &= K\left[\frac{1}{\sqrt{D_{pb}}}-\frac{1}{\sqrt{D_{pa}}}\right]
+\end{align*}
+{\small (Integration used throughout: $\displaystyle\int x^n\,dx=\frac{x^{n+1}}{n+1}+C$.)}
+\end{formulabox}
+
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 2 --- Filtration}
+
+\spsub{Definition, driving force, classification}
+\begin{itemize}
+  \item \textbf{Filtration} is the removal of solid particles from a fluid by passing the fluid (slurry) through a filtering medium (a porous septum) on which the solids are deposited. Industrial filtration ranges from simple straining to highly complex separations. The fluid may be a liquid or a gas; the valuable stream may be the fluid, or the solids, or both --- and sometimes neither, as when waste solids must be separated from waste liquid before disposal.
+  \item The fluid flows through the medium by virtue of a pressure differential across it: pressure above atmospheric on the upstream side of the medium, a vacuum on the downstream side, or gravity. In a gravity filter the medium can be no finer than a coarse screen or a bed of coarse particles such as sand.
+  \item Filters are divided into three main groups: \textbf{cake filters}, \textbf{clarifying filters} and \textbf{crossflow filters}.
+  \begin{itemize}
+    \item \emph{Cake filter}: at the start some particles enter the pores of the medium and are immobilised, but soon others collect on the septum surface. After this brief initial period the cake of solids does the filtration, not the septum; a visible cake of appreciable thickness builds up on the surface and must be periodically removed.
+    \item \emph{Clarifying (depth) filter}: removes small amounts of solids to produce a clean gas or sparkling clear liquids such as beverages. The particles are trapped inside the medium, whose pores are much larger in diameter than the particles to be removed.
+    \item \emph{Crossflow filter}: the feed suspension flows under pressure at fairly high velocity across the medium; a thin layer of solids may form but the high velocity keeps it from building up. The medium is a ceramic, metal or polymer membrane with pores small enough to exclude most suspended particles; clear liquid passes through, leaving a concentrated suspension behind.
+  \end{itemize}
+\end{itemize}
+
+\spsub{Filter media and filter aids}
+\begin{itemize}
+  \item A filter medium must: retain the solids to be filtered, giving a reasonably clear filtrate; not plug or blind; be chemically resistant and physically strong enough to withstand the process conditions; permit the cake to discharge cleanly and completely; not be prohibitively expensive.
+  \item Common medium: canvas cloth, duck or twill weave. Corrosive liquids require woollen cloth, metal cloth of monel or stainless steel, glass cloth or paper. Synthetic fabrics (nylon, polypropylene, various polyesters) are also highly resistant chemically.
+  \item Slimy or very fine solids are difficult to filter because they form a dense, impermeable cake that quickly plugs the medium; the porosity of the cake must be increased so that the filtrate flows at a reasonable rate.
+  \item \textbf{Filter aids} are generally granular or fibrous solids which form a highly permeable cake --- diatomaceous silica, perlite, purified wood cellulose or other inert porous solids. Properties: low bulk density, porous, chemically inert to the filtrate. They may be used as a precoat or mixed directly with the slurry before filtration.
+\end{itemize}
+
+\spsub{Principles of cake filtration}
+\begin{itemize}
+  \item Flow resistances increase with time as the medium clogs or a cake builds up. The quantities of interest are the flow rate through the filter and the pressure drop across the unit.
+  \item \textbf{Constant-pressure filtration}: the pressure drop is held constant and the flow rate is allowed to fall with time. \textbf{Constant-rate filtration}: the pressure drop is progressively increased.
+  \item The liquid passes through two resistances in series --- that of the cake and that of the filter medium. The medium resistance, the only resistance in clarifying filters, is normally important only during the early stages of cake filtration; the cake resistance is zero at the start and increases with time. If the cake is washed after filtering, both resistances are constant during washing and the medium resistance is usually negligible.
+  \item Rate of filtration depends on: the pressure drop across cake and medium; the resistance of the cake; the resistance of the medium; the area of the filtering surface; the viscosity of the filtrate.
+\end{itemize}
+
+\spsub{Pressure drop through a filter cake}
+\begin{formulabox}
+\begin{align*}
+\text{Darcy-type dependence:}\quad & v_0\propto\Delta P \qquad\text{and}\qquad v_0\propto\frac{1}{L}\\[4pt]
+\text{Kozeny--Carman (laminar, }Re<1\text{):}\quad
+& \frac{\Delta P}{L}=\frac{150\,\bar{v}\,\mu(1-\varepsilon)^2}{g_c\Phi_s^2D_p^2\varepsilon^3}\\[4pt]
+\text{Burke--Plummer (turbulent, }Re>1000\text{, purely empirical):}\quad
+& \frac{\Delta P}{L}=\frac{1.75\,\rho\,\bar{v}^2(1-\varepsilon)}{g_c\Phi_sD_p\varepsilon^3}\\[4pt]
+\text{Ergun (entire range of flow rates --- viscous loss }+\text{ kinetic-energy loss):}\quad
+& \frac{\Delta P}{L}=\underbrace{\frac{150\,\bar{v}\,\mu}{g_c\Phi_s^2D_p^2}\frac{(1-\varepsilon)^2}{\varepsilon^3}}_{\text{viscous}}
+   +\underbrace{\frac{1.75\,\rho\,\bar{v}^2}{g_c\Phi_sD_p}\frac{(1-\varepsilon)}{\varepsilon^3}}_{\text{kinetic energy}}
+\end{align*}
+\end{formulabox}
+\notetext{$\bar{v}$ = superficial velocity, $\varepsilon$ = bed/cake porosity, $\Phi_s$ = sphericity, $D_p$ = particle diameter, $\mu$ = fluid viscosity, $\rho$ = fluid density, $g_c$ = conversion factor. The section through the medium and cake shows the fluid pressure $P$ falling from $P_a$ at the upstream face of the cake to $P_e$ at the cake--medium interface and on to $P_b$ through the medium, plotted against the distance $L$ from the medium.}
+
+\spsection{PRACTICE PROBLEMS FROM THE SLIDES}
+
+\spsub{1 \textperiodcentered{} Screen analysis of a clay catalyst (Lec.~3)}
+Finely divided clay used as a catalyst in the petroleum industry: density \SI{1.2}{\gram\per\cubic\centi\meter}, sphericity $0.5$. Size analysis:
+\begin{center}
+\begin{tabular}{@{}l S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]@{}}
+\toprule
+$D_{pi}$ / \si{\milli\meter} & 0.0252 & 0.0178 & 0.0126 & 0.0089 & 0.0038\\
+$x_i$ (\si{\gram\per\gram}) & 0.088 & 0.178 & 0.293 & 0.194 & 0.247\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}
+  \item Show the differential and cumulative screen analysis of the mixture.
+  \item Find the specific surface area $A_w$ and the Sauter mean diameter of the clay.
+  \item Find the number of particles in a \SI{1}{\gram} sample.
+\end{itemize}
+\notetext{Use $A_w=\dfrac{6}{\rho_p\Phi_s}\sum\dfrac{x_i}{D_{pi}}$ with $D_{pi}$ in \si{\milli\meter} and $\rho_p$ in \si{\gram\per\cubic\milli\meter} (\SI{1.2}{\gram\per\cubic\centi\meter}=\SI{1.2e-3}{\gram\per\cubic\milli\meter}), then
+$\overline{D}_s=1/\sum\frac{x_i}{D_{pi}}$ and $N_w=\dfrac{1}{a\rho_p}\sum\dfrac{x_i}{D_{pi}^3}$.}
+
+\spsub{2 \textperiodcentered{} Screen analysis of crushed quartz (Lec.~3)}
+The screen analysis applies to a sample of crushed quartz. Density of the particles \SI{2650}{\kilogram\per\cubic\meter} (\SI{0.00265}{\gram\per\cubic\milli\meter}); shape factors $a=0.8$ and $\Phi_s=0.571$. For the material between 4-mesh and 200-mesh, calculate:
+\begin{itemize}
+  \item[(a)] $A_w$ in \si{\square\milli\meter\per\gram} and $N_w$ in particles per gram,
+  \item[(b)] $\overline{D}_v$, \quad (c) $\overline{D}_s$, \quad (d) $\overline{D}_w$,
+  \item[(e)] $N_i$ for the 150/200-mesh increment,
+  \item[(f)] the fraction of the total number of particles in the 150/200-mesh increment.
+\end{itemize}
+
+\spsub{3 \textperiodcentered{} Mixing index in a muller mixer (Lec.~4)}
+A silty soil containing 14\,\% moisture was mixed in a large muller mixer with 10\,\text{wt}\% of a tracer consisting of dextrose and picric acid. After \SI{3}{\minute} of mixing, 12 random samples were taken and analysed colorimetrically for tracer material. Measured concentrations (wt\% tracer):
+\begin{center}
+\begin{tabular}{@{}S[table-format=2.2] S[table-format=1.2] S[table-format=1.2] S[table-format=2.2] S[table-format=2.2] S[table-format=2.2]@{}}
+10.24 & 9.30 & 7.94 & 10.24 & 11.08 & 10.03\\
+11.91 & 9.72 & 9.20 & 10.76 & 10.97 & 10.55\\
+\end{tabular}
+\end{center}
+Calculate the mixing index $I_p$ and the standard deviation.
+
+\spsub{4 \textperiodcentered{} Crusher power by Rittinger's law (Lec.~5)}
+Particles of average feed size \SI{50e-4}{\meter} are crushed to an average product size of \SI{10e-4}{\meter} at the rate of \SI{20}{\tonne\per\hour}. At this rate the crusher consumes \SI{40}{\kilo\watt}, of which \SI{5}{\kilo\watt} is required for running the mill empty. Calculate the power consumption if \SI{12}{\tonne\per\hour} of this product is crushed to \SI{5e-4}{\meter} size in the same mill. Assume Rittinger's law is applicable.
+\notetext{Net power $=40-5=\SI{35}{\kilo\watt}$ for the first duty; $K_R$ is found from that duty, then the new size range and feed rate are substituted. The empty-mill power is added back at the end.}
+
+\vspace{3mm}
+{\color{rule}\hrule height 0.6pt}
+\vspace{2mm}
+\notetext{Prepared from the Module 1 (Lectures 1--5) and Module 2 (Lecture 2) slide decks of the course. Results follow the notation used on the slides; where a slide carried a hand-worked derivation, the intermediate steps are reproduced above. Symbols: $D_p$ particle diameter, $\Phi_s$ sphericity, $\rho_p$ particle density, $s_p$ surface area of a particle, $v_p$ volume of a particle, $x_i$ mass fraction, $N_i$ particles in a fraction, $N_T$ total number, $A_w$ specific surface area, $N_w$ particles per unit mass, $a$ volume shape factor, $W_i$ work index, $\eta_c$ crushing efficiency, $\eta_m$ mechanical efficiency, $\varepsilon$ bed porosity, $K_R,K_k,K_b$ the Rittinger, Kick and Bond constants.}
+
+\end{document}

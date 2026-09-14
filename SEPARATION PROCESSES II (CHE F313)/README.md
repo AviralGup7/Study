@@ -21,9 +21,13 @@ Original lecture decks (as uploaded):
 | `Mod 2-Lecture 2.pptx` | Filtration — media, filter aids, cake filtration, Kozeny–Carman / Burke–Plummer / Ergun |
 
 ### `Notes/`
-- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 10-page short notes + formula sheet built from the decks
-  above: definitions, derivation steps (including the hand-worked Lecture 3 and Lecture 5 derivations),
-  every formula on the slides, and the practice problems (clay catalyst, crushed quartz, muller mixer,
-  crusher power).
-- `make-notes.py` — the generator for that PDF (ReportLab). Edit the content and re-run:
-  `python3 make-notes.py out.pdf` (needs `reportlab`; DejaVu fonts are used for the math symbols).
+- `SP2-notes.tex` — **the source of truth**: LaTeX short notes + formula sheet built from the decks
+  above. Definitions, the derivation steps (including the hand-worked Lecture 3 and Lecture 5
+  derivations), every formula on the slides, and the practice problems (clay catalyst, crushed quartz,
+  muller mixer, crusher power).
+- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 9-page A4 PDF compiled from that `.tex`.
+
+Rebuild the PDF after editing the `.tex` with any XeLaTeX-capable TeX distribution, e.g.
+`latexmk -xelatex SP2-notes.tex` or `tectonic SP2-notes.tex`. Packages used: `geometry`, `amsmath`,
+`amssymb`, `mathtools`, `xcolor`, `booktabs`, `tabularx`, `enumitem`, `fancyhdr`, `tcolorbox`
+(`breakable,skins`), `siunitx`, `hyperref`.

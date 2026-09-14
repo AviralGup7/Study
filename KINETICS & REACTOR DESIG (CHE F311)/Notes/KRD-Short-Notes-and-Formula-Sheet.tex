@@ -1,0 +1,154 @@
+%=========================================================================
+%  CHE F311 - Kinetics & Reactor Design
+%  SHORT NOTES AND FORMULA SHEET  (condensed from the nine decks in Slides/)
+%=========================================================================
+\documentclass[9pt,a4paper]{article}
+\usepackage[a4paper,left=15mm,right=15mm,top=13mm,bottom=14mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage[colorlinks=true,linkcolor=accent]{hyperref}
+\definecolor{accent}{HTML}{3B2A6B}
+\definecolor{accent2}{HTML}{6B5BA6}
+\definecolor{secbg}{HTML}{F4F1F7}
+\newtcolorbox{secbox}{breakable,enhanced,colback=secbg,colframe=accent!70,
+  boxrule=0.6pt,arc=1.5pt,left=7pt,right=7pt,top=5pt,bottom=6pt,
+  before skip=7pt,after skip=5pt,fontupper=\small}
+\newcommand{\secname}[1]{\par\addvspace{8pt}\noindent
+  \colorbox{accent}{\color{white}\bfseries\small\strut\hspace{3pt}#1\hspace{3pt}}\par\addvspace{4pt}\nopagebreak}
+\setlist[itemize]{leftmargin=13pt,itemsep=0.5pt,topsep=1pt,parsep=0pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small CHE F311 · Short Notes \& Formula Sheet}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\begin{document}
+\noindent{\Large\bfseries\color{accent} KINETICS \& REACTOR DESIGN --- SHORT NOTES}\\
+{\small\color{accent2} CHE F311 · I-Semester 2026-27 · formulas as taught in the uploaded decks (Slides/)}\\[3pt]
+{\footnotesize Companion documents: \texttt{KRD-Problems-and-Solutions.pdf} (every numerical in the decks, solved) and \texttt{krd-answers-check.py}.}
+
+\secname{1 · Mole balances, rates, conversion \hfill (Ch1-krd (1).pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Conversion $X=\dfrac{\text{moles A reacted}}{\text{moles A fed}}$; extent $\alpha$: $N_i=N_i^0+\nu_i\alpha$.
+\item Rate bases: $-r_A$ (mol/vol$\cdot$t); per mass $-r_A'$, per surface $r''$; $-r_A' W = r'' S = r V$.
+\item General mole balance: $F_{j0}-F_j+G_j=\dfrac{dN_j}{dt}$; design equations:
+\begin{center}\small
+\begin{tabular}{lll}
+Batch & $\dfrac{dN_A}{dt}=r_A V$ & $t=N_{A0}\displaystyle\int_0^X \frac{dX}{-r_A V}$\\[2mm]
+CSTR & $V=\dfrac{F_{A0}X}{(-r_A)_{exit}}$ & PFR $\dfrac{dF_A}{dV}=r_A$, $V=F_{A0}\int_0^X\frac{dX}{-r_A}$\\[2mm]
+PBR & $\dfrac{dF_A}{dW}=r_A'$ & $W=F_{A0}\int_0^X\frac{dX}{-r_A'}$
+\end{tabular}
+\end{center}
+\item Space time $\tau=V/v_0$; space velocity $=v_0/V$.
+\end{itemize}
+\end{secbox}
+
+\secname{2 · Sizing with conversion \hfill (Ch2-krd (1).pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Levenspiel plot: $F_{A0}/(-r_A)$ vs $X$; CSTR = rectangle, PFR = area under curve.
+\item Numerical integrals: Simpson $\tfrac{h}{3}(f_0+4f_1+f_2)$; five-point $\tfrac{h}{3}(f_0+4f_1+2f_2+4f_3+f_4)$; 3/8-rule $\tfrac{3h}{8}(f_0+3f_1+3f_2+f_3)$.
+\item Reactors in series: $F_{Ai}=F_{A0}(1-X_i)$; CSTR $i$: $V_i=\dfrac{F_{A0}(X_i-X_{i-1})}{(-r_A)_i}$.
+\item PFRs in parallel: efficient split keeps $V/F$ (or $\tau$) equal in each branch.
+\item Equal-size CSTRs, 1st order: $X=1-\dfrac1{(1+k\tau)^N}$; 2nd order: $\dfrac{C_{A0}}{C_{AN}}=\left[\tfrac{-1+\sqrt{1+4kC_{A0}\tau}}{2}\right]^{-N}$ type recursion.
+\item Best arrangement: $1/(-r_A)$ vs $C_A$ curve; $n>1$: plug, small mixed, large mixed; $n<1$ reversed; rectangle-maximisation $-dy/dx=y/x$ for two CSTRs.
+\end{itemize}
+\end{secbox}
+
+\secname{3 · Rate laws \& stoichiometric tables \hfill (Ch3-krd.pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Relative rates: $\frac{r_A}{-a}=\frac{r_B}{-b}=\frac{r_C}{c}=\frac{r_D}{d}$.
+\item Power law $-r_A=kC_A^\alpha C_B^\beta$, overall $n=\alpha+\beta$; Arrhenius $k=Ae^{-E/RT}$, $\ln\frac{k_2}{k_1}=\frac{E}{R}\left(\frac1{T_1}-\frac1{T_2}\right)$.
+\item Reversible: at equilibrium $-r_A\to0$ and $K_C=\frac{k_f}{k_r}$ (elementary).
+\item Batch table ($aA+bB\to cC+dD$): $N_A=N_{A0}(1-X)$, $N_B=N_{A0}(\Theta_B-\tfrac{b}{a}X)$, $N_C=N_{A0}(\Theta_C+\tfrac{c}{a}X)$; liquid: $C_i=N_i/V_0$.
+\item Flow table: same with $F$'s; gas phase $C_i=C_{A0}\frac{\Theta_i+\nu_i X/a}{1+\varepsilon X}\frac{T_0}{T}\frac{P}{P_0}$, $\varepsilon=y_{A0}\delta$, $\delta=\frac{c+d-b-a}{a}$.
+\item Batch gas, const $P,T$: $V=V_0(1+\varepsilon X)$, $C_A=\frac{N_{A0}(1-X)}{V_0(1+\varepsilon X)}$.
+\end{itemize}
+\end{secbox}
+
+\secname{4 · Isothermal design \hfill (Ch4-\_Krd.pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Algorithm: mole balance $\to$ rate law $\to$ stoichiometry $\to$ combine $\to$ evaluate.
+\item Batch 1st order $t=\frac1k\ln\frac1{1-X}$; 2nd order $t=\frac{1}{kC_{A0}}\frac{X}{1-X}$.
+\item CSTR 1st order $X=\frac{k\tau}{1+k\tau}$; 2nd order $X=\frac{(1+2Da)-\sqrt{1+4Da}}{2Da}$, $Da=k\tau C_{A0}$.
+\item Damköhler: $Da_1=k\tau$; $Da\le0.1\Rightarrow X<0.1$; $Da\ge10\Rightarrow X>0.9$.
+\item CSTRs in series, 1st order: $X=1-\frac1{(1+k\tau_i)^N}$; parallel CSTRs behave as one big CSTR.
+\item PFR gas, 2nd order, $\varepsilon$: $V=\frac{v_0}{kC_{A0}}\left[2\varepsilon(1+\varepsilon)\ln(1-X)+\varepsilon^2 X+\frac{(1+\varepsilon)^2 X}{1-X}\right]$.
+\item Pressure drop (Ergun $\to$): $\frac{dp}{dW}=-\frac{\alpha}{2p}$, $p=\frac{P}{P_0}$; $\varepsilon=0$: $p=(1-\alpha W)^{1/2}$; coupled with $\frac{dX}{dW}=f(X,p)$; pipe form $\frac{dP}{dz}=-\frac{\beta_0 P_0}{P}(1+\varepsilon X)$, $\beta_0=\frac{G(1-\phi)}{\rho_0 D_p \phi^3}\left[\frac{150(1-\phi)\mu}{D_p}+1.75G\right]$.
+\item $C_A=C_{A0}\frac{1-X}{1+\varepsilon X}\,p$ (gas, const $T$).
+\end{itemize}
+\end{secbox}
+
+\secname{5 · Rate-data analysis \hfill (Ch5\_-\,krd.pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Differential: plot $\ln(-dC_A/dt)=\ln k+\alpha\ln C_A$; finite differences:
+initial $\frac{-3C_0+4C_1-C_2}{2\Delta t}$, interior $\frac{C_{i-1}-C_{i+1}}{2\Delta t}$, final $\frac{C_{N-2}-4C_{N-1}+3C_N}{2\Delta t}$.
+\item Integral: guess order, linearise: 0th $C_A$ vs $t$; 1st $\ln C_A$; 2nd $1/C_A$; $A+B$, $M=C_{B0}/C_{A0}\ne1$: $\ln\frac{C_A}{C_B}= \ln M + C_{A0}(M-1)kt$.
+\item Half-life: $t_{1/2}=\frac{2^{n-1}-1}{(n-1)k}C_{A0}^{1-n}$; $\ln t_{1/2}=(1-n)\ln C_{A0}+\text{const}$; 1st order $t_{1/2}=\ln2/k$.
+\item Initial rates, differential reactor: $-r_A'=\frac{F_{A0}-F_A}{W}\approx\frac{F_P}{W}$.
+\item Nonlinear regression: minimise $s^2=\sum(C_{m,i}-C_{c,i})^2$; Michaelis--Menten $-r_S=\frac{k_3 C_S C_E}{C_S+C_M}$, integrated $k_3C_{E}t=(C_{S0}-C_S)+C_M\ln\frac{C_{S0}}{C_S}$.
+\item Variable volume (batch, const $P$): $X=\frac{(V/V_0)-1}{\varepsilon_A}$.
+\end{itemize}
+\end{secbox}
+
+\secname{6 · Multiple reactions \hfill (Ch6\_krd.pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Instantaneous selectivity $S_{D/U}=r_D/r_U$; overall $\tilde S_{D/U}=F_D/F_U$ (batch: $N_D/N_U$).
+\item Yields: $\tilde Y_D=r_D/(-r_A)$ instantaneous; overall $F_D/(F_{A0}-F_A)$.
+\item Parallel, one reactant: $a=\alpha_1-\alpha_2>0\Rightarrow$ keep $C_A$ high (PFR/batch, high $P$, no inerts); $a<0\Rightarrow$ keep low (CSTR, inerts, dilution).
+\item Temperatures: $E_D>E_U\Rightarrow$ run hot; $E_U>E_D\Rightarrow$ run cool (but reactive).
+\item Two reactants: signs of $(\alpha_1-\alpha_2),(\beta_1-\beta_2)$ choose contacting pattern (semibatch, side streams, small CSTRs in series).
+\item Series $A\xrightarrow{k_1}B\xrightarrow{k_2}C$: maximise $B$ by space/batch time; $C_B^{max}$ at $t=\frac{\ln(k_2/k_1)}{k_2-k_1}$.
+\item Net rates: $r_j=\sum_i \nu_{ji} r_i$; product distribution $\varphi(R/A)=\frac{dC_R}{-dC_A}$; PFR $C_R=\int\varphi\,d(-C_A)$-area, MFR rectangle, staged = steps.
+\end{itemize}
+\end{secbox}
+
+\secname{7 · Non-isothermal design \hfill (Ch7-\_krd.pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Energy balance (steady, no shaft): $\dot Q-\dot W_s+\sum F_{i0}H_{i0}-\sum F_i H_i=0$; $H_i(T)=H_i^\circ(T_R)+C_{p,i}(T-T_R)$.
+\item Adiabatic: $X=\frac{\sum\Theta_i C_{p,i}(T-T_0)}{-\left[\Delta H_{Rx}^\circ(T_R)+\Delta C_p(T-T_R)\right]}$; often $T=T_0+(\text{slope})X$.
+\item $K_C(T)=K_C(T_1)\exp\left[\frac{\Delta H_{Rx}}{R}\left(\frac1{T_1}-\frac1{T}\right)\right]$; $X_e=\frac{K_C}{1+K_C}$ for $A\rightleftharpoons B$.
+\item Tubular with exchange: $\frac{dT}{dV}=\frac{Ua(T_a-T)+(-r_A)(-\Delta H_{Rx})}{\sum F_i C_{p,i}}$; coolant co-current $\frac{dT_a}{dV}=\frac{Ua(T-T_a)}{\dot m_c C_{p,c}}$.
+\item CSTR with cooling: solve $X=\frac{k\tau}{1+k\tau}$ with $X=\frac{\sum\Theta_iC_{p,i}(T-T_0)+\kappa(T-T_a)}{F_{A0}(-\Delta H_{Rx})}$, $\kappa=UA/F_{A0}$-style term.
+\item Multiple steady states: $G(T)=\frac{-\Delta H_{Rx}}{1+1/(k\tau)}$-type heat-generated vs $R(T)=C_{p0}(1+\kappa)(T-T_c)$; ignition/extinction; runaway when tangency lost; stability via $S'=\frac{E}{RT_s^2}G(T_s)-C_{p0}(1+\kappa)$.
+\item Interstage cooling/heating between adiabatic reactors; optimum feed temperature maximises $X$ for fixed $V$.
+\end{itemize}
+\end{secbox}
+
+\secname{8 · Catalysis \hfill (Catalysis\_Krd.pdf)}
+\begin{secbox}
+\begin{itemize}
+\item Steps: external diffusion $\to$ internal diffusion $\to$ adsorption $\to$ surface reaction $\to$ desorption; rate-limiting-step algorithm with site balance $C_t=C_v+\sum C_{i\cdot S}$.
+\item Langmuir $C_{A\cdot S}=\frac{K_A P_A C_t}{1+K_AP_A+K_BP_B}$; L-H vs Eley--Rideal forms (e.g. $-r_T'=\frac{k P_T P_{H_2}}{1+K_B P_B+K_T P_T}$).
+\item Thiele modulus (1st order, sphere) $\phi_s=R\sqrt{k_1/D_e}$; $\eta=\frac{3}{\phi^2}(\phi\coth\phi-1)$; slab $\eta=\tanh\phi/\phi$.
+\item Profile: $\frac{C_A}{C_{As}}=\frac{R}{r}\frac{\sinh(\phi r/R)}{\sinh\phi}$.
+\item Weisz--Prater $C_{WP}=\eta\phi^2=\frac{-r_A'(\text{obs})R^2}{D_e C_{As}}$; $C_{WP}\ll1$ no internal limitation, $\gg1$ limited.
+\item Overall $\Omega=\frac{\eta}{1+\eta\phi^2 S_a\rho_b/k_c}$; Mears: $\frac{k C_{Ab}^{n-1}R^2 \rho_b S_a E}{b D_e T^2}<0.15$ to neglect external gradients (ratio $r_{obs}/(k_c C_{Ab})<0.15$ style).
+\item Packed bed: workhorse; adiabatic/non-adiabatic, reverse-flow, counter-flow configurations.
+\end{itemize}
+\end{secbox}
+
+\secname{9 · Non-ideal reactors / RTD \hfill (Non\_ideal\_KRD.pdf)}
+\begin{secbox}
+\begin{itemize}
+\item $E(t)=\frac{C(t)}{\int_0^\infty C\,dt}$; $F(t)=\int_0^t E\,dt$; $t_m=\int_0^\infty tE\,dt=V/v_0$; $\sigma^2=\int(t-t_m)^2E\,dt$.
+\item Ideal: PFR $E=\delta(t-\tau)$; CSTR $E=e^{-t/\tau}/\tau$.
+\item Segregation: $\bar X=\int_0^\infty X_{batch}(t)E(t)dt$; $n>1$: $\bar X>X_{ideal-mixed}$; $0<n<1$ opposite.
+\item Tanks-in-series: $E(t)=\frac{t^{n-1}}{(n-1)!\,\tau_i^n}e^{-t/\tau_i}$, $n=\tau_m^2/\sigma^2$; $n$-tank conversion for 1st order $X=1-(1+k\tau_i)^{-n}$.
+\item Dispersion (closed vessel, 1st order): $X=1-\frac{4q\,e^{Pe/2}}{(1+q)^2e^{Pe q/2}-(1-q)^2e^{-Pe q/2}}$, $q=\sqrt{1+4Da/Pe}$, $Da=k\tau$, $Pe=UL/D_a$; $\sigma_\theta^2=\frac2{Pe}-\frac2{Pe^2}(1-e^{-Pe})$; link $n=Pe/2+1$.
+\item Two-parameter models: real CSTR = ideal volume $V_s=\alpha V$ + dead zone + bypass $\beta=v_b/v_0$; tracer response $C_T/C_{T0}=1-(1-\beta)e^{-(1-\beta)t/(\alpha\tau)}$-type; two-CSTR interchange parameters $(\alpha,\beta)$ from $m_{1,2}$.
+\end{itemize}
+\end{secbox}
+
+\vspace{4pt}\noindent\rule{\linewidth}{0.5pt}\\[2pt]
+{\footnotesize Compiled from the uploaded decks; the questions document (\texttt{KRD-Problems-and-Solutions.pdf}) applies every one of these formulas to the numericals printed in the slides, and \texttt{krd-answers-check.py} reproduces all numbers.}
+\end{document}

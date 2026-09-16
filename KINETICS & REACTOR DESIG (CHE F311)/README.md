@@ -25,9 +25,14 @@ from the slide pictures (OCR-checked by eye at high resolution).
 
 ### `Notes/` — written here
 
-- `KRD-Short-Notes-and-Formula-Sheet.tex` — short notes + formula sheet, one compact section per
-  deck: the definitions, every design equation and formula as the slides teach them.
-- `KRD-Short-Notes-and-Formula-Sheet.pdf` — 3-page A4 PDF compiled from that `.tex`.
+- `KRD-Short-Notes-and-Formula-Sheet.tex` — short notes + formula sheet at the depth of the course
+  standard (`SEPARATION PROCESSES II (CHE F313)/Notes/SP2-notes.tex`): a `Compiled from` box naming all
+  nine decks, a `What is inside` index, a notation table, then one section per deck with subheads,
+  the reasoning behind each formula, and the deck's own worked numbers carried through to a boxed
+  answer. Closes with a consolidated formula sheet and a table of the four reactor-choice comparisons
+  the course keeps asking.
+- `KRD-Short-Notes-and-Formula-Sheet.pdf` — 14-page A4 PDF compiled from that `.tex`
+  (0 errors, 0 overfull boxes).
 - `KRD-Problems-and-Solutions.tex` — **every numerical question or example posed in the nine decks,
   with its solution** (Q1–Q46, each question quoted with its `Source:` line and followed by its
   answer, segregated by deck into Parts A–I).

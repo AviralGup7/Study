@@ -116,7 +116,6 @@
 \fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Separation Processes II --- Short Notes \& Formula Sheet}
 \fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
 
-\begin{document}
 
 %=============================================================== cover
 \begin{center}
@@ -675,6 +674,200 @@ The same result may also be written as
 \end{align*}
 \end{formulabox}
 \notetext{$\bar{v}$ = superficial velocity, $\varepsilon$ = bed/cake porosity, $\Phi_s$ = sphericity, $D_p$ = particle diameter, $\mu$ = fluid viscosity, $\rho$ = fluid density, $g_c$ = conversion factor. The section through the medium and cake shows the fluid pressure $P$ falling from $P_a$ at the upstream face of the cake to $P_e$ at the cake--medium interface and on to $P_b$ through the medium, plotted against the distance $L$ from the medium.}
+
+% ---- Module 2, Lecture 3 : pressure drop through the filter cake ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 3 --- Pressure Drop Through the Filter Cake}
+
+\spsub{The model: flow through a bundle of channels}
+\begin{itemize}
+  \item A cake is a bed of particles, so the pressure drop needed to push filtrate through it is found from the pressure drop for flow through a \emph{pipe}, and the pipe is then replaced by the equivalent parallel channels of the bed.
+  \item Flow of liquid through a single pipe is given by the \textbf{Hagen--Poiseuille} equation,
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Delta P_s &= \frac{32\,\Delta L\,\bar{V}\,\mu}{g_c\,D^2}
+   &&\text{Hagen--Poiseuille (laminar, one pipe of diameter }D)\\[3pt]
+\Phi_s &= \frac{6/D_p}{s_p/v_p}=\frac{6v_p}{D_ps_p}
+   &&\Longrightarrow\qquad \frac{s_p}{v_p}=\frac{6}{\Phi_sD_p}\tag{1}
+\end{align*}
+\vspace{1pt}
+$s_p/v_p$ = surface-to-volume ratio of the particle; for granular solids $\Phi_s$ ranges from $0.6$ to $0.95$.
+\end{formulabox}
+
+\spsub{Equivalent channel diameter $D_{eq}$}
+\begin{itemize}
+  \item Let $\varepsilon$ = porosity and $1-\varepsilon$ = the volume fraction of particles in the bed (the \emph{external} void fraction of the bed, not the total porosity): if the particles are porous, their pores are generally too small to permit any significant flow through them, so they are not counted.
+  \item The solid surface presented to the flow, for $n$ parallel channels of length $L$, is the surface-to-volume ratio times the particle volume, $S_0L(1-\varepsilon)\cdot\dfrac{6}{\Phi_sD_p}$, and it must equal the wetted surface of the $n$ channels:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+n\pi D_{eq}L &= S_0L(1-\varepsilon)\,\frac{6}{\Phi_sD_p}\tag{2}\\[2pt]
+S_0L\varepsilon &= \frac{\pi}{4}\,nD_{eq}^2L\tag{3}
+   &&\text{(void volume of the bed = total volume of the }n\text{ channels)}
+\end{align*}
+Eliminating $S_0$ between (2) and (3):
+\[
+n\pi D_{eq}L=\frac{\frac{\pi}{4}nD_{eq}^2L}{\varepsilon}\times\frac{1-\varepsilon}{L}\times\frac{6}{\Phi_sD_p}
+\qquad\Longrightarrow\qquad \boxed{\;D_{eq}=\frac{2}{3}\,\Phi_sD_p\left(\frac{\varepsilon}{1-\varepsilon}\right)\;}
+\]
+Typically $\varepsilon=0.4$, so $D_{eq}=0.44\,\Phi_sD_p$ --- the equivalent diameter is roughly \emph{half the particle size}.
+\end{formulabox}
+
+\spsub{From channel velocity to the empty-tower velocity}
+\begin{itemize}
+  \item $\bar{V}$ = average velocity in the channels (it depends on the pressure drop); $v_0$ = velocity based on the empty tower (superficial velocity).
+  \item The flow splits between the channels, so $\bar{V}$ falls as $\varepsilon$ rises: $\bar{V}\propto v_0$ and $\bar{V}\propto 1/\varepsilon$, hence
+  \[\bar{V}=\frac{v_0}{\varepsilon}\]
+  \item $v_0$, $D_p$ and $\varepsilon$ are tangible parameters of the bed --- once they are known the pressure drop can be calculated.
+\end{itemize}
+
+\spsub{Kozeny--Carman equation}
+\begin{formulabox}
+At a very low Reynolds number ($Re\simeq1.0$) use Hagen--Poiseuille with $\Delta L\simeq L$ and $D=D_{eq}$, and substitute $\bar{V}=v_0/\varepsilon$:
+\begin{align*}
+\frac{\Delta P}{L}&\simeq\frac{32\,\mu\,\bar{V}}{g_cD_{eq}^2}
+ =\frac{32\,\mu\,\dfrac{v_0}{\varepsilon}}{g_c\left[\dfrac{2}{3}\Phi_sD_p\left(\dfrac{\varepsilon}{1-\varepsilon}\right)\right]^{2}}
+ =\frac{72\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+\end{align*}
+A correction factor $\lambda_1$ is introduced because the channels are actually \emph{tortuous}, not straight. Experiments show the constant is $150$, so
+\[\boxed{\;\frac{\Delta P}{L}=150\,\frac{v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}\;}
+\qquad\text{\textbf{Kozeny--Carman equation (valid for }$Re\simeq1$\textbf{)}}\]
+Flow is proportional to the pressure drop and inversely proportional to the fluid viscosity --- this is \textbf{Darcy's law}, used to explain the flow of liquids through porous media.
+\end{formulabox}
+
+\spsub{Burke--Plummer equation (high flow rate)}
+\begin{itemize}
+  \item As the flow rate increases, the pressure drop eventually rises faster than linearly: at very high Reynolds number $\Delta P\propto v_0^{1.8\text{ or }2}$, which gives the \emph{empirical} result
+\end{itemize}
+\begin{formulabox}
+\[\boxed{\;\frac{\Delta P}{L}=1.75\,\frac{\rho\,v_0^2}{g_c\,\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}\;}
+\qquad\text{\textbf{Burke--Plummer equation (}$Re>1000$\textbf{)}}\]
+\end{formulabox}
+
+\spsub{Ergun equation (entire range of flow rates)}
+\begin{itemize}
+  \item For the entire range of flow rates the equation is obtained by adding the two effects: the \emph{viscous loss} and the \emph{kinetic-energy loss}.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\Delta P}{L}&=
+ \underbrace{\frac{150\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}}_{\text{viscous loss}}
+ +\underbrace{\frac{1.75\,\rho\,v_0^2}{g_c\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}}_{\text{kinetic-energy loss}}
+ &&\text{\textbf{Ergun equation}}
+\end{align*}
+\end{formulabox}
+
+\spsub{Overall pressure drop at any time}
+\begin{itemize}
+  \item The overall drop is the drop over the medium \emph{plus} the drop over the cake:
+  \[\Delta P=P_a-P_b=(P_a-P')+(P'-P_b)=\Delta P_c+\Delta P_m\]
+  with $P_a$ the inlet pressure, $P_b$ the outlet pressure and $P'$ the pressure at the boundary between cake and medium.
+  \item $\Delta P_c$ is written with the Kozeny--Karman equation, $v_0\to u$ and $\Delta P/L\to \mathrm{d}P/\mathrm{d}L$ (the differential form):
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\mathrm{d}P}{\mathrm{d}L}&=\frac{150\,u\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+ &&\text{then put } \Phi_sD_p=\frac{6v_p}{s_p}\\[2pt]
+&=\frac{150\,u\,\mu\,s_p^2(1-\varepsilon)^2}{g_c\,36\,v_p^2\varepsilon^3}
+ =\boxed{\;4.17\,\frac{\mu\,u}{g_c}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\;}
+\end{align*}
+\vspace{2pt}
+{\small
+$\mathrm{d}P/\mathrm{d}L$ = pressure gradient at thickness $L$; \quad
+$\mu$ = viscosity of the filtrate; \quad
+$u$ = linear velocity of the filtrate, based on the \emph{filter} area; \quad
+$s_p$ = surface area of a single particle; \quad
+$v_p$ = volume of a single particle; \quad
+$\varepsilon$ = porosity of the cake; \quad
+$g_c$ = Newton's law proportionality constant; \quad
+usually the coefficient is $4.17$.}
+\end{formulabox}
+
+\spsub{Mass balance over the cake (eliminating $\mathrm{d}L$)}
+\begin{itemize}
+  \item For beds of \emph{compressible} particles (beds with a very low void fraction) write the filtrate flux as
+  \[u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t},\qquad V=\text{volume of filtrate collected from the start of filtration to time }t\]
+  \item Volume of solids in a layer of thickness $\mathrm{d}L$ is $A(1-\varepsilon)\,\mathrm{d}L$, so with $\rho_p$ the density of the particles,
+  \[\mathrm{d}m=\rho_pA(1-\varepsilon)\,\mathrm{d}L\qquad\text{(}m\text{ = mass of solids in the layer)}\]
+\end{itemize}
+\begin{formulabox}
+Eliminating $\mathrm{d}L$ by dividing the differential pressure drop by the mass balance,
+\begin{align*}
+\mathrm{d}P&=\frac{4.17\,\mu\,u\,(1-\varepsilon)^2}{g_c\,\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\cdot\frac{\mathrm{d}m}{\rho_pA(1-\varepsilon)}\\[2pt]
+&=\boxed{\;\frac{k_1\,\mu\,u\,(1-\varepsilon)}{g_c\,\rho_pA\,\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\mathrm{d}m\;}\qquad (k_1 \text{ used instead of } 4.17)
+\end{align*}
+\end{formulabox}
+
+\spsub{Compressible and incompressible filter cakes}
+\begin{itemize}
+  \item For low pressure-drop filtration of slurries \emph{all} the factors are independent of $L$ except $m_c$, so the equation integrates immediately from $m=0$ to $m=m_c$:
+\end{itemize}
+\begin{formulabox}
+\[\int_{P'}^{P_a}\mathrm{d}P=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
+  \left(\frac{s_p}{v_p}\right)^{2}\int_0^{m_c}\mathrm{d}m
+\qquad\Longrightarrow\qquad
+\boxed{\;\Delta P_c=P_a-P'=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
+  \left(\frac{s_p}{v_p}\right)^{2}m_c\;}\]
+\end{formulabox}
+
+\spsub{Specific cake resistance $\alpha$}
+\begin{itemize}
+  \item For cakes that are incompressible the group in front of $m_c$ is a constant of the cake and the slurry:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\alpha&=\frac{\Delta P_c\,g_c\,A}{\mu\,u\,m_c}
+   &&\text{\textbf{specific cake resistance}}\\[2pt]
+&=k_1\left(\frac{s_p}{v_p}\right)^{2}\frac{1-\varepsilon}{\varepsilon^3\rho_p}
+\;;\qquad \text{if the particle diameter is given,}\qquad
+\alpha=\frac{k_2(1-\varepsilon)}{\varepsilon^3\rho_p(\Phi_sD_p)^2}
+\end{align*}
+$\alpha$ is independent of the pressure drop and of the position in the cake.
+\end{formulabox}
+
+\spsub{Filter medium resistance $R_m$}
+\begin{formulabox}
+\begin{align*}
+R_m&=\frac{(P'-P_b)\,g_c}{\mu\,u}=\frac{(\Delta P_m)\,g_c}{\mu\,u}
+   &&\text{dimension } L^{-1}\\[4pt]
+\Delta P&=\Delta P_c+\Delta P_m
+ =\left(\frac{\alpha\,\mu\,u\,m_c}{g_c\,A}\right)+\left(\frac{\mu\,u\,R_m}{g_c}\right)
+ =\boxed{\;\frac{\mu\,u}{g_c}\left[\frac{\alpha\,m_c}{A}+R_m\right]\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Working form and the constant-pressure straight line}
+\begin{itemize}
+  \item If $c$ is the mass of particles deposited on the filter \emph{per unit volume of filtrate}, then the mass of solids at any time is $m_c=Vc$. Substituting $u=\dfrac{1}{A}\dfrac{\mathrm{d}V}{\mathrm{d}t}$,
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Delta P&=\frac{\mu}{g_c}\left(\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t}\right)
+   \left[\frac{\alpha\,Vc}{A}+R_m\right]
+\qquad\Longrightarrow\qquad
+\boxed{\;\frac{\mathrm{d}t}{\mathrm{d}V}=\frac{\mu}{A(\Delta P)g_c}\left[\frac{Vc\alpha}{A}+R_m\right]\;}\\[4pt]
+\text{Constant }\Delta P:\quad & \left(\frac{\mathrm{d}t}{\mathrm{d}V}\right)_{0}
+   =\frac{\mu R_m}{A(\Delta P_m)g_c}=\frac{1}{q_0}
+   \qquad (t=0,\;V=0,\;\Delta P=\Delta P_m \text{ --- medium only})\\[3pt]
+& \frac{\mathrm{d}t}{\mathrm{d}V}=\frac{1}{q}=k_cV+\frac{1}{q_0},
+   \qquad k_c=\frac{\mu\,c\,\alpha}{A^2(\Delta P)g_c}\\[4pt]
+& \boxed{\;\frac{t}{V}=\left(\frac{k_c}{2}\right)V+\frac{1}{q_0}\;}
+   \qquad\text{straight line } y=mx+c:\quad \text{slope}=\frac{k_c}{2},\quad
+   \text{intercept}=\frac{1}{q_0}
+\end{align*}
+\end{formulabox}
+\notetext{From the plot of $t/V$ against $V$ both $\alpha$ (through the slope, hence $k_c$) and $R_m$ (through the intercept, hence $q_0$) can be calculated. The same plot is the bridge to the constant-rate and continuous cases of the next section.}
+
+\spsub{Compressibility of the cake}
+\begin{formulabox}
+\textbf{Empirical equation for cake resistance:}\qquad
+\[\boxed{\;\alpha=\alpha_0(\Delta P)^{s}\;}\]
+$\alpha_0$ and $s$ are empirical constants, determined purely by experiments. $s$ is the \textbf{compressibility coefficient}: $s=0$ for incompressible sludges (the cake resistance does not change with pressure), and $s$ is positive for a compressible cake, typically $0.2$--$0.8$.
+\end{formulabox}
+\notetext{The deck works this lecture from the hand-written pages numbered ``Lecture 9''; the printed front page titles it Module 2 Lecture 3. Both page numbers are the same lecture.}
 
 \spsection{PRACTICE PROBLEMS FROM THE SLIDES}
 

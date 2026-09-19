@@ -1004,6 +1004,107 @@ A_T=\text{total area of the continuous filter}
 \end{formulabox}
 \notetext{The two printed forms of the design equation stand to each other as follows: the compressible one is the incompressible one with $\alpha$ replaced by $\alpha_0(\Delta P)^{s}$, so the pressure drop appears to the power $1-s$. For an incompressible cake $s=0$ and the two coincide. Slide~8 of the deck prints the $R_m=0$ and $R_m\neq0$ forms together with ``Incompressible, $s=0$, $\alpha=\alpha_0$'' between them.}
 
+% ---- Module 2, Lecture 6 : centrifugal filtration and washing ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 6 --- Centrifugal Filtration and Washing Rate}
+
+\spsub{Centrifugal filtration --- where it applies}
+\begin{itemize}
+  \item A centrifuge may hold the bowl stationary (sedimentation in a rotated imperforate bowl) or filter through a perforated basket; this section is the \emph{filtering} case --- a perforated basket, a filter cloth, and a cake thrown against the cloth.
+  \item The basic theory of constant-pressure filtration can be modified to apply to filtration in a centrifuge. It applies \emph{after} the cake has been deposited, and during the flow of clear filtrate or fresh water through the cake.
+  \item In the basket (sketch on slide~6): $r_1$ = radius of the inner surface of the liquid, $r_i$ = radius of the inner face of the cake, $r_2$ = inside radius of the basket, $b$ = height of the basket.
+\end{itemize}
+
+\spsub{Assumptions}
+\begin{itemize}
+  \item The effect of gravity and the change in kinetic energy of the liquid are neglected.
+  \item The pressure drop from the centrifugal action equals the drag of the liquid through the cake.
+  \item The cake is completely filled with liquid; the flow of liquid is laminar.
+  \item The resistance of the filter medium is constant and the cake is nearly incompressible.
+\end{itemize}
+
+\spsub{Derivation as printed and worked on the deck}
+\begin{formulabox}
+\begin{align*}
+\text{Hydrostatic:}\quad
+& \Delta P=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}{2}
+ &&\text{(centrifugal field, }\omega=\text{ angular velocity)}\\[2pt]
+\text{Constant-pressure filtration:}\quad
+& \Delta P=\mu u\left(\frac{\alpha\,m_c}{A}+R_m\right)\\[2pt]
+\text{Linear velocity:}\quad
+& u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t}=\frac{q}{A}
+ &&\text{(}q=\text{ volumetric flow rate)}\\[2pt]
+\text{Substituting }u:\quad
+& \Delta P=\mu q\left(\frac{\alpha\,m_c}{A^{2}}+\frac{R_m}{A}\right)\\[2pt]
+\text{Equating the two:}\quad
+& \frac{\rho\omega^{2}(r_2^{2}-r_1^{2})}{2}
+ =\mu q\left(\frac{\alpha\,m_c}{A^{2}}+\frac{R_m}{A}\right)
+\end{align*}
+\begin{align*}
+\Longrightarrow\quad
+q&=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
+ {2\mu\left(\dfrac{\alpha\,m_c}{A^{2}}+\dfrac{R_m}{A}\right)}
+ &&\text{(area }A\text{ of the cake taken as constant)}
+\end{align*}
+\end{formulabox}
+\notetext{$\rho$ = density of the liquid, $\omega$ = angular velocity of the basket, $A$ = area of the filtering surface, $m_c$ = mass of solids in the cake, $q$ = volumetric rate of filtrate.}
+
+\spsub{Case 1 --- the change of area with radius may be neglected}
+\begin{itemize}
+  \item Permissible for a thin cake in a large-diameter centrifuge: the area for flow does not change with radius, so $A$ may be taken out of the integral.
+\end{itemize}
+\begin{formulabox}
+\[\boxed{\;q=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
+  {2\mu\left(\dfrac{\alpha\,m_c}{\overline{A}_L\overline{A}_a}
+   +\dfrac{R_m}{A_2}\right)}\;}
+\]
+\begin{align*}
+A_2&=\text{area of filter medium (inside area of the centrifuge basket)}\\
+\overline{A}_a&=\text{arithmetic mean of the cake area}=(r_i+r_2)\pi b\\
+\overline{A}_L&=\text{logarithmic mean of the cake area}=\frac{2\pi b(r_2-r_i)}{\ln(r_2/r_i)}
+\end{align*}
+\end{formulabox}
+
+\spsub{Case 2 --- the change of area with radius is too large to be neglected}
+\begin{itemize}
+  \item Then the cake area must be carried through the integration as a function of radius and the arithmetic and logarithmic mean areas above are what come out of it: $\overline{A}_a$ from the cake's inner face to the basket wall, $\overline{A}_L$ from the logarithmic mean of the same two radii.
+\end{itemize}
+
+\spsub{Limits of the equation (as the deck states them)}
+\begin{itemize}
+  \item It applies to a cake of \emph{definite} mass --- it is not integrable over the entire range starting from the beginning of filtration.
+  \item For compressible cakes the specific resistance $\alpha$ increases with the centrifugal force, so $\alpha$ is no longer the constant the equation assumed.
+\end{itemize}
+\notetext{The hydrostatic step is printed on the deck as ``Eq 33 (McCabe Smith) 7th Ed.'' --- the deck's own reference, kept here rather than re-derived.}
+
+\spsub{Washing rates}
+\begin{itemize}
+  \item \textbf{Batch filters}: washing the cake is done at the end of filtration.
+  \item \textbf{Filter press}: the rate of washing is $\tfrac14$ of the normal rate of filtration; the rate of wash water is different from that of the slurry and only half the area is available for washing.
+  \item \textbf{Leaf filter}: washing is done at the \emph{same} pressure as filtration and the rate of washing is a \emph{fixed} ratio of the rate of filtration --- the rate of slurry and of wash water is the same, and hence the same area is available for washing.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\left(\frac{\mathrm{d}V}{\mathrm{d}t}\right)_{f}&=f(V)
+ &&\text{the filtration rate at the end of the run, } V=\text{final volume collected}\\[3pt]
+\text{Washing time:}\quad & t_w=\frac{V_w}{\text{rate of washing}}
+ &&\text{(}V_w=\text{volume of wash water)}\\[2pt]
+& \boxed{\;t_w=\frac{V_w}{(\mathrm{d}V/\mathrm{d}t)_{\text{washing}}}\;}
+\end{align*}
+\begin{align*}
+\text{Idle time }(t_i)&=\text{time for dismantling, dumping, reassembling}\\
+\text{Filtration time }(t_f)&=\text{time required for filtration}\\[2pt]
+\text{Cycle time:}\quad & \boxed{\;t_c=t_f+t_w+t_i\;}\\[2pt]
+\text{Cycles per day:}\quad & n_{\text{cyc}}=\frac{24\;\ensuremath{\mathrm{ h}}}{t_c\;(\ensuremath{\mathrm{ h}})}\\[2pt]
+\text{Daily filtrate:}\quad & V_{\text{day}}=\frac{24\;V_f}{t_c}
+ &&\text{(}V_f=\text{filtrate per cycle)}
+\end{align*}
+\end{formulabox}
+
+\spsub{Continuous filter}
+\begin{itemize}
+  \item Here washing is an \emph{integral part} of filtration --- the rotary-drum filter of Lecture 5 washes the cake as it turns, before the doctor blade removes it; there is no separate washing step to be timed.
+\end{itemize}
+
 \spsection{PRACTICE PROBLEMS FROM THE SLIDES}
 
 \spsub{1 \textperiodcentered{} Screen analysis of a clay catalyst (Lec.~3)}

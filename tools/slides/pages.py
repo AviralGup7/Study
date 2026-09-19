@@ -137,6 +137,264 @@ def emf_dib(record):
     return im, (x_dest, y_dest, cx_dest, cy_dest, (l, t, r, b))
 
 
+# ------------------------------------------------------------------ EMF vector
+# Records used by the decks that export their diagrams and ink as EMF vector
+# art (no bitmap, no text to fall back on): pens, brushes, paths and the
+# 16-bit polyline/polygon family.
+EMR_HEADER, EMR_POLYBEZIER, EMR_POLYGON, EMR_POLYLINE = 1, 2, 3, 4
+EMR_SETWINDOWEXTEX, EMR_SETWINDOWORGEX = 9, 10
+EMR_SETVIEWPORTEXTEX, EMR_SETVIEWPORTORGEX = 11, 12
+EMR_SETPOLYFILLMODE, EMR_SETROP2 = 19, 20
+EMR_MOVETOEX, EMR_SAVEDC, EMR_RESTOREDC = 27, 33, 34
+EMR_SETWORLDTRANSFORM, EMR_MODIFYWORLDTRANSFORM = 35, 36
+EMR_SELECTOBJECT, EMR_CREATEPEN, EMR_CREATEBRUSHINDIRECT = 37, 38, 39
+EMR_DELETEOBJECT, EMR_ELLIPSE, EMR_RECTANGLE = 40, 42, 43
+EMR_LINETO, EMR_BEGINPATH, EMR_ENDPATH, EMR_CLOSEFIGURE = 54, 59, 60, 61
+EMR_FILLPATH, EMR_STROKEANDFILLPATH, EMR_STROKEPATH = 62, 63, 64
+EMR_POLYBEZIER16, EMR_POLYGON16, EMR_POLYLINE16 = 85, 86, 87
+EMR_POLYBEZIERTO16, EMR_POLYLINETO16 = 88, 89
+EMR_POLYPOLYLINE16, EMR_POLYPOLYGON16, EMR_POLYDRAW16 = 90, 91, 92
+EMR_EXTCREATEPEN = 95
+
+_PEN_STYLE_DASH = {1, 2, 3, 4, 5}          # PS_DASH .. PS_ALTERNATE
+
+
+def _colorref(v):
+    return ((v >> 0) & 0xFF, (v >> 8) & 0xFF, (v >> 16) & 0xFF)
+
+
+def _mul(a, b):
+    """2x3 affine matrices, [a b c d e f] meaning x'=ax+cy+e, y'=bx+dy+f."""
+    return [a[0] * b[0] + a[1] * b[2], a[0] * b[1] + a[1] * b[3],
+            a[2] * b[0] + a[3] * b[2], a[2] * b[1] + a[3] * b[3],
+            a[4] * b[0] + a[5] * b[2] + b[4], a[4] * b[1] + a[5] * b[3] + b[5]]
+
+
+def emf_vector(data, size=(1200, 900), bg=(255, 255, 255)):
+    """Rasterise an EMF of vector records (the 16-bit polyline/polygon art).
+
+    Returns a PIL image, or None if the stream held nothing drawable.  It is
+    deliberately small: it implements the records these decks use (pens,
+    brushes, paths, the 16-bit poly* family) and ignores the rest.
+
+    Layout note that cost a debugging cycle: in the 16-bit poly records
+    (EMR_POLYLINE16/POLYGON16/POLYBEZIERTO16/... 85-89) the record is
+    { iType, nSize, rclBounds, cpts, apts } -- the count is at +24 and the
+    points start at +28.  Reading the count at +8 quietly hands back the left
+    edge of the bounding box.
+
+    The header's rclBounds cannot be trusted either (these files carry
+    nonsense there), so the extent is measured by a dry run of the whole
+    stream and the real render is fitted to it.
+    """
+    from PIL import ImageDraw
+    W, H = size
+    wins = {'win_org': (0, 0), 'win_ext': (1, 1), 'vp_org': (0, 0), 'vp_ext': (1, 1)}
+
+    def poly_count_off(off, family):
+        """(cpts, points offset) for the record families we understand."""
+        if family == 'polypoly':
+            n = struct.unpack_from('<I', data, off + 24)[0]
+            return None, off + 32 + 4 * n
+        return struct.unpack_from('<I', data, off + 24)[0], off + 28
+
+    class Sink:
+        """Records the bounding box, then draws into the fitted canvas."""
+
+        def __init__(self, draw=None, tf=None):
+            self.draw, self.tf = draw, tf
+            self.box = None
+
+        def note(self, pts):
+            for x, y in pts:
+                if self.box is None:
+                    self.box = [x, y, x, y]
+                else:
+                    self.box[0] = min(self.box[0], x)
+                    self.box[1] = min(self.box[1], y)
+                    self.box[2] = max(self.box[2], x)
+                    self.box[3] = max(self.box[3], y)
+
+        def line(self, pts, colour, width, dashed=False):
+            self.note(pts)
+            if not (self.draw and self.tf):
+                return
+            pts = [self.tf(p[0], p[1]) for p in pts]
+            if dashed and len(pts) > 1:
+                for i in range(0, len(pts) - 1, 2):
+                    self.draw.line([pts[i], pts[i + 1]], fill=colour, width=width)
+            else:
+                self.draw.line(pts, fill=colour, width=width, joint='curve')
+
+        def polygon(self, pts, colour):
+            self.note(pts)
+            if self.draw and self.tf and colour and len(pts) > 2:
+                self.draw.polygon([self.tf(p[0], p[1]) for p in pts], fill=colour)
+
+        def ellipse(self, box, fill_col, line_col, width):
+            self.note([(box[0], box[1]), (box[2], box[3])])
+            if self.draw and self.tf:
+                b = list(self.tf(box[0], box[1])) + list(self.tf(box[2], box[3]))
+                b = [min(b[0], b[2]), min(b[1], b[3]), max(b[0], b[2]), max(b[1], b[3])]
+                if fill_col:
+                    self.draw.ellipse(b, fill=fill_col)
+                if line_col:
+                    self.draw.ellipse(b, outline=line_col, width=width)
+
+    def run(sink):
+        """Execute the stream once.  `sink` decides whether anything is drawn."""
+        dr = getattr(sink, 'draw', None)
+        img = None
+        st = {'world': [1, 0, 0, 1, 0, 0], 'pen': (0, 0, 0, 1, 0), 'brush': None,
+              'poly_fill': 1, 'path': None, 'in_path': False, 'cur': None}
+        stack, objs, nid = [], {}, [1]
+
+        def logical(p):
+            wx, wy = wins['win_org']
+            wex, wey = wins['win_ext']
+            vox, voy = wins['vp_org']
+            vex, vey = wins['vp_ext']
+            x = (p[0] - wx) * (vex / wex if wex else 1) + vox
+            y = (p[1] - wy) * (vey / wey if wey else 1) + voy
+            w = st['world']
+            return (w[0] * x + w[2] * y + w[4], w[1] * x + w[3] * y + w[5])
+
+        def pts16(off, family='poly'):
+            c, po = poly_count_off(off, family)
+            if c is None:
+                return []
+            return [logical(struct.unpack_from('<hh', data, po + 4 * i)) for i in range(c)]
+
+        def stroke(pts, close=False, raw=False):
+            pen = st['pen']
+            if not pts or pen is None:
+                return
+            seq = [logical(p) for p in pts] if raw else pts
+            if close and len(seq) > 2:
+                seq = seq + [seq[0]]
+            sink.line(seq, pen[:3], max(2, int(round(pen[3]))),
+                      dashed=len(pen) > 4 and pen[4] in _PEN_STYLE_DASH)
+
+        def fillp(pts):
+            if st['brush'] is None:
+                return
+            sink.polygon(pts if isinstance(pts[0], tuple) else pts, st['brush'])
+
+        for rtype, off, rsize in emf_records(data):
+            if rtype in (EMR_SETWINDOWEXTEX, EMR_SETVIEWPORTEXTEX, EMR_SETWINDOWORGEX,
+                         EMR_SETVIEWPORTORGEX):
+                key = {EMR_SETWINDOWEXTEX: 'win_ext', EMR_SETVIEWPORTEXTEX: 'vp_ext',
+                       EMR_SETWINDOWORGEX: 'win_org', EMR_SETVIEWPORTORGEX: 'vp_org'}[rtype]
+                wins[key] = struct.unpack_from('<2i', data, off + 8)
+            elif rtype in (EMR_SETWORLDTRANSFORM, EMR_MODIFYWORLDTRANSFORM):
+                m = list(struct.unpack_from('<6f', data, off + 8))
+                mode = struct.unpack_from('<I', data, off + 32)[0] if rtype == EMR_MODIFYWORLDTRANSFORM else 0
+                if rtype == EMR_SETWORLDTRANSFORM or mode == 1:
+                    st['world'] = _mul(m, st['world']) if mode == 1 else m
+                elif mode == 2:
+                    st['world'] = _mul(st['world'], m)
+            elif rtype == EMR_SAVEDC:
+                stack.append({k: (list(v) if isinstance(v, list) else v) for k, v in st.items()})
+            elif rtype == EMR_RESTOREDC:
+                if stack:
+                    st.update(stack.pop())
+            elif rtype in (EMR_CREATEPEN, EMR_EXTCREATEPEN):
+                style, width, _bs = struct.unpack_from('<3I', data, off + 8)
+                colour = struct.unpack_from('<I', data, off + 20)[0]
+                objs[nid[0]] = ('pen', _colorref(colour) + (max(1, width), style))
+                nid[0] += 1
+            elif rtype == EMR_CREATEBRUSHINDIRECT:
+                style, colour, _hatch = struct.unpack_from('<III', data, off + 8)
+                objs[nid[0]] = ('brush', None if style == 1 else _colorref(colour))
+                nid[0] += 1
+            elif rtype in (93, 94):
+                objs[nid[0]] = ('brush', None)
+                nid[0] += 1
+            elif rtype == EMR_SELECTOBJECT:
+                obj = objs.get(struct.unpack_from('<I', data, off + 8)[0])
+                if obj:
+                    if obj[0] == 'pen':
+                        st['pen'] = obj[1]
+                    else:
+                        st['brush'] = obj[1]
+            elif rtype == EMR_DELETEOBJECT:
+                objs.pop(struct.unpack_from('<I', data, off + 8)[0], None)
+            elif rtype == EMR_SETPOLYFILLMODE:
+                st['poly_fill'] = struct.unpack_from('<I', data, off + 8)[0]
+            elif rtype == EMR_MOVETOEX:
+                st['cur'] = struct.unpack_from('<2i', data, off + 8)
+            elif rtype == EMR_LINETO:
+                p = struct.unpack_from('<2i', data, off + 8)
+                stroke([st['cur'] or p, p], raw=True)
+                st['cur'] = p
+            elif rtype in (EMR_POLYLINE16, EMR_POLYBEZIER16, EMR_POLYGON16, EMR_POLYDRAW16,
+                           EMR_POLYLINETO16, EMR_POLYBEZIERTO16):
+                pts = pts16(off)
+                if rtype in (EMR_POLYLINETO16, EMR_POLYBEZIERTO16):
+                    if st['cur'] is not None:
+                        pts = [logical(st['cur'])] + pts
+                    if pts:
+                        st['cur'] = struct.unpack_from('<hh', data, off + rsize - 4)
+                if rtype == EMR_POLYGON16:
+                    fillp(pts)
+                    stroke(pts, close=True)
+                else:
+                    stroke(pts)
+                    if st['in_path'] and st['path'] is not None:
+                        st['path'] += pts
+            elif rtype in (EMR_POLYPOLYLINE16, EMR_POLYPOLYGON16):
+                pts = pts16(off, 'polypoly')
+                if pts:
+                    if rtype == EMR_POLYPOLYGON16:
+                        fillp(pts)
+                    stroke(pts, close=(rtype == EMR_POLYPOLYGON16))
+                    if st['in_path'] and st['path'] is not None:
+                        st['path'] += pts
+            elif rtype == EMR_RECTANGLE:
+                l2, t2, r2, b2 = struct.unpack_from('<4i', data, off + 8)
+                pts = [logical(p) for p in ((l2, t2), (r2, t2), (r2, b2), (l2, b2))]
+                fillp(pts)
+                stroke(pts, close=True)
+            elif rtype == EMR_ELLIPSE:
+                l2, t2, r2, b2 = struct.unpack_from('<4i', data, off + 8)
+                pen = st['pen']
+                sink.ellipse((l2, t2, r2, b2), st['brush'],
+                             pen[:3] if pen else None,
+                             max(1, int(round(pen[3]))) if pen else 1)
+            elif rtype == EMR_BEGINPATH:
+                st['in_path'], st['path'] = True, []
+            elif rtype == EMR_ENDPATH:
+                st['in_path'] = False
+            elif rtype == EMR_CLOSEFIGURE:
+                if st['path']:
+                    st['path'].append(st['path'][0])
+            elif rtype in (EMR_FILLPATH, EMR_STROKEANDFILLPATH, EMR_STROKEPATH):
+                pts = st['path'] or []
+                if rtype == EMR_FILLPATH:
+                    fillp(pts)
+                elif rtype == EMR_STROKEPATH:
+                    stroke(pts)
+                else:
+                    fillp(pts)
+                    stroke(pts, close=True)
+                st['path'] = []
+        return img
+
+    probe = Sink()
+    run(probe)
+    if probe.box is None:
+        return None
+    x0, y0, x1, y1 = probe.box
+    if x1 - x0 < 1e-9 or y1 - y0 < 1e-9:
+        return None
+    sc = min((W - 2) / (x1 - x0), (H - 2) / (y1 - y0))
+    img = Image.new('RGB', size, bg)
+    dr = ImageDraw.Draw(img)
+    real = Sink(dr, lambda x, y: ((x - x0) * sc + 1, (y - y0) * sc + 1))
+    run(real)
+    return img
+
+
 def _ink_fix(im):
     """White ink strokes on a transparent field -> dark strokes (see docstring)."""
     from PIL import ImageStat
@@ -259,6 +517,10 @@ class PptxRenderer:
                         im = got[0].convert('RGBA').resize((w, h), Image.LANCZOS)
                         img.paste(im, (int(x0), int(y0)), im)
                         return
+            vec = emf_vector(raw, (max(8, w), max(8, h)))
+            if vec is not None:
+                img.paste(vec, (int(x0), int(y0)))
+                return
             lines = emf_text(raw)
             if lines:
                 dr.rectangle([x0, y0, x1, y1], outline=(200, 200, 200))

@@ -866,6 +866,96 @@ In this equation $\Delta P$ is kept on the left-hand side because $\alpha=f(\Del
 \end{formulabox}
 \notetext{The two limiting schedules now sit side by side: \emph{constant pressure} --- $\Delta P$ fixed, rate falls, $t/V$ against $V$ is a straight line; \emph{constant rate} --- rate fixed, $\Delta P$ rises, and for an incompressible cake $\Delta P\propto t$. Both are worked with the same pair of resistances, cake and medium.}
 
+% ---- Module 2, Lecture 5 : continuous filtration ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 5 --- Continuous Filtration}
+
+\spsub{What a continuous filter does}
+\begin{itemize}
+  \item In a continuous filter such as the rotary-drum filter the feed, the filtrate and the cake move at \emph{steady constant rates}; but for any particular element of the filter surface the conditions are \emph{not} steady, they are transient.
+  \item The process consists of several steps in series --- \textbf{cake formation}, \textbf{washing}, \textbf{drying} and \textbf{discharging} --- and each step involves a gradual, continual change in conditions. The pressure drop across the filter during cake formation is held constant, so the equations of discontinuous constant-pressure filtration (Lecture 3) may be applied to a continuous filter with some modification.
+  \item Rotary-drum filter: a cloth-covered outer drum turns in a slurry trough; as each element of the drum passes through the trough a cake is formed by the vacuum inside, the element then emerges for washing (wash spray) and drying, and the cake is finally removed by the doctor blade. The depth to which the drum is immersed is therefore the fraction of the cycle available for cake formation (sketches on slides~5--6 of the deck).
+\end{itemize}
+
+\spsub{The constant-pressure equations the continuity is built on}
+\begin{formulabox}
+From the constant-pressure result of Lecture 3, written for a filter of area $A$:
+\begin{align*}
+\frac{t}{V}&=\left(\frac{k_c}{2}\right)V+\frac{1}{q_0}\\[2pt]
+t&=\left(\frac{k_c}{2}\right)V^{2}+\frac{V}{q_0}
+ \qquad\text{--- a quadratic in }V:\\[2pt]
+\left(\frac{k_c}{2}\right)V^{2}+\left(\frac{1}{q_0}\right)V-t&=0
+ \qquad\text{compare }Ax^2+Bx+C=0,\quad x=\frac{-B\pm\sqrt{B^2-4AC}}{2A}\\[2pt]
+\boxed{\;V=\frac{-\dfrac{1}{q_0}\pm\sqrt{\dfrac{1}{q_0^{2}}+4\times\dfrac{k_c}{2}\times t}}{2\times\dfrac{k_c}{2}}\;}
+\end{align*}
+{\small with the two cake and medium constants of Lecture 3,}
+\[
+k_c=\frac{\mu\,c\,\alpha}{A^{2}(\Delta P)g_c},
+\qquad
+\frac{1}{q_0}=\frac{\mu R_m}{A(\Delta P)g_c}
+\]
+\end{formulabox}
+
+\spsub{The symbols of the continuous case}
+\begin{formulabox}
+\begin{align*}
+& V=\text{volume of filtrate collected in time }t
+ && \frac{V}{t}=\text{rate of filtrate collection}\\[2pt]
+& A=\text{submerged area of filter}
+ && \dot m_c=\text{rate of solids production}\\[2pt]
+& t_c=\text{cycle time}
+ && n=\text{drum speed of the continuous filter, rps }=\frac{1}{t_c}\\[2pt]
+& A_T=\text{total filter area}
+ && f=\frac{A}{A_T}=\frac{\text{submerged area of filter}}{\text{total area}}
+   =\text{fraction of the drum submerged}\\[2pt]
+& t=f\,t_c=\frac{f}{n}
+ && t=\text{time available for cake formation in one cycle}
+\end{align*}
+\end{formulabox}
+
+\spsub{Design equation for continuous filtration}
+\begin{itemize}
+  \item The mass of solids laid down is proportional to the filtrate collected, so
+  \[m_c=Vc\qquad\Longrightarrow\qquad \dot m_c=c\left(\frac{V}{t}\right)\]
+  \item Writing the constant-pressure solution in terms of the rate of filtrate collection per unit area, dividing throughout by $c\alpha$ and replacing the cycle by the drum speed gives the deck's master equation:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\left(\frac{V}{tA}\right)&=
+\frac{\left[\left(\dfrac{2\,\Delta P\,g_c\,c\,\alpha}{\mu\,t}\right)
+      +\left(\dfrac{R_m}{t}\right)^{2}\right]^{1/2}-\dfrac{R_m}{t}}{c\,\alpha}
+ &&\text{(hand-worked page of the deck)}\\[6pt]
+\text{and with } A/A_T=f:\qquad
+\frac{\dot m_c}{A_T}&=
+\frac{\left[\dfrac{2c\alpha\Delta P f n}{\mu}+(nR_m)^{2}\right]^{1/2}-nR_m}{\alpha}
+ &&\text{(printed design equation, }R_m\neq0\text{)}
+\end{align*}
+\vspace{2pt}
+{\small $R_m$ is the filter-medium resistance: it is \emph{not} removed by the discharge mechanism and is carried through to the next cycle. If the filter medium is washed properly $R_m$ becomes negligible, and then}
+\begin{align*}
+\frac{\dot m_c}{A_T}&=\left(\frac{2c\,\Delta P\,g_c\,f\,n}{\alpha\,\mu}\right)^{1/2}
+ &&\text{(medium resistance neglected)}\\[2pt]
+\alpha&=\alpha_0(\Delta P)^{s}\qquad\Longrightarrow\qquad
+\boxed{\;\frac{\dot m_c}{A_T}=\left(\frac{2c\,\Delta P^{\,1-s}g_c\,f\,n}{\alpha_0\,\mu}\right)^{1/2}\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Notation of the design equation}
+\begin{formulabox}
+\begin{align*}
+c&=\text{mass of solids deposited in the filter per unit volume of filtrate}\\
+\Delta P&=\text{overall pressure drop in the filter}\\
+f&=\frac{A}{A_T}=\text{fraction of the drum submerged}\\
+n&=\text{drum speed of the continuous filter (rps)}=\frac{1}{t_c}\\
+t_c&=\text{cycle time};\qquad t=f t_c=\frac{f}{n}\\
+\alpha&=\text{specific cake resistance }(\si{\meter\per\kilogram})\\
+\mu&=\text{viscosity of the filtrate};\qquad
+s=\text{compressibility coefficient of the cake }(0.1\text{--}0.8)\\
+\dot m_c&=\text{mass flow rate of solids from the continuous filter};\qquad
+A_T=\text{total area of the continuous filter}
+\end{align*}
+\end{formulabox}
+\notetext{The two printed forms of the design equation stand to each other as follows: the compressible one is the incompressible one with $\alpha$ replaced by $\alpha_0(\Delta P)^{s}$, so the pressure drop appears to the power $1-s$. For an incompressible cake $s=0$ and the two coincide. Slide~8 of the deck prints the $R_m=0$ and $R_m\neq0$ forms together with ``Incompressible, $s=0$, $\alpha=\alpha_0$'' between them.}
+
 \spsection{PRACTICE PROBLEMS FROM THE SLIDES}
 
 \spsub{1 \textperiodcentered{} Screen analysis of a clay catalyst (Lec.~3)}

@@ -241,4 +241,7 @@ def port(s):
     s = re.sub(r'\\usepackage\s*(?:\[[^\]]*\])?\s*\{[^{}]*\}', '', s)
     s = re.sub(r'\\documentclass\s*(?:\[[^\]]*\])?\s*\{[^{}]*\}', '', s)
     s = s.replace(r'\begin{document}', '').replace(r'\end{document}', '')
+    # enumitem's optional list argument has no meaning without enumitem; LaTeX
+    # reads the [...] as body text and dies with "perhaps a missing \item".
+    s = re.sub(r'(\\begin\{(?:itemize|enumerate|description)\})\s*\[[^\]]*\]', r'\1', s)
     return s.replace(r'\textsuperscript{th}', r'\ensuremath{^{\mathrm{th}}}')

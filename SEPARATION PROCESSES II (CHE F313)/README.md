@@ -40,7 +40,15 @@
 - `SP2-notes.tex` — short notes + formula sheet, covering Module 1 Lectures 1–6 and Module 2
   Lectures 1–2. Definitions, the derivation steps (including the hand-worked Lecture 3, Lecture 5
   and Mod 2 Lecture 1 derivations), every formula on the slides, and the practice problems.
-- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 13-page A4 PDF compiled from `SP2-notes.tex`.
+  **This is the canonical standard** for notes structure, style and depth across the whole
+  repository; the other subjects' notes are built to match it. It is written for XeLaTeX with a
+  full TeX Live (`xcolor`, `tcolorbox`, `siunitx`, `booktabs`, `enumitem`, `mathtools`, `multirow`).
+- `SP2-Short-Notes-and-Formula-Sheet.tex` — the same document **ported to the base TeX tree**, so
+  it rebuilds with `tools/latex` like every other subject's notes. Produced by
+  `tools/latex/mknotes.py:port()` from `SP2-notes.tex`; edit `SP2-notes.tex` and re-port rather
+  than editing this file. Verified equivalent: 13 pp (same as the original), 0 errors,
+  0 overfull, character counts 39293 vs 39271.
+- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 13-page A4 PDF.
 - `SP2-Problems-and-Solutions.tex` — **every numerical question in the uploaded slides, tutorials and
   tests, with its solution** (Q1–Q11, each followed by its `Ans` block, segregated by source).
 - `SP2-Problems-and-Solutions.pdf` — 14-page A4 PDF compiled from `SP2-Problems-and-Solutions.tex`.

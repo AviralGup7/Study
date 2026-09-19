@@ -20,11 +20,15 @@
 
 ### `Notes/` — written here
 
-- `PDP-Short-Notes-and-Formula-Sheet.tex` — short notes + formula sheet, one compact section per
-  deck: the hierarchy of decisions, the synthesis steps and HDA/VCM case-study numbers, heuristics
-  H1–H4, the Kremser equation and its simplifications, the TAC optimum, the approach-temperature
-  and back-of-envelope distillation rules, and the EIA composite-curve/pinch/area formulas.
-- `PDP-Short-Notes-and-Formula-Sheet.pdf` — 2-page A4 PDF compiled from that `.tex`.
+- `PDP-Short-Notes-and-Formula-Sheet.tex` — short notes + formula sheet at the depth of the course
+  standard (`SEPARATION PROCESSES II (CHE F313)/Notes/SP2-notes.tex`): a `Compiled from` box naming
+  all five decks with page counts, a `What is inside` index, a notation table, then one section per
+  deck with subheads and the reasoning behind each rule and formula. Closes with the two worked deck
+  problems (P1 approach temperature, P2 minimum trays), a consolidated formula sheet, a table of all
+  the heuristics in one place, and the order in which decisions must be taken.
+- `PDP-Short-Notes-and-Formula-Sheet.pdf` — 8-page A4 PDF compiled from that `.tex`
+  (0 errors, 0 overfull boxes). All 48 numbers quoted in it were checked against
+  `pdp-answers-check.py` output.
 - `PDP-Problems-and-Solutions.tex` — **every question or problem posed in the decks above, with its
   solution**, worked only with the method and the data given in the decks (P1–P7, in four parts:
   numerical/heuristic problems, the solvent-recovery case study, the flow-sheet synthesis problems, the

@@ -869,6 +869,51 @@ $\alpha_0$ and $s$ are empirical constants, determined purely by experiments. $s
 \end{formulabox}
 \notetext{The deck works this lecture from the hand-written pages numbered ``Lecture 9''; the printed front page titles it Module 2 Lecture 3. Both page numbers are the same lecture.}
 
+% ---- Module 2, Lecture 4 : constant-rate filtration ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 4 --- Constant-Rate Filtration}
+
+\spsub{The condition}
+\begin{itemize}
+  \item In \textbf{constant-rate filtration} the filtrate flows at a \emph{constant volume rate}, so the linear velocity $u$ is constant and the pressure drop must be allowed to rise through the run --- from a minimum at the start of filtration to a maximum at the end of it (the mirror image of the constant-pressure case of Lecture 3, where $\Delta P$ is held and the rate falls).
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+u\;(\text{linear velocity})&=\text{constant}\\[2pt]
+u&=\frac{1}{A}\frac{\mathrm{d}v}{\mathrm{d}t}=\frac{V}{At}
+ &&\text{(}v,V=\text{volume of filtrate collected up to time }t\text{)}\\[2pt]
+\alpha&=\frac{\Delta P_c\,g_c\,A}{\mu\,u\,m_c}
+ &&\text{specific cake resistance, from Lecture 3}
+\end{align*}
+\end{formulabox}
+
+\spsub{Pressure drop over the cake at constant rate}
+\begin{itemize}
+  \item With the cake mass written as $m_c=Vc$ ($c$ = mass of solids deposited per unit volume of filtrate) and $u$ constant, the cake resistance is unchanged during the run and the whole of the extra pressure drop goes into driving the flow through the growing cake:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\Delta P_c}{\alpha}&=\frac{\mu}{g_cA}\left(\frac{V}{At}\right)Vc\\[3pt]
+\boxed{\;\frac{\Delta P}{\alpha}=\frac{\mu\,c}{g_c\,t}\left(\frac{V}{A}\right)^{2}\;}
+\qquad\text{i.e.}\qquad
+\Delta P=\frac{\mu\,c\,\alpha}{g_c\,t}\left(\frac{V}{A}\right)^{2}
+\end{align*}
+\vspace{2pt}
+In this equation $\Delta P$ is kept on the left-hand side because $\alpha=f(\Delta P)$ for compressible sludges --- the specific cake resistance itself grows with the pressure drop that the cake is then asked to withstand.
+\end{formulabox}
+
+\spsub{Closing the loop for a compressible cake}
+\begin{itemize}
+  \item Substituting the empirical cake-resistance law $\alpha=\alpha_0(\Delta P)^{s}$ from Lecture 3 into the constant-rate result gives the pressure drop the pump must deliver at time $t$:
+\end{itemize}
+\begin{formulabox}
+\[\Delta P=\frac{\mu\,c\,\alpha_0(\Delta P)^{s}}{g_c\,t}\left(\frac{V}{A}\right)^{2}
+\qquad\Longrightarrow\qquad
+\boxed{\;\Delta P^{\,1-s}=\frac{\mu\,c\,\alpha_0}{g_c\,t}\left(\frac{V}{A}\right)^{2}\;}
+\]
+(For an incompressible cake $s=0$ and this collapses to the equation above with $\alpha=\alpha_0$: at a fixed rate $\Delta P$ grows linearly with $V^2/t$, that is with $t$ itself, since $V=uAt$.)
+\end{formulabox}
+\notetext{The two limiting schedules now sit side by side: \emph{constant pressure} --- $\Delta P$ fixed, rate falls, $t/V$ against $V$ is a straight line; \emph{constant rate} --- rate fixed, $\Delta P$ rises, and for an incompressible cake $\Delta P\propto t$. Both are worked with the same pair of resistances, cake and medium.}
+
 \spsection{PRACTICE PROBLEMS FROM THE SLIDES}
 
 \spsub{1 \textperiodcentered{} Screen analysis of a clay catalyst (Lec.~3)}

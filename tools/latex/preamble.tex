@@ -1,0 +1,119 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=18mm,right=18mm,top=15mm,bottom=17mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{color}
+\usepackage{array,tabularx,longtable,multicol,calc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent2,citecolor=accent}
+
+%--------------------------------------------------------------- palette
+% The base `color` package (no xcolor here) understands only rgb/cmyk/gray, so
+% the SP2 HTML values are expanded to rgb triplets at generation time.
+\definecolor{accent}{rgb}{0.0431,0.2353,0.3647}
+\definecolor{accent2}{rgb}{0.1137,0.4353,0.6471}
+\definecolor{boxbg}{rgb}{0.9451,0.9569,0.9686}
+\definecolor{boxframe}{rgb}{0.7765,0.8196,0.8549}
+\definecolor{rule}{rgb}{0.6235,0.7020,0.7608}
+\definecolor{inbox}{rgb}{0.0549,0.1412,0.1882}
+\definecolor{notecol}{rgb}{0.2745,0.3255,0.3608}
+\definecolor{white}{rgb}{1.0000,1.0000,1.0000}
+
+%--------------------------------------------------------------- headings
+\newcommand{\spsection}[1]{%
+  \par\addvspace{10pt}\noindent
+  \colorbox{accent}{%
+    \begin{minipage}{\dimexpr\linewidth-14pt\relax}%
+      \color{white}\bfseries\large\strut #1\strut
+    \end{minipage}}\par\vspace{4pt}\nopagebreak}
+
+\newcommand{\spsub}[1]{\par\addvspace{7pt}\noindent{\color{accent}\bfseries #1}\par\addvspace{3pt}\nopagebreak}
+
+\newcommand{\notetext}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
+%--------------------------------------------------------------- boxes
+% tcolorbox is unavailable, so every box is an lrbox'd minipage inside a
+% \fcolorbox.  \bgroup/\egroup CANNOT be used here: they silently discard the
+% box body.  All of these are ENVIRONMENTS, not macros -- calling them as
+% \warnbox{...} leaves a minipage open and TeX dies on "main memory size".
+\newsavebox{\spboxa}
+\newenvironment{formulabox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{daybox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{notecol}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{qbox}{%
+  \par\addvspace{6pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{mthbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{ansbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{warnbox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newcommand{\qtitle}[2]{%
+  \par\addvspace{8pt}\noindent{\color{accent}\bfseries Q#1.\hspace{0.5em}}{\small\color{notecol}#2}\par\addvspace{3pt}\nopagebreak}
+
+%--------------------------------------------------------------- tables
+% booktabs is unavailable; map its rules onto \hline so both source styles work.
+\providecommand{\toprule}{\hline}
+\providecommand{\midrule}{\hline}
+\providecommand{\bottomrule}{\hline}
+
+%--------------------------------------------------------------- glyphs
+% No EC/TS1 metrics in this tree, so build the few needed text glyphs from math.
+\providecommand{\textperiodcentered}{\ensuremath{\cdot}}
+\providecommand{\textdegree}{\ensuremath{^\circ}}
+\newcommand{\microm}{\ensuremath{\,\mu\mathrm{m}}}
+\newcommand{\degreec}{\ensuremath{^\circ\mathrm{C}}}
+\newcommand{\degreef}{\ensuremath{^\circ\mathrm{F}}}
+\newcommand{\degreek}{\ensuremath{^\circ\mathrm{K}}}
+
+%--------------------------------------------------------------- lists
+\setlength{\leftmargini}{1.1em}
+\setlength{\leftmarginii}{1.5em}
+\setlength{\partopsep}{2pt}
+\setlength{\parsep}{0pt}
+\setlength{\itemsep}{1.5pt}
+\setlength{\topsep}{2pt}
+\renewcommand{\labelitemi}{\textbullet}
+\renewcommand{\labelitemii}{\textendash}
+
+%--------------------------------------------------------------- layout
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+\setlength{\emergencystretch}{3em}
+
+%--------------------------------------------------------------- footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\color{notecol}$code \textperiodcentered{} $name --- $doctype}
+\fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
+
+\begin{document}

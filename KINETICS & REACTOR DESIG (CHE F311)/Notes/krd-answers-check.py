@@ -339,3 +339,19 @@ print("=== Ch6 three-reaction selectivity reduction (Ch6 slides 18-19) ===")
 coef = 0.0002/0.0018; dE = 36000-25000; a = 1-1.5
 print(f"S_DU = {coef:.2f} e^({dE}(1/300-1/T)) C_A^({a})   (deck prints 0.11 e^(11,000(1/300-1/T))/C_A^0.5)")
 print(f"S_DQ: prefactor {0.0002/0.00452:.4f}, E-gap {36000-5000} -> very large at high T; order gap {1-0.5}")
+
+print("=== Ch7 A<->B adiabatic equilibrium intersection (Ch7 slides 47-48) ===")
+# X_EB = 50(T-300)/20000 = 2.5e-3(T-300); Kc = 1e5 exp(-33.78 (T-298)/T); Xe = Kc/(1+Kc)
+slope = 50/20000; coef = 20000/1.987/298
+print(f"X_EB slope = {slope:.1e} (deck 2.5e-3); van't Hoff coef = {coef:.2f} (deck 33.78)")
+for Tt in [350, 400, 425, 450, 475, 500]:
+    K = 1e5*np.exp(-coef*(Tt-298)/Tt)
+    print(f"  Kc({Tt}) = {K:.2f}, Xe = {K/(1+K):.2f}")
+f = lambda T: 1e5*np.exp(-coef*(T-298)/T)/(1+1e5*np.exp(-coef*(T-298)/T)) - slope*(T-300)
+lo, hi = 300.0, 600.0
+for _ in range(100):
+    m = 0.5*(lo+hi)
+    if f(lo)*f(m) <= 0: hi = m
+    else: lo = m
+T = 0.5*(lo+hi)
+print(f"exact intersection X = {slope*(T-300):.3f} at T = {T:.1f} K (deck graphic: 0.42 at 465 K)")

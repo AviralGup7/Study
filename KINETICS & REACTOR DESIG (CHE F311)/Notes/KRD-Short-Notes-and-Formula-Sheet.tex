@@ -161,8 +161,9 @@ Collection and analysis of rate data; differential and integral methods;
  half-life; differential reactor; nonlinear regression & Ch5\\
 Multiple reactions; selectivity and yield; contacting schemes for the
  four sign cases; series intermediates; product distribution; net rates & Ch6\\
-Non-isothermal design; energy balance; adiabatic operation; heat exchange;
- multiple steady states and runaway; interstage cooling & Ch7\\
+Non-isothermal design; energy balance; adiabatic operation; equilibrium
+ thermodynamics; heat exchange; multiple steady states and runaway;
+ interstage cooling and optimum feed temperature & Ch7\\
 Catalysis and catalytic reactors; adsorption and site balance;
  Langmuir--Hinshelwood; internal and external diffusion & Catalysis\\
 Non-ideal reactors; residence-time distribution; segregation;
@@ -864,93 +865,205 @@ C_{A2} = 0.0745,\qquad C_{R2} = 0.2277,\qquad C_{S2} = 0.9978
 \spsection{7 \enspace Non-Isothermal Reactor Design}
 \notetext{Source: \texttt{Ch7-\_krd.pdf}.}
 
-\spsub{7.1 \enspace The energy balance}
+\spsub{7.1 \enspace Performance equations and the energy balance}
+\begin{itemize}
+\item The isothermal algorithm of section~4 survives unchanged; temperature only adds one unknown, coupled in through Arrhenius. Slide~5 writes the set for a first-order $A\to B$ PFR:
+\end{itemize}
 \begin{formulabox}
 \begin{align*}
-\dot{Q} - \dot{W}_s + \sum F_{i0}H_{i0} - \sum F_i H_i &= 0
- &&\text{steady state, no shaft work beyond } \dot W_s\\[4pt]
-H_i(T) &= H_i^{\circ}(T_R) + C_{p,i}\left(T - T_R\right)
- &&\text{enthalpy referenced to } T_R
-\end{align*}
-\end{formulabox}
-
-\spsub{7.2 \enspace Adiabatic operation and the equilibrium ceiling}
-\begin{formulabox}
-\begin{align*}
-X &= \frac{\sum \Theta_i C_{p,i}\left(T-T_0\right)}
-        {-\left[\Delta H_{Rx}^{\circ}(T_R) + \Delta C_p\left(T-T_R\right)\right]}
- &&\text{adiabatic energy balance}\\[5pt]
-T &= T_0 + (\text{slope})\,X
- &&\text{a straight line on the } T\text{--}X \text{ plane}\\[5pt]
-K_C(T) &= K_C(T_1)\exp\!\left[\frac{\Delta H_{Rx}}{R}\left(\frac{1}{T_1}-\frac{1}{T}\right)\right]
- &&\text{van 't Hoff}\\[5pt]
-X_e &= \frac{K_C}{1+K_C}
- &&\text{for } A \rightleftharpoons B
+\frac{dX}{dV} &= \frac{-r_A}{F_{A0}}, &
+-r_A &= k_1 \exp\!\left[\frac{E}{R}\left(\frac{1}{T_1}-\frac{1}{T}\right)\right] C_{A0}(1-X)
 \end{align*}
 \end{formulabox}
 \begin{itemize}
-\item For an \textbf{exothermic reversible} reaction these two lines move in opposite directions: temperature raises the rate but \emph{lowers} $X_e$. The achievable conversion is where the energy-balance line meets the equilibrium curve, and no amount of catalyst moves that point.
+\item The open-system energy balance (slides~6--8) reads \emph{accumulation $=$ heat added $-$ work done $+$ energy in by flow $-$ energy out by flow}. With $E_i \approx U_i$ (potential and kinetic energies dropped) and flow work absorbed into the enthalpy, steady state gives
 \end{itemize}
-
-\spsub{7.3 \enspace Heat exchange in a tubular reactor}
 \begin{formulabox}
 \begin{align*}
-\frac{dT}{dV} &= \frac{Ua\left(T_a - T\right) + (-r_A)(-\Delta H_{Rx})}{\sum F_i C_{p,i}}\\[5pt]
+\dot{Q} - \dot{W}_s + \sum F_{i0}H_{i0} - \sum F_i H_i &= 0\\[4pt]
+H_i(T) &= H_i^{\circ}(T_R) + C_{p,i}\left(T - T_R\right)
+ &&\text{no phase change, constant } C_p
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item Substituting the stoichiometry $F_i = F_{A0}(\Theta_i + \nu_i X/a)$ collapses everything to the deck's master equation (slides~9--11):
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\dot{Q} - \dot{W}_s - F_{A0}X\left[\Delta H_{Rx}^{\circ}(T_R) + \Delta\hat{C}_p\left(T-T_R\right)\right]
+ - F_{A0}\sum_i \Theta_i \tilde{C}_{p,i}\left(T - T_{i0}\right) &= 0\\[4pt]
+\Delta\hat{C}_p &= \tfrac{d}{a}C_{pD} + \tfrac{c}{a}C_{pC} - \tfrac{b}{a}C_{pB} - C_{pA}
+\end{align*}
+\end{formulabox}
+
+\spsub{7.2 \enspace Adiabatic operation}
+\begin{formulabox}
+\begin{align*}
+X &= \frac{\sum \Theta_i \tilde{C}_{p,i}\left(T-T_0\right)}
+        {-\left[\Delta H_{Rx}^{\circ}(T_R) + \Delta\hat{C}_p\left(T-T_R\right)\right]}
+ &&\text{the energy-balance line } X_{EB}\\[5pt]
+T &= \frac{X\left[-\Delta H_{Rx}^{\circ}(T_R)\right] + \sum\Theta_i C_{p,i}T_{i0} + X\Delta C_p T_R}
+        {\sum\Theta_i C_{p,i} + X\Delta C_p}
+ &&\text{solved for } T
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item The same straight line $X_{EB}$ on the $T$--$X$ plane holds for \textbf{batch, CSTR, PFR and PBR} --- the deck brackets all four beside the plot. For an exothermic reaction $X_{EB}$ rises with $T$; the reactor can only operate where this line meets what the kinetics and equilibrium allow.
+\end{itemize}
+
+\spsub{7.3 \enspace The equilibrium ceiling, from thermodynamics}
+\notetext{Slides~35--45 develop the ceiling rather than asserting it:}
+\begin{formulabox}
+\begin{align*}
+dG &= Vdp - SdT + \textstyle\sum_j \mu_j\,dn_j, &
+\mu_j &= \left(\frac{\partial G}{\partial n_j}\right)_{T,P,n_i}\\[4pt]
+\Delta G &= \Delta G^{\circ} + RT\ln\!\left(\textstyle\prod_j a_j^{\nu_j}\right), &
+K_a &= \left(\textstyle\prod_j a_j^{\nu_j}\right)_{eq} = \exp\!\left(\frac{-\Delta G^{\circ}}{RT}\right)\\[4pt]
+K_p &= \left(\textstyle\prod_j P_j^{\nu_j}\right),\quad
+K_f = \left(\textstyle\prod_j f_j^{\nu_j}\right),\quad
+K_C = \left(\textstyle\prod_j C_j^{\nu_j}\right)
+ &&\text{activity specialised}\\[4pt]
+\frac{d\ln K_a(T)}{dT} &= \frac{\Delta H}{RT^{2}}
+ &&\text{van 't Hoff}\\[4pt]
+K_p &= \left(\textstyle\prod_j \left[P\,\dfrac{N_{j0}+\nu_j\alpha}{N_{T0}+\alpha\sum_j\nu_j}\right]^{\nu_j}\right) = F(\alpha)
+ &&\text{extent form}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Reversible exothermic:} $X_e$ falls with $T$ (the equilibrium curve descends); \textbf{reversible endothermic:} $X_e$ rises with $T$. The adiabatic energy-balance line crosses the equilibrium curve; that intersection is the \emph{adiabatic equilibrium conversion}, and no catalyst moves it (slide~46).
+\item \textbf{Worked intersection} (slides~47--48): $A \rightleftharpoons B$, pure A at $300$~K, $H_{A0} = -40\,000$, $H_{B0} = -60\,000$~cal/mol, $C_{pA} = C_{pB} = 50$~cal/mol\,K, $K_C(298) = 10^{5}$:
+\end{itemize}
+\begin{mthbox}
+\begin{align*}
+X_{EB} &= \frac{C_p(T-T_0)}{-\Delta H_{Rx}} = 2.5\times10^{-3}(T-300)
+ &&\left(\tfrac{50}{20\,000}\right)\\[3pt]
+K_C(T) &= 100\,000\,\exp\!\left[-33.78\,\frac{T-298}{T}\right]
+ &&\left(\tfrac{|\Delta H|}{R\cdot 298} = \tfrac{10\,065}{298} = 33.78\right)\\[3pt]
+X_e &= \frac{K_C(T)}{1+K_C(T)}
+ &&\text{intersection: deck graphic } 0.42 \text{ at } 465\ \mathrm{K}
+\end{align*}
+\end{mthbox}
+\notetext{Solving the two printed equations exactly gives $X = 0.401$ at $460.4$~K --- the deck's $0.42/465$~K is a graphical read-off of the same pair, reproduced by \texttt{krd-answers-check.py}. The deck's $K_C$ table (slide~47: $661.6$ at $350$~K down to $0.12$ at $500$~K) is the same formula evaluated.}
+
+\spsub{7.4 \enspace Heat exchange in a tubular reactor}
+\begin{formulabox}
+\begin{align*}
+\frac{dT}{dV} &= \frac{Ua\left(T_a - T\right) + (-r_A)(-\Delta H_{Rx})}{\sum F_i C_{p,i}}
+ &&\text{no radial gradients}\\[5pt]
 \text{co-current coolant:}\quad \frac{dT_a}{dV} &= \frac{Ua\left(T - T_a\right)}{\dot{m}_c C_{p,c}}
 \end{align*}
 \end{formulabox}
+\begin{itemize}
+\item If the coolant flow is large compared with the heat released, $T_a$ is effectively \textbf{constant} along the reactor (slide~26); heat added for endothermic, removed for exothermic.
+\item \textbf{Acetic anhydride} (slides~27--30): acetone cracking $\mathrm{CH_3COCH_3} \to \mathrm{CH_2CO} + \mathrm{CH_4}$, first order with $\ln k = 34.34 - 34\,222/T$, $7850$~kg/h through a bank of $1000$ 1-inch schedule-40 tubes, inlet $1035$~K, $162$~kPa. Three cases: adiabatic --- the endothermic reaction cools itself and \emph{dies after $\approx 3.5$~m$^3$}; constant $T_a = 1150$~K with $U = 110$~J/m$^2$s\,K --- $T$ dips then recovers and $X$ climbs; variable heating medium --- $T_a$ slides down with $T$.
+\item \textbf{Ethane cracking at equilibrium} (slide~31): ethane $+$ steam, $2.99$~atm, $880\,^{\circ}$C, $95$~m tubes, $60\,\%$ conversion --- the deck's specification sheet for the equilibrium-limited endothermic case.
+\end{itemize}
 
-\spsub{7.4 \enspace CSTR with cooling, and multiple steady states}
+\spsub{7.5 \enspace The CSTR with heat exchange --- two solution routes}
+\notetext{With $\kappa = UA/(F_{A0}C_{p0})$ and $T_c = (\kappa T_a + T_0)/(1+\kappa)$:}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Specify $X$} & $T = T_c + \dfrac{(-\Delta H_{Rx}^{\circ})(X)}{C_{p0}(1+\kappa)}$, then $k = Ae^{-E/RT}$, $-r_A = kC_{A0}(1-X)$, $V = F_{A0}X/(-r_A)$\\\\
+\textbf{Specify $T$} & $X = \dfrac{C_{p0}(1+\kappa)(T-T_c)}{-\Delta H_{Rx}^{\circ}}$, then the same rate-law chain to $V$\\\\
+\textbf{Specify $V$} & generate $T$ vs $X_{EB}$ from the energy balance and $T$ vs $X_{MB}$ from $X_{MB} = \tau k/(1+\tau k)$; the intersection is the operating point\\\\
+\bottomrule
+\end{tabularx}
 \begin{formulabox}
 \begin{align*}
-G(T) &= \frac{-\Delta H_{Rx}}{1 + 1/(k\tau)}
- &&\text{heat generated}\\[4pt]
+G(T) &= X(-\Delta H_{Rx}) = \frac{\tau A e^{-E/RT}}{1 + \tau A e^{-E/RT}}\,(-\Delta H_{Rx})
+ &&\text{heat generated, first order}\\[4pt]
 R(T) &= C_{p0}\left(1+\kappa\right)\left(T - T_c\right)
- &&\text{heat removed; } \kappa \propto UA/F_{A0}\\[4pt]
-S' &= \frac{E}{RT_s^{2}}\,G(T_s) - C_{p0}\left(1+\kappa\right)
- &&\text{stability at the steady state } T_s
+ &&\text{heat removed}
 \end{align*}
 \end{formulabox}
 \begin{itemize}
-\item Intersections of $G(T)$ and $R(T)$ are the steady states. Where $S' < 0$ the state is stable; where $S' > 0$ it is not.
-\item \textbf{Runaway} occurs when the two curves become tangent and the intersection disappears --- raising $T_c$ or lowering the feed temperature moves the system back to a single stable state. This is the \textbf{ignition/extinction} behaviour the deck plots on its stability diagram.
+\item Raising $T_0$ slides the straight $R(T)$ line to the right; raising $\kappa$ steepens it and moves $T_c$ from $T_0$ ($\kappa=0$) toward $T_a$ ($\kappa\to\infty$) (slides~77--78). Raising $\tau$ or $E$ sharpens the S-shape of $G(T)$ (slide~81) --- which is what creates multiple intersections.
 \end{itemize}
 
-\spsub{7.5 \enspace Interstage cooling}
+\spsub{7.6 \enspace Multiple steady states, ignition--extinction, runaway}
 \begin{itemize}
-\item Instead of one adiabatic bed taken to its equilibrium limit, use \textbf{several adiabatic stages with cooling between them}. Each stage starts cooler, so each one starts further from equilibrium and gains more conversion. The optimum feed temperature for a fixed total volume maximises exit $X$.
-\end{itemize}
-
-\spsub{7.6 \enspace Worked from the deck}
-\begin{itemize}
-\item \textbf{Butane isomerisation, adiabatic PFR} (slides~14--16). The energy balance gives $T = 330 + 43.3X$, i.e.\ $6900/158.9$, with $E/R \approx 7906$ and $-\Delta H/R \approx 830.3$; $k$ rises from $4.22$ at $330$~K to $31.67$ at $360.3$~K.
+\item Intersections of $G(T)$ and $R(T)$ are the steady states; sweeping $T_0$ traces the \textbf{ignition--extinction curve}: upper and lower branches are attainable, the middle branch is not (slides~82--84).
+\item \textbf{Stability} (slides~85--89): a state is stable where a temperature bump removes more heat than it generates. The deck's criterion: with
 \[
-\boxed{\;V_{X=0.70} = 1.974\ \mathrm{m^3}\;}
-\qquad \text{deck table: } T(X{=}0.2) = 338.7\ \mathrm{K},\quad (-r_A)_{X=0} = 39.3
+\Delta T_{bc} = T' - T_c = \frac{RT_c^{\,2}}{E},\qquad
+T' = \frac{E}{2R}\left[1 - \sqrt{1 - 4\tfrac{RT_c}{E}}\,\right],\qquad
+T_c = \frac{\kappa T_a + T_0}{1+\kappa},
 \]
-\item \textbf{Interstage cooling} (slides~48--51), $40$~mol/s cooled to $350$~K between stages, target $95\,\%$ of $X_e$:
+exceeding $\Delta T_{bc}$ tips the reactor to the upper state. For industrial reactions $E/RT \approx 16$--$24$, so $\Delta T_{bc} \approx 15$--$30\,^{\circ}$C.
+\item With $S' = dG/dT$ at the steady state, \textbf{runaway} when $C_{p0}(1+\kappa) < S'$ (slides~88, 90--91): decreasing $UA$ flattens $R(T)$ until tangency disappears and the CSTR runs away to the upper state. The deck demonstrates it on $2\mathrm{Na_2S_2O_3} + 4\mathrm{H_2O_2} \to \mathrm{Na_2S_3O_6} + \mathrm{Na_2SO_4} + 4\mathrm{H_2O}$ (slides~85--86).
+\item \textbf{Zero vs first order} (slides~92--93): with $\tau = 0.1$~min, $E = 10\,000$~cal/mol, $\Delta H_{Rx} = -10\,000$~cal/mol and inerts $2{:}1$, the deck's table gives $dE/dT = 80$; the first-order reaction is globally stable for all $T_c$, while the zero-order one runs away above an entering temperature of $460$~K and becomes stable again only past $685$~K.
+\end{itemize}
+
+\spsub{7.7 \enspace Interstage cooling, interstage heating, optimum feed temperature}
+\begin{itemize}
+\item \textbf{Exothermic reversible:} several adiabatic stages with \emph{coolers} between them; each stage starts cooler, further below its equilibrium curve, and the zigzag path on the $X$--$T$ diagram climbs above what one adiabatic bed can reach (slides~49, 52).
+\item \textbf{Endothermic reversible:} mirror image --- \emph{heaters} between stages (slide~50).
+\item \textbf{Optimum feed temperature} (slides~53--54): at low $T_0$ the rate is slow and conversion is low; at high $T_0$ the equilibrium conversion collapses and conversion is again low; between them $X(T_0)$ passes through a \emph{maximum} --- the optimum feed temperature for a fixed size or catalyst weight.
+\end{itemize}
+
+\spsub{7.8 \enspace Multiple reactions with heat effects (PFR/PBR)}
+\begin{formulabox}
+\begin{align*}
+\frac{dT}{dV} &= \frac{Ua\left(T_a - T\right) + \sum_i (-r_{ij})(-\Delta H_{Rx,ij})}{\sum_j F_j C_{p,j}}
+ &&\text{coupled with the mole balances and rate laws}
+\end{align*}
+\end{formulabox}
+\notetext{Slide~95's example: $A \to B$ ($-r_{1A} = k_{1A}C_A$) and $2A \to C$ ($-r_{2A} = k_{2A}C_A^{2}$), pure A at $100$~mol/s, $150\,^{\circ}$C, $0.1$~mol/dm$^3$; $\Delta H_1 = -20\,000$, $\Delta H_2 = -60\,000$~J/mol A; $C_{pA} = C_{pB} = 90$, $C_{pC} = 180$~J/mol\,$^{\circ}$C; $k_{1A} = 10\exp[(E_1/R)(1/300 - 1/T)]$~s$^{-1}$ with $E_1/R = 4000$~K; $k_{2A} = 0.09\exp[(E_2/R)(1/300 - 1/T)]$~dm$^3$/mol\,s with $E_2/R = 9000$~K; $Ua = 4000$~J/m$^3$s\,$^{\circ}$C, $T_a = 100\,^{\circ}$C.}
+
+\spsub{7.9 \enspace Worked from the deck}
+\begin{itemize}
+\item \textbf{Butane isomerisation, adiabatic PFR} (slides~14--24). $163$~kmol/h of $90\,\%$ n-butane/$10\,\%$ i-pentane at $330$~K to $70\,\%$; $\Delta H_{Rx} = -6900$~J/mol, $E/R \approx 7906$~K, $C_{p,\text{butane}} = 141$, $C_{p,\text{pentane}} = 161$~J/mol\,K. The energy balance gives $T = 330 + 43.3X$ (slope $6900/158.9 \approx 43.3$), and the deck's own explicit set is
+\begin{align*}
+K_C &= 3.03\,e^{-830.3\,(T-333)/(T\cdot333)}, &
+k &= 31.1\,e^{7906\,(T-360)/(T\cdot360)}\\[3pt]
+X_e &= \frac{K_C}{1+K_C}, &
+-r_A &= k C_{A0}\left(1 - \left(1 + \tfrac{1}{K_C}\right)X\right)
+\end{align*}
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l*{6}{r}@{}}
+\toprule
+$X$ & 0 & 0.2 & 0.4 & 0.6 & 0.65 & 0.7\\\\
+\midrule
+$T$ (K) & 330 & 338.7 & 347.3 & 356.0 & 358.1 & 360.3\\\\
+$k$ (h$^{-1}$) & 4.22 & 7.76 & 14.02 & 24.27 & 27.74 & 31.67\\\\
+$X_e$ & 0.76 & 0.74 & 0.73 & 0.72 & 0.718 & 0.715\\\\
+$F_{A0}/(-r_A)$ (m$^3$) & 3.74 & 2.78 & 2.50 & 3.88 & 5.99 & 23.29\\\\
+\bottomrule
+\end{tabularx}
+\begin{mthbox}
+\begin{align*}
+\boxed{\;V_{X=0.70} \approx 1.97\ \mathrm{m^3}\;}
+ &&\text{the rate peaks mid-reactor ($-r_A \approx 59$ at $X\approx0.4$) then collapses toward } X_e
+\end{align*}
+\end{mthbox}
+\begin{itemize}
+\item \textbf{PFR with co-current heat exchange} (slides~61--67): same chemistry with $Ua = 5000$~kJ/h\,m$^3$K, inlet $305$~K, coolant $310$~K; the deck integrates $dT_a/dV = 5000(T-T_a)/14\,000$ alongside $dT/dV = (r_A\Delta H - Ua(T-T_a))/(C_{p0}F_{A0})$ --- the rate peak is cut and $T$ never exceeds the $325$~K limit.
+\item \textbf{Interstage cooling} (slides~48--52), $40$~mol/s cooled to $350$~K between stages, each stage to $95\,\%$ of its equilibrium conversion:
 \[
 \text{R1: } X = 0.397 \text{ at } 458.9\ \mathrm{K};\qquad
 \text{R2: } X = 0.621 \text{ at } 439.5\ \mathrm{K}
 \]
 \[
-\boxed{\;\dot{Q}_1 = 217.8\ \mathrm{kcal/s},\qquad \dot{Q}_2 = 179.1\ \mathrm{kcal/s}\;}
+\boxed{\dot{Q}_1 = 217.8\ \mathrm{kcal/s},\quad \dot{Q}_2 = 179.1\ \mathrm{kcal/s}}
 \]
 \notetext{The second stage exits \emph{cooler} than the first ($439.5$ vs $458.9$~K) yet reaches \emph{higher} conversion --- the direct payoff of resetting the distance to equilibrium.}
-\item \textbf{Propylene glycol, CSTR} (slides~57--74):
+\item \textbf{Propylene oxide, CSTR} (slides~57--74). $43.04$~lbmol/h PO into the $300$-gal CSTR, first order with
+\[
+k = 16.96\times10^{12}\,e^{-32\,400/(1.987\,T)}\ \mathrm{h^{-1}},\qquad \tau = 0.1229\ \mathrm{h},
+\]
+plant ceiling $125\,^{\circ}$F:
 \end{itemize}
 \begin{tabularx}{\linewidth}{@{}l r r r@{}}
 \toprule
-Case & $X$ & $T$ & $T$\\
- & & (R) & (F)\\
+Case & $X$ & $T$ (R) & $T$ (F)\\\\
 \midrule
-adiabatic & 0.842 & 610.8 & 151\\
-with cooling coil & 0.3454 & 562.18 & 102.2\\
+adiabatic & 0.842 & 610.8 & 151\\\\
+with cooling coil & 0.364 & 563.7 & 104\\\\
 \bottomrule
 \end{tabularx}
-\notetext{The deck's conclusion, in its own words: \emph{``125 F = 585 F --- we can't use the existing system.''} The adiabatic operating point sits above the temperature the plant can accept, and the coil pulls conversion down to $0.345$ to hold it. Note that this is the same system as \S5.7's Michaelis--Menten-free propylene-glycol example; the cross-over is at $611$~R $=151\,^{\circ}\mathrm{F}$, $X \approx 0.84$.}
+\notetext{The adiabatic point sits above the $125\,^{\circ}$F $= 585$~R ceiling --- ``we can't use the existing system.'' The $40$~ft$^2$ coil at $85\,^{\circ}$F with $U = 100$~Btu/h\,ft$^2$\,F pulls the operating point down to the deck's fsolve values $X = 0.364$, $T = 563.7$~R, inside the constraint. The $X_{MB}$/$X_{EB}$ table of slide~59 crosses at $613$~R, $0.85$ --- the graphical version of the adiabatic row.}
 \begin{itemize}
-\item \textbf{Parallel reactions with heat effects} (slide~95). The ODE set integrated to $V = 10^{4}$~dm$^3$ gives $T = 645$~K.
+\item \textbf{Parallel reactions with heat effects} (slide~95). The coupled ODE set of \S7.8 integrated to $V = 10^{4}$~dm$^3$ gives $T \to 645$~K with the product essentially B.
 \end{itemize}
 
 %================================================================== Catalysis

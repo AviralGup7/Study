@@ -1099,7 +1099,28 @@ with cooling coil & 0.364 & 563.7 & 104\\\\
 \spsection{8 \enspace Catalysis and Catalytic Reactors}
 \notetext{Source: \texttt{Catalysis\_Krd.pdf}.}
 
-\spsub{8.1 \enspace The seven steps and the rate-limiting-step algorithm}
+\spsub{8.1 \enspace What a catalyst does --- and what it cannot do}
+\begin{itemize}
+\item \textbf{Catalyst} (slide~5): a substance that increases the \emph{rate} at which a chemical system approaches equilibrium, \emph{without being substantially consumed}. Selecting one is \emph{not well understood} --- in practice, extensive trial and error.
+\item \textbf{Homogeneous} --- catalyst in the same phase as the reactants: $2\,\mathrm{SO_2(g)}+\mathrm{O_2(g)} \xrightarrow{\mathrm{NO(g)}} 2\,\mathrm{SO_3(g)}$; sucrose $+\,\mathrm{H_2O} \xrightarrow{\mathrm{H^+(aq)}}$ glucose $+$ fructose. \textbf{Heterogeneous} --- different phase: $4\,\mathrm{NH_3}+5\,\mathrm{O_2} \xrightarrow{\mathrm{Pt},\,800\,\degreec} 4\,\mathrm{NO}+6\,\mathrm{H_2O}$.
+\end{itemize}
+\begin{formulabox}
+\textbf{The catalyst changes the PACE, not the thermodynamics} (slide~15): $\Delta G$ and $K_{eq}$ of the reaction are untouched. The deck's example, $\mathrm{CH_4(g)}+\mathrm{CO_2(g)} = 2\,\mathrm{CO(g)}+2\,\mathrm{H_2(g)}$:
+\begin{align*}
+\Delta G_{100\,\degreec} &= +151\ \mathrm{kJ/mol} &&\text{no driving force: no reaction, with or without catalyst}\\
+\Delta G_{700\,\degreec} &= -16\ \mathrm{kJ/mol} &&\text{driving force present, but the mixture still does not react on its own}
+\end{align*}
+At $700\,\degreec$ with $\mathrm{Pt/ZrO_2}$ or $\mathrm{Ni/Al_2O_3}$ in the reactor, equilibrium conversion ($\sim$100\%) is reached at that same temperature.
+\end{formulabox}
+
+\spsub{8.2 \enspace Solid catalysts: active phase, promoters, supports}
+\begin{itemize}
+\item A solid catalyst is built from three roles (slide~16): the \textbf{active phase} where reaction occurs (mostly metal/metal oxide); a \textbf{promoter} --- textual (e.g.\ Al for NH$_3$ production), electric/structural, or poison-resistant; and a \textbf{support/carrier} giving mechanical strength and surface area (98\% of the surface is inside the porous structure; the support may or may not be catalytically active). \textbf{Gauze/foil}: external active sites alone are enough for very fast rates.
+\item \textbf{Support materials} (slide~17): alumina --- inexpensive, $1$--$700$~m$^2$/g, acidic/neutral; silica --- $100$--$800$~m$^2$/g, acidic; \textbf{zeolite} --- mixture of alumina and silica, often exchanged metal ion present, \emph{shape selective}, acidic; others: active carbon (up to $1000$~m$^2$/g), titania ($10$--$50$), zirconia ($10$--$100$), magnesia ($10$), lanthana ($10$).
+\item \textbf{Specificity} (slides~21, 28): the choice of catalyst selects the product. Ethanol over copper dehydrogenates, $\mathrm{C_2H_5OH} \to \mathrm{CH_3CHO}+\mathrm{H_2}$; over alumina it dehydrates, $\mathrm{C_2H_5OH} \to \mathrm{C_2H_4}+\mathrm{H_2O}$. The distance between active sites and their match to bond lengths decides which bonds are weakened.
+\end{itemize}
+
+\spsub{8.3 \enspace The seven steps; the three intrinsic stages}
 \begin{daybox}
 \textbf{External diffusion $\to$ internal diffusion $\to$ adsorption of A $\to$ surface reaction $\to$ desorption of B $\to$ internal diffusion out $\to$ external diffusion out.}
 \vspace{2pt}
@@ -1109,8 +1130,40 @@ C_t = C_v + \sum_i C_{i\cdot S}
 \]
 Then test the assumption: if the assumed rate-limiting step does not reproduce the data, move to the next one. The deck works through each assumption in turn.
 \end{daybox}
+\begin{itemize}
+\item Inside the film and the pore the three intrinsic stages are \textbf{adsorption $\to$ reaction $\to$ desorption} (slides~24--25): adsorption lands the species on an active site and weakens its bonds; the surface holds adsorbed gases in the right orientation so favourable collisions become likely; desorption releases the products after an electron rearrangement.
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l X X@{}}
+\toprule
+ & \textbf{Physisorption} & \textbf{Chemisorption}\\\\
+\midrule
+force & van der Waals & chemical bond\\\\
+adsorbed layers & multilayer & only one layer\\\\
+heat of adsorption & low ($10$--$40$~kJ/mol) & high ($>40$~kJ/mol)\\\\
+selectivity & low & high\\\\
+temperature at which it occurs & low & high\\\\
+\bottomrule
+\end{tabularx}
+\notetext{Slide~27. Chemisorption is the catalytically useful one: a real bond to the surface is what activates the molecule.}
 
-\spsub{8.2 \enspace Adsorption isotherms and rate forms}
+\spsub{8.4 \enspace Mechanisms: Langmuir--Hinshelwood and Eley--Rideal}
+\begin{itemize}
+\item \textbf{Langmuir--Hinshelwood} (slides~29--30): adsorption from the gas phase, reactions \emph{between adsorbed molecules}, dissociation at the surface, desorption. For $A_2 + 2B = 2AB$ the deck writes
+\[
+A_2 + * = A_2^*,\quad A_2^* + * = 2A^*,\quad B + * = B^*,\quad A^* + B^* = AB^* + *,\quad AB^* = AB + *
+\]
+\item \textbf{Eley--Rideal} (slides~31--32): the same adsorption steps, but the last step is the direct reaction between the adsorbed molecule $A^*$ and a \emph{gas-phase} molecule $B$: $A^* + B = AB + *$. That fourth step cannot occur in an L--H mechanism.
+\item \textbf{Telling them apart} (slide~33), rate versus coverage $\theta_{A,S}$: for E--R the rate \emph{increases} with coverage until the surface is completely covered by $A^*$; for L--H the rate goes through a \emph{maximum} and ends at zero when $A^*$ blocks every site --- because the step $B + * = B^*$ requires a free site. Whether a real reaction follows one or the other cannot be decided without experimental or computational studies.
+\end{itemize}
+\begin{daybox}
+\textbf{Intrinsic-kinetics algorithm} (slide~34): write a rate equation for every step; assume one step is the RDS --- the intrinsically slowest; set $r_o = r_{\text{RDS}}$; take all other steps at equilibrium ($r \approx 0$); express every surface-adsorbed species concentration in terms of bulk species; write the site balance; substitute the adsorbed-species equations and $C_v$ into $r_{\text{RDS}}$.
+\end{daybox}
+\begin{itemize}
+\item \textbf{Ammonia synthesis mechanism as printed} (slide~36): $\mathrm{H_2}+2S \to 2\,\mathrm{H\!\cdot\!S}$ (rapid); $\mathrm{N_2}+S \rightleftharpoons \mathrm{N_2\!\cdot\!S}$ and $\mathrm{N_2\!\cdot\!S}+S \to 2\,\mathrm{N\!\cdot\!S}$ (\textbf{rate-limiting}); then $\mathrm{N\!\cdot\!S}+\mathrm{H\!\cdot\!S} \rightleftharpoons \mathrm{HN\!\cdot\!S}+S$, $\mathrm{NH\!\cdot\!S}+\mathrm{H\!\cdot\!S} \rightleftharpoons \mathrm{H_2N\!\cdot\!S}+S$, $\mathrm{H_2N\!\cdot\!S}+\mathrm{H\!\cdot\!S} \rightleftharpoons \mathrm{NH_3\!\cdot\!S}+S$, $\mathrm{NH_3\!\cdot\!S} \rightleftharpoons \mathrm{NH_3}+S$ (rapid).
+\item \textbf{Cyclohexane dehydrogenation} (slide~35): $\mathrm{C_6H_{12}} \xrightarrow[\mathrm{Al_2O_3}]{\mathrm{Ni}} \mathrm{C_6H_6} + 3\,\mathrm{H_2}$. The measured rate rises with concentration and saturates --- the signature of an adsorption denominator --- and the task is to (1)~propose the mechanism and (2)~find the RDS consistent with the data.
+\end{itemize}
+
+\spsub{8.5 \enspace Adsorption isotherms and rate forms}
 \begin{formulabox}
 \begin{align*}
 C_{A\cdot S} &= \frac{K_A P_A\, C_t}{1 + K_A P_A + K_B P_B}
@@ -1123,9 +1176,30 @@ C_{A\cdot S} &= \frac{K_A P_A\, C_t}{1 + K_A P_A + K_B P_B}
 \item \textbf{Langmuir--Hinshelwood} assumes both reactants are adsorbed before reacting; \textbf{Eley--Rideal} assumes one reacts directly from the gas phase. The denominator is the site balance in both cases --- that is what makes the rate saturate at high pressure.
 \end{itemize}
 
-\spsub{8.3 \enspace Internal diffusion --- Thiele modulus and effectiveness factor}
+\spsub{8.6 \enspace Pore structure and the effective diffusivity}
+\begin{itemize}
+\item \textbf{Pore classes} (slide~38): mesopores $<2$~nm; micropores $2$ to $50$~nm; macro pores $>50$~nm; the active component coats the pore walls. Pores are of random size except in zeolites.
+\end{itemize}
+\notetext{The deck's micro/meso labels are inverted relative to IUPAC (IUPAC: micro $<2$~nm, meso $2$--$50$~nm). Reported as printed, not silently corrected --- the sizes, not the names, are what the calculations use.}
 \begin{formulabox}
 \begin{align*}
+D_e &= \frac{D_{AB}\,\phi_p\,\sigma_c}{\tilde\tau}
+ &&\text{effective diffusivity}\\[4pt]
+\tilde\tau &= \frac{\text{actual distance travelled}}{\text{shortest distance}}
+ &&\text{tortuosity};\quad
+\beta = \frac{\text{area } A_2}{\text{area } A_1},\quad \sigma_c = f(\beta)\\[4pt]
+\text{90\textdegree\ bent pore:}\quad
+\tilde\tau &= \frac{2L}{\sqrt{2L^2}} = \sqrt{2} = 1.414
+ &&\text{worked on slide~40}
+\end{align*}
+\end{formulabox}
+
+\spsub{8.7 \enspace Internal diffusion: Thiele modulus, effectiveness factor, geometries}
+\begin{formulabox}
+\begin{align*}
+\frac{d^2\psi}{d\lambda^2} + \frac{2}{\lambda}\frac{d\psi}{d\lambda} - \phi_1^{2}\,\psi &= 0
+ &&\psi = \frac{C_A}{C_{As}},\ \lambda = \frac{r}{R},\quad
+ \phi_1^{2} = \frac{k_1 R^{2} C_{As}^{\,n-1}}{D_e}\quad\text{(slide~42)}\\[5pt]
 \phi_s &= R\sqrt{\frac{k_1}{D_e}}
  &&\text{Thiele modulus, first order, sphere}\\[5pt]
 \eta &= \frac{3}{\phi^{2}}\left(\phi\coth\phi - 1\right)
@@ -1138,24 +1212,76 @@ C_{A\cdot S} &= \frac{K_A P_A\, C_t}{1 + K_A P_A + K_B P_B}
 \end{formulabox}
 \begin{itemize}
 \item \textbf{$\eta \to 1$} for small $\phi$ (reaction-limited: the whole pellet is used); \textbf{$\eta \to 3/\phi$} for large $\phi$ (diffusion-limited: only a shell near the surface reacts).
+\item \textbf{Other geometries} (slide~44), with $\omega = x/x_p$ or $\bar r/R_p$ and $\phi = x_p$ or $R_p$ times $\sqrt{k/D_{TA}^{e}}$:
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l X X X@{}}
+\toprule
+ & \textbf{Slab} & \textbf{Cylinder} & \textbf{Sphere}\\\\
+\midrule
+$\psi$ & $\dfrac{\cosh(\phi\omega)}{\cosh\phi}$ & $\dfrac{I_0(\phi\omega)}{I_0(\phi)}$ & $\dfrac{\sinh(\phi\omega)}{\omega\sinh\phi}$\\\\[10pt]
+$\eta$ & $\dfrac{\tanh\phi}{\phi}$ & $\dfrac{2\,I_1(\phi)}{\phi\,I_0(\phi)}$ & $\dfrac{3}{\phi}\left[\dfrac{1}{\tanh\phi}-\dfrac{1}{\phi}\right]$\\\\
+\bottomrule
+\end{tabularx}
+\notetext{$I_i$ is the modified Bessel function of order $i$.}
+\begin{itemize}
+\item \textbf{Non-isothermal pellet} (slide~46): with $\gamma = E/(RT_s)$ (Arrhenius number) and $\beta = \Delta T_{max}/T_s = -\Delta H_{Rx} D_e C_{As}/(k_s T_s)$, an exothermic reaction can run hotter inside the pellet than at its surface, and $\eta$ can \emph{exceed}~1.
 \end{itemize}
 
-\spsub{8.4 \enspace Diagnostic criteria}
+\spsub{8.8 \enspace Falsified kinetics and the diagnostic criteria}
+\begin{itemize}
+\item \textbf{Falsified kinetics} (slide~45): cumene cracking on SiO$_2$--Al$_2$O$_3$, measured rate against $1/T$ for four pellet radii. Small pellets give the steep, true-activation-energy line; as the pellet grows the line drops and its slope falls toward $E/2$ --- the Arrhenius plot itself tells you when internal diffusion has taken over.
+\item \textbf{Weisz--Prater} (slide~49): evaluate limitation from the \emph{observed} rate alone,
+\end{itemize}
 \begin{formulabox}
 \begin{align*}
-C_{WP} &= \eta\,\phi^{2} = \frac{(-r_A')_{\text{obs}}\,R^{2}}{D_e\,C_{As}}
- &&\text{Weisz--Prater}\\[3pt]
-C_{WP} &\ll 1 &&\text{no internal limitation}\\[3pt]
-C_{WP} &\gg 1 &&\text{strongly limited}\\[5pt]
-\Omega &= \frac{\eta}{1 + \eta\,\phi^{2} S_a \rho_b / k_c}
- &&\text{overall effectiveness, with external resistance}\\[5pt]
-\frac{k\,C_{Ab}^{\,n-1} R^{2}\rho_b S_a E}{b\,D_e\,T^{2}} &< 0.15
- &&\text{Mears: external gradients negligible}
+C_{WP} &= \eta\,\phi^{2} = \frac{(-r_A')_{\text{obs}}\,\rho_c\, R^{2}}{D_e\,C_{As}}
+ = \frac{\text{actual reaction rate}}{\text{a diffusion rate}}\\[3pt]
+C_{WP} &\ll 1 &&\text{no concentration gradients in the pellet}\\[3pt]
+C_{WP} &\gg 1 &&\text{internal diffusion controls the reaction}
 \end{align*}
 \end{formulabox}
-\notetext{Weisz--Prater is the practical one: it uses the \emph{observed} rate, so it can be evaluated from experiment without knowing the intrinsic kinetics.}
+\begin{itemize}
+\item \textbf{Mears criteria} (slide~56) for the \emph{external} film:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{(-r_A')\,\rho_b\, R\, n}{k_c\, C_{Ab}} &< 0.15
+ &&\text{external concentration gradients negligible}\\[5pt]
+\frac{\left|-\Delta H_{Rx}\,(-r_A')\,\rho_b\, R\, E\right|}{h\, T^{2}\, R_g} &< 0.15
+ &&\text{external temperature gradients negligible}
+\end{align*}
+\end{formulabox}
+\notetext{$n$ = order of reaction, $R$ = pellet radius, $\rho_b$ = bulk density, $h$ = heat-transfer coefficient between gas and pellet. Weisz--Prater is the practical internal test because it needs only the observed rate; Mears is its external counterpart.}
 
-\spsub{8.5 \enspace Worked from the deck}
+\spsub{8.9 \enspace External mass transfer and the overall effectiveness factor}
+\begin{itemize}
+\item \textbf{Mass-transfer coefficient} (slide~51): $k_c = 0.6\,\dfrac{D_{AB}^{2/3}}{\nu^{1/6}}\times\dfrac{U^{1/2}}{d_p^{1/2}}$. Plotting $-r_A'$ against $(U/d_p)^{1/2}$: the rate first rises with velocity (\textbf{diffusion limited}, the boundary layer thins) and then plateaus (\textbf{reaction limited}, the surface reaction is the bottleneck).
+\item \textbf{Steady-state matching} (slides~53--54): the molar rate of transfer from the bulk to the external surface equals the net rate of reaction on and within the pellet, $M_{Ar} = -r_A''\,(\text{external area} + \text{internal area})$, with external area $= a_c\,\Delta V$ and internal area $= S_a\,\rho_b\,\Delta V$.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Omega &= \frac{\text{actual overall rate}}{\text{rate if the whole surface saw } C_{Ab}, T_b}
+ = \frac{\eta}{1 + \eta\, k_1''\, S_a\, \rho_b / (k_c\, a_c)}
+\end{align*}
+\end{formulabox}
+
+\spsub{8.10 \enspace Packed beds: design with diffusion and reaction}
+\begin{itemize}
+\item The packed bed is the workhorse (slide~58) --- steam reforming, catalytic reforming, isomerization, polymerization, ammonia and SO$_3$ synthesis --- run adiabatic or non-adiabatic, particle sizes $1/8''$ to $1/4''$.
+\item \textbf{Balance over a bed slice} (slide~60): $A_c W_{Az}\rvert_z - A_c W_{Az}\rvert_{z+\Delta z} + r_A'\,\rho_b\, A_c\,\Delta z = 0$, i.e.\ $-\dfrac{dW_{Az}}{dz} + r_A'\rho_b = 0$. With a dispersion term this becomes
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+D_a\,\frac{d^2 C_{Ab}}{dz^2} - U\,\frac{dC_{Ab}}{dz} - \Omega\,\rho_b\, k'' S_a\, C_{Ab} &= 0\\[5pt]
+X = 1 - \frac{C_{Ab}}{C_{Ab0}} &= 1 - e^{-\left(\rho_b\, k''\, S_a\, \Omega\, L\right)/U}
+ &&\text{dispersion neglected}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Configurations} (slide~59): \textbf{multi-bed} (unit operations between PBRs); \textbf{reverse flow} --- for exothermic reactions the temperature rise along the bed can deactivate catalyst, so the flow direction is switched periodically, which also preheats the feed; \textbf{counter-flow} --- two chambers, a lean stream preheats the fluid and raises the rate; \textbf{radial flow} --- feed enters and flows radially through an annulus of catalyst, for operation under low pressure drop.
+\end{itemize}
+
+\spsub{8.11 \enspace Worked from the deck}
 \begin{itemize}
 \item \textbf{Concentration inside a pellet} (slide~48), sphere $d_p = 2\times10^{-3}$~cm, $D_e = 0.1$~cm$^2$/s:
 \[
@@ -1166,23 +1292,20 @@ C_{WP} &\gg 1 &&\text{strongly limited}\\[5pt]
 \qquad\Longrightarrow\qquad \boxed{\;d_{\text{new}} = 6.82\times10^{-4}\ \mathrm{cm}\;}
 \]
 \notetext{At $\phi = 5.99$ only $24\,\%$ of the surface concentration survives at the pellet centre. Shrinking the diameter to about a third of the original is what it takes to make the whole pellet effective.}
-\item \textbf{Apparent activation energy} (slide~57), $R = 0.2$~cm, $D_e = 0.015$~cm$^2$/s, $100 \to 150\,^{\circ}\mathrm{C}$:
+\item \textbf{Apparent activation energy} (slide~57), $R = 0.2$~cm, $D_e = 0.015$~cm$^2$/s, $100 \to 150\,\degreec$:
 \end{itemize}
 \begin{tabularx}{\linewidth}{@{}l r r r@{}}
 \toprule
-$T$ & $\phi$ & $\eta$ & $r$\\
+$T$ & $\phi$ & $\eta$ & $r$\\\\
 \midrule
-100\,\degreec & 1.575 & 0.8660 & $2.617\times10^{-5}$\\
-150\,\degreec & 7.75  & 0.337  & $2.468\times10^{-4}$\\
+100\,\degreec & 1.575 & 0.8660 & $2.617\times10^{-5}$\\\\
+150\,\degreec & 7.75  & 0.337  & $2.468\times10^{-4}$\\\\
 \bottomrule
 \end{tabularx}
 \[
 \boxed{\;E_{\text{app}} = 14\,080\ \mathrm{cal/mol}\;}
 \]
-\notetext{The measured activation energy is roughly \emph{half} the true one because $\eta$ is falling as fast as $k$ is rising --- the classic signature of internal diffusion control. Halving the observed $E$ is the diagnostic, not an error in the Arrhenius plot.}
-\begin{itemize}
-\item \textbf{Reactor choice:} the packed bed is the workhorse; the deck covers adiabatic and non-adiabatic operation, reverse-flow and counter-flow configurations.
-\end{itemize}
+\notetext{The measured activation energy is roughly \emph{half} the true one because $\eta$ is falling as fast as $k$ is rising --- the classic signature of internal diffusion control, the falsified kinetics of slide~45 in numbers. Halving the observed $E$ is the diagnostic, not an error in the Arrhenius plot.}
 
 %================================================================== Non-ideal
 \spsection{9 \enspace Non-Ideal Reactors and Residence-Time Distributions}

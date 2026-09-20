@@ -1407,38 +1407,32 @@ the model \emph{and} extracts $k_3,C_M$ --- the standard exam move for
 Michaelis--Menten batch data.}
 \begin{ansbox}Yes: $k_3\approx32$ h$^{-1}$ (at $C_{S0}=0.01$), $C_M\approx0.5$ mmol/L.\end{ansbox}
 
-\qtitle{Q34 -- Reversible PFR: equilibrium then actual conversion}{\label{q:34}Ch5, slide 61}
+\qtitle{Q34 -- $A\to R$ batch, integral from the $t$ table}{\label{q:34}Ch5, slide 61}
 \src{Ch5\_-\\,krd.pdf, slide 61.}
-A PFR of 2~m$^3$ processes an aqueous feed (100~L/min) with
-$C_{A0}=100$~mmol/L; $A\rightleftharpoons B$.  Find the equilibrium conversion,
-then the actual conversion --- and repeat for a CSTR.
+$-r_A=0.2C_A$ mol/(L$\\cdot$s), $C_{A0}=1$~mol/L, in a batch reactor.  A data
+table gives $C_A$ ($0.9,0.75,\dots$) and $t$ ($5,10,\dots,50$~s).  Find
+$C_A$ at $t=20$~s.
 
 \begin{qbox}
-\textbf{The rate law the slide implies.}  The slide states the problem without
-constants; the textbook original it reproduces (Levenspiel, whose companion MFR
-version is printed with $-r_A=0.04C_A-0.01C_R$ mol/(L$\cdot$min)) supplies them;
-the deck's own answers below confirm the pairing.
+\textbf{Step 1 --- integrate the law.}  $-dC_A/dt=0.2C_A$ separates to
+$dC_A/C_A=-0.2\,dt$ and integrates, with $C_A=C_{A0}=1$ at $t=0$, to
+$C_A=e^{-0.2t}$, so $\ln(C_{A0}/C_A)=0.2t$.
 
-\textbf{Step 1 --- equilibrium conversion.}  $K_e=k_1/k_2=0.04/0.01=4$, and with
-$C_R=C_{A0}-C_A$: $K_e=\frac{X_e}{1-X_e}\Rightarrow X_e=\frac{4}{5}=0.80$.
-
-\textbf{Step 2 --- one clean rate form.}  Substituting $C_R=C_{A0}-C_A$:
-$-r_A=(k_1+k_2)C_A-k_2C_{A0}=0.05\,(C_A-0.02)$ --- first order towards the
-equilibrium concentration $C_{Ae}=0.02$.
-
-\textbf{Step 3 --- PFR, $\tau=V/v_0=2000/100=20$~min.}
+\textbf{Step 2 --- one substitution.}  At $t=20$~s,
 \[
-\tau=\int_{C_{Af}}^{C_{A0}}\frac{dC_A}{0.05(C_A-0.02)}\Rightarrow
-\ln\frac{0.08}{C_{Af}-0.02}=0.05\times20=1,
+\ln\frac{C_{A0}}{C_A}=0.2\times20=4\ \Rightarrow\ C_A=\frac{1}{e^4}=0.0183\approx0.018\ \mathrm{mol/L}.
 \]
-so $C_{Af}-0.02=0.08/e=0.0294$, $C_{Af}=0.0494$, $X_{PFR}=0.51$.
 
-\textbf{Step 4 --- CSTR for comparison.}
-$0.05(C_A-0.02)\times20=C_{A0}-C_A\Rightarrow C_A-0.02=0.1-C_A\Rightarrow
-C_A=0.06$, $X_{CSTR}=0.40$ --- the PFR beats the CSTR towards equilibrium, as
-always for a simple reversible reaction.
+\textbf{Step 3 --- what the table is doing.}  Each tabulated pair is this
+same straight line: $t=\ln(1/C_A)/0.2$.  Hence the first entry $t=5$~s
+corresponds to $C_A=e^{-1}=0.368$, and the last, $t=50$~s, to
+$C_A=e^{-10}\approx4.5\times10^{-5}$.  The row of round concentrations
+$(0.9,0.75,\dots)$ printed on the sheet cannot all lie on one exponential;
+the method --- integrate, then use $t$ --- is the part to reproduce.
 \end{qbox}
-\begin{ansbox}$X_e=0.80$; PFR $X\approx0.51$; CSTR $X\approx0.40$ (rate law quoted from the textbook original, as the slide omits it).\end{ansbox}
+\note{For constant-volume first order $\tau=t$: Q22's slide-16 formula
+$\tau=(C_{A0}-C_A)/(-r_A)$ gives the same pairs here ($\tau=(1-C_A)/(0.2C_A)$).}
+\begin{ansbox}$C_A=e^{-4}=0.018$ mol/L at $t=20$ s.\end{ansbox}
 
 \qtitle{Q35 -- $A\to R+2S$ from total-pressure data}{\label{q:35}Ch5, slide 62}
 \src{Ch5\_-\\,krd.pdf, slide 62.}
@@ -1446,15 +1440,39 @@ Pure A at constant volume; total pressure $\pi$ (mmHg) $=7.5,10.5,12.5,15.8,17.9
 at $t=0,2.5,5,10,15,20$~min.  Find the rate equation.
 
 \begin{qbox}
-\textbf{Step 1 --- $p_A(\pi)$.}  Per mole A reacted the moles rise by
-$\Delta n=(1+2)-1=2$: $\pi=\pi_0+2x$, $p_A=\pi_0-x$, hence
+\textbf{Step 1 --- why $\pi$ is a composition signal.}  The reaction turns one
+mole of A into three moles of product.  At constant $V,T$ the total pressure
+counts total moles, so every mole of A that reacts adds two moles to the gas.
+Write $x=$ moles of A reacted per initial mole of A; then
 \[
-p_A=\pi_0-\frac{\pi-\pi_0}{2}=\frac{3\pi_0-\pi}{2}=7.5,\,6.0,\,5.0,\,3.35,\,2.3,\,1.55.
+\pi=\pi_0+2x,\qquad p_A=\pi_0-x
+\quad\Rightarrow\quad
+p_A=\pi_0-\frac{\pi-\pi_0}{2}=\frac{3\pi_0-\pi}{2}.
 \]
 
-\textbf{Step 2 --- test first order.}  $\ln(p_{A0}/p_A)/t$ gives
-$0.089,\,0.081,\,0.081,\,0.079,\,0.079$~min$^{-1}$ --- constant within scatter:
-first order with $k\approx0.08$~min$^{-1}$.
+\textbf{Step 2 --- the pressure row becomes a $p_A$ row.}  With $\pi_0=7.5$:
+\begin{center}\small
+\begin{tabular}{lcccccc}
+\toprule
+$t$ (min) & 0 & 2.5 & 5 & 10 & 15 & 20\\
+$\pi$ (mmHg) & 7.5 & 10.5 & 12.5 & 15.8 & 17.9 & 19.4\\
+$p_A=\frac{22.5-\pi}{2}$ & 7.5 & 6.0 & 5.0 & 3.35 & 2.3 & 1.55\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 3 --- test first order, point by point.}  If
+$p_A=p_{A0}e^{-kt}$, then $k_i=\frac{1}{t}\ln\frac{p_{A0}}{p_A}$ should be the
+same number at every reading:
+\[
+k_i:\quad\frac{\ln(7.5/6.0)}{2.5}=0.089,\ \ \frac{\ln1.50}{5}=0.081,\ \ 
+\frac{\ln2.24}{10}=0.081,\ \ \frac{\ln3.26}{15}=0.079,\ \ \frac{\ln4.84}{20}=0.079
+\ \mathrm{min^{-1}}.
+\]
+Flat within reading scatter --- first order.
+
+\textbf{Conclusion.}  $-r_A=kC_A$ with $k\approx0.08$~min$^{-1}$ represents the
+run (the first reading sits slightly high; fitting the log plot gives 0.08).
 \end{qbox}
 \note{Here $\pi_0$ \emph{is} recorded (7.5), unlike Q23; the same
 $p_A=(3\pi_0-\pi)/2$ algebra covers every $1\to3$-type expansion in this part.}

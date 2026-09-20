@@ -854,43 +854,102 @@ collapses before 20\% is reached (slide 98: ``10\% conversion is possible, but 2
 %============================= PART E =====================================
 \spsection{Part E -- Collection and analysis of rate data (Ch5\_-\,krd.pdf)}
 
-\qtitle{Q22 -- Trityl + methanol}{\label{q:22}Ch5, slides 12--17}
-\src{Ch5\_-\,krd.pdf, slides 12--17 and 42--49.}
-$(\mathrm{C_6H_5})_3\mathrm{CCl}+\mathrm{CH_3OH}\to(\mathrm{C_6H_5})_3\mathrm{COCH_3}+\mathrm{HCl}$;
-$C_{B0}=0.5$ M; trityl data ($\times10^3$ mol/dm$^3$): 50, 38, 30.6, 25.6, 22.2, 19.5, 17.4 at
-$t=0,50,\dots,300$ min.  (1) order in trityl; (2) rate constant given first order in methanol.
+\qtitle{Q22 -- Trityl + methanol: order and rate constant}{\label{q:22}Ch5, slides 12--17}
+\src{Ch5\_-\\,krd.pdf, slides 12--17 (and 42--49).}
+$(\mathrm{C_6H_5})_3\mathrm{CCl}+\mathrm{CH_3OH}\to(\mathrm{C_6H_5})_3\mathrm{COCH_3}+\mathrm{HCl}$
+in a batch reactor; $C_{B0}=0.5$~mol/dm$^3$ (methanol) against trityl
+($\times10^3$~mol/dm$^3$) $=50,38,30.6,25.6,22.2,19.5,17.4$ at
+$t=0,50,\dots,300$~min.  (1) Find the order in trityl; (2) the rate constant,
+given first order in methanol.
+
 \begin{qbox}
-Finite-difference rates $-dC_A/dt$ (deck slide 17): $2.86,1.94,1.24,0.84,0.61,0.48,0.36
-\times10^{-4}$.  Log--log slope $=1.99\approx2$ (deck) --- second order in trityl.
-Integral check: $1/C_A-1/C_{A0}$ vs $t$ is linear with slope $k'=0.124\approx0.125$
-dm$^3$/(mol$\cdot$min).  With $-r_A=kC_A^2C_B$ and $C_B\approx C_{B0}$:
-$k=k'/0.5=0.25$ dm$^6$/(mol$^2\cdot$min).  The deck's nonlinear regression returns
-$\alpha\approx2$ with the same $k'$.
+\textbf{Set-up --- pseudo-order.}  Methanol is in ten-fold excess, so
+$C_B\approx C_{B0}$ throughout and $-r_A=kC_A^{\alpha}C_B\approx
+(kC_{B0})C_A^{\alpha}=k'C_A^{\alpha}$: the runs see a single unknown
+$\alpha$.
+
+\textbf{Step 1 --- differential method (slide 17).}  Estimate $-dC_A/dt$ at each
+point by finite differences (deck values, $\times10^{-4}$~mol/(dm$^3\cdot$min)):
+$2.86,\,1.94,\,1.24,\,0.84,\,0.61,\,0.48,\,0.36$.  Plot $\ln(-r_A)$ vs
+$\ln C_A$: slope $=1.99\approx2$ --- \emph{second order in trityl}.
+
+\textbf{Step 2 --- integral check.}  If $\alpha=2$,
+$\frac{1}{C_A}-\frac{1}{C_{A0}}=k't$ must be a straight line through the origin;
+it is, with slope $k'=0.124\approx0.125$~dm$^3$/(mol$\\cdot$min).  Two independent
+methods agreeing is the deck's point.
+
+\textbf{Step 3 --- split off the methanol order.}  With $-r_A=kC_A^2C_B$ and
+$C_B=0.5$: $k=k'/C_{B0}=0.125/0.5=0.25$~dm$^6$/(mol$^2\cdot$min).  (The deck's
+nonlinear-regression slides return $\alpha\approx2$ with the same $k'$.)
 \end{qbox}
-\begin{ansbox}Second order in trityl; $k'=0.125$ dm$^3$/(mol$\cdot$min), $k=0.25$ dm$^6$/(mol$^2\cdot$min).\end{ansbox}
+\note{Exam wording: ``differential method gives the order from the log--log slope;
+the integral method confirms it and supplies $k'$; the excess reactant converts
+$k'$ back to $k$.''}
+\begin{ansbox}Second order in trityl; $k'=0.125$ dm$^3$/(mol$\\cdot$min), $k=0.25$ dm$^6$/(mol$^2\\cdot$min).\end{ansbox}
 
 \qtitle{Q23 -- Dimethyl ether decomposition bomb}{\label{q:23}Ch5, slide 75}
-\src{Ch5\_-\,krd.pdf, slide 75 (``F 5.8'').}
-$(\mathrm{CH_3})_2\mathrm{O}\to\mathrm{CH_4}+\mathrm{H_2}+\mathrm{CO}$ at 504\,°C, constant
-volume; $\pi$ (mmHg) $=408,488,562,799$ at $t=390,777,1195,3155$ s and $931$ at $t=\infty$.
-(a) Why is $\pi_0$ missing, and estimate it; (b) order and rate constant.
+\src{Ch5\_-\\,krd.pdf, slide 75 (``F 5.8'').}
+$(\mathrm{CH_3})_2\mathrm{O}\to\mathrm{CH_4}+\mathrm{H_2}+\mathrm{CO}$ at
+$504\,^\circ$C in a constant-volume bomb; total pressure $\pi$ (mmHg)
+$=408,488,562,799$ at $t=390,777,1195,3155$~s and $931$ at $t=\infty$.
+(a) Why is $\pi_0$ not recorded, and what was it?  (b) Find the order and the
+rate constant.
+
 \begin{qbox}
-(a) The bomb was already hot and reacting before the first reading; since 1 mol $\to$ 3 mol,
-$\pi_0=\pi_\infty/3=310$ mmHg.
-(b) $p_A=(\pi_\infty-\pi)/2 = 261.5,\,221.5,\,184.5,\,66.0$ mmHg; the four values of
-$\ln(p_{A0}/p_A)/t$ are $4.4,\,4.3,\,4.3,\,4.9\times10^{-4}$ s$^{-1}$ --- first order.
+\textbf{(a) The missing first reading.}  The bomb had to be heated to
+$504\,^\circ$C before readings could start, and it was already reacting during
+that time --- so $\pi_0$ was never observed.  Recover it from stoichiometry:
+1~mol of ether gives 3~mol of product, so at complete conversion
+$\pi_\infty=3\pi_0$, hence
+\[
+\pi_0=\frac{931}{3}\approx310\ \mathrm{mmHg}.
+\]
+
+\textbf{(b) Express $p_A$ in terms of $\pi$.}  If $x$ (pressure units) of ether
+has reacted, $\pi=\pi_0+2x$ and $p_A=\pi_0-x$; eliminating $x$ (and using
+$3\pi_0=\pi_\infty$):
+\[
+p_A=\frac{3\pi_0-\pi}{2}=\frac{\pi_\infty-\pi}{2}
+=261.5,\,221.5,\,184.5,\,66.0\ \mathrm{mmHg}.
+\]
+
+\textbf{Test first order:} $\ln(p_{A0}/p_A)/t$ gives
+$4.4,\,4.3,\,4.3,\,4.9\times10^{-4}$~s$^{-1}$ --- constant to reading error, so
+the decomposition is first order with
+$k\approx4.4\times10^{-4}$~s$^{-1}$.
 \end{qbox}
-\begin{ansbox}$\pi_0\approx310$ mmHg; first order, $k\approx4.4\times10^{-4}$ s$^{-1}$.\end{ansbox}
+\note{The same trick --- ``$p_A$ from the total pressure using $p_{A,\infty}$'' ---
+is used in Q27, Q28 and Q35; learn it once.}
+\begin{ansbox}$\pi_0\approx310$ mmHg; first order, $k\approx4.4\\times10^{-4}$ s$^{-1}$.\end{ansbox}
 
 \qtitle{Q24 -- First-order reversible $A\rightleftharpoons R$}{\label{q:24}Ch5, slide 72}
-\src{Ch5\_-\,krd.pdf, slide 72.}
-$C_{A0}=0.5$ mol/L, $C_{R0}=0$; after 8 min $X=33.3$\%; $X_e=66.7$\%.  Find the rate equation.
+\src{Ch5\_-\\,krd.pdf, slide 72.}
+$C_{A0}=0.5$~mol/L, $C_{R0}=0$.  After 8~min the conversion is $33.3$\%; the
+equilibrium conversion is $66.7$\%.  Find the rate equation.
+
 \begin{qbox}
-$\ln\frac{X_e}{X_e-X}=(k_1+k_2)t$: $\ln 2 = (k_1+k_2)(8)\Rightarrow k_1+k_2=0.0866$ min$^{-1}$;
-$K_e=X_e/(1-X_e)=2=k_1/k_2$.  Hence $k_1=0.0578$, $k_2=0.0289$ min$^{-1}$ and
-$-r_A=0.0578\,C_A-0.0289\,C_R$ (mol/L$\cdot$min).
+\textbf{The integrated law to use.}  For
+$-r_A=k_1C_A-k_2C_R$ (both directions first order) the batch integral is
+\[
+\ln\frac{X_e}{X_e-X}=(k_1+k_2)\,t,
+\]
+so one kinetic run plus the equilibrium conversion fixes $k_1+k_2$.
+
+\textbf{Step 1 --- the sum.}  $\ln\frac{0.667}{0.667-0.333}=\ln2=0.693
+=(k_1+k_2)(8)$, so $k_1+k_2=0.0866$~min$^{-1}$.
+
+\textbf{Step 2 --- the ratio.}  At equilibrium the net rate vanishes:
+$K_e=\frac{C_{Re}}{C_{Ae}}=\frac{X_e}{1-X_e}=\frac{0.667}{0.333}=2=\frac{k_1}{k_2}$.
+
+\textbf{Step 3 --- solve.}  $3k_2=0.0866$: $k_2=0.0289$, $k_1=0.0577$~min$^{-1}$,
+hence
+\[
+-r_A=0.058\,C_A-0.029\,C_R\quad\mathrm{mol/(L\cdot min)}.
+\]
 \end{qbox}
-\begin{ansbox}$-r_A = 0.058\,C_A - 0.029\,C_R$ mol/(L$\cdot$min).\end{ansbox}
+\note{Check before writing the answer: $k_1/k_2=2=K_e$ and $k_1+k_2=0.087$ --- both
+constraints must hold.}
+\begin{ansbox}$-r_A=0.058\\,C_A-0.029\\,C_R$ mol/(L$\\cdot$min).\end{ansbox}
 
 \qtitle{Q25 -- Half-order batch; $2A\to B$ volume change}{\label{q:25}Ch5, slide 73}
 \src{Ch5\_-\,krd.pdf, slide 73.}

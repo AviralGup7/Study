@@ -750,48 +750,105 @@ $C_{A0}$ at STP instead of at $649\,^\circ$C/$460$~kPa.}
 \spsection{Part D -- Isothermal design (Ch4-\_Krd.pdf)}
 
 \qtitle{Q15 -- Ethylene-oxide batch data}{\label{q:15}Ch4, slides 17--20}
-\src{Ch4-\_Krd.pdf, slides 17--20.}
-500 mL of 2 M EO mixed with 500 mL of water (0.9 wt\% H$_2$SO$_4$ catalyst) at 55\,°C
-($C_{A0}=1.0$ kmol/m$^3$ after mixing); glycol concentrations recorded vs time.
-Determine $k$; and the batch time for 90\% conversion.
+\src{Ch4-\\_Krd.pdf, slides 17--20.}
+500~mL of 2~M ethylene oxide mixed with 500~mL of water (0.9~wt\% H$_2$SO$_4$
+catalyst) at 55\,°C; after mixing $C_{A0}=1.0$~kmol/m$^3$.  Glycol concentration
+is recorded against time.  Determine $k$, and the batch time for 90\% conversion.
+
 \begin{qbox}
-$\ln(C_{A0}/C_A)$ vs $t$ is linear; the deck's slope is $k=0.311$ min$^{-1}$ (our least-squares
-fit of the printed $\ln$ column gives 0.315).  Then
-$t_{0.9}=\ln(10)/k = 7.4$ min.  The deck's scaling slide: with $k=10^{-4}$ s$^{-1}$,
-$t_{0.9}=2.3/10^{-4}=23\,000$ s $=6.4$ h.
+\textbf{Step 1 --- choose the order to test.}  Hydrolysis with water in vast
+excess is pseudo-first-order, so plot $\ln(C_{A0}/C_A)$ vs $t$.
+
+\textbf{Step 2 --- the straight line.}  The printed $\ln$ column against $t$ is
+linear; the deck's slope is $k=0.311$~min$^{-1}$ (a least-squares fit of the same
+printed points gives $0.315$ --- agree to quote).
+
+\textbf{Step 3 --- batch time for 90\%.}  First order:
+\[
+t_{0.9}=\frac{1}{k}\ln\frac{1}{1-0.9}=\frac{2.303}{0.311}=7.4\ \mathrm{min}.
+\]
+
+\textbf{Step 4 --- the deck's scaling slide.}  At a much smaller
+$k=10^{-4}$~s$^{-1}$ the same formula gives
+$t_{0.9}=2.303/10^{-4}=23\,000$~s $=6.4$~h --- the point being that the batch
+time scales exactly as $1/k$.
 \end{qbox}
-\begin{ansbox}$k\approx0.311$ min$^{-1}$; $t_{90}\approx7.4$ min (and 6.4 h for $k=10^{-4}$ s$^{-1}$).\end{ansbox}
+\begin{ansbox}$k\approx0.311$ min$^{-1}$; $t_{90}\approx7.4$ min (and 6.4 h if $k=10^{-4}$ s$^{-1}$).\end{ansbox}
 
 \qtitle{Q16 -- Ethylene glycol CSTR}{\label{q:16}Ch4, slides 29--38}
-\src{Ch4-\_Krd.pdf, slides 29--38.}
-Produce 200 million lb/yr of EG at 80\% conversion; 1 lbmol/ft$^3$ EO solution mixed with an
-equal volume of water (0.9 wt\% H$_2$SO$_4$); $k=0.311$ min$^{-1}$.  (a) CSTR volume;
-(b) conversion of two 800-gal reactors in parallel; (c) in series.
+\src{Ch4-\\_Krd.pdf, slides 29--38.}
+Produce 200 million lb/yr of ethylene glycol at 80\% conversion in a CSTR.  A
+1~lbmol/ft$^3$ solution of ethylene oxide is mixed with an equal volume of water
+(0.9~wt\% H$_2$SO$_4$); $k=0.311$~min$^{-1}$ (Q15).  (a) Find the CSTR volume;
+(b) the conversion of two 800-gal reactors in parallel, each fed half; (c) in
+series.
+
 \begin{qbox}
-$F_C=200\times10^6/62$ lbmol/yr $=3.226\times10^6$/yr; $F_{A0}=F_C/0.8=7.67$ lbmol/min;
-$v_{A0}=7.67$ ft$^3$/min, $v_0=15.34$ ft$^3$/min, $C_{A0}=0.5$ lbmol/ft$^3$.
-(a) $V=\frac{F_{A0}X}{kC_{A0}(1-X)}=\frac{7.67(0.8)}{0.311(0.5)(0.2)}=197.3$ ft$^3$ (deck value).
-(b) Each reactor sees $v_{A0}$: $\tau=\frac{800/7.48}{7.67}=13.94$ min, $Da=k\tau=4.34$,
-$X=\frac{Da}{1+Da}=0.81$.
-(c) Each sees $v_0$: $\tau=6.97$ min, $Da=2.17$, $X=1-\frac1{(1+Da)^2}=0.90$ (deck values).
+\textbf{Step 1 --- molar flows.}  $F_C=\frac{200\times10^6}{62}=3.226\times10^6$
+lbmol/yr $=6.14$~lbmol/min; at 80\%,
+$F_{A0}=F_C/0.8=7.67$~lbmol/min.
+
+\textbf{Step 2 --- volumetric flows and $C_{A0}$.}  The oxide stream is
+1~lbmol/ft$^3$, so $v_{A0}=7.67$~ft$^3$/min; mixing with an equal water volume
+doubles it, $v_0=15.34$~ft$^3$/min, halving the concentration,
+$C_{A0}=0.5$~lbmol/ft$^3$.
+
+\textbf{(a) The CSTR volume.}
+\[
+V=\frac{F_{A0}X}{kC_{A0}(1-X)}=\frac{7.67\times0.8}{0.311\times0.5\times0.2}=197.3\ \mathrm{ft^3}
+\quad(\text{deck value}).
+\]
+
+\textbf{(b) Two 800-gal reactors in parallel.}  Each holds
+$800/7.48=107$~ft$^3$ and sees only its half-stream $v_{A0}=7.67$~ft$^3$/min:
+$\tau=107/7.67=13.94$~min, Damk\"ohler $Da=k\tau=4.34$,
+\[
+X=\frac{Da}{1+Da}=0.81.
+\]
+
+\textbf{(c) The same two in series.}  Now each sees the full $v_0=15.34$:
+$\tau=6.97$~min, $Da=2.17$, and two CSTRs in series multiply:
+\[
+X=1-\frac{1}{(1+Da)^2}=0.90\quad(\text{deck values}).
+\]
 \end{qbox}
+\note{Exam point of (b)/(c): splitting the feed between parallel CSTRs keeps each
+at the high feed concentration (good per unit volume); series staging keeps the
+first reactor off the slow exit rate.}
 \begin{ansbox}(a) 197.3 ft$^3$; (b) $X\approx0.81$; (c) $X\approx0.90$.\end{ansbox}
 
 \qtitle{Q17 -- Ethane cracking PFR and tube count}{\label{q:17}Ch4, slides 44--45}
-\src{Ch4-\_Krd.pdf, slides 44--45.}
-300 million lb/yr ethylene from pure ethane, irreversible elementary rate law, 80\% conversion,
-1100 K, 6 atm; $k=0.072$ s$^{-1}$ at 1000 K, $E=82$ kcal/mol.  How many 0.0205 ft$^3$,
-40-ft PFR tubes in parallel?
+\src{Ch4-\\_Krd.pdf, slides 44--45 (MATLAB solution on slides 84--95).}
+Produce 300 million lb/yr of ethylene by cracking pure ethane
+($\mathrm{C_2H_6\to C_2H_4+H_2}$, irreversible elementary) at 80\% conversion,
+1100~K, 6~atm; $k=0.072$~s$^{-1}$ at 1000~K with $E=82$~kcal/mol.  How many
+40-ft PFR tubes of 0.0205~ft$^3$ in parallel?
+
 \begin{qbox}
-$k(1100)=0.072\exp\!\left[\frac{82\,000}{1.987}\left(\frac1{1000}-\frac1{1100}\right)\right]=3.07$ s$^{-1}$;
-$C_{A0}=6\times101\,325/(8.314\times1100)=66.5$ mol/m$^3$;
-$F_{A0}=300\times10^6/28$ lbmol/yr $=154$ mol/s; $v_0=2.32$ m$^3$/s.
-$\mathrm{C_2H_6\to C_2H_4+H_2}$: $\varepsilon=1$;
-$V=\frac{v_0}{k}\left[2\ln\frac1{1-X}-X\right]=\frac{2.32}{3.07}(2.419)=1.83$ m$^3$
-$=64.6$ ft$^3$.  Tubes $=64.6/0.0205\approx3.2\times10^3$.
+\textbf{Step 1 --- $k$ at the reactor temperature (Arrhenius).}
+\[
+k(1100)=0.072\exp\!\left[\frac{82\,000}{1.987}\left(\frac{1}{1000}-\frac{1}{1100}\right)\right]=3.07\ \mathrm{s^{-1}}.
+\]
+
+\textbf{Step 2 --- enter in concentration and flow.}
+$C_{A0}=\frac{P}{RT}=\frac{6\times101\,325}{8.314\times1100}=66.5$~mol/m$^3$;
+$F_{A0}=\frac{300\times10^6\ \mathrm{lb/yr}}{28}=154$~mol/s; hence
+$v_0=F_{A0}/C_{A0}=2.32$~m$^3$/s.
+
+\textbf{Step 3 --- the expanding-gas PFR integral.}  $\varepsilon=1$; first order:
+\[
+V=\frac{v_0}{k}\left[(1+\varepsilon)\ln\frac{1}{1-X}-\varepsilon X\right]
+=\frac{2.32}{3.07}\left[2\ln5-0.8\right]=0.756\times2.419=1.83\ \mathrm{m^3}
+\ (=64.6\ \mathrm{ft^3}).
+\]
+
+\textbf{Step 4 --- tube count.}  $64.6/0.0205\approx3.2\times10^3$ tubes in
+parallel.
 \end{qbox}
+\begin{warnbox}The deck solves the same problem numerically in MATLAB (slides
+84--95) without printing the final volume; the closed-form first-order gas-phase
+integral above is the method the deck derives on slides 42--43.}\end{warnbox}
 \begin{ansbox}$V\approx1.8$ m$^3$ (65 ft$^3$); about 3150 tubes of 0.0205 ft$^3$ in parallel.\end{ansbox}
-\begin{warnbox}The deck solves the same problem numerically in MATLAB (slides 84--95) without printing the final volume; the closed-form first-order gas-phase integral above is the method the deck derives on slides 42--43.\end{warnbox}
 
 \qtitle{Q18 -- PBR with pressure drop, $A+B\to2C$}{\label{q:18}Ch4, slides 55--58}
 \src{Ch4-\_Krd.pdf, slides 55--58.}

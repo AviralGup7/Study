@@ -75,6 +75,11 @@
 }{\end{minipage}\end{lrbox}%
   \fcolorbox{accent}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
 
+% The problems documents define these two of their own; provided here so a ported
+% body compiles unchanged.
+\providecommand{\src}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}\textbf{Source:} #1}\par\vspace{3pt}}
+\providecommand{\note}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
 \newcommand{\qtitle}[2]{%
   \par\addvspace{8pt}\noindent{\color{accent}\bfseries Q#1.\hspace{0.5em}}{\small\color{notecol}#2}\par\addvspace{3pt}\nopagebreak}
 
@@ -116,7 +121,7 @@
 \fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Separation Processes II --- Short Notes \& Formula Sheet}
 \fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
 
-
+\begin{document}
 %=============================================================== cover
 \begin{center}
 {\LARGE\bfseries\color{accent} SEPARATION PROCESSES II}\\[2pt]
@@ -149,6 +154,12 @@ Equipment for size reduction: crushers, grinders, mills, circuits & 6\\
 \midrule
 Screening and screen effectiveness --- material balance and overall effectiveness & 1\\
 Filtration: media, filter aids, cake filtration and pressure drop & 2\\
+Pressure drop through the filter cake: Kozeny--Carman, Burke--Plummer, Ergun & 3\\
+Constant-rate filtration & 4\\
+Continuous filtration: the rotary-drum filter & 5\\
+Centrifugal filtration and washing rate & 6\\
+Clarifying, crossflow and membrane filters; sedimentation begins & 7\\
+Centrifugal sedimentation & 8\\
 Practice problems set from the slides & ---\\
 \bottomrule
 \end{tabularx}

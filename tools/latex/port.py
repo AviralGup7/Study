@@ -15,14 +15,12 @@ The repository keeps two kinds of .tex file:
 
 The port is assembled as
 
-    preamble.tex ($code/$name/$doctype filled, minus its trailing \\begin{document})
+    preamble.tex ($code/$name/$doctype filled, ending in \\begin{document})
   + mknotes.port(<body of the canonical document>)
   + \\end{document}
 
-which is exactly how the file already in the repository was produced, so
-regenerating it from an unmodified canonical document reproduces it byte for
-byte.  With --body, the body alone (no preamble) is also written out, which is
-what tools/latex/gen.py compiles.
+i.e. a complete standalone document.  With --body, the body alone (no
+preamble) is also written out, which is what tools/latex/gen.py compiles.
 
 Edit the canonical file, run this, then compile the body with gen.py.
 """
@@ -49,7 +47,12 @@ def body_of(path):
 def port(tex, code, name, doctype, out, body_out=None):
     pre = mknotes.preamble().rstrip()
     assert pre.endswith(r'\begin{document}')
-    pre = pre[:-len(r'\begin{document}')]
+    # Keep the trailing \begin{document}: the assembled file must be a complete,
+    # standalone document.  Stripping it here (as an earlier version did)
+    # produces a .tex with \end{document} but no \begin{document}, which fails
+    # at the first body line with "Missing \begin{document}" and cascades into
+    # bogus \@pdfcolorstack / .aux errors -- that is exactly the state the
+    # committed SP2-Short-Notes-and-Formula-Sheet.tex was caught in.
     esc = lambda t: re.sub(r'([&%#_$])', r'\\\1', t)
     pre = pre.replace('$code', esc(code)) \
              .replace('$name', esc(name)) \

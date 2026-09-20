@@ -1444,54 +1444,94 @@ $C_{A0}+C_{S0}=1.3$ (R and S each come from A): $0.075+0.23+1.00=1.30$.)}
 \spsection{Part G -- Non-isothermal design (Ch7-\_krd.pdf)}
 
 \qtitle{Q38 -- Adiabatic PFR: n-butane isomerisation}{\label{q:38}Ch7, slides 14--17}
-\src{Ch7-\_krd.pdf, slides 14--17.}
-$n$-butane $\rightleftharpoons$ isobutane, adiabatic liquid-phase PFR; $k=31.1$ h$^{-1}$ at
-360 K, $E=65.7$ kJ/mol, $\Delta H_{Rx}=-6900$ J/mol, $K_C=3.03$ at 60\,°C,
-$C_{A0}=9.3$ kmol/m$^3$, $C_p=141/141/161$ J/(mol$\cdot$K) (butane/isobutane/pentane).
-Process 163 kmol/h (90 mol\% butane) to $X=0.70$, feed at 330 K.
+\src{Ch7-\_Krd.pdf, slides 14--17.}
+$n$-butane $\rightleftharpoons$ isobutane, adiabatic liquid-phase PFR;
+$k=31.1$~h$^{-1}$ at 360~K, $E=65.7$~kJ/mol, $\Delta H_{Rx}=-6900$~J/mol,
+$K_C=3.03$ at 60\,°C, $C_{A0}=9.3$~kmol/m$^3$,
+$C_p=141/141/161$~J/(mol$\\cdot$K) (butane/isobutane/pentane inert).  Process
+163~kmol/h (90~mol\% butane) to $X=0.70$ with the feed at 330~K.
+
 \begin{qbox}
-Adiabatic line $T=330+43.3X$ (deck);
-$k(T)=31.1e^{7902(1/360-1/T)}$; $K_C(T)=3.03e^{830.3(1/333-1/T)}$;
-$F_{A0}=0.9\times163=146.7$ kmol/h, and
-\[
--r_A=kC_{A0}\left[1-\left(1+\tfrac1{K_C}\right)X\right].
-\]
-The deck's table (e.g. $-r_A=39.2$ at $X=0$,
-$F_{A0}/-r_A=23.29$ m$^3$ at 0.7) is reproduced by these expressions; integrating
-$F_{A0}/(-r_A)$ to $X=0.7$ gives $V\approx2.0$ m$^3$ (the deck's coarse Simpson table reads
-$\approx2.4$ m$^3$; the value is sensitive near $X_e\approx0.72$).
+\textbf{Step 1 --- the adiabatic line (deck).}  Energy balance with no heat
+exchange ties $T$ to $X$: $T=330+43.3X$ --- every 10\% conversion heats the
+stream by about 4.3~K.
+
+\textbf{Step 2 --- $k(T)$ and $K_C(T)$ (Arrhenius / van't Hoff).}
+$k(T)=31.1\,e^{7902(1/360-1/T)}$ and $K_C(T)=3.03\,e^{830.3(1/333-1/T)}$;
+exothermic, so $K_C$ falls as $T$ rises and equilibrium closes in.
+
+\textbf{Step 3 --- the rate in one bracket.}  $-r_A=k(C_A-C_B/K_C)
+=kC_{A0}\big[1-\big(1+\tfrac1{K_C}\big)X\big]$; with
+$F_{A0}=0.9\times163=146.7$~kmol/h the Levenspiel column $F_{A0}/(-r_A)$ is
+the deck's table (e.g.\ $-r_A=39.2$ at $X=0$; $23.29$~m$^3$ at $X=0.7$).
+
+\textbf{Step 4 --- integrate to $X=0.7$.}  $\int_0^{0.7}\frac{F_{A0}}{-r_A}dX
+\approx2.0$~m$^3$; the deck's coarse Simpson table reads $\approx2.4$~m$^3$ ---
+the value is sensitive because $X=0.7$ sits just under $X_e\approx0.72$ where
+the rate vanishes.
 \end{qbox}
+\note{Exam habit: write adiabatic line, $k(T)$, $K_C(T)$, rate bracket, then the
+table --- that is the whole deck algorithm for any adiabatic equilibrium
+reaction.}
 \begin{ansbox}$V\approx2$--$2.4$ m$^3$ for 70\% (deck table: $F_{A0}/(-r_A)=23.3$ m$^3$ at $X=0.7$).\end{ansbox}
 
 \qtitle{Q39 -- Adiabatic equilibrium with two interstage coolers}{\label{q:39}Ch7, slides 48--51}
-\src{Ch7-\_krd.pdf, slides 48--51.}
-$A\rightleftharpoons B$, pure A at 300 K; $K_C(298)=10^5$, $\Delta H_{Rx}=-20\,000$ cal/mol
-(as implied by the deck's $K_C(T)$ and adiabatic line), $C_{pA}=C_{pB}=50$ cal/(mol$\cdot$K),
-so $X_{ad}=2.5\times10^{-3}(T-300)$.  Two coolers return the stream to 350 K; 95\% of the
-equilibrium conversion in each reactor; $F_{A0}=40$ mol/s; cooling water at 270 K,
-$c_{pC}=18$ cal/(mol$\cdot$K), $U=100$ cal/(s$\cdot$m$^2\cdot$K).
+\src{Ch7-\_Krd.pdf, slides 48--51.}
+$A\rightleftharpoons B$, pure A at 300~K; $K_C(298)=10^5$,
+$\Delta H_{Rx}=-20\,000$~cal/mol, $C_{pA}=C_{pB}=50$~cal/(mol$\\cdot$K), so the
+adiabatic line is $X_{ad}=2.5\times10^{-3}(T-300)$.  Each adiabatic reactor runs
+to 95\% of the equilibrium conversion and a cooler returns the stream to 350~K
+between stages; $F_{A0}=40$~mol/s; cooling water at 270~K with
+$c_{pC}=18$~cal/(mol$\\cdot$K).  Find the two exits and the two duties.
+
 \begin{qbox}
-$K_C(T)=10^5\exp[-33.78(T-298)/T]$, $X_e=K_C/(1+K_C)$.
-Reactor 1: $2.5\times10^{-3}(T-300)=0.95X_e(T)\Rightarrow T_1=459$ K, $X_1=0.40$.
-Cool to 350 K.  Reactor 2: $X_1+2.5\times10^{-3}(T-350)=0.95X_e(T)\Rightarrow T_2=440$ K,
-$X_2=0.62$.
-Duties: $\dot Q=\dot n C_p (T_{out}-350)$: $Q_1=40\times50\times109=218$ kcal/s;
-$Q_2=40\times50\times90=179$ kcal/s (water flow $=\dot Q/(18\,\Delta T)$ as sized by the deck).
+\textbf{Step 1 --- equilibrium curve.}  Van't Hoff:
+$K_C(T)=10^5\exp[-33.78(T-298)/T]$, and $X_e=K_C/(1+K_C)$ --- steeply falling
+with $T$ because the reaction is exothermic.
+
+\textbf{Step 2 --- reactor 1: intersect the lines.}
+$2.5\times10^{-3}(T-300)=0.95\,X_e(T)$ solves at $T_1=459$~K,
+$X_1=0.40$.
+
+\textbf{Step 3 --- cool to 350~K, reactor 2.}  The new adiabatic line starts at
+$(350,X_1)$: $X_1+2.5\times10^{-3}(T-350)=0.95X_e(T)$ gives $T_2=440$~K,
+$X_2=0.62$.  Cooling resets the equilibrium budget --- that is the whole point
+of interstage cooling.
+
+\textbf{Step 4 --- cooler duties.}  $\dot Q=\dot n C_p\Delta T$:
+$Q_1=40\times50\times(459-350)=218$~kcal/s;
+$Q_2=40\times50\times(440-350)=179$~kcal/s; the water flow in each exchanger is
+$\dot Q/(18\,\Delta T_{water})$ as sized by the deck.
 \end{qbox}
 \begin{ansbox}$X\approx0.40$ after reactor 1 and $0.62$ after reactor 2; $\dot Q_1\approx218$, $\dot Q_2\approx179$ kcal/s.\end{ansbox}
 
 \qtitle{Q40 -- Propylene-oxide CSTR, adiabatic}{\label{q:40}Ch7, slides 57--59}
-\src{Ch7-\_krd.pdf, slides 57--59 (and 69--72).}
-300-gal glass-lined CSTR; $F_{A0}=43.04$ lbmol/h PO; streams: 46.62 ft$^3$/h PO, 46.62 ft$^3$/h
-methanol, 233.1 ft$^3$/h water (0.1 wt\% H$_2$SO$_4$); methanol 71.87 and water 802.8 lbmol/h;
-$T_0=75$\,°F $=535$ R after the 17\,°F heat-of-mixing rise; first order in PO with
-$k=16.96\times10^{12}e^{-32\,400/RT}$ h$^{-1}$; limit 125\,°F.
+\src{Ch7-\_Krd.pdf, slides 57--59 (and 69--72).}
+A 300-gal glass-lined CSTR; $F_{A0}=43.04$~lbmol/h propylene oxide; streams
+46.62~ft$^3$/h PO, 46.62~ft$^3$/h methanol, 233.1~ft$^3$/h water
+(0.1~wt\% H$_2$SO$_4$); methanol 71.87 and water 802.8~lbmol/h;
+$T_0=75$\,°F $=535$~R after the 17\,°F heat-of-mixing rise; first order in PO
+with $k=16.96\times10^{12}e^{-32\,400/RT}$~h$^{-1}$; temperature limit 125\,°F.
+Can the reactor be used adiabatically?
+
 \begin{qbox}
-$v_0=326.3$ ft$^3$/h, $C_{A0}=0.132$ lbmol/ft$^3$, $\tau=(300/7.48)/326.3=0.123$ h.
-Energy balance: $\sum\Theta_iC_{p,i}\approx404$ Btu/(lbmol A$\cdot$R), $-\Delta H_{Rx}=36\,400$
-Btu/lbmol $\Rightarrow T=535+90.1X$.  Solving with $X=\frac{k\tau}{1+k\tau}$:
-$X=0.84$, $T=611$ R $=151$\,°F (deck table intersection $\approx613$ R, $X\approx0.85$).
-$151>125$\,°F: the reactor \emph{cannot} be used adiabatically.
+\textbf{Step 1 --- flows.}  $v_0=46.62+46.62+233.1=326.3$~ft$^3$/h;
+$C_{A0}=43.04/326.3=0.132$~lbmol/ft$^3$;
+$\tau=(300/7.48)/326.3=0.123$~h.
+
+\textbf{Step 2 --- the adiabatic energy line.}
+$\sum\Theta_iC_{p,i}\approx404$~Btu/(lbmol~A$\\cdot$R) and
+$-\Delta H_{Rx}=36\,400$~Btu/lbmol give
+\[
+T=535+\frac{36\,400}{404}X=535+90.1X.
+\]
+
+\textbf{Step 3 --- intersect with the mole balance.}
+$X=\frac{k(T)\tau}{1+k(T)\tau}$ together with the line solves at
+$X=0.84$, $T=611$~R $=151$\,°F (deck intersection $\approx613$~R, $X\approx0.85$).
+
+\textbf{Step 4 --- the constraint.}  $151>125$\,°F: the reactor \emph{cannot} be
+used adiabatically --- the exotherm outruns the limit.
 \end{qbox}
 \begin{ansbox}$X\approx0.84$--$0.85$ at $T\approx611$--$613$ R ($\approx151$\,°F) $>125$\,°F --- not acceptable.\end{ansbox}
 

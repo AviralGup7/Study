@@ -113,7 +113,7 @@ Q9  & Ch3, slides 5--7 & Relative rates: $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{N
 Q10 & Ch3, slides 6--7 & Relative rates: $2A+3B\to5C$ & p.~\pageref{q:10}\\
 Q11 & Ch3, slides 42--44 & Saponification stoichiometric table & p.~\pageref{q:11}\\
 Q12 & Ch3, slides 48--51 & Flow-system stoichiometric table, $A+2B\to C+D$ & p.~\pageref{q:12}\\
-Q13 & Ch3 s.61 (+Ch5 s.77) & Dimerisation $2A\to R$ in MFR: rate equation & p.~\pageref{q:13}\\
+Q13 & Ch3 s.62 (+Ch5 s.77) & Dimerisation $2A\to R$ in MFR: rate equation & p.~\pageref{q:13}\\
 Q14 & Ch3, slide 63 & Phosphine cracking: PFR size & p.~\pageref{q:14}\\
 Q15 & Ch4, slides 17--20 & Ethylene-oxide batch data: $k$ and batch time & p.~\pageref{q:15}\\
 Q16 & Ch4, slides 29--38 & Ethylene glycol: CSTR volume, parallel and series 800-gal reactors & p.~\pageref{q:16}\\
@@ -626,39 +626,124 @@ $\Theta_B=\tfrac13$, in which case B is exhausted exactly when $X=1$.
 by $V_0$ and replace $N_{A0}/V_0$ with $C_{A0}$.''}
 \begin{ansbox}$C_A=C_{A0}(1-X)$, $C_B=C_{A0}(\Theta_B-X/3)$, $C_C=C_{A0}(\Theta_C+X)$, $C_D=C_{A0}(\Theta_D+X/3)$.\end{ansbox}
 
-\qtitle{Q12 -- Flow-system table for $A+2B\to C+D$}{\label{q:12}Ch3, slides 48--51}
-\src{Ch3-krd.pdf, slides 48--51 (``Example'').}
-Liquid phase, $C_{A0}=1.8$, $C_{B0}=6.6$ kmol/m$^3$; A is the basis.
+\qtitle{Q12 -- Flow-system table for $A+2B\to C+D$}{\label{q:12}Ch3, slides 48--52}
+\src{Ch3-krd.pdf, slides 49--52 (worked flow-table example).}
+Liquid phase, $A+2B\to C+D$, with $C_{A0}=1.8$ and $C_{B0}=6.6$~kmol/m$^3$
+($C_{C0}=C_{D0}=0$).  Take A as the basis and express every concentration in
+terms of $X$.
+
 \begin{qbox}
-$\Theta_B=6.6/1.8=3.67$.  Effluent rates: $F_A=F_{A0}(1-X)$, $F_B=F_{A0}(3.67-2X)$,
-$F_C=F_{A0}X$, $F_D=F_{A0}X$; concentrations $C_i=F_i/v_0$, e.g.
-$C_B=C_{A0}(3.67-2X)$ (deck slides 49--51).
+\textbf{Step 1 --- feed ratios and $\delta$ (slide 49).}
+$\Theta_i=F_{i0}/F_{A0}=C_{i0}/C_{A0}$:
+\[
+\Theta_B=\frac{6.6}{1.8}=3.67,\qquad \Theta_C=\Theta_D=0,
+\]
+and $\delta=\frac{d}{a}+\frac{c}{a}-\frac{b}{a}-1=1+1-2-1=-1$ (moles shrink),
+though for a \emph{liquid} feed $\delta$ never changes the volume.
+
+\textbf{Step 2 --- the molar-flow table (slide 50), changes $-\!F_{A0}X$,
+$-2F_{A0}X$, $+F_{A0}X$, $+F_{A0}X$:}
+\begin{center}\small
+\begin{tabular}{ll}
+\toprule
+Species & Effluent molar flow\\
+\midrule
+A & $F_A=F_{A0}(1-X)$\\
+B & $F_B=F_{A0}(\Theta_B-2X)=F_{A0}(3.67-2X)$\\
+C & $F_C=F_{A0}X$\\
+D & $F_D=F_{A0}X$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 3 --- concentrations (slide 52).}  Liquid phase: $v=v_0$, so
+$C_i=F_i/v_0=C_{A0}(\ldots)$:
+\[
+C_A=C_{A0}(1-X),\quad C_B=C_{A0}(3.67-2X),\quad C_C=C_D=C_{A0}X.
+\]
 \end{qbox}
+\note{The point of the exercise: even with $\delta=-1$ nothing expands, because
+liquids do not.  The same reaction in the gas phase would need the
+$(1+\varepsilon X)$ factor --- contrast with Q14.}
 \begin{ansbox}$C_A=C_{A0}(1-X)$, $C_B=C_{A0}(3.67-2X)$, $C_C=C_D=C_{A0}X$.\end{ansbox}
 
-\qtitle{Q13 -- Dimerisation $2A\to R$ in a MFR}{\label{q:13}Ch3, slide 61}
-\src{Ch3-krd.pdf, slide 61; repeated in Ch5\_-\,krd.pdf, slide 77 (``L 5.2'').}
-Pure gaseous A ($C_{A0}=100$ mmol/L) dimerises in a MFR ($V=0.1$ L).  Runs:
-$v_0 = 10.0,\,3.0,\,1.2,\,0.5$ L/h with $C_A = 85.7,\,66.7,\,50,\,33.4$ mmol/L.  Find a rate
-equation.
+\qtitle{Q13 -- Dimerisation $2A\to R$ in a MFR}{\label{q:13}Ch3, slide 62}
+\src{Ch3-krd.pdf, slide 62; repeated as Ch5\_-\\,krd.pdf slide 77 (``L 5.2'').}
+Pure gaseous reactant A ($C_{A0}=100$~millimol/liter) is fed at a steady rate into
+a mixed flow reactor ($V=0.1$~liter) where it dimerises ($2A\to R$).  Four runs:
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+Run & 1 & 2 & 3 & 4\\
+$v_0$ (liter/h) & 10.0 & 3.0 & 1.2 & 0.5\\
+$C_A$ (mmol/L) & 85.7 & 66.7 & 50 & 33.4\\
+\bottomrule
+\end{tabular}
+\end{center}
+Find a rate equation for this reaction.
+
 \begin{qbox}
-Gas phase, $\varepsilon_A=\tfrac{1-2}{2}=-0.5$: $C_A=C_{A0}(1-X)/(1-0.5X)$ gives
-$X=0.250,\,0.500,\,0.667,\,0.800$.  MFR design: $-r_A=F_{A0}X/V = v_0 C_{A0}X/V$:
-$-r_A = 2502,\,1499,\,800,\,400$ mmol/(L$\cdot$h).
-Log--log slope of $(-r_A)$ vs $C_A$ is $1.96\approx2$; $-r_A/C_A^2 = 0.34,\,0.34,\,0.32,\,0.36$.
+\textbf{Step 1 --- conversion per run (gas phase!).}  $2A\to R$ gives
+$\varepsilon_A=\frac{1-2}{2}=-0.5$, so $C_A=C_{A0}\frac{1-X}{1-0.5X}$; inverting,
+$X=\frac{C_{A0}-C_A}{C_{A0}-0.5C_A}$:
+\[
+X=0.250,\ 0.500,\ 0.667,\ 0.800.
+\]
+(A constant-density formula would give different, wrong $X$ here.)
+
+\textbf{Step 2 --- the MFR balance gives one rate per run.}
+$-r_A=\dfrac{F_{A0}X}{V}=\dfrac{v_0 C_{A0}X}{V}$; e.g.\ run~1:
+$\frac{10\times100\times0.25}{0.1}=2500$~mmol/(L$\cdot$h).  All four:
+\[
+-r_A = 2502,\ 1499,\ 800,\ 400\quad\mathrm{mmol/(L\cdot h)}.
+\]
+
+\textbf{Step 3 --- find the order from the four $(C_A,-r_A)$ pairs.}  A log--log
+plot has slope $1.96\approx2$: second order in A.  Check by division:
+$-r_A/C_A^2 = 0.34,\,0.34,\,0.32,\,0.36$ --- constant, so
+\[
+-r_A \approx 0.34\,C_A^{2}\qquad(C_A\ \mathrm{in\ mmol/L},\ -r_A\ \mathrm{in\ mmol/(L\cdot h)}).
+\]
 \end{qbox}
-\begin{ansbox}$-r_A \approx 0.34\,C_A^2$ with $C_A$ in mmol/L and $-r_A$ in mmol/(L$\cdot$h) (second order in A).\end{ansbox}
+\note{Method sentence for the exam: ``the mixed reactor evaluates the rate at the
+exit conditions; four space velocities give four rates; the order is the log--log
+slope.''}
+\begin{ansbox}Second order in A: $-r_A\approx0.34\,C_A^2$ (mmol, L, h).\end{ansbox}
 
 \qtitle{Q14 -- Phosphine cracking PFR}{\label{q:14}Ch3, slide 63}
 \src{Ch3-krd.pdf, slide 63 (``Example'').}
-$4\,\mathrm{PH_3}\to\mathrm{P_4}+6\,\mathrm{H_2}$ at 649\,°C, first order with
-$k=10$ h$^{-1}$.  Size a PFR at 649\,°C and 460 kPa for 80\% conversion of 40 mol/h pure PH$_3$.
+$4\,\mathrm{PH_3}(g)\to\mathrm{P_4}(g)+6\,\mathrm{H_2}(g)$ proceeds at
+$649\,^\circ$C with the first-order rate
+$-r_{\mathrm{PH_3}}=\left(\frac{10}{\mathrm{hr}}\right)C_{\mathrm{PH_3}}$.  What
+size of plug-flow reactor operating at $649\,^\circ$C and $460$~kPa can produce
+$80$\% conversion of a feed of $40$~mol/h of pure phosphine?
+
 \begin{qbox}
-$C_{A0}=P/RT=460\,000/(8.314\times922.15)=60.0$ mol/m$^3$; $\varepsilon_A=(10-4)/4=1.5$.
-$V=\frac{F_{A0}}{kC_{A0}}\left[(1+\varepsilon)\ln\frac1{1-X}-\varepsilon X\right]
-=\frac{40}{10\times60}\left[2.5\ln5-1.2\right]=0.0667(2.419+0.402-0.402)$
-$=0.188$ m$^3$.
+\textbf{Step 1 --- enter in concentrations.}  Ideal gas at the reactor state:
+\[
+C_{A0}=\frac{P_0}{RT}=\frac{460\,000}{8.314\times922.15}=60.0\ \mathrm{mol/m^3}.
+\]
+
+\textbf{Step 2 --- the expansion factor.}  $4\to10$ moles:
+$\varepsilon_A=\frac{10-4}{4}=1.5$, so
+$C_A=C_{A0}\frac{1-X}{1+1.5X}$ --- the gas \emph{expands} as it cracks and the
+concentration falls faster than $(1-X)$.
+
+\textbf{Step 3 --- PFR design equation, first order.}
+\[
+V=F_{A0}\int_0^{0.8}\frac{dX}{kC_{A0}}\cdot\frac{1+1.5X}{1-X}
+=\frac{F_{A0}}{kC_{A0}}\Big[(1+\varepsilon)\ln\frac{1}{1-X}-\varepsilon X\Big].
+\]
+
+\textbf{Step 4 --- substitute.}  $\frac{F_{A0}}{kC_{A0}}=\frac{40}{10\times60}=0.0667$~m$^3$;
+the bracket at $X=0.8$: $2.5\ln5-1.5(0.8)=4.024-1.2=2.824$:
+\[
+V=0.0667\times2.824=0.188\ \mathrm{m^3}\ (\approx188\ \mathrm{L}).
+\]
 \end{qbox}
+\note{Two classic slips the deck warns about implicitly: forgetting $\varepsilon$
+(which would give $0.0667\times\ln5=0.107$~m$^3$, far too small) and using
+$C_{A0}$ at STP instead of at $649\,^\circ$C/$460$~kPa.}
 \begin{ansbox}$V\approx0.19$ m$^3$ (about 190 L).\end{ansbox}
 
 %============================= PART D =====================================

@@ -97,7 +97,7 @@ print("=== Q9/Q10 relative rates (Ch3 slides 5-7) ===")
 print("Q9: rNO2=+4 -> rNO = -4, rO2 = -2 mol/m3.s")
 print("Q10: rA=-10 -> rB = -15, rC = +25 mol/dm3.s")
 
-print("=== Q13 dimerization MFR (Ch3 slide 61 / Ch5 slide 77) ===")
+print("=== Q13 dimerization MFR (Ch3 slide 62 / Ch5 slide 77) ===")
 v0s = np.array([10.0, 3.0, 1.2, 0.5]); CAs = np.array([85.7, 66.7, 50, 33.4]); CA0 = 100.0
 Xs = (CA0-CAs)/(CA0-0.5*CAs); r = v0s*CA0*Xs/0.1
 n, lk = linreg(np.log(CAs), np.log(r))

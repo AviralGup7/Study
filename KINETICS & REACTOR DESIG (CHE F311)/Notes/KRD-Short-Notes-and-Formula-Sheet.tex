@@ -185,6 +185,7 @@ $\Theta_i$ & $C_{i0}/C_{A0}$, feed ratio & $U a,\,T_a$ & heat-transfer coefficie
 $p$ & $P/P_0$, reduced pressure & $\phi,\,\eta$ & Thiele modulus, effectiveness factor\\
 $\alpha$ & pressure-drop parameter & $E(t),\,F(t)$ & RTD function, cumulative RTD\\
 $t_m,\,\sigma^2$ & mean residence time, variance & $Pe,\,n$ & P\'eclet number, tanks-in-series number\\
+$S_{D/U},\,\tilde S_{D/U}$ & selectivity, instantaneous / overall & $\tilde Y_D$ & yield, rate basis / mole basis\\
 \bottomrule
 \end{tabularx}}
 
@@ -723,6 +724,13 @@ X_e = 0.80,\qquad \tau = 20.0\ \mathrm{min},\qquad C_{Af} = 0.0494
 \item \textbf{Independent:} $A \to B+C$ and $D \to E+F$ run side by side without sharing species.
 \end{itemize}
 \notetext{The deck's own chemistry: parallel --- ethylene $+$ oxygen burning to $2\mathrm{CO_2}+2\mathrm{H_2O}$ ($k_1$) versus epoxidation to ethylene oxide ($k_2$); series --- ethylene oxide $+$ NH$_3$ to mono-, then di-, then tri-ethanolamine; complex --- ethanol to ethylene and to acetaldehyde, then ethylene $+$ acetaldehyde to butadiene $+$ water; independent --- cracking of crude, $\mathrm{C_{15}H_{32}} \to \mathrm{C_{12}H_{26}} + \mathrm{C_3H_6}$ and $\mathrm{C_8H_{18}} \to \mathrm{C_6H_{14}} + \mathrm{C_2H_4}$.}
+With two reactants the deck's first lever is the \emph{contacting pattern} (slide~5):
+\begin{itemize}
+\item $C_A,\,C_B$ both high --- charge $A$ and $B$ all at once (batch);
+\item $C_A,\,C_B$ both low --- add both slowly to a well-mixed vessel (semibatch / fed CSTR);
+\item $C_B$ high, $C_A$ low --- start with $B$ and feed $A$ slowly.
+\end{itemize}
+\notetext{The economic incentive (slide~8): with $D$ desired and $U$ undesired, maximise $D$ and minimise $U$; the deck's cost sketch shows the reaction cost falling and the separation cost rising as the system is pushed harder, so the \emph{total} cost has a minimum in between --- selectivity, not conversion alone, sets the optimum.}
 
 \spsub{6.2 \enspace Selectivity and yield --- the four definitions}
 \begin{formulabox}
@@ -778,7 +786,7 @@ S_{D/U} &= \frac{r_D}{r_U}
  &&\left(\tfrac{0.0002}{0.0018} = 0.11,\ \ 36\,000-25\,000 = 11\,000,\ \ 1-1.5 = -\tfrac12\right)
 \end{align*}
 \end{mthbox}
-\notetext{Two levers survive the algebra: \textbf{high temperature} (to bury $Q$) and \textbf{low concentration of $A$} (to bury $U$) --- the latter by inerts, low pressure, or a CSTR / recycle reactor.}
+\notetext{Two levers survive the algebra: \textbf{high temperature} (to bury $Q$) and \textbf{low concentration of $A$} (to bury $U$) --- the latter by inerts, low pressure, or a CSTR / recycle reactor. One printed sentence runs against the algebra: slide~18's ``$S_{DU}$ is minimized at low concentration of $A$'' states the reverse of the $C_A^{-0.5}$ dependence of the slide's own equation~(5); slide~19's operating conclusions agree with the algebra, and the sentence is reported as printed.}
 
 \spsub{6.4 \enspace Two reactants: signs, schemes and the four cases}
 \notetext{For $A+B \xrightarrow{k_1} D$ and $A+B \xrightarrow{k_2} U$ with $r_D = k_1 C_A^{\alpha_1}C_B^{\beta_1}$, $r_U = k_2 C_A^{\alpha_2}C_B^{\beta_2}$:}
@@ -805,12 +813,13 @@ S_{D/U} &= \frac{k_1}{k_2}\,C_A^{\,\alpha_1-\alpha_2}\,C_B^{\,\beta_1-\beta_2}
 \begin{align*}
 A \;\xrightarrow{\;k_1\;}\; B \;\xrightarrow{\;k_2\;}\; C
 \qquad\Longrightarrow\qquad
-t_{\text{opt}} = \frac{\ln(k_2/k_1)}{k_2-k_1}
+C_B &= C_{A0}\,\frac{k_1}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)\\[3pt]
+t_{\text{opt}} &= \frac{\ln(k_2/k_1)}{k_2-k_1}
  &&\text{maximises } C_B
 \end{align*}
 \end{formulabox}
 \begin{itemize}
-\item In \textbf{parallel} networks the product is maximised by adjusting the reaction \emph{conditions} and choosing the proper reactor; in \textbf{series} networks the lever is \emph{time} --- the space time of a flow reactor or the real time of a batch.
+\item In \textbf{parallel} networks the product is maximised by adjusting the reaction \emph{conditions} and choosing the proper reactor; in \textbf{series} networks the lever is \emph{time} --- the space time of a flow reactor or the real time of a batch. The $C_B(t)$ form above is the one behind the Ch4 series numerical reproduced in \S4.6 (Q20).
 \item The deck's triangular diagram (slide~27): $k_1/k_2 \gg 1$ gives a large quantity of $B$; $k_1/k_2 \sim 1$ a moderate one; $k_1/k_2 \ll 1$ (first reaction slow, second fast) very little. In every case a \emph{long} reaction time in batch or a \emph{long} tubular reactor converts $B$ onward to $C$ --- which is why the optimum is interior.
 \item Verified numerically in \S4.6: $t_{\max} = 0.693$~h gives $C_{B,\max} = 1.250$.
 \end{itemize}
@@ -1292,6 +1301,6 @@ Real vessel, or an ideal limit? & neither & \S9.7 ($0.679$ vs $0.720$ / $0.560$)
 \vspace{3mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}
-\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Two places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, and the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}. Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
+\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Four places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, and two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
 
 \end{document}

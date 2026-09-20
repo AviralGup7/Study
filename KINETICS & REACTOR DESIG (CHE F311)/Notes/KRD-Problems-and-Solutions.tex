@@ -1374,30 +1374,70 @@ $p_A=(3\pi_0-\pi)/2$ algebra covers every $1\to3$-type expansion in this part.}
 
 \qtitle{Q36 -- Product distribution, three contacting patterns}{\label{q:36}Ch6, slide 32}
 \src{Ch6\_krd.pdf, slide 32.}
-Aqueous $A+B\xrightarrow{k_1}R$ (desired), $A+B\xrightarrow{k_2}S$, with
-$r_R=1.0\,C_A^{1.5}C_B^{0.3}$, $r_S=1.0\,C_A^{0.5}C_B^{1.8}$ mol/(L$\cdot$min).
-Equal streams of A and B at 20 mol/L each are fed ($C_{A0}=C_{B0}=10$ after mixing);
-90\% conversion of A.  Find $C_R$ for (a) plug flow, (b) mixed flow, (c) plug flow with side
-entrances of B.
+Aqueous $A+B\xrightarrow{k_1}R$ (desired) and $A+B\xrightarrow{k_2}S$ with
+$r_R=1.0\,C_A^{1.5}C_B^{0.3}$, $r_S=1.0\,C_A^{0.5}C_B^{1.8}$ mol/(L$\\cdot$min).
+Equal streams of A and B at 20~mol/L each are fed (after mixing
+$C_{A0}=C_{B0}=10$); 90\% conversion of A is required.  Find $C_R$ for
+(a) plug flow, (b) mixed flow, (c) plug flow with side entrances of B.
+
 \begin{qbox}
-With $C_A=C_B=c$: $\varphi(R/A)=\frac{r_R}{r_R+r_S}=\frac{1}{1+c^{0.5}}$.
-(a) $C_R=\int_{1}^{10}\frac{dc}{1+\sqrt c}=2\left[u-\ln(1+u)\right]_1^{\sqrt{10}}=2.86$ mol/L.
-(b) $C_R=\varphi|_{c=1}\,(10-1)=0.5\times9=4.5$ mol/L.
-(c) Side entry of B holds $C_B$ at the low exit level ($=1$):
-$\varphi=\frac{c}{c+1}$, $C_R=\int_1^{10}\frac{c\,dc}{c+1}=9-\ln\frac{11}{2}=7.30$ mol/L.
+\textbf{Step 1 --- the instantaneous fraction.}  With $C_A=C_B=c$ throughout
+(equal feeds, equal consumption),
+\[
+\varphi(R/A)=\frac{r_R}{r_R+r_S}=\frac{c^{1.5}c^{0.3}}{c^{1.5}c^{0.3}+c^{0.5}c^{1.8}}
+=\frac{1}{1+c^{0.5}}.
+\]
+$\varphi$ is \emph{larger at low concentration} --- that single observation
+already ranks the three contactors.
+
+\textbf{(a) Plug flow.}  Integrate $\varphi$ over $c:10\to1$:
+\[
+C_R=\int_1^{10}\frac{dc}{1+\sqrt c}\ \stackrel{u=\sqrt c}{=}\ 2\big[u-\ln(1+u)\big]_1^{\sqrt{10}}=2.86\ \mathrm{mol/L}.
+\]
+
+\textbf{(b) Mixed flow.}  The whole reactor sits at the exit level $c=1$:
+$\varphi=\frac12$, so $C_R=\frac12(10-1)=4.50$~mol/L --- better, because the
+CSTR keeps $c$ low where $\varphi$ is high.
+
+\textbf{(c) Side entry of B.}  Feeding B along the length holds $C_B$ at the low
+exit value ($=1$) while $C_A$ stays high:
+$\varphi=\frac{c^{1.5}}{c^{1.5}+c^{0.5}}=\frac{c}{c+1}$,
+\[
+C_R=\int_1^{10}\frac{c\,dc}{c+1}=9-\ln\frac{11}{2}=7.30\ \mathrm{mol/L}.
+\]
 \end{qbox}
+\note{The deck's lesson: when the desired reaction has the lower concentration
+exponent, run at low concentrations (CSTR beats PFR), and side-feeding the other
+reactant beats both.}
 \begin{ansbox}(a) 2.86; (b) 4.50; (c) 7.30 mol/L --- mixed flow beats plug flow here, and keeping B low is best.\end{ansbox}
 
 \qtitle{Q37 -- Two MFRs in series}{\label{q:37}Ch6, slide 33}
 \src{Ch6\_krd.pdf, slide 33.}
-$r_R=k_1C_A^2$, $r_S=k_2C_A$; feed $C_{A0}=1.0,C_{R0}=0,C_{S0}=0.3$; $\tau_1=2.5$, $\tau_2=10$ min;
-first-reactor exit $C_A=0.4,C_R=0.2,C_S=0.7$.  Find the second-reactor exit.
+$r_R=k_1C_A^2$, $r_S=k_2C_A$; feed $C_{A0}=1.0$, $C_{R0}=0$, $C_{S0}=0.3$;
+$\tau_1=2.5$, $\tau_2=10$~min; the first reactor exits at
+$C_A=0.4$, $C_R=0.2$, $C_S=0.7$.  Find the second reactor's exit.
+
 \begin{qbox}
-From reactor 1: $k_1=\frac{0.2/2.5}{0.4^2}=0.5$; $k_2=\frac{(0.7-0.3)/2.5}{0.4}=0.4$
-(the S balance checks: $0.4\times0.4=0.16=(0.7-0.3)/2.5$).
-Reactor 2: $0.4-C_A=(0.5C_A^2+0.4C_A)10\Rightarrow C_A=0.0745$;
-$C_R=0.2+0.5C_A^2(10)=0.228$; $C_S=0.7+0.4C_A(10)=0.998$.
+\textbf{Step 1 --- extract the constants from reactor 1.}  MFR balances:
+\[
+k_1=\frac{C_{R1}-C_{R0}}{\tau_1 C_{A1}^2}=\frac{0.2/2.5}{0.4^2}=0.5,\qquad
+k_2=\frac{(C_{S1}-C_{S0})/\tau_1}{C_{A1}}=\frac{0.4/2.5}{0.4}=0.4.
+\]
+
+\textbf{Step 2 --- A balance on reactor 2.}
+$0.4-C_A=(0.5C_A^2+0.4C_A)\times10$, i.e.\ $5C_A^2+5C_A-0.4=0$:
+\[
+C_A=\frac{-5+\sqrt{25+8}}{10}=0.0745.
+\]
+
+\textbf{Step 3 --- R and S balances.}
+\[
+C_R=0.2+0.5C_A^2(10)=0.228,\qquad
+C_S=0.7+0.4C_A(10)=0.998.
+\]
 \end{qbox}
+\note{Mass check to state in the exam: $C_A+C_R+C_S$ should equal
+$C_{A0}+C_{S0}=1.3$ (R and S each come from A): $0.075+0.23+1.00=1.30$.)}
 \begin{ansbox}$C_A\approx0.075$, $C_R\approx0.23$, $C_S\approx1.00$ mol/L.\end{ansbox}
 
 %============================= PART G =====================================

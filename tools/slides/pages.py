@@ -415,7 +415,10 @@ def _ink_fix(im):
 
 # ------------------------------------------------------------------ pptx
 def _xfrm(el):
-    x = el.find('.//' + A + 'xfrm')
+    # graphicFrame stores its transform as <p:xfrm>, everything else as <a:xfrm>
+    x = el.find(P + 'xfrm')
+    if x is None:
+        x = el.find('.//' + A + 'xfrm')
     if x is None:
         return None
     off, ext = x.find(A + 'off'), x.find(A + 'ext')
@@ -610,7 +613,10 @@ class PptxRenderer:
             texts.append((x0, y0, paras))
 
     def _text(self, dr, x0, y0, paras):
-        sc = self.scale * 72 / 914400.0
+        # 1 pt = 914400/72 EMU; self.scale is px/EMU, so px-per-pt = scale*914400/72.
+        # (72/914400 is the inverse -- it made every label collapse to the 8px
+        # floor, dropping typed text and table cells at large --width.)
+        sc = self.scale * 914400.0 / 72
         y = y0
         for line, size, bold in paras:
             px = max(8, int(round(size * sc * 1.6)))

@@ -986,10 +986,18 @@ $C_B\approx C_{B0}$ throughout and $-r_A=kC_A^{\alpha}C_B\approx
 (kC_{B0})C_A^{\alpha}=k'C_A^{\alpha}$: the runs see a single unknown
 $\alpha$.
 
-\textbf{Step 1 --- differential method (slide 17).}  Estimate $-dC_A/dt$ at each
-point by finite differences (deck values, $\times10^{-4}$~mol/(dm$^3\cdot$min)):
+\textbf{Step 1 --- differential method (slides 16--17).}  The deck computes
+$-dC_A/dt$ point by point with the three-point finite-difference formulas it
+teaches on slide 16,
+\[
+\left(\tfrac{\Delta C_A}{\Delta t}\right)_0=\frac{-3C_{A0}+4C_{A1}-C_{A2}}{2\Delta t},\quad
+\left(\tfrac{\Delta C_A}{\Delta t}\right)_i=\frac{C_{A,i+1}-C_{A,i-1}}{2\Delta t},\quad
+\left(\tfrac{\Delta C_A}{\Delta t}\right)_N=\frac{C_{A,N-2}-4C_{A,N-1}+3C_{AN}}{2\Delta t},
+\]
+(write these out in the exam --- they are worth marks on their own).  The seven
+rates come out (deck values, $\times10^{-4}$~mol/(dm$^3\cdot$min)):
 $2.86,\,1.94,\,1.24,\,0.84,\,0.61,\,0.48,\,0.36$.  Plot $\ln(-r_A)$ vs
-$\ln C_A$: slope $=1.99\approx2$ --- \emph{second order in trityl}.
+$\ln C_A$ (slide 14): slope $=1.99\approx2$ --- \emph{second order in trityl}.
 
 \textbf{Step 2 --- integral check.}  If $\alpha=2$,
 $\frac{1}{C_A}-\frac{1}{C_{A0}}=k't$ must be a straight line through the origin;
@@ -1116,6 +1124,10 @@ $(C_A,-r_A)$ pairs is $2.00$; dividing, $-r_A/C_A^2=0.0040$ in all runs, so
 -r_A=0.004\,C_A^2\qquad(\mathrm{mmol,\ L,\ min})\;=\;4\ \mathrm{L/(mol\cdot min)}\ \text{in molar units}.
 \]
 \end{qbox}
+\note{This is the same experiment as Q13 (dimerisation, slide 77 of this deck):
+a MFR run at several space velocities is the deck's standard way of generating
+$(C_A,-r_A)$ pairs.  Learn the pair once: $X$ from the stoichiometry with
+$\varepsilon$, then $-r_A=v_0C_{A0}X/V$.}
 \begin{ansbox}$-r_A=0.004\\,C_A^2$ with $C_A$ in mmol/L (i.e. $k=4$ L/(mol$\cdot$min)).\end{ansbox}
 
 \qtitle{Q27 -- $A\to2.5R$ batch, partial-pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
@@ -1145,10 +1157,20 @@ $\ln[(p_0-p_e)/(p-p_e)]$ vs $t$ before anything else.}
 
 \qtitle{Q28 -- Reaction bomb $2A\to B$ at 100\,°C}{\label{q:28}Ch5, slides 78--79}
 \src{Ch5\_-\\,krd.pdf, slides 78--79.}
-Pure A at 1~atm and 25\,°C is jumped to 100\,°C; the total pressure falls from
-$1.14$~atm at $t=1$~min to $0.728$~atm at $t=20$~min (readings e.g.\
-$1.04,\,0.982,\,0.940,\,0.905,\,0.870$ at $t=2..6$); after the weekend no A
-remains.  Find the rate equation in mol, L, min.
+Pure A at 1~atm and 25\,°C is jumped to 100\,°C; the total pressure is recorded
+(slide 79):
+\begin{center}\small
+\begin{tabular}{lllllll}
+\toprule
+$t$ (min) & 1 & 2 & 3 & 4 & 5 & 6\\
+$\pi$ (atm) & 1.14 & 1.04 & 0.982 & 0.940 & 0.905 & 0.870\\
+\midrule
+$t$ (min) & 7 & 8 & 9 & 10 & 15 & 20\\
+$\pi$ (atm) & 0.850 & 0.832 & 0.815 & 0.800 & 0.754 & 0.728\\
+\bottomrule
+\end{tabular}
+\end{center}
+after the weekend no A remains.  Find the rate equation in mol, L, min.
 
 \begin{qbox}
 \textbf{Step 1 --- stoichiometry to $p_A(\pi)$.}  $2A\to B$ halves the moles:

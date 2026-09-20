@@ -1026,37 +1026,81 @@ $\ln[(p_0-p_e)/(p-p_e)]$ vs $t$ before anything else.}
 \begin{ansbox}First-order approach to $p_{Ae}=150$ mm with $k\approx0.16$ min$^{-1}$.\end{ansbox}
 
 \qtitle{Q28 -- Reaction bomb $2A\to B$ at 100\,°C}{\label{q:28}Ch5, slides 78--79}
-\src{Ch5\_-\,krd.pdf, slides 78--79.}
-Pure A at 1 atm and 25\,°C is jumped to 100\,°C; $\pi$ falls from 1.14 atm at $t=1$ min
-to 0.728 atm at $t=20$ min (twelve readings, e.g. 1.04, 0.982, 0.940, 0.905, 0.870 at
-$t=2..6$); after the weekend no A remains.  Rate equation in mol, L, min.
+\src{Ch5\_-\\,krd.pdf, slides 78--79.}
+Pure A at 1~atm and 25\,°C is jumped to 100\,°C; the total pressure falls from
+$1.14$~atm at $t=1$~min to $0.728$~atm at $t=20$~min (readings e.g.\
+$1.04,\,0.982,\,0.940,\,0.905,\,0.870$ at $t=2..6$); after the weekend no A
+remains.  Find the rate equation in mol, L, min.
+
 \begin{qbox}
-$2A\to B$ with $\pi_0(100\,°\mathrm{C})=1$ atm: $p_A=2\pi-1$.  Least squares:
-second order ($1/p_A$ linear) fits with $r^2=0.964$ vs $0.886$ first order, giving
-$k_p=0.074$ atm$^{-1}$min$^{-1}$; with $p_A=C_ART$ ($RT=30.6$ L$\cdot$atm/mol at 373 K),
-$k_C=k_pRT\approx2.3$ L/(mol$\cdot$min).
+\textbf{Step 1 --- stoichiometry to $p_A(\pi)$.}  $2A\to B$ halves the moles:
+$\pi=p_A+p_B$ with $p_B=\tfrac12(p_{A0}-p_A)$, so $p_A=2\pi-p_{A0}$; the deck
+takes $p_{A0}=1$~atm at the reaction temperature.  The ``no A after the weekend''
+reading confirms the reaction goes to completion.
+
+\textbf{Step 2 --- try the orders.}  Plot the twelve readings as
+$1/p_A$ vs $t$ (second order) and $\ln p_A$ vs $t$ (first order): the
+second-order plot is the straight one ($r^2=0.964$ against $0.886$), so the
+reaction is second order in A with
+$k_p=0.074$~atm$^{-1}$min$^{-1}$ from the $1/p_A$ slope.
+
+\textbf{Step 3 --- convert to concentration units.}  With $p_A=C_ART$ and
+$RT=0.082\times373=30.6$~L$\\cdot$atm/mol at 100\,°C, a second-order $k$ scales as
+\[
+k_C=k_p\,RT=0.074\times30.6\approx2.3\ \mathrm{L/(mol\cdot min)}.
+\]
 \end{qbox}
-\begin{ansbox}Second order in A; $k\approx0.074$ atm$^{-1}$min$^{-1}$ $\approx2.3$ L/(mol$\cdot$min) at 100\,°C.\end{ansbox}
+\note{Exam sentence: ``the order is decided by which linearisation is linear; the
+units conversion $k_C=k_p(RT)^{1-n}$ then moves between pressure and concentration
+forms'' ($1-n=-1$ here).}
+\begin{ansbox}Second order in A; $k\approx0.074$ atm$^{-1}$min$^{-1}\approx2.3$ L/(mol$\\cdot$min) at 100\,°C.\end{ansbox}
 
 \qtitle{Q29 -- The gambling tables}{\label{q:29}Ch5, slide 80}
-\src{Ch5\_-\,krd.pdf, slide 80.}
-Losses proportional to money held: table 1 halves it in 4 h, table 2 in 2 h.  Starting with
-Rs.\,1000 at both tables at once, when is Rs.\,10 left?
+\src{Ch5\_-\\,krd.pdf, slide 80.}
+Raju plays at two tables at once; losses at each table are proportional to the
+money he holds --- table~1 halves it in 4~h, table~2 in 2~h.  Starting with
+Rs.~1000 at both, when is Rs.~10 left?
+
 \begin{qbox}
-First-order decay with $k=\ln2/4+\ln2/2=0.520$ h$^{-1}$;
-$t=\ln(1000/10)/k=4.605/0.520=8.9$ h.
+\textbf{Translate to kinetics.}  ``Loss proportional to money held'' is
+first-order decay: $k_1=\ln2/4$ and $k_2=\ln2/2$~h$^{-1}$.  Playing at both
+tables simultaneously is two parallel first-order reactions, so the money obeys
+\[
+\frac{dM}{dt}=-(k_1+k_2)M,\qquad k=k_1+k_2=\frac{\ln2}{4}+\frac{\ln2}{2}=0.520\ \mathrm{h^{-1}}.
+\]
+
+\textbf{Integrate.}
+\[
+t=\frac{1}{k}\ln\frac{M_0}{M}=\frac{\ln(1000/10)}{0.520}=\frac{4.605}{0.520}=8.9\ \mathrm{h}.
+\]
 \end{qbox}
+\note{The teaching point of the slide: parallel first-order paths add their rate
+constants --- exactly the series/parallel rule used later for reactions.}
 \begin{ansbox}About 8.9 hours.\end{ansbox}
 
 \qtitle{Q30 -- Second order: bigger MFR, equal PFR}{\label{q:30}Ch5, slide 81}
-\src{Ch5\_-\,krd.pdf, slide 81.}
-$-r_A=kC_A^2$ gives 50\% in a MFR.  (i) conversion in a MFR of 6 times the volume;
-(ii) in a PFR of the same size.
+\src{Ch5\_-\\,krd.pdf, slide 81.}
+$-r_A=kC_A^2$ gives 50\% conversion in a mixed flow reactor.  (i) What
+conversion if the reactor is replaced by one of 6 times the volume?  (ii) What
+conversion if it is replaced by a PFR of the same size?
+
 \begin{qbox}
-Original: $kC_{A0}\tau=\frac{X}{(1-X)^2}=2$.
-(i) $kC_{A0}\tau'=12=\frac{X}{(1-X)^2}\Rightarrow X=0.75$.
-(ii) PFR: $kC_{A0}\tau=\frac{X}{1-X}=2\Rightarrow X=2/3$.
+\textbf{Step 0 --- calibrate with the original reactor.}  MFR at $X=0.5$:
+\[
+kC_{A0}\tau=\frac{X}{(1-X)^2}=\frac{0.5}{0.25}=2.
+\]
+This single dimensionless group is all the data the question gives.
+
+\textbf{(i) Six-fold volume.}  $kC_{A0}\tau'=12$:
+$\dfrac{X}{(1-X)^2}=12\Rightarrow X=0.75$ (solve the quadratic
+$12(1-X)^2=X$; the root below 1).
+
+\textbf{(ii) Same-size PFR.}  The PFR design equation for second order gives
+$kC_{A0}\tau=\dfrac{X}{1-X}=2\Rightarrow X=\tfrac23\approx0.67$.
 \end{qbox}
+\note{Notice the contrast with Q2: six-fold the MFR volume buys only
+$0.5\to0.75$, while switching reactor \emph{type} at equal volume buys
+$0.5\to0.67$ --- second-order kinetics punish the MFR's exit-rate operation.}
 \begin{ansbox}(i) $X=0.75$; (ii) $X=0.67$.\end{ansbox}
 
 \qtitle{Q31 -- $A+3B\to6R$ with inerts}{\label{q:31}Ch5, slide 82}

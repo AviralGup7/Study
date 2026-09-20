@@ -159,8 +159,8 @@ Isothermal reactor design; the algorithm; closed-form conversions;
  Damk\"ohler number; pressure drop in packed beds & Ch4\\
 Collection and analysis of rate data; differential and integral methods;
  half-life; differential reactor; nonlinear regression & Ch5\\
-Multiple reactions; selectivity and yield; parallel and series schemes;
- product distribution & Ch6\\
+Multiple reactions; selectivity and yield; contacting schemes for the
+ four sign cases; series intermediates; product distribution; net rates & Ch6\\
 Non-isothermal design; energy balance; adiabatic operation; heat exchange;
  multiple steady states and runaway; interstage cooling & Ch7\\
 Catalysis and catalytic reactors; adsorption and site balance;
@@ -714,37 +714,92 @@ X_e = 0.80,\qquad \tau = 20.0\ \mathrm{min},\qquad C_{Af} = 0.0494
 \spsection{6 \enspace Multiple Reactions}
 \notetext{Source: \texttt{Ch6\_krd.pdf}.}
 
-\spsub{6.1 \enspace Selectivity and yield}
+\spsub{6.1 \enspace The four classes of multiple reaction}
+\begin{itemize}
+\item \textbf{Parallel (competing):} $A \xrightarrow{k_1} B$ and $A \xrightarrow{k_2} C$ consume the same feedstock at once; the reactor's job is to steer consumption toward one branch.
+\item \textbf{Series (consecutive):} $A \xrightarrow{k_1} B \xrightarrow{k_2} C$ --- the product of the first reaction is the feed of the second, so the intermediate $B$ passes through a maximum.
+\item \textbf{Complex (parallel $+$ series):} e.g.\ $A+B \xrightarrow{k_1} C+D$ together with $A+C \xrightarrow{k_2} E$; the deck also prints the \textbf{Denbigh network} $A \xrightarrow{1} R \xrightarrow{3} S$ with the side arrows $A \xrightarrow{2} T$ and $R \xrightarrow{4} U$ --- the standard bookkeeping test for net rates.
+\item \textbf{Independent:} $A \to B+C$ and $D \to E+F$ run side by side without sharing species.
+\end{itemize}
+\notetext{The deck's own chemistry: parallel --- ethylene $+$ oxygen burning to $2\mathrm{CO_2}+2\mathrm{H_2O}$ ($k_1$) versus epoxidation to ethylene oxide ($k_2$); series --- ethylene oxide $+$ NH$_3$ to mono-, then di-, then tri-ethanolamine; complex --- ethanol to ethylene and to acetaldehyde, then ethylene $+$ acetaldehyde to butadiene $+$ water; independent --- cracking of crude, $\mathrm{C_{15}H_{32}} \to \mathrm{C_{12}H_{26}} + \mathrm{C_3H_6}$ and $\mathrm{C_8H_{18}} \to \mathrm{C_6H_{14}} + \mathrm{C_2H_4}$.}
+
+\spsub{6.2 \enspace Selectivity and yield --- the four definitions}
 \begin{formulabox}
 \begin{align*}
 S_{D/U} &= \frac{r_D}{r_U}
- &&\text{instantaneous selectivity}\\[3pt]
-\tilde{S}_{D/U} &= \frac{F_D}{F_U}
- &&\text{overall (batch: } N_D/N_U\text{)}\\[4pt]
-\tilde{Y}_D &= \frac{r_D}{-r_A}
+ &&\text{instantaneous (rate) selectivity}\\[3pt]
+\tilde{S}_{D/U} &= \frac{F_D}{F_U},\ \ \frac{N_D}{N_U}\ \text{(batch)}
+ &&\text{overall selectivity}\\[4pt]
+Y_D &= \frac{r_D}{-r_A}
  &&\text{instantaneous yield}\\[3pt]
-\tilde{Y}_D &= \frac{F_D}{F_{A0}-F_A}
- &&\text{overall yield}\\[4pt]
-r_j &= \sum_i \nu_{ji}\,r_i
- &&\text{net rate of } j \text{ over all reactions}
+\tilde{Y}_D &= \frac{F_D}{F_{A0}-F_A},\ \ \frac{N_D}{N_{A0}-N_A}\ \text{(batch)}
+ &&\text{overall yield}
 \end{align*}
 \end{formulabox}
-
-\spsub{6.2 \enspace Parallel reactions --- the operating rules}
-\notetext{For $A \xrightarrow{k_1} D$ and $A \xrightarrow{k_2} U$ with $-r_{1A} = k_1C_A^{\alpha_1}$ and $-r_{2A} = k_2C_A^{\alpha_2}$, let $a = \alpha_1 - \alpha_2$.}
-\begin{tabularx}{\linewidth}{@{}l X@{}}
-\toprule
-$a > 0$ & keep $C_A$ \textbf{high} --- PFR or batch, high pressure, no inerts\\
-$a < 0$ & keep $C_A$ \textbf{low} --- CSTR, add inerts, dilute the feed\\
-$E_D > E_U$ & run \textbf{hot}\\
-$E_U > E_D$ & run \textbf{cool}, but still fast enough to be practical\\
-\bottomrule
-\end{tabularx}
 \begin{itemize}
-\item \textbf{Two reactants:} the signs of $(\alpha_1-\alpha_2)$ and $(\beta_1-\beta_2)$ together choose the contacting pattern --- semibatch, side streams, or a train of small CSTRs.
+\item \textbf{In a CSTR the two selectivities coincide} (slide~11): $F_D = r_D V$ and $F_U = r_U V$, so $\tilde S_{D/U} = r_D V / r_U V = S_{D/U}$.
+\item \textbf{Definitions differ between authors} --- slide~14 says to check which one a question intends. The \emph{overall} quantities set the profit of the reaction--separation system; the \emph{instantaneous} ones are the design tool, because they say which reactor and contacting scheme to choose.
 \end{itemize}
 
-\spsub{6.3 \enspace Series reactions}
+\spsub{6.3 \enspace The rate selectivity parameter, one reactant}
+\notetext{For $A \xrightarrow{k_D} D$ (desired) and $A \xrightarrow{k_U} U$ (undesired) with $-r_A = k_D C_A^{\alpha_1} + k_U C_A^{\alpha_2}$:}
+\begin{formulabox}
+\begin{align*}
+S_{D/U} &= \frac{r_D}{r_U} = \frac{k_D}{k_U}\,C_A^{\,\alpha_1-\alpha_2}
+ &&\text{maximise this}\\[4pt]
+\frac{k_D}{k_U} &= \frac{A_D}{A_U}\,e^{-(E_D-E_U)/RT}
+ &&\text{the temperature lever}
+\end{align*}
+\end{formulabox}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Case 1} $\alpha_1 > \alpha_2$ & keep $C_A$ \textbf{high}: batch or plug flow, no inerts and high pressure (gas), minimum diluent (liquid)\\\\
+\textbf{Case 2} $\alpha_2 > \alpha_1$ & keep $C_A$ \textbf{low}: CSTR or recycle reactor (the product stream acts as diluent), inerts and low pressure (gas), maximum diluent (liquid)\\\\
+\textbf{Case 3} $E_D > E_U$ & run \textbf{hot}: $k_D$ grows faster with $T$ than $k_U$\\\\
+\textbf{Case 4} $E_U > E_D$ & run \textbf{cool} --- but not so cool that the desired reaction stops proceeding\\\\
+\bottomrule
+\end{tabularx}
+\notetext{The deck's rules of thumb (slide~4) are the same table in words: a \emph{high} reactant concentration favours the reaction of \emph{higher} order, a \emph{low} concentration the reaction of \emph{lower} order, and for reactions of the \emph{same} order concentration has no effect on the distribution.}
+\begin{itemize}
+\item \textbf{Worked selectivity argument} (slides~18--19). Three parallel paths from $A$:
+\end{itemize}
+\begin{align*}
+r_D &= 0.0002\,e^{36\,000\left(\frac{1}{300}-\frac{1}{T}\right)} C_A &
+r_U &= 0.0018\,e^{25\,000\left(\frac{1}{300}-\frac{1}{T}\right)} C_A^{1.5} &
+r_Q &= 0.00452\,e^{5\,000\left(\frac{1}{300}-\frac{1}{T}\right)} C_A^{0.5}
+\end{align*}
+\begin{mthbox}
+\begin{align*}
+S_{D/Q} &= \frac{r_D}{r_Q} \approx \text{very large at high } T
+ &&(E_D = 36\,000 \gg E_Q = 5\,000)\\[3pt]
+S_{D/U} &= \frac{r_D}{r_U}
+ = \frac{0.11\,e^{11\,000\left(\frac{1}{300}-\frac{1}{T}\right)}}{C_A^{\,0.5}}
+ &&\left(\tfrac{0.0002}{0.0018} = 0.11,\ \ 36\,000-25\,000 = 11\,000,\ \ 1-1.5 = -\tfrac12\right)
+\end{align*}
+\end{mthbox}
+\notetext{Two levers survive the algebra: \textbf{high temperature} (to bury $Q$) and \textbf{low concentration of $A$} (to bury $U$) --- the latter by inerts, low pressure, or a CSTR / recycle reactor.}
+
+\spsub{6.4 \enspace Two reactants: signs, schemes and the four cases}
+\notetext{For $A+B \xrightarrow{k_1} D$ and $A+B \xrightarrow{k_2} U$ with $r_D = k_1 C_A^{\alpha_1}C_B^{\beta_1}$, $r_U = k_2 C_A^{\alpha_2}C_B^{\beta_2}$:}
+\begin{formulabox}
+\begin{align*}
+S_{D/U} &= \frac{k_1}{k_2}\,C_A^{\,\alpha_1-\alpha_2}\,C_B^{\,\beta_1-\beta_2}
+\end{align*}
+\end{formulabox}
+\notetext{The deck's menu of contacting schemes (slide~21): (a)~CSTR; (b)~tubular reactor; (c)~batch; (d)~semibatch, B fed slowly into A; (e)~semibatch, A fed slowly into B; (f)~tubular reactor with side streams of B; (g)~tubular reactor with side streams of A; (h)~series of small CSTRs; (i)~tubular reactor with recycle.}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Case I} $\alpha_1>\alpha_2,\ \beta_1>\beta_2$ & keep $C_A,C_B$ \textbf{both high} --- (b) tubular, (c) batch, high pressure, reduce inert\\\\
+\textbf{Case II} $\alpha_1>\alpha_2,\ \beta_1<\beta_2$ & $C_A$ high, $C_B$ low --- (d) semibatch B into A, (f) side streams of B, (h) small CSTRs with A fed only to the first\\\\
+\textbf{Case III} $\alpha_1<\alpha_2,\ \beta_1<\beta_2$ & keep $C_A,C_B$ \textbf{both low} --- (a) CSTR, (i) large recycle ratio, feed diluted with inert, low pressure\\\\
+\textbf{Case IV} $\alpha_1<\alpha_2,\ \beta_1>\beta_2$ & $C_A$ low, $C_B$ high --- (e) semibatch A into B, (g) side streams of A, (h) small CSTRs with fresh B to each\\\\
+\bottomrule
+\end{tabularx}
+\begin{warnbox}
+\textbf{A slip in the source, reported rather than corrected.} Slide~25 (Case~IV) opens with the sentence ``maintain the concentration of both A and B as high as possible,'' which contradicts its own $S_{D/U} = k_1 C_B^{\,b}/(k_2 C_A^{\,a})$ with $a,b>0$; the schemes it then lists --- (e), (g), (h) with fresh B --- are exactly the low-$C_A$/high-$C_B$ set quoted in the table above.
+\end{warnbox}
+
+\spsub{6.5 \enspace Series reactions --- maximising the intermediate}
 \begin{formulabox}
 \begin{align*}
 A \;\xrightarrow{\;k_1\;}\; B \;\xrightarrow{\;k_2\;}\; C
@@ -753,29 +808,53 @@ t_{\text{opt}} = \frac{\ln(k_2/k_1)}{k_2-k_1}
  &&\text{maximises } C_B
 \end{align*}
 \end{formulabox}
-\notetext{Verified numerically in \S4.6: $t_{\max} = 0.693$~h gives $C_{B,\max} = 1.250$.}
+\begin{itemize}
+\item In \textbf{parallel} networks the product is maximised by adjusting the reaction \emph{conditions} and choosing the proper reactor; in \textbf{series} networks the lever is \emph{time} --- the space time of a flow reactor or the real time of a batch.
+\item The deck's triangular diagram (slide~27): $k_1/k_2 \gg 1$ gives a large quantity of $B$; $k_1/k_2 \sim 1$ a moderate one; $k_1/k_2 \ll 1$ (first reaction slow, second fast) very little. In every case a \emph{long} reaction time in batch or a \emph{long} tubular reactor converts $B$ onward to $C$ --- which is why the optimum is interior.
+\item Verified numerically in \S4.6: $t_{\max} = 0.693$~h gives $C_{B,\max} = 1.250$.
+\end{itemize}
 
-\spsub{6.4 \enspace Product distribution}
+\spsub{6.6 \enspace Product distribution --- the quantitative treatment}
 \begin{formulabox}
 \begin{align*}
-\varphi\!\left(\frac{R}{A}\right) = \frac{dC_R}{-dC_A}
- &&\text{instantaneous fractional yield}\\[5pt]
-C_R = \int \varphi\; d(-C_A)
- &&\text{PFR: area under } \varphi;\quad
-   \text{MFR: rectangle};\quad \text{staged: steps}
+\varphi &= \frac{dC_R}{-dC_A}
+ &&\text{instantaneous fractional yield of } R\\[4pt]
+\Phi &= \frac{C_{Rf}}{C_{A0}-C_{Af}}
+ &&\text{overall yield} = \bar\varphi \text{ in the reactor}\\[4pt]
+\text{PFR:}\quad \Phi_p &= \frac{1}{\Delta C_A}\int_{C_{A0}}^{C_{Af}} \varphi\,dC_A
+ &&\text{area under } \varphi(C_A)\\[4pt]
+\text{MFR:}\quad \Phi_m &= \varphi \text{ evaluated at } C_{Af}
+ &&\text{one rectangle}\\[4pt]
+\text{$N$ staged MFRs:}\quad
+\Phi_{N} &= \frac{\sum_i \varphi_i\left(C_{A,i-1}-C_{A,i}\right)}{C_{A0}-C_{AN}}
+ &&\text{steps between the two}\\[4pt]
+C_{Rf} &= \Phi\left(C_{A0}-C_{Af}\right)
+ &&\text{product out of any reactor}
 \end{align*}
 \end{formulabox}
+\notetext{Slide~31 draws the three constructions on one $\varphi$ curve: plug flow shades the area under the curve from $C_{Af}$ to $C_{A0}$, mixed flow draws the single rectangle of height $\varphi(C_{Af})$ over $(-\Delta C_A)$, and staged reactors climb the curve in steps --- the rectangle construction converging to the area as $N \to \infty$.}
 
-\spsub{6.5 \enspace Worked from the deck}
+\spsub{6.7 \enspace Net rates and the bookkeeping for $q$ reactions}
+\begin{formulabox}
+\begin{align*}
+r_j &= \sum_{i=1}^{q} r_{ij}
+ &&\text{net rate of species } j = \text{sum over reactions } i
+\end{align*}
+\end{formulabox}
 \begin{itemize}
-\item \textbf{Product distribution} (slide~32). The same feed through three contacting patterns:
+\item The deck's example set (slide~34): reaction~1, $A+B \to 3C+D$; reaction~2, $A+2C \to 3E$; reaction~3, $2B+3E \to 4F$; reaction~$q$, $A+\tfrac12 C \to G$. Then $r_A = r_{1A}+r_{2A}+r_{3A}+\cdots+r_{qA}$ while $r_B$ picks up only reactions 1 and~3 --- species absent from a reaction contribute zero to its sum.
+\end{itemize}
+
+\spsub{6.8 \enspace Worked from the deck}
+\begin{itemize}
+\item \textbf{Product distribution} (slide~32). $dC_R/dt = 1.0\,C_A^{1.5}C_B^{0.3}$, $dC_S/dt = 1.0\,C_A^{0.5}C_B^{1.8}$; equal volumetric feeds each at $20$~mol/L, $90\,\%$ conversion of A. The same chemistry through three contacting patterns:
 \[
-\text{(a) } C_R = 2.859 \qquad
-\text{(b) } C_R = 4.50 \qquad
-\text{(c) } C_R = 7.295
+\text{(a) plug flow } C_R = 2.859 \qquad
+\text{(b) mixed flow } C_R = 4.50 \qquad
+\text{(c) plug flow, B in side streams } C_R = 7.295
 \]
-\notetext{A factor of $2.6$ in product concentration from contacting alone, with no change to chemistry, temperature or throughput. This is why the rules of \S6.2 are worth memorising.}
-\item \textbf{Two MFRs in series} (slide~33), $k_1 = 0.5$, $k_2 = 0.4$, $\tau = 2.5$ and $10$~min:
+\notetext{With equal feeds $C_A = C_B$ everywhere, so $r_R/r_S = C^{-0.5}$: \emph{low} concentration favours R. Mixed flow then runs entirely at the lowest concentration, plug flow must pass through the high-concentration region making S, and side entrances of B depress $C_B$ relative to $C_A$ further still --- hence $2.86 < 4.50 < 7.30$. A factor of $2.6$ in product from contacting alone, with no change to chemistry, temperature or throughput.}
+\item \textbf{Two MFRs in series} (slide~33), $r_R = k_1 C_A^{2}$, $r_S = k_2 C_A$, feed $C_{A0}=1.0$, $C_{S0}=0.3$, $\tau_1 = 2.5$, $\tau_2 = 10$~min, first-reactor exit $C_{A1}=0.4$, $C_{R1}=0.2$, $C_{S1}=0.7$:
 \[
 C_{A2} = 0.0745,\qquad C_{R2} = 0.2277,\qquad C_{S2} = 0.9978
 \]

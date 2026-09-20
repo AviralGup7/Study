@@ -332,3 +332,10 @@ def rhs(y):
     return [dFa, dFc, dT]
 y = rk4(rhs, [100.0, 0.0, 423.15], 10000, h=10)
 print(f"at V = 1e4 dm3: FA = {y[0]:.1f}, FC = {y[1]:.1f}, T = {y[2]:.0f} K")
+
+print("=== Ch6 three-reaction selectivity reduction (Ch6 slides 18-19) ===")
+# r_D = 0.0002 e^{36000(1/300-1/T)} C_A ; r_U = 0.0018 e^{25000(1/300-1/T)} C_A^1.5 ;
+# r_Q = 0.00452 e^{5000(1/300-1/T)} C_A^0.5  ->  S_DU = r_D/r_U, S_DQ = r_D/r_Q
+coef = 0.0002/0.0018; dE = 36000-25000; a = 1-1.5
+print(f"S_DU = {coef:.2f} e^({dE}(1/300-1/T)) C_A^({a})   (deck prints 0.11 e^(11,000(1/300-1/T))/C_A^0.5)")
+print(f"S_DQ: prefactor {0.0002/0.00452:.4f}, E-gap {36000-5000} -> very large at high T; order gap {1-0.5}")

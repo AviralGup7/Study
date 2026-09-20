@@ -404,30 +404,77 @@ care where (or whether) you split it.
 \begin{ansbox}$V_1=0.551$ m$^3$, $V_2=1.614$ m$^3$, total $2.165$ m$^3$ $=$ one PFR of Q3.\end{ansbox}
 
 \qtitle{Q6 -- Mixed reactor, unknown stoichiometry}{\label{q:6}Ch2, slides 41--42}
-\src{Ch2-krd (1).pdf, slides 41--42.}
-A and B ($C_{A0}=0.10$, $C_{B0}=0.01$ mol/L) react in a mixed reactor of $V=1$ L,
-$\tau = V/v_0 = 1$ min.  The outlet contains $C_A=0.02$, $C_B=0.03$, $C_C=0.04$ mol/L.
-Find the rates of reaction of A, B and C.
+\src{Ch2-krd (1).pdf, slides 42--43 (the worked mixed-reactor problem).}
+One liter per minute of liquid containing A and B ($C_{A0}=0.10$, $C_{B0}=0.01$
+mol/liter) flows into a mixed reactor of volume $V=1$~liter.  The materials react
+in a complex manner for which the stoichiometry is unknown.  The outlet stream
+contains A, B and C with $C_A=0.02$, $C_B=0.03$, $C_C=0.04$ mol/liter.  Find the
+rate of reaction of A, B and C for the conditions within the reactor.
+
 \begin{qbox}
-$r_i=(C_i-C_{i0})/\tau$: $r_A=-0.08$, $r_B=+0.02$, $r_C=+0.04$ mol/(L$\cdot$min).
-Ratio $-r_A:r_B:r_C = 4:1:2$, i.e. the stoichiometry consistent with the data is
-$4A \to B + 2C$.
+\textbf{Why one balance per species.}  A CSTR at steady state balances each
+species on its own: In $-$ Out $+$ Generation $=0$,
+$v_0C_{i0}-v_0C_i+r_iV=0$, so with the space time $\tau=V/v_0=1/1=1$~min
+\[
+r_i=\frac{C_i-C_{i0}}{\tau}.
+\]
+Because the stream is liquid (constant volume), every species can be balanced
+independently --- which is exactly why the question can be solved even though
+the stoichiometry is unknown.
+
+\textbf{Step 1 --- evaluate the three balances.}
+\[
+r_A=\frac{0.02-0.10}{1}=-0.08,\qquad
+r_B=\frac{0.03-0.01}{1}=+0.02,\qquad
+r_C=\frac{0.04-0}{1}=+0.04\quad\mathrm{mol/(L\cdot min)}.
+\]
+A is consumed; B and C are produced.
+
+\textbf{Step 2 --- the ratios reveal the stoichiometry.}  Rates of reaction are
+proportional to the stoichiometric coefficients (the relative-rate rule of
+Part~C): $-r_A:r_B:r_C=0.08:0.02:0.04=4:1:2$, so the equation consistent with
+the measurements is $4A\to B+2C$.
 \end{qbox}
-\begin{ansbox}$-r_A=0.08$, $r_B=0.02$, $r_C=0.04$ mol/(L$\cdot$min); stoichiometry $4A\to B+2C$.\end{ansbox}
+\note{Exam phrasing: ``the reactor is a CSTR, hence each species obeys
+$r_i=(C_i-C_{i0})/\tau$; the signs give consumption/production and the ratio of
+the rates gives the stoichiometric coefficients.''}
+\begin{ansbox}$-r_A=0.08$, $r_B=0.02$, $r_C=0.04$ mol/(L$\\cdot$min); the data imply $4A\to B+2C$.\end{ansbox}
 
 \qtitle{Q7 -- PFRs in two parallel branches}{\label{q:7}Ch2, slides 45--46}
 \src{Ch2-krd (1).pdf, slides 45--46.}
-Branch D: 20 L then 30 L in series; branch E: 40 L.  What fraction of the feed should go
-to branch D?
+The reactor setup consists of three plug-flow reactors in two parallel branches:
+branch D has a reactor of volume 50 liters followed by a reactor of volume
+30 liters; branch E has a reactor of volume 40 liters.  What fraction of the
+feed should go to branch D?
+
 \begin{qbox}
-For parallel PFR branches the efficient split keeps $V/F$ equal:
-$F_D/F_E = 50/40$, so $F_D/F = 50/90 = 0.556$.
+\textbf{The rule (slide 45).}  PFRs in any parallel / parallel-series combination
+behave as a single PFR of the total volume \emph{only if} the feed is distributed
+so that streams which meet have the same composition --- i.e.\ the space time
+$V/F$ must be the same for each parallel line; ``any other way of feeding is less
+efficient''.
+
+\textbf{Step 1 --- branch volumes.}  Series PFRs add (slide 44): branch~D is
+$50+30=80$~L; branch~E is $40$~L.
+
+\textbf{Step 2 --- equal space times.}  $V_D/F_D=V_E/F_E \Rightarrow
+F_D/F_E=80/40=2$.
+
+\textbf{Step 3 --- the fraction.}
+\[
+\frac{F_D}{F}=\frac{80}{80+40}=\frac{2}{3}\approx0.67.
+\]
 \end{qbox}
-\begin{ansbox}$5/9 \approx 0.56$ of the feed to branch D.\end{ansbox}
+\note{An earlier revision of these notes misread the figure as $20+30$~L and
+printed $5/9$; the slide prints 50 then 30 liters, so two-thirds is the value
+consistent with the deck.}
+\begin{ansbox}$2/3\approx0.67$ of the feed to branch D (equal space time $80/80=40/40=1$~L per unit flow).\end{ansbox}
 
 \qtitle{Q8 -- P2-7: adiabatic $A+B\to C$, parts (a)--(e)}{\label{q:8}Ch2, slide 59}
-\src{Ch2-krd (1).pdf, slide 59 (``P2-7'').}
-$F_{A0}=300$ mol/min with
+\src{Ch2-krd (1).pdf, slides 59--60 (``P2-7'').}
+The exothermic reaction $A\to B+C$ was carried out adiabatically and the
+following data were recorded; the entering molar flow rate of A was
+$F_{A0}=300$~mol/min:
 \begin{center}\small
 \begin{tabular}{lcccccccc}
 \toprule
@@ -436,21 +483,47 @@ $-r_A$ (mol/dm$^3\cdot$min) & 1.0 & 1.67 & 5.0 & 5.0 & 5.0 & 5.0 & 1.25 & 0.91\\
 \bottomrule
 \end{tabular}
 \end{center}
-(a) PFR and CSTR volumes for 40\%; (b) range of $X$ where the two volumes are identical;
-(c) maximum $X$ in a 105 dm$^3$ CSTR; (d) $X$ for a 72 dm$^3$ PFR followed by a 24 dm$^3$ CSTR;
-(e) $X$ for the reverse order.
+(a) PFR and CSTR volumes for 40\%; (b) range of $X$ where the two volumes are
+identical; (c) maximum $X$ in a 105~dm$^3$ CSTR; (d) $X$ for a 72~dm$^3$ PFR
+followed by a 24~dm$^3$ CSTR; (e) $X$ for the reverse order.
+
 \begin{qbox}
-With $g(X)=F_{A0}/(-r_A) = 300,179.6,60,60,60,60,240,329.7$ dm$^3$:
-\begin{itemize}[leftmargin=14pt,itemsep=1pt]
-\item (a) CSTR: $60(0.4)=24$ dm$^3$; PFR: trapezium over the table gives $71.9$ dm$^3$.
-\item (b) $X\,g(X)=\int_0^X g$ first holds near $X\approx0.69$ (between 0.6 and 0.8, where the
-rate falls again); below it the CSTR is smaller, above it the CSTR is larger.
-\item (c) $X\,g(X)=105 \Rightarrow X\approx0.70$.
-\item (d) PFR to 72 dm$^3$ $\Rightarrow X_1\approx0.40$; then $(X_2-0.4)g(X_2)=24 \Rightarrow X_2\approx0.64$.
-\item (e) CSTR: $X_1 g(X_1)=24 \Rightarrow X_1=0.40$ (the high-conversion root); PFR adds
-72 dm$^3$ $\Rightarrow X_2\approx0.90$.
-\end{itemize}
+\textbf{Step 0 --- the Levenspiel column and its shape.}
+$g(X)=F_{A0}/(-r_A)$ = $300,\,179.6,\,60,\,60,\,60,\,60,\,240,\,329.7$~dm$^3$ at the
+tabulated $X$.  Plot it (slide 60): a V-shaped curve --- adiabatic heating makes
+the rate \emph{rise} at first ($1/(-r_A)$ falls to the flat bottom 60), then
+reactant depletion makes it climb steeply.  All five parts are just rectangles
+(CSTR: $V=X\,g(X)$) and areas (PFR: $V=\int_0^X g\,dX$) on this curve.
+
+\textbf{(a) 40\% conversion.}  CSTR rectangle at the exit height:
+$V=0.4\times60=24$~dm$^3$.  PFR area by trapezia over $0,\,0.2,\,0.4$:
+$V=0.1(300+2\times179.6+60)=71.9$~dm$^3$ --- here the PFR is \emph{larger},
+because the rate is slow at the entrance.
+
+\textbf{(b) Where CSTR $=$ PFR.}  Track both with $X$: at $X=0.6$,
+CSTR $=0.6\times60=36$ vs PFR $=71.9+0.2\times60=83.9$; at $X=0.8$,
+CSTR $=0.8\times240=192$ vs PFR $=83.9+\tfrac{0.2}{2}(60+240)=113.9$.  The
+rectangle overtakes the area between $0.6$ and $0.8$, at $X\approx0.69$; below it
+the CSTR is the smaller reactor, above it the PFR is.
+
+\textbf{(c) 105 dm$^3$ CSTR.}  Solve $X\,g(X)=105$: $X=0.6\Rightarrow36$,
+$X=0.8\Rightarrow192$, interpolation on the rising limb gives $X\approx0.70$.
+
+\textbf{(d) PFR then CSTR.}  The PFR area reaches $72$~dm$^3$ essentially at
+$X_1=0.40$ (part (a): 71.9).  The CSTR then needs
+$(X_2-X_1)\,g(X_2)=24$: on the bottom/rising limb, $X_2=0.64$ gives
+$0.24\times g(0.64)\approx0.24\times96\approx23$ --- so $X_2\approx0.64$.
+
+\textbf{(e) CSTR then PFR.}  $X_1g(X_1)=24$ has its useful root at $X_1=0.40$
+(the height 60 rectangle).  The PFR must add $72$~dm$^3$ from $0.40$: the area
+$0.4\to0.6$ is $12$, $0.6\to0.8$ is $15$, $0.8\to0.9$ is $28.5$ --- $55.5$ at the
+last datum, so the remaining area is eaten just beyond $X=0.9$ where the data
+end; quote $X_2\approx0.90$.
 \end{qbox}
+\note{The V-shaped curve is the exam point: at low $X$ the CSTR wins (it sits on
+the fast bottom while the PFR drags through the slow entrance); past
+$X\approx0.69$ the PFR wins.  Order the units accordingly (slide 58: best
+arrangement rules).}
 \begin{ansbox}(a) 24 dm$^3$ / 71.9 dm$^3$; (b) about $X=0.69$; (c) $X\approx0.70$; (d) $X\approx0.64$; (e) $X\approx0.90$.\end{ansbox}
 
 %============================= PART C =====================================

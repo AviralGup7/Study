@@ -67,7 +67,9 @@ rA, rB, rC = (0.02-0.10)/tau, (0.03-0.01)/tau, (0.04-0.0)/tau
 print(f"rA={rA}, rB={+rB}, rC={+rC}  -> 4A -> B + 2C")
 
 print("=== Q7 parallel PFR branches (Ch2 slide 46) ===")
-print(f"fraction to D = 50/90 = {50/90:.3f}")
+# slide 46 prints branch D = 50 L + 30 L = 80 L, branch E = 40 L; equal space
+# time per branch => F_D/F = 80/120 (an early draft misread D as 20+30 L)
+print(f"fraction to D = 80/120 = {80/120:.3f}")
 
 print("=== Q8 P2-7 (Ch2 slide 59) ===")
 Xq = np.array([0, .2, .4, .45, .5, .6, .8, .9]); rA = np.array([1.0, 1.67, 5.0, 5.0, 5.0, 5.0, 1.25, 0.91])

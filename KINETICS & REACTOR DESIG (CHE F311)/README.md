@@ -83,7 +83,7 @@ Rules that follow:
 | Q4 | Ch2 s.31–36 | 0.82 + 3.20 = 4.02 m³ |
 | Q5 | Ch2 s.37–38 | 0.551 + 1.614 = 2.165 m³ |
 | Q6 | Ch2 s.41–42 | $-r_A=0.08$, $r_B=0.02$, $r_C=0.04$; stoichiometry $4A\to B+2C$ |
-| Q7 | Ch2 s.45–46 | 5/9 ≈ 0.56 of the feed to branch D |
+| Q7 | Ch2 s.45–46 | 2/3 ≈ 0.67 of the feed to branch D (80 L vs 40 L, equal space time) |
 | Q8 | Ch2 s.59 | (a) 24 / 71.9 dm³; (b) ≈0.69; (c) 0.70; (d) 0.64; (e) 0.90 |
 | Q9 | Ch3 s.5–7 | $r_{NO}=-4$, $r_{O_2}=-2$ |
 | Q10 | Ch3 s.6–7 | $r_B=-15$, $r_C=+25$ |

@@ -852,59 +852,120 @@ integral above is the method the deck derives on slides 42--43.\end{warnbox}
 
 \qtitle{Q18 -- PBR with pressure drop, $A+B\to2C$}{\label{q:18}Ch4, slides 55--58}
 \src{Ch4-\_Krd.pdf, slides 55--58.}
-Equimolar feed, $k=1.5$ dm$^6$/(mol$\cdot$kg$\cdot$min), $\alpha=0.0099$ kg$^{-1}$, $\varepsilon=0$.
-Find $X$ at $W=100$ kg.
+Equimolar feed of $A+B\to2C$ over a packed bed; $k=1.5$~dm$^6$/(mol$\\cdot$kg$\\cdot$min),
+$\alpha=0.0099$~kg$^{-1}$, $\varepsilon=0$.  Find the conversion at $W=100$~kg of
+catalyst.
+
 \begin{qbox}
-$\frac{dX}{dW}=\frac{kC_{A0}^2}{F_{A0}}(1-X)^2(1-\alpha W)$ integrates to
-$\frac{X}{1-X}=\frac{kC_{A0}^2}{F_{A0}}\left(W-\frac{\alpha W^2}{2}\right)$,
-$p=(1-\alpha W)^{1/2}$.
-The deck prints $X=0.75$ for $\alpha=0$, which fixes the group
-$\frac{kC_{A0}^2}{F_{A0}}=\frac{3}{100}=0.03$ kg$^{-1}$; then
-$\frac{X}{1-X}=0.03(100-49.5)=1.515 \Rightarrow X=0.60$ --- the deck's two answers.
+\textbf{Step 1 --- rate law with the pressure factor.}  $\varepsilon=0$ and an
+equimolar feed give $C_A=C_B=C_{A0}(1-X)p$ with
+$p=(1-\alpha W)^{1/2}$, so $-r_A=kC_AC_B=kC_{A0}^2(1-X)^2(1-\alpha W)$.
+
+\textbf{Step 2 --- separate and integrate.}  The mole balance
+$\frac{dX}{dW}=\frac{kC_{A0}^2}{F_{A0}}(1-X)^2(1-\alpha W)$ separates cleanly:
+\[
+\frac{X}{1-X}=\frac{kC_{A0}^2}{F_{A0}}\left(W-\frac{\alpha W^2}{2}\right).
+\]
+
+\textbf{Step 3 --- calibrate the unknown group from the deck.}  The deck prints
+$X=0.75$ for the \emph{no-drop} case, where the bracket is $W=100$:
+$\frac{X}{1-X}=3$ fixes $\frac{kC_{A0}^2}{F_{A0}}=\frac{3}{100}=0.03$~kg$^{-1}$.
+
+\textbf{Step 4 --- with drop.}  $W-\frac{\alpha W^2}{2}=100-49.5=50.5$:
+\[
+\frac{X}{1-X}=0.03\times50.5=1.515\ \Rightarrow\ X=0.60.
+\]
+Pressure drop has cost $0.75-0.60=0.15$ of conversion.
 \end{qbox}
+\begin{warnbox}The slide does not print $C_{A0}$ and $F_{A0}$ separately; the
+combined group $0.03$~kg$^{-1}$ is implied by its own $\alpha=0$ answer and is
+stated here instead of being invented.\end{warnbox}
 \begin{ansbox}$X=0.60$ with pressure drop, $0.75$ without.\end{ansbox}
-\begin{warnbox}The slide does not print $C_{A0}$ and $F_{A0}$ separately; the combined group 0.03 kg$^{-1}$ is implied by its own $\alpha=0$ answer and is stated here instead of being invented.\end{warnbox}
 
 \qtitle{Q19 -- PBR + CSTR in series}{\label{q:19}Ch4, slides 76--77}
 \src{Ch4-\_Krd.pdf, slides 76--77.}
-First order in $p_A$, $A\to B$ (gas), PBR with 50 kg catalyst gives 50\% conversion at
-$P_0=20$ atm; $\alpha=0.018$ kg$^{-1}$.  A CSTR with the same 50 kg is added in series.
-(a) Which order gives the higher conversion? (b) The exit conversion; (c) pressure at the
-PBR exit; (d) effect of halving catalyst diameter and enlarging the pipe 50\% (turbulent).
+First order in $p_A$, $A\to B$ (gas).  A PBR with 50~kg of catalyst gives 50\%
+conversion at $P_0=20$~atm with $\alpha=0.018$~kg$^{-1}$.  A CSTR holding the same
+50~kg is added in series.  (a) Which order gives the higher conversion?
+(b) The exit conversion; (c) the pressure at the PBR exit; (d) the effect of
+halving the catalyst diameter and enlarging the pipe 50\% (turbulent flow).
+
 \begin{qbox}
-Shooting the coupled ODEs $\frac{dX}{dW}=a\frac{1-X}{1+X}p$, $\frac{dp}{dW}=-\frac{\alpha}{2p}$
-to match $X(50)=0.5$ gives $a=kP_0/F_{A0}=0.0247$ kg$^{-1}$.
-(c) $p=\sqrt{1-\alpha W}=\sqrt{0.1}=0.316 \Rightarrow P=6.3$ atm.
-(b) PBR$\to$CSTR: $X=0.60$; CSTR$\to$PBR: $X=0.69$ --- putting the CSTR first is better,
-because the PBR then runs at full pressure.
-(d) Turbulent $\alpha\propto D_p^{-2}D_{pipe}^{-4}$: $\alpha'=0.018\times2\times1.5^{-4}=0.0071$,
-and PBR$\to$CSTR rises to $X\approx0.73$ (similarly higher in the other order).
+\textbf{Set-up --- the coupled ODEs.}  First order in $p_A$ with expansion:
+$\frac{dX}{dW}=a\,\frac{1-X}{1+\varepsilon X}\,p$ together with the Ergun
+(simplified) drop $\frac{dp}{dW}=-\frac{\alpha}{2p}$; shooting them to match
+$X(50)=0.5$ fixes $a=kP_0/F_{A0}=0.0247$~kg$^{-1}$.
+
+\textbf{(c) The PBR exit pressure.}  $p=\sqrt{1-\alpha W}=\sqrt{1-0.9}=0.316$,
+so $P=20\times0.316=6.3$~atm --- the bed eats two-thirds of the pressure.
+
+\textbf{(a)+(b) Which order first.}  Integrate the pair through the PBR then
+solve the CSTR balance (and the reverse order): PBR$\to$CSTR gives $X=0.60$;
+CSTR$\to$PBR gives $X=0.69$.  Putting the \emph{CSTR first} is better: it runs
+on undropped pressure and leaves the pressure-sensitive PBR the full 20~atm.
+
+\textbf{(d) Smaller pellets, fatter pipe, turbulent flow.}  Then
+$\alpha\propto D_p^{-1}D_{\text{pipe}}^{-4}$:
+$\alpha'=0.018\times2\times1.5^{-4}=0.0071$~kg$^{-1}$; less drop means the PBR
+works harder, and PBR$\to$CSTR rises to $X\approx0.73$ (the other order rises
+similarly).
 \end{qbox}
+\note{Exam one-liner for (a): ``a CSTR cares only about the pressure at its own
+inlet; a PFR/PBR integrates it all along --- so spend the pressure drop last.''}
 \begin{ansbox}(a) CSTR upstream; (b) $X\approx0.69$ (0.60 the other way); (c) 6.3 atm; (d) $X\approx0.73$.\end{ansbox}
 
 \qtitle{Q20 -- Series reactions in a batch reactor}{\label{q:20}Ch4, slides 78--79}
 \src{Ch4-\_Krd.pdf, slides 78--79.}
-$A\xrightarrow{k_1}B\xrightarrow{k_2}C$, $k_1=1$ h$^{-1}$, $k_2=2$ h$^{-1}$,
-$C_A(0)=5$ mol/m$^3$, $C_B(0)=C_C(0)=0$.
+$A\xrightarrow{k_1}B\xrightarrow{k_2}C$ with $k_1=1$~h$^{-1}$, $k_2=2$~h$^{-1}$,
+$C_A(0)=5$~mol/m$^3$, $C_B(0)=C_C(0)=0$.  Give the profiles and the maximum of B.
+
 \begin{qbox}
-$C_A=5e^{-t}$; $C_B=5\frac{k_1}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)=5(e^{-t}-e^{-2t})$;
-$C_C=5-C_A-C_B$.  $C_B$ peaks at $t_{max}=\frac{\ln(k_2/k_1)}{k_2-k_1}=0.693$ h with
-$C_B^{max}=1.25$ mol/m$^3$.
+\textbf{Step 1 --- A decays alone.}  $C_A=5e^{-k_1t}=5e^{-t}$.
+
+\textbf{Step 2 --- B is made and consumed.}  $\frac{dC_B}{dt}=k_1C_A-k_2C_B$;
+the standard integrating-factor result:
+\[
+C_B=5\,\frac{k_1}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)=5\left(e^{-t}-e^{-2t}\right).
+\]
+
+\textbf{Step 3 --- C by closure.}  $C_C=5-C_A-C_B$.
+
+\textbf{Step 4 --- the maximum of the intermediate.}  $dC_B/dt=0$ gives
+\[
+t_{max}=\frac{\ln(k_2/k_1)}{k_2-k_1}=\ln2=0.693\ \mathrm{h},\qquad
+C_B^{max}=5(0.5-0.25)=1.25\ \mathrm{mol/m^3}.
+\]
 \end{qbox}
+\note{The shape to sketch in the exam: A falls exponentially; B rises through its
+peak at $t_{max}$ then falls; C is the monotone mirror image.  Series
+intermediates \emph{always} pass through a maximum.}
 \begin{ansbox}$t_{max}=\ln2\approx0.69$ h, $C_B^{max}=1.25$ mol/m$^3$; profiles as above.\end{ansbox}
 
 \qtitle{Q21 -- PFR pressure drop: pipe length}{\label{q:21}Ch4, slides 90--98}
 \src{Ch4-\_Krd.pdf, slides 90--98.}
-$A\to B$, first order, $P_0=10$ atm, $Q_0=0.005$ m$^3$/s, 300 K, $k=0.1$ s$^{-1}$,
-$M=60$ g/mol, $\mu=10^{-5}$ Pa$\cdot$s.  Length for (a) 2 cm pipe, 10\%; (b) 1.5 cm pipe,
-10\%; (c) 1.5 cm pipe, 20\%?
+$A\to B$, first order, $P_0=10$~atm, $Q_0=0.005$~m$^3$/s, 300~K, $k=0.1$~s$^{-1}$,
+$M=60$~g/mol, $\mu=10^{-5}$~Pa$\\cdot$s.  Pipe length for (a) 10\% in a 2-cm pipe;
+(b) 10\% in a 1.5-cm pipe; (c) 20\% in the 1.5-cm pipe?
+
 \begin{qbox}
-$\rho_0=P_0M/RT=24.4$ kg/m$^3$, $v_0=Q_0/A=15.9$ m/s (2 cm), $F_{A0}=2.03$ mol/s.
-Without drop, $L_{10}=\frac{v_0}{k}\ln\frac1{0.9}=16.8$ m and $L_{20}=35.5$ m (2 cm).
-The deck integrates the coupled $dX/dz$, $dP/dz$ ODEs (slides 92--95) and reports
-(a) $\approx20$ m for 10\% in the 2 cm pipe; (b) 10\% still possible in the 1.5 cm pipe
-($\approx$ longer, steeper pressure fall); (c) 20\% \emph{not} possible --- the pressure
-collapses before 20\% is reached (slide 98: ``10\% conversion is possible, but 20\% is not'').
+\textbf{Step 1 --- enter the flow.}  $\rho_0=P_0M/RT=24.4$~kg/m$^3$; in the 2-cm
+pipe $v_0=Q_0/A=0.005/3.14\times10^{-4}=15.9$~m/s; $F_{A0}=2.03$~mol/s.
+
+\textbf{Step 2 --- the no-drop benchmark.}  Without drop,
+$L_{10}=\frac{v_0}{k}\ln\frac{1}{0.9}=16.8$~m and $L_{20}=35.5$~m in the 2-cm
+pipe --- pressure drop can only make these longer.
+
+\textbf{Step 3 --- with drop, the deck's coupled ODEs.}  The deck integrates
+$dX/dz$ and $dP/dz$ together (slides 92--95): (a) about $20$~m for 10\% in the
+2-cm pipe.
+
+\textbf{(b) 1.5-cm pipe, 10\%.}  The smaller bore raises $v_0$ (to about
+28~m/s) and steepens the pressure fall, but 10\% is still reachable --- at a
+longer length.
+
+\textbf{(c) 1.5-cm pipe, 20\%.}  Not possible: the pressure collapses towards
+zero before 20\% is reached (slide 98: ``10\% conversion is possible, but 20\%
+is not'') --- once $P\to0$ the velocity diverges and the reaction starves.
 \end{qbox}
 \begin{ansbox}(a) $\approx20$ m; (b) 10\% achievable; (c) 20\% unattainable in the 1.5 cm pipe.\end{ansbox}
 

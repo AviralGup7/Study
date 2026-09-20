@@ -1601,34 +1601,68 @@ is unaffected.\end{warnbox}
 
 \qtitle{Q43 -- Pellet concentration profile}{\label{q:43}Catalysis, slide 48}
 \src{Catalysis\_Krd.pdf, slide 48 (``Problem'').}
-$A\to B$, first order, spherical particle $d_p=2\times10^{-3}$ cm; $C_{As}=0.001$ gmol/m$^3$;
-$D_e=0.1$ cm$^2$/s.  The concentration halfway to the centre is $1/10$ of $C_{As}$.
-(a) $C_A$ at $3\times10^{-4}$ cm from the external surface; (b) diameter for $\eta=0.8$.
+$A\to B$, first order, spherical pellet $d_p=2\times10^{-3}$~cm;
+$C_{As}=0.001$~gmol/m$^3$; $D_e=0.1$~cm$^2$/s.  The concentration halfway to the
+centre is one tenth of $C_{As}$.  (a) $C_A$ at $3\times10^{-4}$~cm from the
+external surface; (b) the diameter for which $\eta=0.8$.
+
 \begin{qbox}
-Sphere, first order: $\frac{C_A}{C_{As}}=\frac{R}{r}\frac{\sinh(\phi r/R)}{\sinh\phi}$.
-At $r=R/2$: $0.1=\frac{2\sinh(\phi/2)}{\sinh\phi}=\frac1{\cosh(\phi/2)}\Rightarrow
-\phi=2\,\mathrm{arcosh}(10)=5.99$.
-(a) $r=R-3\times10^{-4}=7\times10^{-4}$ cm: ratio $=\frac{1}{0.7}\frac{\sinh(0.7\times5.99)}{\sinh 5.99}=0.237$,
-$C_A=2.4\times10^{-4}$ gmol/m$^3$.
-(b) $\eta=\frac{3}{\phi^2}(\phi\coth\phi-1)=0.8\Rightarrow\phi_{0.8}=2.04$; $\phi\propto d_p$:
-$d_{new}=2\times10^{-3}\times\frac{2.04}{5.99}=6.8\times10^{-4}$ cm.
+\textbf{Step 1 --- the profile formula.}  Sphere + first order:
+\[
+\frac{C_A}{C_{As}}=\frac{R}{r}\,\frac{\sinh(\phi\, r/R)}{\sinh\phi}.
+\]
+
+\textbf{Step 2 --- $\phi$ from the midpoint datum.}  At $r=R/2$:
+$0.1=\frac{2\sinh(\phi/2)}{\sinh\phi}=\frac{1}{\cosh(\phi/2)}$, so
+$\cosh(\phi/2)=10$ and $\phi=2\,\mathrm{arcosh}(10)=5.99$ --- a strongly
+diffusion-limited pellet.
+
+\textbf{(a) The off-surface point.}  $r=R-3\times10^{-4}=7\times10^{-4}$~cm,
+$r/R=0.7$:
+\[
+\frac{C_A}{C_{As}}=\frac{1}{0.7}\frac{\sinh(0.7\times5.99)}{\sinh5.99}=0.237
+\ \Rightarrow\ C_A=2.4\times10^{-4}\ \mathrm{gmol/m^3}.
+\]
+
+\textbf{(b) Diameter for $\eta=0.8$.}  $\eta=\frac{3}{\phi^2}(\phi\coth\phi-1)=0.8$
+solves at $\phi_{0.8}=2.04$; and $\phi\propto R$ (same kinetics, same $D_e$):
+\[
+d_{new}=2\times10^{-3}\times\frac{2.04}{5.99}=6.8\times10^{-4}\ \mathrm{cm}.
+\]
+Smaller pellet, shorter diffusion path, higher effectiveness --- the design
+lever the deck keeps returning to.
 \end{qbox}
 \begin{ansbox}(a) $C_A\approx2.4\times10^{-4}$ gmol/m$^3$; (b) $d_p\approx6.8\times10^{-4}$ cm.\end{ansbox}
 
 \qtitle{Q44 -- Internal diffusion: 100 vs 150\,°C}{\label{q:44}Catalysis, slide 57}
 \src{Catalysis\_Krd.pdf, slide 57.}
-First order, $R=0.2$ cm, $D_e=0.015$ cm$^2$/s; $k(100\,°\mathrm{C})=0.93$ s$^{-1}$,
-$E=20$ kcal/mol; $C_{Ab}=3.25\times10^{-5}$ mol/L.  (a) rate at 100\,°C; (b) at 150\,°C;
-(c) apparent activation energy.
+First order, $R=0.2$~cm, $D_e=0.015$~cm$^2$/s; $k(100\,°\mathrm{C})=0.93$~s$^{-1}$,
+$E=20$~kcal/mol; $C_{Ab}=3.25\times10^{-5}$~mol/L.  (a) The rate at 100\,°C;
+(b) at 150\,°C; (c) the apparent activation energy between them.
+
 \begin{qbox}
-(a) $\phi_1=R\sqrt{k_1/D_e}=1.575$; $\eta_1=0.866$; $-r_A=\eta_1 k_1 C_{Ab}=2.6\times10^{-5}$
-mol/(L$\cdot$s).
-(b) $k_2=0.93e^{\frac{20\,000}{1.987}(1/373-1/423)}=22.5$ s$^{-1}$; $\phi_2=7.75$;
-$\eta_2=0.337$; $-r_A=2.5\times10^{-4}$ mol/(L$\cdot$s).
-(c) From the two rates, $E_{app}=R\ln(r_2/r_1)/(1/T_1-1/T_2)\approx14.1$ kcal/mol --- between
-$E$ and $E/2$, moving toward the diffusion-limited $E/2=10$ kcal/mol as $\phi$ grows.
+\textbf{(a) 100\,°C.}  Thiele modulus
+$\phi_1=R\sqrt{k_1/D_e}=0.2\sqrt{0.93/0.015}=1.575$;
+$\eta_1=\frac{3}{\phi_1^2}(\phi_1\coth\phi_1-1)=0.866$; rate
+$-r_A=\eta_1k_1C_{Ab}=0.866\times0.93\times3.25\times10^{-5}=2.6\times10^{-5}$
+mol/(L$\\cdot$s).
+
+\textbf{(b) 150\,°C.}  Arrhenius first:
+$k_2=0.93\,e^{\frac{20\,000}{1.987}(1/373-1/423)}=22.5$~s$^{-1}$; then
+$\phi_2=0.2\sqrt{22.5/0.015}=7.75$, $\eta_2=0.337$; rate
+$-r_A=0.337\times22.5\times3.25\times10^{-5}=2.5\times10^{-4}$ mol/(L$\\cdot$s).
+
+\textbf{(c) Apparent $E$.}  From the two measured-style rates:
+\[
+E_{app}=R\,\frac{\ln(r_2/r_1)}{1/T_1-1/T_2}\approx14.1\ \mathrm{kcal/mol}.
+\]
+Between $E$ and $E/2$: at 150\,°C the pellet is deep in the diffusion-limited
+regime ($\phi_2\gg1$), where the observed slope tends to $E/2=10$~kcal/mol.
 \end{qbox}
-\begin{ansbox}(a) $2.6\times10^{-5}$; (b) $2.5\times10^{-4}$ mol/(L$\cdot$s); (c) $E_{app}\approx14$ kcal/mol.\end{ansbox}
+\note{The exam moral: as $\phi$ grows, $\eta\sim3/\phi$ and the apparent
+activation energy halves --- a rate that rises ``too slowly'' with temperature
+is the fingerprint of internal diffusion control.}
+\begin{ansbox}(a) $2.6\times10^{-5}$; (b) $2.5\times10^{-4}$ mol/(L$\\cdot$s); (c) $E_{app}\approx14$ kcal/mol.\end{ansbox}
 
 %============================= PART I =====================================
 \spsection{Part I -- Residence time distributions (Non\_ideal\_KRD.pdf)}

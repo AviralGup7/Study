@@ -101,8 +101,8 @@ are re-computed by \texttt{krd-answers-check.py} kept beside this file.}
 \toprule
 ID & Source & Topic & Solved at\\
 \midrule
-Q1  & Ch1, slide 7  & Rocket engine: rates of reaction from mole balance & p.~\pageref{q:1}\\
-Q2  & Ch1, slide 12 & $A\to B$: CSTR, PFR and batch volumes/times, three rate laws & p.~\pageref{q:2}\\
+Q1  & Ch1, slide 36 & Rocket engine: rates of reaction from mole balance & p.~\pageref{q:1}\\
+Q2  & Ch1, slide 54 & $A\to B$: CSTR, PFR and batch volumes/times, three rate laws & p.~\pageref{q:2}\\
 Q3  & Ch2, slides 19--24 & Levenspiel sizing: CSTR and PFR at 80\% & p.~\pageref{q:3}\\
 Q4  & Ch2, slides 31--36 & Two CSTRs in series (40\%, 80\%) & p.~\pageref{q:4}\\
 Q5  & Ch2, slides 37--38 & Two PFRs in series & p.~\pageref{q:5}\\
@@ -156,44 +156,115 @@ Q46 & Non-ideal, s.52--59 & Dispersion model: conversion four ways & p.~\pageref
 %============================= PART A =====================================
 \spsection{Part A -- Mole balances and rates (Ch1-krd (1).pdf)}
 
-\qtitle{Q1 -- Rocket engine: rates of reaction}{\label{q:1}Ch1, slide 7}
-\src{Ch1-krd (1).pdf, slide 7 (``Example'').}
-A rocket engine burns a stoichiometric mixture of hydrogen and oxygen.  The combustion
-chamber is cylindrical, 75\,cm long and 60\,cm in diameter, and produces 108\,kg/s of
-exhaust gas.  If combustion is complete, find the rate of reaction of hydrogen and of oxygen.
+\qtitle{Q1 -- Rocket engine: rates of reaction}{\label{q:1}Ch1, slide 36}
+\src{Ch1-krd (1).pdf, slide 36 (the ``Example'' slide).}
+A rocket engine burns a stoichiometric mixture of fuel (liquid hydrogen) in oxidant
+(liquid oxygen).  The combustion chamber is cylindrical, 75\,cm long and 60\,cm in
+diameter, and the combustion process produces 108\,kg/s of exhaust gases.  If
+combustion is complete, find the rate of reaction of hydrogen and of oxygen.
 
 \begin{qbox}
-$\mathrm{H_2 + \tfrac12 O_2 \to H_2O}$.  Chamber volume
-$V=\frac{\pi}{4}(0.6)^2(0.75)=0.212\ \mathrm{m^3}$.
-Exhaust $=108/18 = 6.0$ kmol/s of $\mathrm{H_2O}$, so 6.0 kmol/s $\mathrm{H_2}$ and
-3.0 kmol/s $\mathrm{O_2}$ react (complete combustion).
-With $-r_i = F_i/V$:
+\textbf{What ``rate of reaction'' means here.}  The rate is defined per unit
+extensive quantity of the system (Ch1 slides 30--34); for a homogeneous gas-phase
+combustion chamber the natural basis is the reactor \emph{volume},
+$-r_i = (\text{moles of } i \text{ reacting per unit time})/V$, with units
+mol/(m$^3\cdot$s).  So the whole problem is: find the molar rates at which
+H$_2$ and O$_2$ are consumed, and divide by the chamber volume.
+
+\textbf{Step 1 --- the chamber volume.}  A cylinder of length $L=0.75$~m and
+diameter $D=0.60$~m:
 \[
--r_{\mathrm{H_2}}=\frac{6.0}{0.212}=28.3\ \mathrm{kmol\,m^{-3}\,s^{-1}},\qquad
--r_{\mathrm{O_2}}=\frac{3.0}{0.212}=14.1\ \mathrm{kmol\,m^{-3}\,s^{-1}}.
+V = \frac{\pi}{4}D^2 L = \frac{\pi}{4}(0.60)^2(0.75) = 0.2121\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- turn the exhaust mass flow into a molar flow.}  Complete
+combustion means every gram of exhaust leaves as water,
+$\mathrm{H_2 + \tfrac12 O_2 \to H_2O}$, of molar mass $18$~kg/kmol:
+\[
+F_{\mathrm{H_2O}} = \frac{108\ \mathrm{kg/s}}{18\ \mathrm{kg/kmol}} = 6.0\ \mathrm{kmol/s}.
+\]
+
+\textbf{Step 3 --- read the reactant rates off the stoichiometry.}  One mole of
+H$_2$ and half a mole of O$_2$ disappear per mole of water formed, so
+\[
+F_{\mathrm{H_2,\,reacted}} = 6.0\ \mathrm{kmol/s},\qquad
+F_{\mathrm{O_2,\,reacted}} = \tfrac12(6.0) = 3.0\ \mathrm{kmol/s}.
+\]
+
+\textbf{Step 4 --- divide by the volume.}  At steady state with complete, uniform
+combustion the mole balance In $-$ Out $+$ Generation $=$ Accumulation$(=0)$ gives
+the consumption rate per unit volume directly:
+\[
+-r_{\mathrm{H_2}} = \frac{6.0}{0.2121} = 28.3\ \mathrm{kmol\,m^{-3}\,s^{-1}},\qquad
+-r_{\mathrm{O_2}} = \frac{3.0}{0.2121} = 14.1\ \mathrm{kmol\,m^{-3}\,s^{-1}}.
 \]
 \end{qbox}
-\begin{ansbox}$-r_{\mathrm{H_2}} \approx 2.8\times10^{4}$ and $-r_{\mathrm{O_2}} \approx 1.4\times10^{4}$ mol/(m$^3\cdot$s).\end{ansbox}
+\note{Sanity checks for the exam: the two rates are in the same $2{:}1$ ratio as the
+stoichiometric coefficients (this is the relative-rate rule of Part~C), and the
+magnitudes sit in the ``rocket engines'' band of the rate spectrum printed on
+slide~35 --- combustion is among the fastest reactions there are.}
+\begin{ansbox}$-r_{\mathrm{H_2}} \approx 28.3$ kmol/(m$^3\cdot$s) $\approx 2.8\times10^{4}$ mol/(m$^3\cdot$s);
+$-r_{\mathrm{O_2}} \approx 14.1$ kmol/(m$^3\cdot$s) $\approx 1.4\times10^{4}$ mol/(m$^3\cdot$s).\end{ansbox}
 
-\qtitle{Q2 -- CSTR, PFR and batch for three rate laws}{\label{q:2}Ch1, slide 12}
-\src{Ch1-krd (1).pdf, slide 12 (``Problem'').}
-$A\to B$ isothermally in a continuous-flow reactor; consume 99\% of A
-($C_A=0.01\,C_{A0}$) with $F_{A0}=5$ mol/h and $v_0=10$ dm$^3$/h (so $C_{A0}=0.5$ mol/dm$^3$).
-Rate laws: (a) $-r_A=k$, $k=0.05$ mol/(h$\cdot$dm$^3$); (b) $-r_A=kC_A$, $k=0.0001$ s$^{-1}=0.36$ h$^{-1}$;
-(c) $-r_A=kC_A^2$, $k=3$ dm$^3$/(mol$\cdot$h).  (d) The batch time for 99\% in each case.
+\qtitle{Q2 -- CSTR, PFR and batch for three rate laws}{\label{q:2}Ch1, slide 54}
+\src{Ch1-krd (1).pdf, slide 54 (the ``Problem'' slide).}
+The reaction $A\to B$ is to be carried out isothermally in a continuous-flow
+reactor.  Calculate both the CSTR and the PFR volumes necessary to consume 99\%
+of A ($C_A = 0.01\,C_{A0}$) when the entering molar flow rate is $F_{A0}=5$~mol/h,
+assuming the rate laws (a) $-r_A=k$ with $k=0.05$~mol/(h$\cdot$dm$^3$),
+(b) $-r_A=kC_A$ with $k=0.0001$~s$^{-1}$, (c) $-r_A=kC_A^2$ with
+$k=3$~dm$^3$/(mol$\cdot$h).  The entering volumetric flow rate is
+$v_0=10$~dm$^3$/h.  (d)~Repeat each case for a batch reactor reaching 99\%.
 
 \begin{qbox}
-CSTR $V=F_{A0}X/(-r_A)_{exit}$; PFR $V=\int_0^X F_{A0}\,dX/(-r_A)$; batch $t=N_{A0}\int_0^X dX/(-r_A V)$ with $C_{A0}=0.5$.
-\begin{itemize}[leftmargin=14pt,itemsep=1pt]
-\item (a) zero order: $V_{CSTR}=V_{PFR}=5(0.99)/0.05 = 99$ dm$^3$.
-\item (b) first order: $V_{CSTR}=\frac{v_0 X}{k(1-X)}=\frac{10(0.99)}{0.36(0.01)}=2750$ dm$^3$;
-$V_{PFR}=\frac{v_0}{k}\ln\frac1{1-X}=\frac{10}{0.36}(4.605)=127.9$ dm$^3$.
-\item (c) second order: $V_{CSTR}=\frac{v_0 X}{kC_{A0}(1-X)^2}=\frac{10(0.99)}{3(0.5)(10^{-4})}=66\,000$ dm$^3$;
-$V_{PFR}=\frac{v_0}{kC_{A0}}\frac{X}{1-X}=\frac{10}{1.5}(99)=660$ dm$^3$.
-\item (d) batch: (a) $t=C_{A0}X/k=9.9$ h; (b) $t=\ln(100)/0.36=12.8$ h; (c) $t=\frac{X}{kC_{A0}(1-X)}=66$ h.
-\end{itemize}
+\textbf{Set-up used for every part.}  $X = 0.99$ and
+$C_{A0} = F_{A0}/v_0 = 5/10 = 0.5$~mol/dm$^3$.  The three design equations
+(slides 42--53):
+\[
+\text{CSTR: } V = \frac{F_{A0}\,X}{(-r_A)_{\text{exit}}},\qquad
+\text{PFR: } V = F_{A0}\int_0^X \frac{dX}{-r_A},\qquad
+\text{batch: } t = N_{A0}\int_0^X \frac{dX}{-r_A\,V} = C_{A0}\int_0^X \frac{dX}{-r_A}\ (V\ \text{const}).
+\]
+For a flow reactor with $-r_A = kC_A^n$ and $C_A = C_{A0}(1-X)$, the integrals
+below are the standard ones; write them out in the exam rather than quoting results.
+
+\textbf{(a) Zero order, $-r_A = k = 0.05$.}  The rate is constant, so the CSTR
+exit rate equals the rate everywhere in the PFR and the two reactors coincide:
+\[
+V_{CSTR} = \frac{F_{A0}X}{k} = \frac{5(0.99)}{0.05} = 99\ \mathrm{dm^3},\qquad
+V_{PFR} = \frac{F_{A0}}{k}\int_0^{0.99} dX = 99\ \mathrm{dm^3}.
+\]
+Batch: $t = \dfrac{C_{A0}}{k}\displaystyle\int_0^{0.99} dX = \dfrac{0.5(0.99)}{0.05} = 9.9$~h.
+
+\textbf{(b) First order, $-r_A = kC_A$.}  First fix the units:
+$k = 0.0001\ \mathrm{s^{-1}} \times 3600 = 0.36\ \mathrm{h^{-1}}$ --- the single
+most common slip in this question.  With $C_A = C_{A0}(1-X)$:
+\begin{align*}
+V_{CSTR} &= \frac{F_{A0}X}{kC_{A0}(1-X)} = \frac{v_0 X}{k(1-X)}
+ = \frac{10(0.99)}{0.36(0.01)} = 2750\ \mathrm{dm^3},\\
+V_{PFR} &= \frac{F_{A0}}{kC_{A0}}\int_0^X\frac{dX}{1-X}
+ = \frac{v_0}{k}\ln\frac{1}{1-X} = \frac{10}{0.36}(4.605) = 127.9\ \mathrm{dm^3},\\
+t_{batch} &= \frac{1}{k}\ln\frac{1}{1-X} = \frac{4.605}{0.36} = 12.8\ \mathrm{h}.
+\end{align*}
+
+\textbf{(c) Second order, $-r_A = kC_A^2 = kC_{A0}^2(1-X)^2$.}
+\begin{align*}
+V_{CSTR} &= \frac{F_{A0}X}{kC_{A0}^2(1-X)^2} = \frac{v_0 X}{kC_{A0}(1-X)^2}
+ = \frac{10(0.99)}{3(0.5)(0.01)^2} = 66\,000\ \mathrm{dm^3},\\
+V_{PFR} &= \frac{v_0}{kC_{A0}}\int_0^X\frac{dX}{(1-X)^2}
+ = \frac{v_0}{kC_{A0}}\cdot\frac{X}{1-X} = \frac{10}{1.5}(99) = 660\ \mathrm{dm^3},\\
+t_{batch} &= \frac{1}{kC_{A0}}\cdot\frac{X}{1-X} = \frac{99}{1.5} = 66\ \mathrm{h}.
+\end{align*}
 \end{qbox}
-\begin{ansbox}(a) 99 dm$^3$ both; (b) CSTR 2750, PFR 128 dm$^3$; (c) CSTR 66\,000, PFR 660 dm$^3$; (d) 9.9 / 12.8 / 66 h.\end{ansbox}
+\note{What the numbers teach (and what the deck's next section turns into the
+Levenspiel plot): as the order rises the CSTR volume explodes ---
+99 $\to$ 2750 $\to$ 66\,000~dm$^3$ --- while the PFR grows mildly ---
+99 $\to$ 128 $\to$ 660~dm$^3$.  The CSTR operates at the \emph{exit} rate, i.e.\ at
+the smallest rate in the reactor, and punishing a small rate with a big volume is
+exactly what the design equations do.  At 99\% conversion a CSTR is 100$\times$ the
+PFR for the second-order case.}
+\begin{ansbox}(a) 99 dm$^3$ (CSTR $=$ PFR), batch 9.9 h; (b) CSTR 2750, PFR 127.9 dm$^3$, batch 12.8 h;
+(c) CSTR 66\,000, PFR 660 dm$^3$, batch 66 h.\end{ansbox}
 
 %============================= PART B =====================================
 \spsection{Part B -- Conversion and reactor sizing (Ch2-krd (1).pdf)}

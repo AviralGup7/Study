@@ -1177,28 +1177,39 @@ $\varepsilon=2$ inversion in Step~1.}
 
 \qtitle{Q27 -- $A\to2.5R$ batch, partial-pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
 \src{Ch5\_-\\,krd.pdf, slide 76.}
-At 0\,°C, constant volume, pure A: $p_A$ (mm) $=760,600,475,380,320,275,240,215$
-at $t=0,2,\dots,14$~min and $150$ at $t=\infty$.  Find a rate equation that
-represents the data.
+At 0\,°C in a constant-volume batch reactor, pure gaseous A gives $p_A$ (mm)
+$=760,600,475,380,320,275,240,215$ at $t=0,2,\dots,14$~min and $150$ at
+$t=\infty$.  The stoichiometry is $A\to2.5R$.  Find a rate equation that
+satisfactorily represents the decomposition.
 
 \begin{qbox}
-\textbf{Step 1 --- the tail is not zero: equilibrium.}  $p_{A,\infty}=150\neq0$:
-the reaction stops short, so it is reversible and the rate must be tested as a
-first-order \emph{approach to equilibrium}:
+\textbf{Step 1 --- the tail tells the story.}  $p_{A,\infty}=150\neq0$: A never
+disappears completely, so the reaction is \emph{reversible} and stops at
+equilibrium.  The right test is therefore a first-order \emph{approach to
+equilibrium}:
 \[
-\ln\frac{p_{A0}-p_{Ae}}{p_A-p_{Ae}}=kt.
+\ln\frac{p_{A0}-p_{Ae}}{p_A-p_{Ae}}=kt,\qquad p_{A0}-p_{Ae}=760-150=610.
 \]
 
-\textbf{Step 2 --- evaluate at each reading.}  With $p_{A0}-p_{Ae}=610$ the eight
-values of $k$ come out $0.152$--$0.162$~min$^{-1}$ (least-squares fit $0.160$) ---
-flat enough to accept the form.
+\textbf{Step 2 --- evaluate at every reading.}
+\begin{center}\small
+\begin{tabular}{lccccccc}
+\toprule
+$t$ (min) & 2 & 4 & 6 & 8 & 10 & 12 & 14\\
+$k=\frac{1}{t}\ln\frac{610}{p_A-150}$ & 0.152 & 0.157 & 0.162 & 0.149 & 0.159 & 0.160 & 0.160\\
+\bottomrule
+\end{tabular}
+\end{center}
+flat to within reading scatter (fit $0.160$~min$^{-1}$) --- the form represents
+the data.
 
-\textbf{Conclusion.}  A first-order reversible rate equation (forward and reverse
-each first order) represents the data with $k_1+k_2\approx0.16$~min$^{-1}$.
+\textbf{Conclusion.}  A first-order reversible rate equation (forward and
+reverse each first order, $k_1+k_2\approx0.16$~min$^{-1}$) is the satisfactory
+rate equation.
 \end{qbox}
-\note{Same family as Q24: whenever a batch run levels off above zero, test
-$\ln[(p_0-p_e)/(p-p_e)]$ vs $t$ before anything else.}
-\begin{ansbox}First-order approach to $p_{Ae}=150$ mm with $k\approx0.16$ min$^{-1}$.\end{ansbox}
+\note{Decision rule to write in the exam: ``$p_{A,\infty}\neq0\Rightarrow$
+reversible; test $\ln[(p_0-p_e)/(p-p_e)]$ vs $t$ before anything else.''}
+\begin{ansbox}First-order approach to $p_{Ae}=150$ mm with $k\\approx0.16$ min$^{-1}$.\end{ansbox}
 
 \qtitle{Q28 -- Reaction bomb $2A\to B$ at 100\,°C}{\label{q:28}Ch5, slides 78--79}
 \src{Ch5\_-\\,krd.pdf, slides 78--79.}
@@ -1242,49 +1253,62 @@ forms'' ($1-n=-1$ here).}
 
 \qtitle{Q29 -- The gambling tables}{\label{q:29}Ch5, slide 80}
 \src{Ch5\_-\\,krd.pdf, slide 80.}
-Raju plays at two tables at once; losses at each table are proportional to the
+Raju plays at two tables at once.  Losses at each table are proportional to the
 money he holds --- table~1 halves it in 4~h, table~2 in 2~h.  Starting with
 Rs.~1000 at both, when is Rs.~10 left?
 
 \begin{qbox}
-\textbf{Translate to kinetics.}  ``Loss proportional to money held'' is
-first-order decay: $k_1=\ln2/4$ and $k_2=\ln2/2$~h$^{-1}$.  Playing at both
-tables simultaneously is two parallel first-order reactions, so the money obeys
+\textbf{Translate the story into kinetics.}  ``Loss proportional to money held''
+is first-order decay.  ``Halves in 4~h'' fixes $k_1=\ln2/4$~h$^{-1}$; ``halves in
+2~h'' gives $k_2=\ln2/2$~h$^{-1}$.  Playing at both tables at once is two
+\emph{parallel} first-order paths, and parallel first-order constants add:
 \[
-\frac{dM}{dt}=-(k_1+k_2)M,\qquad k=k_1+k_2=\frac{\ln2}{4}+\frac{\ln2}{2}=0.520\ \mathrm{h^{-1}}.
+\frac{dM}{dt}=-(k_1+k_2)M,\qquad
+k=k_1+k_2=\frac{\ln2}{4}+\frac{\ln2}{2}=0.173+0.347=0.520\ \mathrm{h^{-1}}.
 \]
 
-\textbf{Integrate.}
+\textbf{Integrate.}  $M=M_0e^{-kt}$, so the time to go from 1000 to 10 is
 \[
-t=\frac{1}{k}\ln\frac{M_0}{M}=\frac{\ln(1000/10)}{0.520}=\frac{4.605}{0.520}=8.9\ \mathrm{h}.
+t=\frac{1}{k}\ln\frac{M_0}{M}=\frac{\ln100}{0.520}=\frac{4.605}{0.520}=8.9\ \mathrm{h}.
 \]
+
+\textbf{Sanity read.}  At one table alone the halves would take 4~h and 2~h;
+together the money halves every $\ln2/0.52=1.33$~h, and $1000\to10$ is
+$\log_2 100\approx6.6$ halvings $\approx8.9$~h --- consistent.
 \end{qbox}
-\note{The teaching point of the slide: parallel first-order paths add their rate
-constants --- exactly the series/parallel rule used later for reactions.}
+\note{The slide's teaching point: parallel first-order paths add their rate
+constants --- the same rule used later for competing reactions.}
 \begin{ansbox}About 8.9 hours.\end{ansbox}
 
 \qtitle{Q30 -- Second order: bigger MFR, equal PFR}{\label{q:30}Ch5, slide 81}
 \src{Ch5\_-\\,krd.pdf, slide 81.}
 $-r_A=kC_A^2$ gives 50\% conversion in a mixed flow reactor.  (i) What
-conversion if the reactor is replaced by one of 6 times the volume?  (ii) What
-conversion if it is replaced by a PFR of the same size?
+conversion if it is replaced by an MFR of 6 times the volume?  (ii) What
+conversion if it is replaced by a PFR of the same size, all else unchanged?
 
 \begin{qbox}
-\textbf{Step 0 --- calibrate with the original reactor.}  MFR at $X=0.5$:
+\textbf{Step 0 --- calibrate the one group the question gives.}  MFR at
+$X=0.5$:
 \[
 kC_{A0}\tau=\frac{X}{(1-X)^2}=\frac{0.5}{0.25}=2.
 \]
-This single dimensionless group is all the data the question gives.
+Everything below is this single number rescaled.
 
-\textbf{(i) Six-fold volume.}  $kC_{A0}\tau'=12$:
-$\dfrac{X}{(1-X)^2}=12\Rightarrow X=0.75$ (solve the quadratic
-$12(1-X)^2=X$; the root below 1).
+\textbf{(i) Six-fold volume.}  $kC_{A0}\tau'=6\times2=12$, so
+$\frac{X}{(1-X)^2}=12$, i.e.\ $12X^2-25X+12=0$:
+\[
+X=\frac{25\pm\sqrt{625-576}}{24}=\frac{25\pm7}{24}\ \Rightarrow\ X=0.75
+\quad(\tfrac{4}{3}\text{ rejected}).
+\]
 
-\textbf{(ii) Same-size PFR.}  The PFR design equation for second order gives
-$kC_{A0}\tau=\dfrac{X}{1-X}=2\Rightarrow X=\tfrac23\approx0.67$.
+\textbf{(ii) Same-size PFR.}  The PFR design equation for second order is
+$kC_{A0}\tau=\frac{X}{1-X}$; with the same group $=2$:
+\[
+\frac{X}{1-X}=2\ \Rightarrow\ X=\frac{2}{3}\approx0.67.
+\]
 \end{qbox}
-\note{Notice the contrast with Q2: six-fold the MFR volume buys only
-$0.5\to0.75$, while switching reactor \emph{type} at equal volume buys
+\note{Read the comparison in the exam: six-fold the MFR volume buys only
+$0.5\to0.75$, while changing the \emph{type} of reactor at equal volume buys
 $0.5\to0.67$ --- second-order kinetics punish the MFR's exit-rate operation.}
 \begin{ansbox}(i) $X=0.75$; (ii) $X=0.67$.\end{ansbox}
 

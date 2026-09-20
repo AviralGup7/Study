@@ -1168,7 +1168,15 @@ $T$ & $\phi$ & $\eta$ & $r$\\
 \spsection{9 \enspace Non-Ideal Reactors and Residence-Time Distributions}
 \notetext{Source: \texttt{Non\_ideal\_KRD.pdf} --- headed \emph{Reaction Engineering / CHE~G641}, the graduate treatment of this material.}
 
-\spsub{9.1 \enspace The RTD functions}
+\spsub{9.1 \enspace Where ideality breaks}
+\begin{itemize}
+\item \textbf{Why it matters (slides 3--4):} the ideal design equations assume identical residence times (PFR/PBR, no axial diffusion) or perfect mixing (CSTR/batch); real vessels sit in between --- non-uniform flow, inefficient or absent mixing, bypassing and dead zones change conversion, yield and the temperature development of the process.
+\item \textbf{CSTR (slide 5):} the feed entrance runs at relatively high concentration while stagnant \emph{dead zones} run low; part of the flow can short-circuit the vessel as bypass.
+\item \textbf{PBR (slide 6):} ideal plug flow moves every molecule at the same axial rate; the real bed adds turbulent velocity profiles, back-mixing and molecular diffusion, so molecules travel at different speeds and in different directions (channeling, slide~14).
+\item \textbf{Micro vs macro mixing (slides 8--9):} macromixing is the RTD itself; micromixing asks whether molecules of different ages meet at all --- \emph{complete segregation}, same-age globules leaving together, versus \emph{complete micromixing} --- and whether mixing occurs early or late along the flow path.
+\end{itemize}
+
+\spsub{9.2 \enspace The RTD functions}
 \begin{formulabox}
 \begin{align*}
 E(t) &= \frac{C(t)}{\displaystyle\int_0^{\infty} C\,dt}
@@ -1178,12 +1186,15 @@ F(t) &= \int_0^{t} E\,dt
 t_m &= \int_0^{\infty} t\,E\,dt = \frac{V}{v_0}
  &&\text{mean residence time}\\[5pt]
 \sigma^{2} &= \int_0^{\infty} \left(t - t_m\right)^{2} E\,dt
- &&\text{variance, i.e.\ the spread}
+ &&\text{variance, i.e.\ the spread}\\[5pt]
+1-F(t) &= \frac{V}{v}\,I(t)
+ &&\text{internal age distribution } I(t)
 \end{align*}
 \end{formulabox}
 \notetext{Normalising by the area is what makes $E(t)$ a probability density, and it is the step most often missed when a pulse experiment is worked up by hand.}
+\notetext{The profiles are a diagnostic (slides 14, 21): a sharp spike reads as a nearly ideal PFR, a decaying exponential as a nearly ideal CSTR, an early spike with a long tail as a PBR with channeling and dead zones, and a two-humped curve as a CSTR with dead zones.}
 
-\spsub{9.2 \enspace Ideal limits}
+\spsub{9.3 \enspace Ideal limits}
 \begin{formulabox}
 \begin{align*}
 \text{PFR:}\quad & E(t) = \delta\left(t-\tau\right)
@@ -1193,7 +1204,7 @@ t_m &= \int_0^{\infty} t\,E\,dt = \frac{V}{v_0}
 \end{align*}
 \end{formulabox}
 
-\spsub{9.3 \enspace Segregation model}
+\spsub{9.4 \enspace Zero-parameter models: segregation and maximum mixedness}
 \begin{formulabox}
 \begin{align*}
 \bar{X} &= \int_0^{\infty} X_{\text{batch}}(t)\,E(t)\,dt
@@ -1203,8 +1214,9 @@ t_m &= \int_0^{\infty} t\,E\,dt = \frac{V}{v_0}
 \begin{itemize}
 \item \textbf{$n>1$:} $\bar{X}$ \emph{exceeds} the ideal-mixed conversion. \textbf{$0<n<1$:} the opposite. Complete segregation is therefore a bound, and it tells you which way a real reactor departs from ideal mixing without any further modelling.
 \end{itemize}
+\notetext{The deck's model menu (slide~22): \emph{zero} adjustable parameters --- the segregation model above and the maximum-mixedness model, its micromixed opposite extreme; \emph{one} parameter --- tanks-in-series and dispersion; \emph{two} parameters --- the real vessel as a combination of ideal reactors (\S9.7).}
 
-\spsub{9.4 \enspace Tanks-in-series model}
+\spsub{9.5 \enspace Tanks-in-series model}
 \begin{formulabox}
 \begin{align*}
 E(t) &= \frac{t^{\,n-1}}{(n-1)!\;\tau_i^{\,n}}\;e^{-t/\tau_i}
@@ -1215,8 +1227,9 @@ X &= 1 - \left(1 + k\tau_i\right)^{-n}
  &&\text{first-order conversion}
 \end{align*}
 \end{formulabox}
+\notetext{Where the gamma form comes from (slides 26--28): a pulse through $N$ equal CSTRs gives $C_1 = C_0e^{-t/\tau_i}$, $C_2 = C_0\,t\,e^{-t/\tau_i}/\tau_i$, $C_3 = C_0\,t^2e^{-t/\tau_i}/2\tau_i^2$, and in general $E(t) = t^{N-1}e^{-t/\tau_i}/[(N-1)!\,\tau_i^{N}]$, or dimensionless $E(\theta) = N(N\theta)^{N-1}e^{-N\theta}/(N-1)!$. As $N\to\infty$ the curve collapses to the plug-flow spike, which is why $n = t_m^2/\sigma^2$ measures the departure from plug flow.}
 
-\spsub{9.5 \enspace Dispersion model}
+\spsub{9.6 \enspace Dispersion model}
 \begin{formulabox}
 \begin{align*}
 X &= 1 - \frac{4q\,e^{Pe/2}}
@@ -1231,18 +1244,31 @@ n &= \frac{Pe}{2} + 1
  &&\text{equivalent number of tanks}
 \end{align*}
 \end{formulabox}
+\notetext{The picture behind it (slides 29--33): molecules diffuse ahead of and lag behind the molar average velocity, i.e.\ a Fickian dispersion $D_a\,dC/dz$ superimposed on the bulk flow, so the tracer pulse broadens as it travels; the mole balance over a slice $\Delta Z$ with $F_A = uAC_A + AD_a\,dC_A/dz$ yields the closed-vessel solution above. The single parameter $D_a/(UL)$ is read from a pulse tracer test; the deck's $E$-curves for $D_a/(UL) = 0.002,\ 0.025,\ 0.2$ show small, intermediate and large deviation from plug flow.}
 
-\spsub{9.6 \enspace Two-parameter models}
+\spsub{9.7 \enspace Two-parameter models}
 \begin{itemize}
-\item A real vessel is represented as an \textbf{ideal region} of volume $V_s = \alpha V$ exchanging with a \textbf{dead zone}, plus a \textbf{bypass} fraction $\beta = v_b/v_0$.
+\item A real CSTR is represented as an \textbf{ideal reacting region} of volume $V_s = \alpha V$ with a \textbf{dead zone} $V_d = (1-\alpha)V$, plus a \textbf{bypass} stream; $\beta = v_s/v_0$ is the fraction of the feed entering the reacting region (slides 40--41). The modelled conversion is
+\[
+1-X = \beta + \frac{(1-\beta)^2}{1-\beta+\alpha\tau k}.
+\]
 \item Tracer response takes the form
 \[
 \frac{C_T}{C_{T0}} = 1 - \left(1-\beta\right)e^{-(1-\beta)t/(\alpha\tau)}
 \]
-and the two parameters $(\alpha,\beta)$ are extracted from the first two moments.
+and linearising it (slide~42),
+\[
+\ln\frac{C_{T0}}{C_{T0}-C_T} = \ln\frac{1}{1-\beta} + \frac{1-\beta}{\alpha}\cdot\frac{t}{\tau},
+\]
+so the intercept and slope of the tracer straight line give $(\alpha,\beta)$.
+\item The deck's second two-parameter variant (slides 43--44) models a real CSTR as \textbf{two ideal CSTRs with interchange} --- a highly agitated region near the impeller exchanging with a quieter one, $V_d = (1-\alpha)V$ --- with
+\[
+X = \frac{(\beta+\alpha\tau k)(\beta+(1-\alpha)\tau k)-\beta^{2}}{(1+\beta+\alpha\tau k)(\beta+(1-\alpha)\tau k)-\beta^{2}},
+\]
+and $(\alpha,\beta)$ again fixed by a tracer test, the response now a sum of two exponentials with exponents $m_{1},m_{2}$.
 \end{itemize}
 
-\spsub{9.7 \enspace Worked from the deck}
+\spsub{9.8 \enspace Worked from the deck}
 \begin{itemize}
 \item \textbf{Pulse tracer} (slide~17):
 \[
@@ -1294,7 +1320,7 @@ C_{WP} &= \frac{(-r_A')_{\text{obs}}R^{2}}{D_eC_{As}} && n = \frac{t_m^{2}}{\sig
 Same conversion, one vessel: PFR or CSTR? & PFR & \S2.6 ($2.165$ vs $6.40$~m$^3$)\\
 Same total volume, two CSTRs in series or parallel? & series & \S4.6 ($0.900$ vs $0.813$)\\
 PBR then CSTR, or CSTR then PBR? & CSTR first & \S4.6 ($0.690$ vs $0.598$)\\
-Real vessel, or an ideal limit? & neither & \S9.7 ($0.679$ vs $0.720$ / $0.560$)\\
+Real vessel, or an ideal limit? & neither & \S9.8 ($0.679$ vs $0.720$ / $0.560$)\\
 \bottomrule
 \end{tabularx}
 

@@ -270,43 +270,138 @@ PFR for the second-order case.}
 \spsection{Part B -- Conversion and reactor sizing (Ch2-krd (1).pdf)}
 
 \qtitle{Q3 -- Sizing from the Levenspiel table}{\label{q:3}Ch2, slides 19--24}
-\src{Ch2-krd (1).pdf, slides 19--24.}
-Calculate the volumes required to achieve 80\% conversion in a CSTR and a PFR when species A
-enters at 0.4 mol/s, given $F_{A0}/(-r_A)$ (m$^3$):
+\src{Ch2-krd (1).pdf, slides 19--24 (the worked ``CSTR/PFR sizing'' problem).}
+Consider the isothermal gas-phase isomerization $A\to B$ ($T=500$~K,
+$P=830$~kPa $=8.2$~atm, charge pure A).  The measured rates are:
 \begin{center}\small
 \begin{tabular}{lccccccc}
 \toprule
 $X$ & 0 & 0.1 & 0.2 & 0.4 & 0.6 & 0.7 & 0.8\\
-$F_{A0}/(-r_A)$ & 0.89 & 1.08 & 1.33 & 2.05 & 3.54 & 5.06 & 8.00\\
+$-r_A$ (mol/m$^3\cdot$s) & 0.45 & 0.37 & 0.30 & 0.195 & 0.113 & 0.079 & 0.05\\
 \bottomrule
 \end{tabular}
 \end{center}
+Calculate the volumes required to achieve $80$\% conversion in a CSTR and in a
+PFR when species A enters at $F_{A0}=0.4$~mol/s.
+
 \begin{qbox}
-CSTR: $V=\frac{F_{A0}}{-r_A}\Big|_{0.8} X = 8.00(0.8)=6.40$ m$^3$.
-PFR with the deck's five-point quadrature ($h=0.2$):
-$V=\frac{0.2}{3}[0.89+4(1.33)+2(2.05)+4(3.54)+8.00]=2.165$ m$^3$ (deck value).
+\textbf{Step 0 --- build the Levenspiel column.}  The deck's method (slides
+10--12) sizes reactors from the plot of $F_{A0}/(-r_A)$ vs $X$: the CSTR volume is
+a \emph{rectangle} (height at exit conversion times width $X$); the PFR volume is
+the \emph{area under the curve}.  Dividing $F_{A0}=0.4$~mol/s by each rate gives
+\begin{center}\small
+\begin{tabular}{lccccccc}
+\toprule
+$X$ & 0 & 0.1 & 0.2 & 0.4 & 0.6 & 0.7 & 0.8\\
+$F_{A0}/(-r_A)$ (m$^3$) & 0.89 & 1.08 & 1.33 & 2.05 & 3.54 & 5.06 & 8.00\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 1 --- CSTR volume (slide 20).}  A CSTR operates at its \emph{exit}
+conditions, so evaluate the rate at $X=0.8$: $\left(1/-r_A\right)_{0.8}=1/0.05=20$
+m$^3\cdot$s/mol, i.e.\ $F_{A0}/(-r_A)=8.00$~m$^3$, and
+\[
+V_{\mathrm{CSTR}}=\left(\frac{F_{A0}}{-r_A}\right)_{X=0.8}X
+=0.4\ \tfrac{\mathrm{mol}}{\mathrm s}\times20\ \tfrac{\mathrm{m^3\,s}}{\mathrm{mol}}\times0.8
+=6.4\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- PFR volume by Simpson's rule (slides 21--23).}
+$V_{\mathrm{PFR}}=\int_0^{0.8}\frac{F_{A0}}{-r_A}\,dX$ has no closed form without a
+rate law, so the deck applies its five-point quadrature with
+$h=\Delta X=(0.8-0)/4=0.2$:
+\[
+V=\frac{\Delta X}{3}\Big[\tfrac{F_{A0}}{-r_A}(0)+4\tfrac{F_{A0}}{-r_A}(0.2)
++2\tfrac{F_{A0}}{-r_A}(0.4)+4\tfrac{F_{A0}}{-r_A}(0.6)+\tfrac{F_{A0}}{-r_A}(0.8)\Big]
+\]
+\[
+=\frac{0.2}{3}\big[0.89+4(1.33)+2(2.05)+4(3.54)+8.00\big]
+=\frac{0.2}{3}(32.47)=2.165\ \mathrm{m^3}.
+\]
+
+\textbf{Step 3 --- read the picture (slide 24).}  The CSTR rectangle minus the
+PFR area is $6.4-2.165=4.235$~m$^3$ of extra volume --- the price of running the
+whole reactor at the slow exit rate.
 \end{qbox}
-\begin{ansbox}$V_{CSTR}=6.4$ m$^3$, $V_{PFR}=2.165$ m$^3$.\end{ansbox}
+\note{Exam habit: write the two design equations, the $F_{A0}/(-r_A)$ table, the
+rectangle-vs-area argument, and the Simpson arithmetic.  The deck's own printed
+answers are exactly $6.4$ and $2.165$~m$^3$.}
+\begin{ansbox}$V_{CSTR}=6.4$ m$^3$, $V_{PFR}=2.165$ m$^3$ (the PFR is $4.235$ m$^3$ smaller).\end{ansbox}
 
 \qtitle{Q4 -- Two CSTRs in series}{\label{q:4}Ch2, slides 31--36}
 \src{Ch2-krd (1).pdf, slides 35--36.}
-With the same table, the first CSTR reaches $X=0.4$; find the volume of each of two CSTRs
-for 80\% overall.
-\begin{qbox}
-$V_1 = 2.05(0.4)=0.82$ m$^3$; $V_2 = 8.00(0.8-0.4)=3.20$ m$^3$; total $4.02$ m$^3$ ---
-less than one CSTR (6.4 m$^3$), as the deck points out.
-\end{qbox}
-\begin{ansbox}$V_1=0.82$ m$^3$, $V_2=3.20$ m$^3$, total $4.02$ m$^3$.\end{ansbox}
+For two CSTRs in series, $40$\% conversion is achieved in the first reactor.
+What is the volume of each reactor necessary to achieve $80$\% overall conversion
+of the entering species?  (Same feed and rate data as Q3.)
 
-\qtitle{Q5 -- Two PFRs in series}{\label{q:5}Ch2, slides 37--38}
-\src{Ch2-krd (1).pdf, slides 37--38.}
-Same feed; intermediate conversion 40\%, final 80\%.
 \begin{qbox}
-$V_1=\frac{0.2}{3}[0.89+4(1.33)+2.05]=0.551$ m$^3$;
-$V_2=\frac{0.2}{3}[2.05+4(3.54)+8.00]=1.614$ m$^3$;
-total $2.165$ m$^3$ $=$ one PFR, as expected for PFRs in series (deck values).
+\textbf{The design equation for the $n$-th CSTR (slides 32--34).}  Balance A over
+reactor 1: In $-$ Out $+$ Generation $=0$, i.e.\ $F_{A0}-F_{A1}+r_{A1}V_1=0$; with
+$F_{A1}=F_{A0}-F_{A0}X_1$ this gives $V_1=F_{A0}\left(\frac{1}{-r_{A1}}\right)X_1$.
+Over reactor 2 the balance is $F_{A1}-F_{A2}+r_{A2}V_2=0$; substituting
+$F_{A1}=F_{A0}(1-X_1)$ and $F_{A2}=F_{A0}(1-X_2)$ leaves the difference of
+conversions:
+\[
+V_2=\frac{F_{A1}-F_{A2}}{-r_{A2}}=\frac{F_{A0}}{-r_{A2}}\,(X_2-X_1).
+\]
+Graphically each CSTR is a rectangle whose height is its \emph{own exit} value of
+$F_{A0}/(-r_A)$.
+
+\textbf{Step 1 --- reactor 1 ($X_1=0.4$, slide 36).}
+$F_{A0}/(-r_A)\big|_{0.4}=2.05$~m$^3$:
+\[
+V_1 = 2.05\ \mathrm{m^3}\times0.4 = 0.82\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- reactor 2 ($X_1=0.4 \to X_2=0.8$).}
+$F_{A0}/(-r_A)\big|_{0.8}=8.00$~m$^3$:
+\[
+V_2 = 8.00\ \mathrm{m^3}\times(0.8-0.4) = 3.20\ \mathrm{m^3}.
+\]
+
+\textbf{Step 3 --- total and comparison.}
+$V=V_1+V_2=0.82+3.20=4.02$~m$^3$, against $6.4$~m$^3$ for a single CSTR to 80\%:
+splitting the conversion across two tanks saves $2.38$~m$^3$, because the first
+tank never has to operate at the slow $X=0.8$ rate.
 \end{qbox}
-\begin{ansbox}$V_1=0.551$, $V_2=1.614$, total $2.165$ m$^3$.\end{ansbox}
+\note{Exam habit: sketch the two Levenspiel rectangles (short one on $0\le X\le0.4$,
+tall one on $0.4\le X\le0.8$) and label the heights $2.05$ and $8.00$~m$^3$ ---
+the picture carries half the marks.}
+\begin{ansbox}$V_1=0.82$ m$^3$, $V_2=3.20$ m$^3$, total $4.02$ m$^3$ (vs $6.4$ m$^3$ for one CSTR).\end{ansbox}
+
+\qtitle{Q5 -- Two PFRs in series}{\label{q:5}Ch2, slides 37--39}
+\src{Ch2-krd (1).pdf, slides 37--39.}
+Calculate the reactor volumes $V_1$ and $V_2$ for the plug-flow sequence shown
+when the intermediate conversion is $40$\% and the final conversion is $80$\%
+(same feed as Q3).
+
+\begin{qbox}
+\textbf{Why each PFR integrates over its own slice.}  Reactor 1 raises $X$ from
+$0$ to $0.4$ and reactor 2 from $0.4$ to $0.8$; each integrates $F_{A0}/(-r_A)$
+over that interval, so the two areas simply tile the area of one PFR (slide 44
+proves that $N$ PFRs in series give the same conversion as a single PFR of the
+total volume).
+
+\textbf{Step 1 --- reactor 1 (slide 38), three-point Simpson, $h=0.2$:}
+\[
+V_1=\int_0^{0.4}\frac{F_{A0}}{-r_A}\,dX
+=\frac{0.2}{3}\big[0.89+4(1.33)+2.05\big]
+=\frac{0.2}{3}(8.26)=0.551\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- reactor 2 (slide 39), points $0.4,\,0.6,\,0.8$:}
+\[
+V_2=\int_{0.4}^{0.8}\frac{F_{A0}}{-r_A}\,dX
+=\frac{0.2}{3}\big[2.05+4(3.54)+8.00\big]
+=\frac{0.2}{3}(24.21)=1.614\ \mathrm{m^3}.
+\]
+
+\textbf{Step 3 --- total.}  $V=V_1+V_2=0.551+1.614=2.165$~m$^3$ --- exactly the
+single-PFR volume of Q3, which is the point the deck is making: a PFR does not
+care where (or whether) you split it.
+\end{qbox}
+\begin{ansbox}$V_1=0.551$ m$^3$, $V_2=1.614$ m$^3$, total $2.165$ m$^3$ $=$ one PFR of Q3.\end{ansbox}
 
 \qtitle{Q6 -- Mixed reactor, unknown stoichiometry}{\label{q:6}Ch2, slides 41--42}
 \src{Ch2-krd (1).pdf, slides 41--42.}

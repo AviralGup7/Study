@@ -434,6 +434,26 @@ def _chx(el):
     return (int(o.get('x')), int(o.get('y')), int(e.get('cx')), int(e.get('cy')))
 
 
+
+def _ph_key(el):
+    """(type, idx) of a shape's <p:ph>, or None if the shape is not a placeholder."""
+    ph = el.find('.//' + P + 'ph')
+    if ph is None:
+        return None
+    return (ph.get('type') or 'body', ph.get('idx') or '0')
+
+
+def _placeholder_box(tree, key):
+    """The xfrm a placeholder inherits from its layout/master, or None."""
+    for sp in tree.iter(P + 'sp'):
+        if _ph_key(sp) != key:
+            continue
+        box = _xfrm(sp)
+        if box:
+            return box
+    return None
+
+
 class PptxRenderer:
     def __init__(self, path, width=1500):
         self.z = zipfile.ZipFile(path)
@@ -451,11 +471,41 @@ class PptxRenderer:
         dr = ImageDraw.Draw(img)
         root = ET.fromstring(self.z.read(part))
         rels = self._rels(part)
+        # A placeholder that carries no <a:xfrm> of its own takes its position
+        # from the slide LAYOUT (and the layout's from the master).  Without
+        # this, every such shape -- which is most body text in a deck built
+        # from a template -- is dropped and the page renders blank.
+        self._ph = {}
+        for chain in ('ppt/slideLayouts', 'ppt/slideMasters'):
+            for name in self.z.namelist():
+                if not name.startswith(chain + '/') or not name.endswith('.xml'):
+                    continue
+                tree = ET.fromstring(self.z.read(name))
+                for sp in tree.iter(P + 'sp'):
+                    key = _ph_key(sp)
+                    box = _xfrm(sp)
+                    if key and box and key not in self._ph:
+                        self._ph[key] = box
         texts = []
         self.walk(list(root.find('.//' + P + 'spTree')), rels, (0, 0, 1.0), img, dr, texts)
         for t in texts:
             self._text(dr, *t)
         return img
+
+    def _box_of(self, el):
+        """A shape's own xfrm, else the one its placeholder inherits."""
+        box = _xfrm(el)
+        if box:
+            return box
+        key = _ph_key(el)
+        if key is None:
+            return None
+        box = getattr(self, '_ph', {}).get(key)
+        if box:
+            return box
+        # last resort: place it in the body block so the text is never lost
+        return (609600, 1600000, self.sw - 1219200, self.sh - 2200000)
+
 
     def _rels(self, part):
         rp = os.path.join(os.path.dirname(part), '_rels', os.path.basename(part) + '.rels')
@@ -490,7 +540,7 @@ class PptxRenderer:
                 self.walk(list(el), rels, tf, img, dr, texts)   # mc:AlternateContent etc.
 
     def _pic(self, el, rels, tf, img, dr):
-        blip, box = el.find('.//' + A + 'blip'), _xfrm(el)
+        blip, box = el.find('.//' + A + 'blip'), self._box_of(el)
         if blip is None or box is None:
             return
         target = rels.get(blip.get(R + 'embed'))
@@ -536,7 +586,7 @@ class PptxRenderer:
         return x * self.scale, y * self.scale
 
     def _text_shape(self, el, tf, texts):
-        box, tx = _xfrm(el), el.find('.//' + P + 'txBody')
+        box, tx = self._box_of(el), el.find('.//' + P + 'txBody')
         if box is None or tx is None:
             return
         ox, oy, cx, cy = (v * tf[2] for v in box)

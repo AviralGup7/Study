@@ -1669,29 +1669,63 @@ is the fingerprint of internal diffusion control.}
 
 \qtitle{Q45 -- Tracer pulse: $E(t)$ and the 3--6 min fraction}{\label{q:45}Non-ideal, slides 17--19}
 \src{Non\_ideal\_KRD.pdf, slides 17--19 (``Problem'').}
-$C$ (g/m$^3$) $=0,1,5,8,10,8,6,4,3,2.2,1.5,0.6,0$ at $t=0,1,\dots,10,12,14$ min.  Construct
-$E(t)$ and find the fraction that spent 3--6 min in the reactor.
+A tracer pulse gives $C$ (g/m$^3$) $=0,1,5,8,10,8,6,4,3,2.2,1.5$ at
+$t=0,1,\dots,10$~min and $0.6,\,0$ at $12,\,14$~min.  Construct $E(t)$ and find
+the fraction of material that spent 3--6~min in the reactor.
+
 \begin{qbox}
-$\int_0^\infty C\,dt = 47.4+2.6 = 50.0$ g$\cdot$min/m$^3$ (Simpson on 0--10 plus 10--14, as on
-the deck).  $E(t)=C(t)/50$: peak $E(4)=0.20$.  Fraction between 3 and 6 min:
-$\int_3^6 E\,dt \approx \frac{1}{50}\times\frac{3}{8}(8+3\cdot10+3\cdot8+6)=0.465\approx0.5$.
-Mean residence time $t_m=\int tE\,dt\approx5.2$ min.
+\textbf{Step 1 --- normalise.}  $E(t)=C(t)/\int_0^\infty C\,dt$; the deck
+integrates with Simpson on $0$--$10$ ($47.4$) plus the $10$--$14$ tail ($2.6$):
+\[
+\int_0^\infty C\,dt=50.0\ \mathrm{g\cdot min/m^3}.
+\]
+
+\textbf{Step 2 --- the $E$ curve.}  $E(t)=C(t)/50$: it peaks at
+$E(4)=10/50=0.20$~min$^{-1}$.
+
+\textbf{Step 3 --- the 3--6 min fraction.}  Integrate $E$ over $[3,6]$ (Simpson
+on the tabulated points):
+\[
+\int_3^6 E\,dt\approx\frac{1}{50}\times\frac{3}{8}\big(8+3(10)+3(8)+6\big)=0.465\approx0.5,
+\]
+i.e.\ about half the material spent between 3 and 6 minutes inside.
+
+\textbf{Step 4 --- the mean.}  $t_m=\int tE\,dt\approx5.2$~min --- quoted by the
+deck and reused by Q46.
 \end{qbox}
-\begin{ansbox}$\int C\,dt=50$ g$\cdot$min/m$^3$; about half the material (0.47--0.51) spent 3--6 min inside; $t_m\approx5.2$ min.\end{ansbox}
+\begin{ansbox}$\int C\,dt=50$ g$\\cdot$min/m$^3$; about half the material (0.47--0.51) spent 3--6 min inside; $t_m\approx5.2$ min.\end{ansbox}
 
 \qtitle{Q46 -- Dispersion model: conversion four ways}{\label{q:46}Non-ideal, slides 52--59}
 \src{Non\_ideal\_KRD.pdf, slides 52--59 (``Problem'').}
-First order $A\to B$ in a 10 cm, 6.36 m tubular reactor, $k=0.25$ min$^{-1}$; tracer test of
-Q45.  Conversion by (i) closed-vessel dispersion model, (ii) PFR, (iii) single CSTR,
-(iv) tanks in series.
+First-order $A\to B$, $k=0.25$~min$^{-1}$, in the 10-cm, 6.36-m tubular reactor
+of Q45.  Predict the conversion with (i) the closed-vessel dispersion model,
+(ii) an ideal PFR, (iii) a single CSTR, (iv) the tanks-in-series model.
+
 \begin{qbox}
-$t_m=5.13$ min, $\sigma^2=5.92$ min$^2$ (deck values), $\sigma_\theta^2=0.225$;
-$\sigma_\theta^2=\frac{2}{Pe}-\frac{2}{Pe^2}(1-e^{-Pe})\Rightarrow Pe=7.7$.
-$Da=k t_m=1.28$, $q=\sqrt{1+4Da/Pe}=1.29$:
-$X=1-\frac{4q\,e^{Pe/2}}{(1+q)^2e^{Pe\,q/2}-(1-q)^2e^{-Pe\,q/2}}=0.68$ (deck value).
-(ii) $X=1-e^{-Da}=0.72$; (iii) $X=\frac{Da}{1+Da}=0.56$;
-(iv) $n=t_m^2/\sigma^2=4.45$: $X=1-(1+Da/n)^{-n}=0.68$.
+\textbf{Step 1 --- RTD parameters from Q45.}  $t_m=5.13$~min,
+$\sigma^2=5.92$~min$^2$ (deck values), so
+$\sigma_\theta^2=\sigma^2/t_m^2=0.225$.
+
+\textbf{Step 2 --- the P\'eclet number.}  Closed vessel:
+$\sigma_\theta^2=\frac{2}{Pe}-\frac{2}{Pe^2}\left(1-e^{-Pe}\right)$ solves at
+$Pe=7.7$.
+
+\textbf{(i) Dispersion model.}  With $Da=k t_m=1.28$ and
+$q=\sqrt{1+4Da/Pe}=1.29$, the closed-closed conversion formula gives
+\[
+X=1-\frac{4q\,e^{Pe/2}}{(1+q)^2e^{Pe\,q/2}-(1-q)^2e^{-Pe\,q/2}}=0.68
+\quad(\text{deck value}).
+\]
+
+\textbf{(ii) PFR.}  $X=1-e^{-Da}=0.72$.  \textbf{(iii) CSTR.}
+$X=\frac{Da}{1+Da}=0.56$.
+
+\textbf{(iv) Tanks in series.}  $n=t_m^2/\sigma^2=4.45$:
+$X=1-\left(1+\frac{Da}{n}\right)^{-n}=0.68$.
 \end{qbox}
+\note{The deck's conclusion to state in the exam: both one-parameter models
+agree with each other (0.68) and sit between the ideal extremes 0.56--0.72 ---
+exactly where a real reactor belongs.}
 \begin{ansbox}(i) 0.68; (ii) 0.72; (iii) 0.56; (iv) 0.68.\end{ansbox}
 
 \vspace{6pt}

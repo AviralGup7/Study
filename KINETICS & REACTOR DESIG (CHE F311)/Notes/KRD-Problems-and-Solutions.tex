@@ -1199,27 +1199,56 @@ Michaelis--Menten batch data.}
 \begin{ansbox}Yes: $k_3\approx32$ h$^{-1}$ (at $C_{S0}=0.01$), $C_M\approx0.5$ mmol/L.\end{ansbox}
 
 \qtitle{Q34 -- Reversible PFR: equilibrium then actual conversion}{\label{q:34}Ch5, slide 61}
-\src{Ch5\_-\,krd.pdf, slide 61.}
-A PFR (2 m$^3$) processes aqueous feed (100 L/min) with $C_{A0}=100$ mmol/L; $A\rightleftharpoons B$.
-Find the equilibrium conversion, then the actual conversion (and repeat for a CSTR).
+\src{Ch5\_-\\,krd.pdf, slide 61.}
+A PFR of 2~m$^3$ processes an aqueous feed (100~L/min) with
+$C_{A0}=100$~mmol/L; $A\rightleftharpoons B$.  Find the equilibrium conversion,
+then the actual conversion --- and repeat for a CSTR.
+
 \begin{qbox}
-The slide prints no rate constants; the textbook problem it reproduces (Levenspiel, the
-companion MFR version of which is printed with $-r_A=0.04C_A-0.01C_R$ mol/(L$\cdot$min))
-supplies them: $K_e=k_1/k_2=4\Rightarrow X_e=\frac{4}{5}=0.80$.
-$-r_A=0.05(C_A-0.02)$; $\tau=V/v_0=20$ min;
-$\ln\frac{C_{Af}-0.02}{0.08}=-(k_1+k_2)\tau=-1\Rightarrow C_{Af}=0.0494$, $X=0.51$.
-(CSTR: $0.05(C_A-0.02)\times20=C_{A0}-C_A\Rightarrow C_A=0.06$, $X=0.40$.)
+\textbf{The rate law the slide implies.}  The slide states the problem without
+constants; the textbook original it reproduces (Levenspiel, whose companion MFR
+version is printed with $-r_A=0.04C_A-0.01C_R$ mol/(L$\\cdot$min)) supplies them;
+the deck's own answers below confirm the pairing.
+
+\textbf{Step 1 --- equilibrium conversion.}  $K_e=k_1/k_2=0.04/0.01=4$, and with
+$C_R=C_{A0}-C_A$: $K_e=\frac{X_e}{1-X_e}\Rightarrow X_e=\frac{4}{5}=0.80$.
+
+\textbf{Step 2 --- one clean rate form.}  Substituting $C_R=C_{A0}-C_A$:
+$-r_A=(k_1+k_2)C_A-k_2C_{A0}=0.05\,(C_A-0.02)$ --- first order towards the
+equilibrium concentration $C_{Ae}=0.02$.
+
+\textbf{Step 3 --- PFR, $\tau=V/v_0=2000/100=20$~min.}
+\[
+\tau=\int_{C_{Af}}^{C_{A0}}\frac{dC_A}{0.05(C_A-0.02)}\Rightarrow
+\ln\frac{0.08}{C_{Af}-0.02}=0.05\times20=1,
+\]
+so $C_{Af}-0.02=0.08/e=0.0294$, $C_{Af}=0.0494$, $X_{PFR}=0.51$.
+
+\textbf{Step 4 --- CSTR for comparison.}
+$0.05(C_A-0.02)\times20=C_{A0}-C_A\Rightarrow C_A-0.02=0.1-C_A\Rightarrow
+C_A=0.06$, $X_{CSTR}=0.40$ --- the PFR beats the CSTR towards equilibrium, as
+always for a simple reversible reaction.
 \end{qbox}
 \begin{ansbox}$X_e=0.80$; PFR $X\approx0.51$; CSTR $X\approx0.40$ (rate law quoted from the textbook original, as the slide omits it).\end{ansbox}
 
 \qtitle{Q35 -- $A\to R+2S$ from total-pressure data}{\label{q:35}Ch5, slide 62}
-\src{Ch5\_-\,krd.pdf, slide 62.}
-Pure A, constant volume; $\pi$ (mmHg) $=7.5,10.5,12.5,15.8,17.9,19.4$ at
-$t=0,2.5,5,10,15,20$ min.
+\src{Ch5\_-\\,krd.pdf, slide 62.}
+Pure A at constant volume; total pressure $\pi$ (mmHg) $=7.5,10.5,12.5,15.8,17.9,19.4$
+at $t=0,2.5,5,10,15,20$~min.  Find the rate equation.
+
 \begin{qbox}
-$\Delta n=+2$: $p_A=\pi_0-\frac{\pi-\pi_0}{2}=\frac{3\pi_0-\pi}{2}=7.5,6.0,5.0,3.35,2.3,1.55$.
-$\ln(p_{A0}/p_A)/t = 0.089,0.081,0.081,0.079,0.079$ --- first order, $k\approx0.08$ min$^{-1}$.
+\textbf{Step 1 --- $p_A(\pi)$.}  Per mole A reacted the moles rise by
+$\Delta n=(1+2)-1=2$: $\pi=\pi_0+2x$, $p_A=\pi_0-x$, hence
+\[
+p_A=\pi_0-\frac{\pi-\pi_0}{2}=\frac{3\pi_0-\pi}{2}=7.5,\,6.0,\,5.0,\,3.35,\,2.3,\,1.55.
+\]
+
+\textbf{Step 2 --- test first order.}  $\ln(p_{A0}/p_A)/t$ gives
+$0.089,\,0.081,\,0.081,\,0.079,\,0.079$~min$^{-1}$ --- constant within scatter:
+first order with $k\approx0.08$~min$^{-1}$.
 \end{qbox}
+\note{Here $\pi_0$ \emph{is} recorded (7.5), unlike Q23; the same
+$p_A=(3\pi_0-\pi)/2$ algebra covers every $1\to3$-type expansion in this part.}
 \begin{ansbox}First order with $k\approx0.08$ min$^{-1}$.\end{ansbox}
 
 %============================= PART F =====================================

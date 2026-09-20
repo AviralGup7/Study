@@ -1102,6 +1102,66 @@ Hyperfiltration / reverse osmosis (RO) & $<\SI{1}{} nm$: water passes and essent
 \end{tabularx}}
 \end{formulabox}
 
+\spsub{General equation for ultrafiltration}
+\begin{itemize}
+  \item The \textbf{volume flux} is the superficial permeate velocity normal to the surface:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+J_v&=\frac{\Delta P-\Delta\pi}{R_m+R_{gel}}
+ =\frac{\Delta P-\Delta\pi}{R_m(\mu/\mu_0)+R_{gel}}
+\end{align*}
+\vspace{2pt}
+{\small
+$\Delta P$ = trans-membrane pressure drop; \quad
+$\Delta\pi$ = osmotic pressure drop; \quad
+$R_m$ = membrane resistance; \quad
+$R_{gel}$ = gel-layer resistance; \quad
+$\mu$ = viscosity of the permeate at the operating temperature; \quad
+$\mu_0$ = viscosity of water at room temperature. \quad
+The membrane resistance is corrected by the permeate-to-water viscosity ratio $\mu/\mu_0$; the deck writes that factor in the denominator of the bracketed form.}
+\end{formulabox}
+
+\spsub{Concentration polarization}
+\begin{itemize}
+  \item As permeate is drawn through the membrane, solute is carried towards the surface faster than it can diffuse back, so the concentration at the surface rises above the bulk value. In \textbf{RO} the surface concentration is only moderately higher than the bulk concentration; in \textbf{UF} the surface concentration is large, and a gel layer forms.
+  \item The boundary layer has thickness $\delta$. Writing $C_s$ for the concentration at the surface ($x=0$) and $C_1$ for the bulk concentration at $x=\delta$, with $C_2$ the solute concentration in the permeate:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+J_v&=K_c\ln\frac{C_s-C_2}{C_1-C_2}
+ &&\text{volume flux with concentration polarization}
+\end{align*}
+\vspace{2pt}
+{\small $C_s$ = concentration at the surface ($x=0$);\quad $C_1$ = bulk concentration at $x=\delta$, the edge of the gel boundary layer;\quad $C_2$ = solute concentration in the permeate.}
+\end{formulabox}
+
+\spsub{Mass-transfer coefficient and the Sherwood correlation}
+\begin{formulabox}
+\begin{align*}
+K_c&=\frac{D_v}{\delta}
+ &&\text{mass-transfer coefficient}\\[2pt]
+Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
+ &&\text{Sherwood number}\\[2pt]
+&\boxed{\;Sh=0.0096\,Re^{\,0.913}Sc^{\,0.346}\;}
+\end{align*}
+\vspace{2pt}
+{\small $K_c$ in \si{\centi\meter\per\second}, $D_v$ (diffusivity) in \si{\square\centi\meter\per\second}, $L$ a characteristic length; the boxed correlation is the one the deck uses to get $K_c$.}
+\end{formulabox}
+
+\spsub{Complete solute rejection}
+\begin{itemize}
+  \item When $C_2=0$, that is complete solute rejection and no solute in the permeate, the flux expression collapses to
+\end{itemize}
+\begin{formulabox}
+\[J_v=K_c\ln\frac{C_s}{C_1}\]
+\end{formulabox}
+
+\spsub{Applications of ultrafiltration (from the deck)}
+\begin{itemize}
+  \item Food processing and pharmacy; textile and paper industry; wastewater treatment and water purification; dairy industry.
+\end{itemize}
+
 \spsection{PRACTICE PROBLEMS FROM THE SLIDES}
 
 \spsub{1 \textperiodcentered{} Screen analysis of a clay catalyst (Lec.~3)}

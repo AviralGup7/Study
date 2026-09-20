@@ -116,7 +116,6 @@
 \fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Separation Processes II --- Short Notes \& Formula Sheet}
 \fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
 
-\begin{document}
 
 %=============================================================== cover
 \begin{center}
@@ -675,6 +674,675 @@ The same result may also be written as
 \end{align*}
 \end{formulabox}
 \notetext{$\bar{v}$ = superficial velocity, $\varepsilon$ = bed/cake porosity, $\Phi_s$ = sphericity, $D_p$ = particle diameter, $\mu$ = fluid viscosity, $\rho$ = fluid density, $g_c$ = conversion factor. The section through the medium and cake shows the fluid pressure $P$ falling from $P_a$ at the upstream face of the cake to $P_e$ at the cake--medium interface and on to $P_b$ through the medium, plotted against the distance $L$ from the medium.}
+
+% ---- Module 2, Lecture 3 : pressure drop through the filter cake ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 3 --- Pressure Drop Through the Filter Cake}
+
+\spsub{The model: flow through a bundle of channels}
+\begin{itemize}
+  \item A cake is a bed of particles, so the pressure drop needed to push filtrate through it is found from the pressure drop for flow through a \emph{pipe}, and the pipe is then replaced by the equivalent parallel channels of the bed.
+  \item Flow of liquid through a single pipe is given by the \textbf{Hagen--Poiseuille} equation,
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Delta P_s &= \frac{32\,\Delta L\,\bar{V}\,\mu}{g_c\,D^2}
+   &&\text{Hagen--Poiseuille (laminar, one pipe of diameter }D)\\[3pt]
+\Phi_s &= \frac{6/D_p}{s_p/v_p}=\frac{6v_p}{D_ps_p}
+   &&\Longrightarrow\qquad \frac{s_p}{v_p}=\frac{6}{\Phi_sD_p}\tag{1}
+\end{align*}
+\vspace{1pt}
+$s_p/v_p$ = surface-to-volume ratio of the particle; for granular solids $\Phi_s$ ranges from $0.6$ to $0.95$.
+\end{formulabox}
+
+\spsub{Equivalent channel diameter $D_{eq}$}
+\begin{itemize}
+  \item Let $\varepsilon$ = porosity and $1-\varepsilon$ = the volume fraction of particles in the bed (the \emph{external} void fraction of the bed, not the total porosity): if the particles are porous, their pores are generally too small to permit any significant flow through them, so they are not counted.
+  \item The solid surface presented to the flow, for $n$ parallel channels of length $L$, is the surface-to-volume ratio times the particle volume, $S_0L(1-\varepsilon)\cdot\dfrac{6}{\Phi_sD_p}$, and it must equal the wetted surface of the $n$ channels:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+n\pi D_{eq}L &= S_0L(1-\varepsilon)\,\frac{6}{\Phi_sD_p}\tag{2}\\[2pt]
+S_0L\varepsilon &= \frac{\pi}{4}\,nD_{eq}^2L\tag{3}
+   &&\text{(void volume of the bed = total volume of the }n\text{ channels)}
+\end{align*}
+Eliminating $S_0$ between (2) and (3):
+\[
+n\pi D_{eq}L=\frac{\frac{\pi}{4}nD_{eq}^2L}{\varepsilon}\times\frac{1-\varepsilon}{L}\times\frac{6}{\Phi_sD_p}
+\qquad\Longrightarrow\qquad \boxed{\;D_{eq}=\frac{2}{3}\,\Phi_sD_p\left(\frac{\varepsilon}{1-\varepsilon}\right)\;}
+\]
+Typically $\varepsilon=0.4$, so $D_{eq}=0.44\,\Phi_sD_p$ --- the equivalent diameter is roughly \emph{half the particle size}.
+\end{formulabox}
+
+\spsub{From channel velocity to the empty-tower velocity}
+\begin{itemize}
+  \item $\bar{V}$ = average velocity in the channels (it depends on the pressure drop); $v_0$ = velocity based on the empty tower (superficial velocity).
+  \item The flow splits between the channels, so $\bar{V}$ falls as $\varepsilon$ rises: $\bar{V}\propto v_0$ and $\bar{V}\propto 1/\varepsilon$, hence
+  \[\bar{V}=\frac{v_0}{\varepsilon}\]
+  \item $v_0$, $D_p$ and $\varepsilon$ are tangible parameters of the bed --- once they are known the pressure drop can be calculated.
+\end{itemize}
+
+\spsub{Kozeny--Carman equation}
+\begin{formulabox}
+At a very low Reynolds number ($Re\simeq1.0$) use Hagen--Poiseuille with $\Delta L\simeq L$ and $D=D_{eq}$, and substitute $\bar{V}=v_0/\varepsilon$:
+\begin{align*}
+\frac{\Delta P}{L}&\simeq\frac{32\,\mu\,\bar{V}}{g_cD_{eq}^2}
+ =\frac{32\,\mu\,\dfrac{v_0}{\varepsilon}}{g_c\left[\dfrac{2}{3}\Phi_sD_p\left(\dfrac{\varepsilon}{1-\varepsilon}\right)\right]^{2}}
+ =\frac{72\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+\end{align*}
+A correction factor $\lambda_1$ is introduced because the channels are actually \emph{tortuous}, not straight. Experiments show the constant is $150$, so
+\[\boxed{\;\frac{\Delta P}{L}=150\,\frac{v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}\;}
+\qquad\text{\textbf{Kozeny--Carman equation (valid for }$Re\simeq1$\textbf{)}}\]
+Flow is proportional to the pressure drop and inversely proportional to the fluid viscosity --- this is \textbf{Darcy's law}, used to explain the flow of liquids through porous media.
+\end{formulabox}
+
+\spsub{Burke--Plummer equation (high flow rate)}
+\begin{itemize}
+  \item As the flow rate increases, the pressure drop eventually rises faster than linearly: at very high Reynolds number $\Delta P\propto v_0^{1.8\text{ or }2}$, which gives the \emph{empirical} result
+\end{itemize}
+\begin{formulabox}
+\[\boxed{\;\frac{\Delta P}{L}=1.75\,\frac{\rho\,v_0^2}{g_c\,\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}\;}
+\qquad\text{\textbf{Burke--Plummer equation (}$Re>1000$\textbf{)}}\]
+\end{formulabox}
+
+\spsub{Ergun equation (entire range of flow rates)}
+\begin{itemize}
+  \item For the entire range of flow rates the equation is obtained by adding the two effects: the \emph{viscous loss} and the \emph{kinetic-energy loss}.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\Delta P}{L}&=
+ \underbrace{\frac{150\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}}_{\text{viscous loss}}
+ +\underbrace{\frac{1.75\,\rho\,v_0^2}{g_c\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}}_{\text{kinetic-energy loss}}
+ &&\text{\textbf{Ergun equation}}
+\end{align*}
+\end{formulabox}
+
+\spsub{Overall pressure drop at any time}
+\begin{itemize}
+  \item The overall drop is the drop over the medium \emph{plus} the drop over the cake:
+  \[\Delta P=P_a-P_b=(P_a-P')+(P'-P_b)=\Delta P_c+\Delta P_m\]
+  with $P_a$ the inlet pressure, $P_b$ the outlet pressure and $P'$ the pressure at the boundary between cake and medium.
+  \item $\Delta P_c$ is written with the Kozeny--Karman equation, $v_0\to u$ and $\Delta P/L\to \mathrm{d}P/\mathrm{d}L$ (the differential form):
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\mathrm{d}P}{\mathrm{d}L}&=\frac{150\,u\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+ &&\text{then put } \Phi_sD_p=\frac{6v_p}{s_p}\\[2pt]
+&=\frac{150\,u\,\mu\,s_p^2(1-\varepsilon)^2}{g_c\,36\,v_p^2\varepsilon^3}
+ =\boxed{\;4.17\,\frac{\mu\,u}{g_c}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\;}
+\end{align*}
+\vspace{2pt}
+{\small
+$\mathrm{d}P/\mathrm{d}L$ = pressure gradient at thickness $L$; \quad
+$\mu$ = viscosity of the filtrate; \quad
+$u$ = linear velocity of the filtrate, based on the \emph{filter} area; \quad
+$s_p$ = surface area of a single particle; \quad
+$v_p$ = volume of a single particle; \quad
+$\varepsilon$ = porosity of the cake; \quad
+$g_c$ = Newton's law proportionality constant; \quad
+usually the coefficient is $4.17$.}
+\end{formulabox}
+
+\spsub{Mass balance over the cake (eliminating $\mathrm{d}L$)}
+\begin{itemize}
+  \item For beds of \emph{compressible} particles (beds with a very low void fraction) write the filtrate flux as
+  \[u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t},\qquad V=\text{volume of filtrate collected from the start of filtration to time }t\]
+  \item Volume of solids in a layer of thickness $\mathrm{d}L$ is $A(1-\varepsilon)\,\mathrm{d}L$, so with $\rho_p$ the density of the particles,
+  \[\mathrm{d}m=\rho_pA(1-\varepsilon)\,\mathrm{d}L\qquad\text{(}m\text{ = mass of solids in the layer)}\]
+\end{itemize}
+\begin{formulabox}
+Eliminating $\mathrm{d}L$ by dividing the differential pressure drop by the mass balance,
+\begin{align*}
+\mathrm{d}P&=\frac{4.17\,\mu\,u\,(1-\varepsilon)^2}{g_c\,\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\cdot\frac{\mathrm{d}m}{\rho_pA(1-\varepsilon)}\\[2pt]
+&=\boxed{\;\frac{k_1\,\mu\,u\,(1-\varepsilon)}{g_c\,\rho_pA\,\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\mathrm{d}m\;}\qquad (k_1 \text{ used instead of } 4.17)
+\end{align*}
+\end{formulabox}
+
+\spsub{Compressible and incompressible filter cakes}
+\begin{itemize}
+  \item For low pressure-drop filtration of slurries \emph{all} the factors are independent of $L$ except $m_c$, so the equation integrates immediately from $m=0$ to $m=m_c$:
+\end{itemize}
+\begin{formulabox}
+\[\int_{P'}^{P_a}\mathrm{d}P=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
+  \left(\frac{s_p}{v_p}\right)^{2}\int_0^{m_c}\mathrm{d}m
+\qquad\Longrightarrow\qquad
+\boxed{\;\Delta P_c=P_a-P'=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
+  \left(\frac{s_p}{v_p}\right)^{2}m_c\;}\]
+\end{formulabox}
+
+\spsub{Specific cake resistance $\alpha$}
+\begin{itemize}
+  \item For cakes that are incompressible the group in front of $m_c$ is a constant of the cake and the slurry:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\alpha&=\frac{\Delta P_c\,g_c\,A}{\mu\,u\,m_c}
+   &&\text{\textbf{specific cake resistance}}\\[2pt]
+&=k_1\left(\frac{s_p}{v_p}\right)^{2}\frac{1-\varepsilon}{\varepsilon^3\rho_p}
+\;;\qquad \text{if the particle diameter is given,}\qquad
+\alpha=\frac{k_2(1-\varepsilon)}{\varepsilon^3\rho_p(\Phi_sD_p)^2}
+\end{align*}
+$\alpha$ is independent of the pressure drop and of the position in the cake.
+\end{formulabox}
+
+\spsub{Filter medium resistance $R_m$}
+\begin{formulabox}
+\begin{align*}
+R_m&=\frac{(P'-P_b)\,g_c}{\mu\,u}=\frac{(\Delta P_m)\,g_c}{\mu\,u}
+   &&\text{dimension } L^{-1}\\[4pt]
+\Delta P&=\Delta P_c+\Delta P_m
+ =\left(\frac{\alpha\,\mu\,u\,m_c}{g_c\,A}\right)+\left(\frac{\mu\,u\,R_m}{g_c}\right)
+ =\boxed{\;\frac{\mu\,u}{g_c}\left[\frac{\alpha\,m_c}{A}+R_m\right]\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Working form and the constant-pressure straight line}
+\begin{itemize}
+  \item If $c$ is the mass of particles deposited on the filter \emph{per unit volume of filtrate}, then the mass of solids at any time is $m_c=Vc$. Substituting $u=\dfrac{1}{A}\dfrac{\mathrm{d}V}{\mathrm{d}t}$,
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Delta P&=\frac{\mu}{g_c}\left(\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t}\right)
+   \left[\frac{\alpha\,Vc}{A}+R_m\right]
+\qquad\Longrightarrow\qquad
+\boxed{\;\frac{\mathrm{d}t}{\mathrm{d}V}=\frac{\mu}{A(\Delta P)g_c}\left[\frac{Vc\alpha}{A}+R_m\right]\;}\\[4pt]
+\text{Constant }\Delta P:\quad & \left(\frac{\mathrm{d}t}{\mathrm{d}V}\right)_{0}
+   =\frac{\mu R_m}{A(\Delta P_m)g_c}=\frac{1}{q_0}
+   \qquad (t=0,\;V=0,\;\Delta P=\Delta P_m \text{ --- medium only})\\[3pt]
+& \frac{\mathrm{d}t}{\mathrm{d}V}=\frac{1}{q}=k_cV+\frac{1}{q_0},
+   \qquad k_c=\frac{\mu\,c\,\alpha}{A^2(\Delta P)g_c}\\[4pt]
+& \boxed{\;\frac{t}{V}=\left(\frac{k_c}{2}\right)V+\frac{1}{q_0}\;}
+   \qquad\text{straight line } y=mx+c:\quad \text{slope}=\frac{k_c}{2},\quad
+   \text{intercept}=\frac{1}{q_0}
+\end{align*}
+\end{formulabox}
+\notetext{From the plot of $t/V$ against $V$ both $\alpha$ (through the slope, hence $k_c$) and $R_m$ (through the intercept, hence $q_0$) can be calculated. The same plot is the bridge to the constant-rate and continuous cases of the next section.}
+
+\spsub{Compressibility of the cake}
+\begin{formulabox}
+\textbf{Empirical equation for cake resistance:}\qquad
+\[\boxed{\;\alpha=\alpha_0(\Delta P)^{s}\;}\]
+$\alpha_0$ and $s$ are empirical constants, determined purely by experiments. $s$ is the \textbf{compressibility coefficient}: $s=0$ for incompressible sludges (the cake resistance does not change with pressure), and $s$ is positive for a compressible cake, typically $0.2$--$0.8$.
+\end{formulabox}
+\notetext{The deck works this lecture from the hand-written pages numbered ``Lecture 9''; the printed front page titles it Module 2 Lecture 3. Both page numbers are the same lecture.}
+
+% ---- Module 2, Lecture 4 : constant-rate filtration ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 4 --- Constant-Rate Filtration}
+
+\spsub{The condition}
+\begin{itemize}
+  \item In \textbf{constant-rate filtration} the filtrate flows at a \emph{constant volume rate}, so the linear velocity $u$ is constant and the pressure drop must be allowed to rise through the run --- from a minimum at the start of filtration to a maximum at the end of it (the mirror image of the constant-pressure case of Lecture 3, where $\Delta P$ is held and the rate falls).
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+u\;(\text{linear velocity})&=\text{constant}\\[2pt]
+u&=\frac{1}{A}\frac{\mathrm{d}v}{\mathrm{d}t}=\frac{V}{At}
+ &&\text{(}v,V=\text{volume of filtrate collected up to time }t\text{)}\\[2pt]
+\alpha&=\frac{\Delta P_c\,g_c\,A}{\mu\,u\,m_c}
+ &&\text{specific cake resistance, from Lecture 3}
+\end{align*}
+\end{formulabox}
+
+\spsub{Pressure drop over the cake at constant rate}
+\begin{itemize}
+  \item With the cake mass written as $m_c=Vc$ ($c$ = mass of solids deposited per unit volume of filtrate) and $u$ constant, the cake resistance is unchanged during the run and the whole of the extra pressure drop goes into driving the flow through the growing cake:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\Delta P_c}{\alpha}&=\frac{\mu}{g_cA}\left(\frac{V}{At}\right)Vc\\[3pt]
+\boxed{\;\frac{\Delta P}{\alpha}=\frac{\mu\,c}{g_c\,t}\left(\frac{V}{A}\right)^{2}\;}
+\qquad\text{i.e.}\qquad
+\Delta P=\frac{\mu\,c\,\alpha}{g_c\,t}\left(\frac{V}{A}\right)^{2}
+\end{align*}
+\vspace{2pt}
+In this equation $\Delta P$ is kept on the left-hand side because $\alpha=f(\Delta P)$ for compressible sludges --- the specific cake resistance itself grows with the pressure drop that the cake is then asked to withstand.
+\end{formulabox}
+
+\spsub{Closing the loop for a compressible cake}
+\begin{itemize}
+  \item Substituting the empirical cake-resistance law $\alpha=\alpha_0(\Delta P)^{s}$ from Lecture 3 into the constant-rate result gives the pressure drop the pump must deliver at time $t$:
+\end{itemize}
+\begin{formulabox}
+\[\Delta P=\frac{\mu\,c\,\alpha_0(\Delta P)^{s}}{g_c\,t}\left(\frac{V}{A}\right)^{2}
+\qquad\Longrightarrow\qquad
+\boxed{\;\Delta P^{\,1-s}=\frac{\mu\,c\,\alpha_0}{g_c\,t}\left(\frac{V}{A}\right)^{2}\;}
+\]
+(For an incompressible cake $s=0$ and this collapses to the equation above with $\alpha=\alpha_0$: at a fixed rate $\Delta P$ grows linearly with $V^2/t$, that is with $t$ itself, since $V=uAt$.)
+\end{formulabox}
+\notetext{The two limiting schedules now sit side by side: \emph{constant pressure} --- $\Delta P$ fixed, rate falls, $t/V$ against $V$ is a straight line; \emph{constant rate} --- rate fixed, $\Delta P$ rises, and for an incompressible cake $\Delta P\propto t$. Both are worked with the same pair of resistances, cake and medium.}
+
+% ---- Module 2, Lecture 5 : continuous filtration ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 5 --- Continuous Filtration}
+
+\spsub{What a continuous filter does}
+\begin{itemize}
+  \item In a continuous filter such as the rotary-drum filter the feed, the filtrate and the cake move at \emph{steady constant rates}; but for any particular element of the filter surface the conditions are \emph{not} steady, they are transient.
+  \item The process consists of several steps in series --- \textbf{cake formation}, \textbf{washing}, \textbf{drying} and \textbf{discharging} --- and each step involves a gradual, continual change in conditions. The pressure drop across the filter during cake formation is held constant, so the equations of discontinuous constant-pressure filtration (Lecture 3) may be applied to a continuous filter with some modification.
+  \item Rotary-drum filter: a cloth-covered outer drum turns in a slurry trough; as each element of the drum passes through the trough a cake is formed by the vacuum inside, the element then emerges for washing (wash spray) and drying, and the cake is finally removed by the doctor blade. The depth to which the drum is immersed is therefore the fraction of the cycle available for cake formation (sketches on slides~5--6 of the deck).
+\end{itemize}
+
+\spsub{The constant-pressure equations the continuity is built on}
+\begin{formulabox}
+From the constant-pressure result of Lecture 3, written for a filter of area $A$:
+\begin{align*}
+\frac{t}{V}&=\left(\frac{k_c}{2}\right)V+\frac{1}{q_0}\\[2pt]
+t&=\left(\frac{k_c}{2}\right)V^{2}+\frac{V}{q_0}
+ \qquad\text{--- a quadratic in }V:\\[2pt]
+\left(\frac{k_c}{2}\right)V^{2}+\left(\frac{1}{q_0}\right)V-t&=0
+ \qquad\text{compare }Ax^2+Bx+C=0,\quad x=\frac{-B\pm\sqrt{B^2-4AC}}{2A}\\[2pt]
+\boxed{\;V=\frac{-\dfrac{1}{q_0}\pm\sqrt{\dfrac{1}{q_0^{2}}+4\times\dfrac{k_c}{2}\times t}}{2\times\dfrac{k_c}{2}}\;}
+\end{align*}
+{\small with the two cake and medium constants of Lecture 3,}
+\[
+k_c=\frac{\mu\,c\,\alpha}{A^{2}(\Delta P)g_c},
+\qquad
+\frac{1}{q_0}=\frac{\mu R_m}{A(\Delta P)g_c}
+\]
+\end{formulabox}
+
+\spsub{The symbols of the continuous case}
+\begin{formulabox}
+\begin{align*}
+& V=\text{volume of filtrate collected in time }t
+ && \frac{V}{t}=\text{rate of filtrate collection}\\[2pt]
+& A=\text{submerged area of filter}
+ && \dot m_c=\text{rate of solids production}\\[2pt]
+& t_c=\text{cycle time}
+ && n=\text{drum speed of the continuous filter, rps }=\frac{1}{t_c}\\[2pt]
+& A_T=\text{total filter area}
+ && f=\frac{A}{A_T}=\frac{\text{submerged area of filter}}{\text{total area}}
+   =\text{fraction of the drum submerged}\\[2pt]
+& t=f\,t_c=\frac{f}{n}
+ && t=\text{time available for cake formation in one cycle}
+\end{align*}
+\end{formulabox}
+
+\spsub{Design equation for continuous filtration}
+\begin{itemize}
+  \item The mass of solids laid down is proportional to the filtrate collected, so
+  \[m_c=Vc\qquad\Longrightarrow\qquad \dot m_c=c\left(\frac{V}{t}\right)\]
+  \item Writing the constant-pressure solution in terms of the rate of filtrate collection per unit area, dividing throughout by $c\alpha$ and replacing the cycle by the drum speed gives the deck's master equation:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\left(\frac{V}{tA}\right)&=
+\frac{\left[\left(\dfrac{2\,\Delta P\,g_c\,c\,\alpha}{\mu\,t}\right)
+      +\left(\dfrac{R_m}{t}\right)^{2}\right]^{1/2}-\dfrac{R_m}{t}}{c\,\alpha}
+ &&\text{(hand-worked page of the deck)}\\[6pt]
+\text{and with } A/A_T=f:\qquad
+\frac{\dot m_c}{A_T}&=
+\frac{\left[\dfrac{2c\alpha\Delta P f n}{\mu}+(nR_m)^{2}\right]^{1/2}-nR_m}{\alpha}
+ &&\text{(printed design equation, }R_m\neq0\text{)}
+\end{align*}
+\vspace{2pt}
+{\small $R_m$ is the filter-medium resistance: it is \emph{not} removed by the discharge mechanism and is carried through to the next cycle. If the filter medium is washed properly $R_m$ becomes negligible, and then}
+\begin{align*}
+\frac{\dot m_c}{A_T}&=\left(\frac{2c\,\Delta P\,g_c\,f\,n}{\alpha\,\mu}\right)^{1/2}
+ &&\text{(medium resistance neglected)}\\[2pt]
+\alpha&=\alpha_0(\Delta P)^{s}\qquad\Longrightarrow\qquad
+\boxed{\;\frac{\dot m_c}{A_T}=\left(\frac{2c\,\Delta P^{\,1-s}g_c\,f\,n}{\alpha_0\,\mu}\right)^{1/2}\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Notation of the design equation}
+\begin{formulabox}
+\begin{align*}
+c&=\text{mass of solids deposited in the filter per unit volume of filtrate}\\
+\Delta P&=\text{overall pressure drop in the filter}\\
+f&=\frac{A}{A_T}=\text{fraction of the drum submerged}\\
+n&=\text{drum speed of the continuous filter (rps)}=\frac{1}{t_c}\\
+t_c&=\text{cycle time};\qquad t=f t_c=\frac{f}{n}\\
+\alpha&=\text{specific cake resistance }(\ensuremath{\mathrm{ m}/\mathrm{k g}})\\
+\mu&=\text{viscosity of the filtrate};\qquad
+s=\text{compressibility coefficient of the cake }(0.1\text{--}0.8)\\
+\dot m_c&=\text{mass flow rate of solids from the continuous filter};\qquad
+A_T=\text{total area of the continuous filter}
+\end{align*}
+\end{formulabox}
+\notetext{The two printed forms of the design equation stand to each other as follows: the compressible one is the incompressible one with $\alpha$ replaced by $\alpha_0(\Delta P)^{s}$, so the pressure drop appears to the power $1-s$. For an incompressible cake $s=0$ and the two coincide. Slide~8 of the deck prints the $R_m=0$ and $R_m\neq0$ forms together with ``Incompressible, $s=0$, $\alpha=\alpha_0$'' between them.}
+
+% ---- Module 2, Lecture 6 : centrifugal filtration and washing ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 6 --- Centrifugal Filtration and Washing Rate}
+
+\spsub{Centrifugal filtration --- where it applies}
+\begin{itemize}
+  \item A centrifuge may hold the bowl stationary (sedimentation in a rotated imperforate bowl) or filter through a perforated basket; this section is the \emph{filtering} case --- a perforated basket, a filter cloth, and a cake thrown against the cloth.
+  \item The basic theory of constant-pressure filtration can be modified to apply to filtration in a centrifuge. It applies \emph{after} the cake has been deposited, and during the flow of clear filtrate or fresh water through the cake.
+  \item In the basket (sketch on slide~6): $r_1$ = radius of the inner surface of the liquid, $r_i$ = radius of the inner face of the cake, $r_2$ = inside radius of the basket, $b$ = height of the basket.
+\end{itemize}
+
+\spsub{Assumptions}
+\begin{itemize}
+  \item The effect of gravity and the change in kinetic energy of the liquid are neglected.
+  \item The pressure drop from the centrifugal action equals the drag of the liquid through the cake.
+  \item The cake is completely filled with liquid; the flow of liquid is laminar.
+  \item The resistance of the filter medium is constant and the cake is nearly incompressible.
+\end{itemize}
+
+\spsub{Derivation as printed and worked on the deck}
+\begin{formulabox}
+\begin{align*}
+\text{Hydrostatic:}\quad
+& \Delta P=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}{2}
+ &&\text{(centrifugal field, }\omega=\text{ angular velocity)}\\[2pt]
+\text{Constant-pressure filtration:}\quad
+& \Delta P=\mu u\left(\frac{\alpha\,m_c}{A}+R_m\right)\\[2pt]
+\text{Linear velocity:}\quad
+& u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t}=\frac{q}{A}
+ &&\text{(}q=\text{ volumetric flow rate)}\\[2pt]
+\text{Substituting }u:\quad
+& \Delta P=\mu q\left(\frac{\alpha\,m_c}{A^{2}}+\frac{R_m}{A}\right)\\[2pt]
+\text{Equating the two:}\quad
+& \frac{\rho\omega^{2}(r_2^{2}-r_1^{2})}{2}
+ =\mu q\left(\frac{\alpha\,m_c}{A^{2}}+\frac{R_m}{A}\right)
+\end{align*}
+\begin{align*}
+\Longrightarrow\quad
+q&=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
+ {2\mu\left(\dfrac{\alpha\,m_c}{A^{2}}+\dfrac{R_m}{A}\right)}
+ &&\text{(area }A\text{ of the cake taken as constant)}
+\end{align*}
+\end{formulabox}
+\notetext{$\rho$ = density of the liquid, $\omega$ = angular velocity of the basket, $A$ = area of the filtering surface, $m_c$ = mass of solids in the cake, $q$ = volumetric rate of filtrate.}
+
+\spsub{Case 1 --- the change of area with radius may be neglected}
+\begin{itemize}
+  \item Permissible for a thin cake in a large-diameter centrifuge: the area for flow does not change with radius, so $A$ may be taken out of the integral.
+\end{itemize}
+\begin{formulabox}
+\[\boxed{\;q=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
+  {2\mu\left(\dfrac{\alpha\,m_c}{\overline{A}_L\overline{A}_a}
+   +\dfrac{R_m}{A_2}\right)}\;}
+\]
+\begin{align*}
+A_2&=\text{area of filter medium (inside area of the centrifuge basket)}\\
+\overline{A}_a&=\text{arithmetic mean of the cake area}=(r_i+r_2)\pi b\\
+\overline{A}_L&=\text{logarithmic mean of the cake area}=\frac{2\pi b(r_2-r_i)}{\ln(r_2/r_i)}
+\end{align*}
+\end{formulabox}
+
+\spsub{Case 2 --- the change of area with radius is too large to be neglected}
+\begin{itemize}
+  \item Then the cake area must be carried through the integration as a function of radius and the arithmetic and logarithmic mean areas above are what come out of it: $\overline{A}_a$ from the cake's inner face to the basket wall, $\overline{A}_L$ from the logarithmic mean of the same two radii.
+\end{itemize}
+
+\spsub{Limits of the equation (as the deck states them)}
+\begin{itemize}
+  \item It applies to a cake of \emph{definite} mass --- it is not integrable over the entire range starting from the beginning of filtration.
+  \item For compressible cakes the specific resistance $\alpha$ increases with the centrifugal force, so $\alpha$ is no longer the constant the equation assumed.
+\end{itemize}
+\notetext{The hydrostatic step is printed on the deck as ``Eq 33 (McCabe Smith) 7th Ed.'' --- the deck's own reference, kept here rather than re-derived.}
+
+\spsub{Washing rates}
+\begin{itemize}
+  \item \textbf{Batch filters}: washing the cake is done at the end of filtration.
+  \item \textbf{Filter press}: the rate of washing is $\tfrac14$ of the normal rate of filtration; the rate of wash water is different from that of the slurry and only half the area is available for washing.
+  \item \textbf{Leaf filter}: washing is done at the \emph{same} pressure as filtration and the rate of washing is a \emph{fixed} ratio of the rate of filtration --- the rate of slurry and of wash water is the same, and hence the same area is available for washing.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\left(\frac{\mathrm{d}V}{\mathrm{d}t}\right)_{f}&=f(V)
+ &&\text{the filtration rate at the end of the run, } V=\text{final volume collected}\\[3pt]
+\text{Washing time:}\quad & t_w=\frac{V_w}{\text{rate of washing}}
+ &&\text{(}V_w=\text{volume of wash water)}\\[2pt]
+& \boxed{\;t_w=\frac{V_w}{(\mathrm{d}V/\mathrm{d}t)_{\text{washing}}}\;}
+\end{align*}
+\begin{align*}
+\text{Idle time }(t_i)&=\text{time for dismantling, dumping, reassembling}\\
+\text{Filtration time }(t_f)&=\text{time required for filtration}\\[2pt]
+\text{Cycle time:}\quad & \boxed{\;t_c=t_f+t_w+t_i\;}\\[2pt]
+\text{Cycles per day:}\quad & n_{\text{cyc}}=\frac{24\;\ensuremath{\mathrm{ h}}}{t_c\;(\ensuremath{\mathrm{ h}})}\\[2pt]
+\text{Daily filtrate:}\quad & V_{\text{day}}=\frac{24\;V_f}{t_c}
+ &&\text{(}V_f=\text{filtrate per cycle)}
+\end{align*}
+\end{formulabox}
+
+\spsub{Continuous filter}
+\begin{itemize}
+  \item Here washing is an \emph{integral part} of filtration --- the rotary-drum filter of Lecture 5 washes the cake as it turns, before the doctor blade removes it; there is no separate washing step to be timed.
+\end{itemize}
+
+% ---- Module 2, Lecture 7 (a) : clarifying, crossflow and membrane filters ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 7 --- Clarifying Filters, Crossflow and Membrane Filters; Sedimentation}
+
+\spsub{Clarifying filters}
+\begin{itemize}
+  \item Clarifying filters remove \emph{small amounts} of solids or liquid droplets from either liquids or gases.
+  \item The particles are caught by \emph{surface forces} and immobilised on the surfaces or within the flow channels. They reduce the effective diameter of the channels but usually do not block them completely.
+  \item Clarification differs from screening in that the pores in the filter medium are larger --- sometimes much larger --- than the particles to be removed.
+  \item \textbf{Liquid clarification}: clarifying filters for liquids include the gravity-bed filters used in water treatment; cake filters are also used extensively for clarification. In batch units the filtration rate and the filtration efficiency stay constant for a long period, and eventually reach a \textbf{breakthrough} value, after which backwashing or replacement becomes necessary.
+  \item \textbf{Gas cleaning}: filters for gas cleaning include pad filters for atmospheric dust, and granular beds and bag filters for process dusts. Air is cleaned by passing it through pads of cellulose pulp, cotton, felt, glass fibre or metal screening; the pad material may be dry or coated with a viscous oil to act as a dust holder.
+\end{itemize}
+
+\spsub{Principles of clarification}
+\begin{itemize}
+  \item \textbf{Direct sieving}: the solid particles being removed completely plug the pores of the filter medium, and the rate of plugging is constant with time.
+  \item \textbf{Standard blocking}: the particles partially block the pores, giving a gradual reduction in pore size.
+  \item \textbf{Impingement}: in cleaning gases the separation is by impingement of the particles against a solid surface placed in the flowing stream. The particles, because of their inertia, are expected to cross the streamlines of the fluid, strike the solid, and adhere to it, from which they can subsequently be removed.
+\end{itemize}
+
+\spsub{Crossflow filtration}
+\begin{itemize}
+  \item The feed is passed through a membrane or bed, the solids being trapped in the filter and the filtrate released at the other end.
+  \item The majority of the feed flow travels \emph{tangentially across the surface} of the filter, rather than into the filter.
+  \item The principal advantage is that the filter cake is substantially washed away during the filtration process, increasing the length of time that a filter unit can stay operational --- compare the dead-end arrangement, where all the feed is forced through the medium and the cake builds up on it.
+  \item Applied to concentrate suspensions of fine particles or colloidal particles.
+\end{itemize}
+
+\spsub{Membrane filters}
+\begin{itemize}
+  \item \textbf{Types of membranes}: polymer membranes (cellulose acetate, polyacrylonitrile, polysulfone, polyether sulfone, polyamide, etc.); metallic membranes (sintered stainless steel or other metals); inorganic membranes (porous carbon or alumina).
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Technique} & \textbf{Pore size and what is retained}\\
+\midrule
+Microfiltration (MF) & \ensuremath{10\,\mathrm{\mu m}}--\ensuremath{0.1\,\mathrm{\mu m}} (100\,nm): suspended solids, bacteria/algae and viruses are held back; water and dissolved ions pass.\\
+Ultrafiltration (UF) & \ensuremath{0.1\,\mathrm{\mu m}}--\ensuremath{0.01\,\mathrm{\mu m}} (10\,nm): as MF, with viruses rejected more completely; ions still pass.\\
+Nanofiltration (NF) & \ensuremath{10} nm--\ensuremath{1} nm: multivalent ions, viruses, bacteria/algae and suspended solids are rejected; monovalent ions and water pass.\\
+Hyperfiltration / reverse osmosis (RO) & $<\ensuremath{1} nm$: water passes and essentially everything else is rejected --- monovalent ions, multivalent ions, viruses, bacteria/algae and suspended solids.\\
+\bottomrule
+\end{tabularx}}
+\end{formulabox}
+
+\spsub{General equation for ultrafiltration}
+\begin{itemize}
+  \item The \textbf{volume flux} is the superficial permeate velocity normal to the surface:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+J_v&=\frac{\Delta P-\Delta\pi}{R_m+R_{gel}}
+ =\frac{\Delta P-\Delta\pi}{R_m(\mu/\mu_0)+R_{gel}}
+\end{align*}
+\vspace{2pt}
+{\small
+$\Delta P$ = trans-membrane pressure drop; \quad
+$\Delta\pi$ = osmotic pressure drop; \quad
+$R_m$ = membrane resistance; \quad
+$R_{gel}$ = gel-layer resistance; \quad
+$\mu$ = viscosity of the permeate at the operating temperature; \quad
+$\mu_0$ = viscosity of water at room temperature. \quad
+The membrane resistance is corrected by the permeate-to-water viscosity ratio $\mu/\mu_0$; the deck writes that factor in the denominator of the bracketed form.}
+\end{formulabox}
+
+\spsub{Concentration polarization}
+\begin{itemize}
+  \item As permeate is drawn through the membrane, solute is carried towards the surface faster than it can diffuse back, so the concentration at the surface rises above the bulk value. In \textbf{RO} the surface concentration is only moderately higher than the bulk concentration; in \textbf{UF} the surface concentration is large, and a gel layer forms.
+  \item The boundary layer has thickness $\delta$. Writing $C_s$ for the concentration at the surface ($x=0$) and $C_1$ for the bulk concentration at $x=\delta$, with $C_2$ the solute concentration in the permeate:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+J_v&=K_c\ln\frac{C_s-C_2}{C_1-C_2}
+ &&\text{volume flux with concentration polarization}
+\end{align*}
+\vspace{2pt}
+{\small $C_s$ = concentration at the surface ($x=0$);\quad $C_1$ = bulk concentration at $x=\delta$, the edge of the gel boundary layer;\quad $C_2$ = solute concentration in the permeate.}
+\end{formulabox}
+
+\spsub{Mass-transfer coefficient and the Sherwood correlation}
+\begin{formulabox}
+\begin{align*}
+K_c&=\frac{D_v}{\delta}
+ &&\text{mass-transfer coefficient}\\[2pt]
+Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
+ &&\text{Sherwood number}\\[2pt]
+&\boxed{\;Sh=0.0096\,Re^{\,0.913}Sc^{\,0.346}\;}
+\end{align*}
+\vspace{2pt}
+{\small $K_c$ in \ensuremath{\mathrm{c m}/\mathrm{ s}}, $D_v$ (diffusivity) in \ensuremath{\mathrm{c m}^{2}/\mathrm{ s}}, $L$ a characteristic length; the boxed correlation is the one the deck uses to get $K_c$.}
+\end{formulabox}
+
+\spsub{Complete solute rejection}
+\begin{itemize}
+  \item When $C_2=0$, that is complete solute rejection and no solute in the permeate, the flux expression collapses to
+\end{itemize}
+\begin{formulabox}
+\[J_v=K_c\ln\frac{C_s}{C_1}\]
+\end{formulabox}
+
+\spsub{Applications of ultrafiltration (from the deck)}
+\begin{itemize}
+  \item Food processing and pharmacy; textile and paper industry; wastewater treatment and water purification; dairy industry.
+\end{itemize}
+
+% ---- Module 2, Lecture 8 : centrifugal sedimentation ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 8 --- Centrifugal Sedimentation}
+
+\spsub{Cyclone separators}
+\begin{itemize}
+  \item Most centrifugal separators for removing particles from gas streams contain \emph{no moving parts}. The body is a vertical cylinder with a conical bottom, a \textbf{tangential inlet} near the top and an outlet for dust at the bottom of the cone; the inlet is usually rectangular, and the outlet pipe is extended into the cylinder to prevent short-circuiting of air from inlet to outlet.
+  \item The incoming dust-laden air travels in a \emph{spiral path} around and down the cylindrical body. The centrifugal force developed in the vortex moves the particles radially toward the wall, and particles that reach the wall slide down into the cone and are collected.
+  \item The cyclone is therefore basically a settling device in which a strong \emph{centrifugal} force acting radially is used in place of the relatively weak \emph{gravitational} force acting vertically.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Centrifugal force at radius }r:\quad & F_c=\frac{m\,u_{tan}^{2}}{r}
+ &&\text{(}m=\text{particle mass},\; u_{tan}=\text{tangential velocity)}\\[3pt]
+\text{Ratio to gravity:}\quad & \frac{F_c}{F_g}=\frac{m\,u_{tan}^{2}/r}{mg}=\frac{u_{tan}^{2}}{rg}
+ &&\text{\textbf{separation factor}}
+\end{align*}
+\end{formulabox}
+
+\spsub{Hydrocyclones (hydroclones)}
+\begin{itemize}
+  \item Cyclones are also used for separating solids from \emph{liquids}, sometimes as thickeners but much more commonly as classifiers. In this service they are called hydrocyclones or hydroclones.
+  \item The feed enters tangentially at high velocity near the top. The liquid follows a spiral path near the vessel wall, forming a strong \emph{downward vortex}; large or heavy solid particles separate to the wall and are pushed downward and out of the cyclone as a slurry or paste.
+  \item A variable-discharge orifice controls the consistency of the underflow. Most of the liquid goes back upward in an \emph{inner vortex} and leaves through the central discharge pipe, known as the \textbf{vortex finder}.
+\end{itemize}
+
+\spsub{Centrifugal decanters --- separating immiscible liquids}
+\begin{itemize}
+  \item Immiscible liquids are separated industrially in centrifugal decanters. The separating force is much larger than that of gravity, and it acts in the direction \emph{away from the axis of rotation} instead of downward towards the earth's surface.
+  \item The main types are \textbf{tubular centrifuges} and \textbf{disk centrifuges}.
+\end{itemize}
+
+\spsub{Tubular centrifuge}
+\begin{itemize}
+  \item Feed enters from a stationary nozzle inserted through an opening in the bottom of the bowl, and separates into two concentric layers of liquid inside the bowl.
+  \item The inner (lighter) layer spills over a \emph{weir} at the top of the bowl; it is thrown outward into a stationary discharge cover and from there to a spout. The heavy liquid flows over another weir into a separate cover and discharge spout.
+  \item The weir over which the heavy liquid flows is removable and may be replaced with another having an opening of a different size --- this is how the position of the heavy--light interface is set.
+\end{itemize}
+
+\spsub{Disk centrifuge}
+\begin{itemize}
+  \item Feed enters from above through a stationary pipe set into the neck of the bowl. Two liquid layers form as in a tubular centrifuge, and flow over adjustable dams into separate discharge spouts.
+  \item Inside the bowl, and rotating with it, are closely spaced ``disks'' --- actually cones of sheet metal set one above the other. Matching holes in the disks, about halfway between the axis and the wall of the bowl, form channels through which the liquids pass.
+  \item Feed liquor enters the bowl at the bottom, flows into the channels and upward past the disks. Heavier liquid is thrown outward, displacing lighter liquid toward the centre of the bowl. In its travel the heavy liquid very soon strikes the underside of a disk and flows beneath it to the periphery of the bowl without meeting any more light liquid; light liquid similarly flows inward and upward over the upper surfaces of the disks.
+  \item Because the disks are closely spaced, the distance a drop of either liquid must travel to escape from the other phase is short --- much shorter than in the comparatively thick liquid layers of a tubular centrifuge.
+  \item Disk centrifuges are particularly valuable where the purpose of centrifuging is not complete separation but the \emph{concentration} of one fluid phase, as in separating cream from milk and concentrating rubber latex.
+\end{itemize}
+
+\spsub{Nozzle-discharge centrifuge}
+\begin{itemize}
+  \item A modified disk-type centrifuge with a \emph{double conical} bowl. At the periphery of the bowl, at its maximum diameter, is a set of small holes or nozzles, perhaps \ensuremath{3\,m\,m} in diameter.
+  \item The central part of the bowl operates in the same way as the usual disk centrifuge, overflowing either one or two streams of clarified liquid.
+  \item Solids are thrown to the periphery of the bowl and escape continuously through the nozzles, together with a considerable quantity of liquid.
+\end{itemize}
+
+\spsub{Principle of centrifugal sedimentation}
+\begin{itemize}
+  \item A particle of a given size is \emph{removed} when it reaches the wall of the separator bowl. The particle moves radially outward with its terminal velocity, and the diameter of the smallest particle that is removed is what the design calculates.
+  \item Feed enters at the bottom, liquid discharges at the top; the liquid moves upward through the bowl at a constant velocity, carrying the solid particles with it.
+  \item Geometry: $r_1$ = radius of the inner surface of the liquid (the liquid interface), $r_2$ = inside radius of the bowl, $r_A$ = radius at which the feed enters, $r_B$ = radial position reached by the particle at the end of settling, $b$ = height of the bowl.
+  \item If $r_B<r_2$ the particle leaves the bowl with the liquid, i.e.\ it is \emph{not} removed. If $r_B=r_2$ the particle has been deposited on the bowl wall and is removed from the liquid.
+\end{itemize}
+
+\spsub{Residence time and settling time --- Stokes' law regime}
+\begin{formulabox}
+\begin{align*}
+\text{Terminal velocity at radius }r:\quad & u_t=\frac{\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}
+ &&\text{(Stokes' law regime)}\\[3pt]
+& u_t=\frac{\mathrm{d}r}{\mathrm{d}t}
+ \qquad\Longrightarrow\qquad
+ \mathrm{d}t=\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\,\frac{\mathrm{d}r}{r}\\[4pt]
+\text{Integrate:}\quad & \text{limits } r=r_A \text{ at } t=0,\quad r=r_B \text{ at } t=t_T\\[3pt]
+& t_T=\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\,\ln\frac{r_B}{r_A}
+ &&\text{settling time}\\[4pt]
+& t_T=\frac{\text{volume of liquid in bowl}}{\text{volumetric flow rate}}=\frac{V}{q},
+ \qquad V=\pi b\left(r_2^{2}-r_1^{2}\right)
+ &&\text{residence time}
+\end{align*}
+\end{formulabox}
+\notetext{$\omega$ = angular velocity of the bowl (rad/s), $\rho_p$ = particle density, $\rho$ = liquid density, $\mu$ = liquid viscosity, $D_p$ = particle diameter. The settling time available is limited by the residence time of the liquid in the bowl; a particle is removed only if the two are comparable in the way the design requires.}
+
+\spsub{Volumetric flow rate and the cut point}
+\begin{formulabox}
+Equating the two times gives the volumetric flow rate for a given cut size:
+\begin{align*}
+\frac{\pi b\left(r_2^{2}-r_1^{2}\right)}{q}
+ =\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\ln\frac{r_B}{r_A}
+ \qquad\Longrightarrow\qquad
+ q=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}\,
+    \frac{r_2^{2}-r_1^{2}}{\ln\left(r_B/r_A\right)}
+\end{align*}
+\textbf{Cut point} $D_{pc}$: the diameter of the particle that reaches \emph{half} the distance between $r_1$ and $r_2$ during the settling time, i.e.
+\[r_B=r_2,\qquad r_A=\frac{r_1+r_2}{2}\]
+so that
+\[\boxed{\;q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
+   \frac{r_2^{2}-r_1^{2}}{\ln\left[\dfrac{2r_2}{r_1+r_2}\right]}\;}
+\]
+Particles larger than $D_{pc}$ are removed at this flow rate; particles smaller than $D_{pc}$ stay in the liquid.
+\end{formulabox}
+
+\spsub{Thin liquid layer --- the simple scaling form}
+\begin{itemize}
+  \item When $r_1\simeq r_2$ --- the thickness of the liquid layer is very small --- the settling velocity is effectively constant through the layer and is evaluated at the bowl radius:
+\end{itemize}
+\begin{formulabox}
+\[u_t=\frac{D_p^{2}(\rho_p-\rho)\omega^{2}r_2}{18\mu}\]
+Writing $s$ for the settling distance and $t_T$ for the settling time, $u_t=\dfrac{s}{t_T}$ and $t_T=\dfrac{V}{q_c}$, so
+\[q_c=\frac{2V\,u_t}{s}
+ =\frac{2V}{\omega^{2}}\cdot\frac{\omega^{2}D_p^{2}(\rho_p-\rho)r_2}{18\mu\,s}
+ =\boxed{\;\frac{2V\omega^{2}r_2D_p^{2}(\rho_p-\rho)}{18\mu\,s}\;}\]
+\end{formulabox}
+
+\spsub{Sigma value and scale-up}
+\begin{itemize}
+  \item For industrial centrifuges the thin-layer flow equation is modified by replacing $r_2$ and $s$ by average values $r_e$ and $s_e$ for the type of centrifuge under consideration:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+q_c&=\frac{2V\omega^{2}r_e}{g\,s_e}\cdot\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
+     =\boxed{\;2\,\Sigma\,u_g\;}\\[3pt]
+\Sigma&=\frac{V\omega^{2}r_e}{g\,s_e}
+ &&\text{characteristic of the centrifuge}\\[3pt]
+u_g&=\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
+ &&\text{terminal settling velocity of the particle under gravity}
+\end{align*}
+$\Sigma$ is the \emph{cross-sectional area of a gravity settling tank of the same separation capacity as the centrifuge}.
+\end{formulabox}
+\notetext{Because $q_c=2\Sigma u_g$, a centrifuge and a gravity settler that must do the same job are compared through $\Sigma$ alone: double $\Sigma$ and the same cut is achieved at double the flow rate. The deck's Table 30.5 lists $\Sigma$ values for commercial sedimenting centrifuges (tubular, disk, helical-conveyor, axial-flow-conveyor types) against bowl diameter and speed.}
+
+\spsub{Worked problem set by the deck (Mod 2 Lec 8, slide 26)}
+\begin{daybox}
+\textbf{Capacity of a clarifying centrifuge.} What is the capacity in cubic metres per hour of a clarifying centrifuge operating under the following conditions? Bowl diameter \ensuremath{600\,m\,m}; thickness of the liquid layer \ensuremath{75\,m\,m}; depth of bowl \ensuremath{400\,m\,m}; speed \ensuremath{1200\,r\,/\,m\,i\,n}; specific gravity of liquid $1.2$; specific gravity of solid $1.6$; viscosity of liquid \ensuremath{2\,c\,P}; cut size of particles \ensuremath{30\,\mathrm{\mu m}}.
+\end{daybox}
+\notetext{The solution, with every substituted number, is worked in \texttt{SP2-Problems-and-Solutions.tex} (Q12) and checked by \texttt{sp2-answers-check.py}.}
 
 \spsection{PRACTICE PROBLEMS FROM THE SLIDES}
 

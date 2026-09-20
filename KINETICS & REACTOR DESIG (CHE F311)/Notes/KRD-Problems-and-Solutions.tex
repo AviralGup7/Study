@@ -836,11 +836,11 @@ $F_{A0}=\frac{300\times10^6\ \mathrm{lb/yr}}{28}=154$~mol/s; hence
 $v_0=F_{A0}/C_{A0}=2.32$~m$^3$/s.
 
 \textbf{Step 3 --- the expanding-gas PFR integral.}  $\varepsilon=1$; first order:
-\[
-V=\frac{v_0}{k}\left[(1+\varepsilon)\ln\frac{1}{1-X}-\varepsilon X\right]
-=\frac{2.32}{3.07}\left[2\ln5-0.8\right]=0.756\times2.419=1.83\ \mathrm{m^3}
-\ (=64.6\ \mathrm{ft^3}).
-\]
+\begin{align*}
+V&=\frac{v_0}{k}\left[(1+\varepsilon)\ln\frac{1}{1-X}-\varepsilon X\right]
+=\frac{2.32}{3.07}\left[2\ln5-0.8\right]\\
+&=0.756\times2.419=1.83\ \mathrm{m^3}\quad(=64.6\ \mathrm{ft^3}).
+\end{align*}
 
 \textbf{Step 4 --- tube count.}  $64.6/0.0205\approx3.2\times10^3$ tubes in
 parallel.
@@ -1226,9 +1226,9 @@ conversion --- $0.82$, not a small one.}
 \qtitle{Q33 -- Sucrase kinetics, Michaelis--Menten}{\label{q:33}Ch5, slide 84}
 \src{Ch5\_-\\,krd.pdf, slide 84.}
 Sucrose (A) hydrolysed by sucrase (S): $C_{A0}=1.0$, $C_{S0}=0.01$~mmol/L; batch
-data $C_A$ (mmol/L) $=0.68,0.60,0.55,0.38,0.27,0.16,0.09,0.04,0.018,0.006,0.0025$
-at $t=1..11$~h.  Can the data be fitted by Michaelis--Menten kinetics?  Evaluate
-$k_3$ and $C_M$.
+data $C_A$ (mmol/L) $=0.68,\,0.60,\,0.55,\,0.38$, then $0.27,\,0.16,\,0.09,\,0.04$,
+then $0.018,\,0.006,\,0.0025$ at $t=1..11$~h.  Can the data be fitted by
+Michaelis--Menten kinetics?  Evaluate $k_3$ and $C_M$.
 
 \begin{qbox}
 \textbf{The model and its batch integral.}
@@ -1349,9 +1349,13 @@ $n$-butane $\rightleftharpoons$ isobutane, adiabatic liquid-phase PFR; $k=31.1$ 
 $C_{A0}=9.3$ kmol/m$^3$, $C_p=141/141/161$ J/(mol$\cdot$K) (butane/isobutane/pentane).
 Process 163 kmol/h (90 mol\% butane) to $X=0.70$, feed at 330 K.
 \begin{qbox}
-Adiabatic line $T=330+43.3X$ (deck); $k(T)=31.1e^{7902(1/360-1/T)}$;
-$K_C(T)=3.03e^{830.3(1/333-1/T)}$; $-r_A=kC_{A0}\left[1-\left(1+\tfrac1{K_C}\right)X\right]$;
-$F_{A0}=0.9\times163=146.7$ kmol/h.  The deck's table (e.g. $-r_A=39.2$ at $X=0$,
+Adiabatic line $T=330+43.3X$ (deck);
+$k(T)=31.1e^{7902(1/360-1/T)}$; $K_C(T)=3.03e^{830.3(1/333-1/T)}$;
+$F_{A0}=0.9\times163=146.7$ kmol/h, and
+\[
+-r_A=kC_{A0}\left[1-\left(1+\tfrac1{K_C}\right)X\right].
+\]
+The deck's table (e.g. $-r_A=39.2$ at $X=0$,
 $F_{A0}/-r_A=23.29$ m$^3$ at 0.7) is reproduced by these expressions; integrating
 $F_{A0}/(-r_A)$ to $X=0.7$ gives $V\approx2.0$ m$^3$ (the deck's coarse Simpson table reads
 $\approx2.4$ m$^3$; the value is sensitive near $X_e\approx0.72$).

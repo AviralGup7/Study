@@ -108,6 +108,13 @@ CA0 = P/(R*T); k = 10.0; FA0 = 40.0; eps = 1.5; X = 0.8
 V = FA0/(k*CA0)*((1+eps)*np.log(1/(1-X)) - eps*X)
 print(f"CA0 = {CA0:.2f} mol/m3; V = {V:.4f} m3")
 
+print("=== Ch3 milk sterilisation activation energy (Ch3 slide 61, notes 3.5) ===")
+# same sterilisation result => same k*t; first order. Deck prints 80C/30min vs
+# 74C/15s; hotter must be shorter, so pair 353.15K with 15s, 347.15K with 1800s.
+t1, t2 = 1800.0, 15.0; T1, T2 = 347.15, 353.15
+E = 8.314*np.log(t1/t2)/(1/T1 - 1/T2)
+print(f"E = {E/1000:.0f} kJ/mol")
+
 print("=== Q15 EO batch (Ch4 slides 17-20) ===")
 t = np.array([.5, 1, 1.5, 2, 3, 4, 6, 10]); lnCA = np.array([-.157, -.315, -.472, -.629, -.942, -1.255, -1.884, -3.147])
 m, c = linreg(t, lnCA)

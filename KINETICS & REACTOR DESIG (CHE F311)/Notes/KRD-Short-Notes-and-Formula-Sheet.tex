@@ -153,7 +153,8 @@
 Mole balances, rate of reaction, conversion, the four design equations & Ch1\\
 Reactor sizing from conversion; the Levenspiel plot; numerical integration;
  reactors in series and in parallel; optimum size ratio & Ch2\\
-Rate laws and stoichiometry; relative rates; Arrhenius; stoichiometric tables
+Rate laws and stoichiometry; relative rates; units of $k$; elementary vs
+ non-elementary and reversible laws; Arrhenius; stoichiometric tables
  for batch and flow, liquid and gas phase & Ch3\\
 Isothermal reactor design; the algorithm; closed-form conversions;
  Damk\"ohler number; pressure drop in packed beds & Ch4\\
@@ -407,9 +408,21 @@ K_C &= \frac{k_f}{k_r}
 \end{formulabox}
 \begin{itemize}
 \item \textbf{$\alpha$ and $\beta$ are empirical} --- they are \emph{not} the stoichiometric coefficients unless the reaction is elementary. Determining them is the whole subject of section~5.
+\item \textbf{Units of $k$ (slide~9):} $k = (\text{concentration})^{1-n}/\text{time}$, so $\mathrm{mol\,dm^{-3}s^{-1}}$ (zero), $\mathrm{s^{-1}}$ (first), $\mathrm{dm^{3}\,mol^{-1}s^{-1}}$ (second), $\mathrm{dm^{6}\,mol^{-2}s^{-1}}$ (third) --- the units alone betray the order.
+\item \textbf{Arrhenius plot (slides 27--28):} $\ln k = \ln A - (E/R)(1/T)$ is a straight line in $1/T$; a larger $E$ means a steeper slope, i.e.\ a reaction that is far more temperature-sensitive --- high-$E$ reactions surge with a small temperature rise yet crawl at low temperature.
 \end{itemize}
 
-\spsub{3.3 \enspace Stoichiometric tables}
+\spsub{3.3 \enspace Elementary, non-elementary and reversible rate laws}
+\begin{itemize}
+\item \textbf{Elementary (slide~14):} the orders \emph{are} the stoichiometric coefficients, as in $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$ with $-r_{\mathrm{NO}} = kC_{\mathrm{NO}}^2C_{\mathrm{O_2}}$; the deck notes there is no known reaction with molecularity~4. Some non-elementary reactions nonetheless \emph{follow} an elementary rate law (the orders happen to match the coefficients).
+\item \textbf{Non-elementary (slides 15--17):} homogeneous $\mathrm{CO}+\mathrm{Cl_2}\to\mathrm{COCl_2}$ with $r_{\mathrm{CO}} = kC_{\mathrm{CO}}C_{\mathrm{Cl_2}}^{3/2}$ (orders $1$, $\tfrac32$, overall $\tfrac52$); heterogeneous toluene hydrogenation $-r_T' = kP_TP_H/(1+K_BP_B+K_TP_T)^2$ and cumene hydrogenolysis $-r_C' = kP_CP_H/(1+K_BP_B+K_CP_C)$, with $K_B,K_T$ adsorption constants; enzymatic sucrose $\to$ glucose $+$ fructose (Michaelis--Menten form).
+\item \textbf{Reversible (slides 18--21):} the rate law must reduce to the thermodynamic relation $K_C = C_C^cC_D^d/(C_A^aC_B^b)$ at equilibrium. The deck's benzene dimerisation, $2\mathrm{C_6H_6} \rightleftharpoons \mathrm{C_{12}H_{10}} + \mathrm{H_2}$: forward $k_BC_B^2$, reverse $k_{-B}C_DC_H$, net
+\[
+-r_B = k_B\!\left(C_B^2 - \frac{C_DC_H}{K_C}\right),\qquad \frac{k_B}{k_{-B}} = K_C .
+\]
+\end{itemize}
+
+\spsub{3.4 \enspace Stoichiometric tables}
 \notetext{For $aA + bB \to cC + dD$, with $\Theta_i = C_{i0}/C_{A0}$.}
 \begin{tabularx}{\linewidth}{@{}l X@{}}
 \toprule
@@ -435,7 +448,7 @@ C_i &= C_{A0}\,\frac{\Theta_i + \nu_i X/a}{1 + \varepsilon X}\cdot\frac{T_0}{T}\
 \item \textbf{$\varepsilon > 0$} (moles increase) means the gas expands as conversion proceeds, concentrations fall faster than stoichiometry alone implies, and the reactor needs more volume than the constant-density calculation suggests.
 \end{itemize}
 
-\spsub{3.4 \enspace Worked from the deck}
+\spsub{3.5 \enspace Worked from the deck}
 \begin{itemize}
 \item \textbf{Relative rates} (slides~5--7).
 \end{itemize}
@@ -462,6 +475,13 @@ C_{A0} = 60.00\ \mathrm{mol\,m^{-3}}
 \qquad\Longrightarrow\qquad \boxed{\;V = 0.1882\ \mathrm{m^3} \approx 188\ \mathrm{L}\;}
 \]
 \notetext{$C_{A0}$ comes from $P/RT$ at the stated temperature and pressure --- the deck supplies the state, not the concentration.}
+\item \textbf{Milk sterilisation} (slide~61). The same result in $30$~min at one temperature and $15$~s at the other means the same $k\,t$; with first-order kinetics,
+\[
+E = \frac{R\,\ln(t_1/t_2)}{1/T_1 - 1/T_2}
+ = \frac{8.314\,\ln(1800/15)}{1/347.15 - 1/353.15}
+ \;\Longrightarrow\; \boxed{\;E \approx 813\ \mathrm{kJ/mol}\;}
+\]
+\notetext{The deck prints ``$80\,^{\circ}\mathrm{C}$ for 30~min'' beside ``$74\,^{\circ}\mathrm{C}$ \dots\ 15~s''; a hotter treatment needs the \emph{shorter} time, so the printed pairing is reversed and is reported as such --- the calculation pairs $353.15$~K with $15$~s and $347.15$~K with $1800$~s. The enormous $E$ is exactly why pasteurisation is so sensitive to temperature.}
 \end{itemize}
 
 %================================================================== Ch4
@@ -474,7 +494,7 @@ C_{A0} = 60.00\ \mathrm{mol\,m^{-3}}
 \begin{enumerate}
 \item \textbf{Mole balance} --- pick the reactor, write its design equation (section~1).
 \item \textbf{Rate law} --- from the data or the mechanism (section~3).
-\item \textbf{Stoichiometry} --- express every $C_i$ in terms of $X$ (the tables of \S3.3).
+\item \textbf{Stoichiometry} --- express every $C_i$ in terms of $X$ (the tables of \S3.4).
 \item \textbf{Combine} --- substitute 2 and 3 into 1 to get one equation in $X$.
 \item \textbf{Evaluate} --- integrate, or solve, and size the reactor.
 \end{enumerate}
@@ -1327,6 +1347,6 @@ Real vessel, or an ideal limit? & neither & \S9.8 ($0.679$ vs $0.720$ / $0.560$)
 \vspace{3mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}
-\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Four places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, and two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
+\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Five places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4) --- and the temperature--time pairing on Ch3 slide~61 (\S3.5). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
 
 \end{document}

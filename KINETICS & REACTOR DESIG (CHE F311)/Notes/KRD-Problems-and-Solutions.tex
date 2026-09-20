@@ -1104,36 +1104,98 @@ $0.5\to0.67$ --- second-order kinetics punish the MFR's exit-rate operation.}
 \begin{ansbox}(i) $X=0.75$; (ii) $X=0.67$.\end{ansbox}
 
 \qtitle{Q31 -- $A+3B\to6R$ with inerts}{\label{q:31}Ch5, slide 82}
-\src{Ch5\_-\,krd.pdf, slide 82.}
-Feed $C_{A0}=100$, $C_{B0}=200$, $C_{I0}=100$; $C_A=40$ at the exit.  Find $X_A,X_B,C_B$.
+\src{Ch5\_-\\,krd.pdf, slide 82.}
+Consider a feed $C_{A0}=100$, $C_{B0}=200$, $C_{I0}=100$ to a steady-flow
+reactor.  The isothermal gas-phase reaction is $A+3B\to6R$.  If $C_A=40$ at the
+reactor exit, what are $C_B$, $X_A$ and $X_B$ there?
+
 \begin{qbox}
-$X_A=0.6$; $X_B=X_A\frac{3C_{A0}}{C_{B0}}\cdot\frac{1}{3}\times3=0.9$; $C_B=200-3(60)=20$ mol/L.
+\textbf{Step 1 --- the expansion factor.}  Gas phase, so moles matter:
+$y_{A0}=\frac{100}{400}=0.25$, $\delta=6-4=2$, hence
+$\varepsilon_A=y_{A0}\delta=0.5$ --- the stream expands as it reacts.
+
+\textbf{Step 2 --- $X_A$ from the exit concentration.}
+$C_A=C_{A0}\frac{1-X}{1+\varepsilon X}$ inverted:
+\[
+X_A=\frac{C_{A0}-C_A}{C_{A0}+\varepsilon C_A}=\frac{100-40}{100+0.5(40)}=\frac{60}{120}=0.5.
+\]
+(A constant-density reading, $X=0.6$, ignores the expansion and is wrong for a
+gas.)
+
+\textbf{Step 3 --- $X_B$.}  B reacts three times faster per mole fed:
+\[
+X_B=\frac{b}{a}\frac{C_{A0}X_A}{C_{B0}}=\frac{3\times100\times0.5}{200}=0.75.
+\]
+
+\textbf{Step 4 --- $C_B$ at the expanded volume.}
+\[
+C_B=C_{B0}\frac{1-X_B}{1+\varepsilon X_A}=\frac{200\times0.25}{1.25}=40.
+\]
 \end{qbox}
-\begin{ansbox}$X_A=0.6$, $X_B=0.9$, $C_B=20$.\end{ansbox}
+\note{An earlier revision of these notes dropped $\varepsilon$ and printed
+$0.6/0.9/20$; the slide says \emph{gas-phase}, and Levenspiel's own method keeps
+the $(1+\varepsilon X)$ factor --- hence $0.5/0.75/40$.}
+\begin{ansbox}$X_A=0.5$, $X_B=0.75$, $C_B=40$.\end{ansbox}
 
 \qtitle{Q32 -- Gaseous feed with $T$ and $\pi$ change}{\label{q:32}Ch5, slide 83}
-\src{Ch5\_-\,krd.pdf, slide 83.}
-$T_0=1000$ K, $\pi_0=5$ atm, $C_{A0}=100$, $C_{B0}=200$; $A+B\to5R$; at the exit
-$T=400$ K, $\pi=4$ atm, $C_A=20$.  Find $X_A,X_B,C_B$.
+\src{Ch5\_-\\,krd.pdf, slide 83.}
+Given a gaseous feed $T_0=1000$~K, $\pi_0=5$~atm, $C_{A0}=100$, $C_{B0}=200$;
+$A+B\to5R$; at the exit $T=400$~K, $\pi=4$~atm, $C_A=20$.  Find $X_A$, $X_B$,
+$C_B$.
+
 \begin{qbox}
-$y_{A0}=1/3$, $\delta=+3$, $\varepsilon_A=1$:
-$C_A=C_{A0}\frac{1-X}{1+X}\frac{T_0}{T}\frac{\pi}{\pi_0}=32\frac{1-X}{1+X}=20
-\Rightarrow X_A=0.231$; $X_B=X_A C_{A0}/C_{B0}=0.115$;
-$C_B=200\frac{1-X_B}{1+X_A}\times0.32=46.0$.
+\textbf{Step 1 --- $\varepsilon$ and the temperature/pressure factor.}
+$y_{A0}=\frac13$, $\delta=5-2=3$, $\varepsilon_A=1$.  Cooling \emph{concentrates}
+the gas and the pressure drop dilutes it:
+\[
+\frac{T_0}{T}\cdot\frac{\pi}{\pi_0}=\frac{1000}{400}\times\frac{4}{5}=2.5\times0.8=2.
+\]
+
+\textbf{Step 2 --- $X_A$.}  $C_A=C_{A0}\frac{1-X}{1+X}\times2=200\frac{1-X}{1+X}=20$,
+so $\frac{1-X}{1+X}=0.1\Rightarrow 1-X=0.1+0.1X\Rightarrow X_A=\frac{0.9}{1.1}=0.82$.
+
+\textbf{Step 3 --- $X_B$.}  $X_B=\frac{C_{A0}X_A}{C_{B0}}=\frac{100\times0.818}{200}=0.41$.
+
+\textbf{Step 4 --- $C_B$.}  Same factor as A:
+\[
+C_B=C_{B0}\frac{1-X_B}{1+X_A}\times2=\frac{200\times0.591}{1.818}\times2\approx130.
+\]
 \end{qbox}
-\begin{ansbox}$X_A=0.23$, $X_B=0.12$, $C_B\approx46$.\end{ansbox}
+\note{Sanity check to quote in the exam: at $X=0$ the exit concentration would be
+$100\times2=200$ (cold, compressed gas); reaching 20 therefore needs a large
+conversion --- $0.82$, not a small one.}
+\begin{ansbox}$X_A\approx0.82$, $X_B\approx0.41$, $C_B\approx130$.\end{ansbox}
 
 \qtitle{Q33 -- Sucrase kinetics, Michaelis--Menten}{\label{q:33}Ch5, slide 84}
-\src{Ch5\_-\,krd.pdf, slide 84.}
-$C_{A0}=1.0$, $C_{S0}=0.01$ mmol/L; $C_A$ (mmol/L) $=0.68,0.60,0.55,0.38,0.27,0.16,0.09,0.04,
-0.018,0.006,0.0025$ at $t=1..11$ h.  Does Michaelis--Menten fit?  Evaluate $k_3,C_M$.
+\src{Ch5\_-\\,krd.pdf, slide 84.}
+Sucrose (A) hydrolysed by sucrase (S): $C_{A0}=1.0$, $C_{S0}=0.01$~mmol/L; batch
+data $C_A$ (mmol/L) $=0.68,0.60,0.55,0.38,0.27,0.16,0.09,0.04,0.018,0.006,0.0025$
+at $t=1..11$~h.  Can the data be fitted by Michaelis--Menten kinetics?  Evaluate
+$k_3$ and $C_M$.
+
 \begin{qbox}
-Integrated MM: $k_3C_{S0}\,t=(C_{A0}-C_A)+C_M\ln\frac{C_{A0}}{C_A}$, linearised as
-$\frac{t}{\ln(C_{A0}/C_A)}=\frac{1}{k_3C_{S0}}\frac{C_{A0}-C_A}{\ln(C_{A0}/C_A)}+\frac{C_M}{k_3C_{S0}}$.
-Least squares over the eleven points: slope $=3.12$ h, intercept $=1.61$ h, giving
-$k_3C_{S0}=0.321$ h$^{-1}$ ($k_3\approx32$ h$^{-1}$) and $C_M\approx0.52$ mmol/L; the points
-lie on the line ($r^2>0.99$), so the fit is reasonable.
+\textbf{The model and its batch integral.}
+$-r_A=\dfrac{k_3C_{S0}\,C_A}{C_A+C_M}$; separating variables and integrating
+(the deck's ``integral method''):
+\[
+k_3C_{S0}\,t=(C_{A0}-C_A)+C_M\ln\frac{C_{A0}}{C_A}.
+\]
+
+\textbf{Linearise.}  Dividing by $\ln(C_{A0}/C_A)$ gives a straight-line form,
+$y=mx+b$ with $x=\frac{C_{A0}-C_A}{\ln(C_{A0}/C_A)}$, $y=\frac{t}{\ln(C_{A0}/C_A)}$:
+\[
+\frac{t}{\ln(C_{A0}/C_A)}=\frac{1}{k_3C_{S0}}\cdot\frac{C_{A0}-C_A}{\ln(C_{A0}/C_A)}+\frac{C_M}{k_3C_{S0}}.
+\]
+
+\textbf{Fit the eleven points.}  Least squares gives slope $=3.12$~h and
+intercept $=1.61$~h with $r^2>0.99$ --- the points lie on the line, so the
+Michaelis--Menten form \emph{does} represent the data.  Hence
+$k_3C_{S0}=1/3.12=0.321$~h$^{-1}$, i.e.\ $k_3=0.321/0.01\approx32$~h$^{-1}$, and
+$C_M=1.61\times0.321\approx0.52$~mmol/L.
 \end{qbox}
+\note{Why this linearisation: both parameters appear linearly, so one plot tests
+the model \emph{and} extracts $k_3,C_M$ --- the standard exam move for
+Michaelis--Menten batch data.}
 \begin{ansbox}Yes: $k_3\approx32$ h$^{-1}$ (at $C_{S0}=0.01$), $C_M\approx0.5$ mmol/L.\end{ansbox}
 
 \qtitle{Q34 -- Reversible PFR: equilibrium then actual conversion}{\label{q:34}Ch5, slide 61}

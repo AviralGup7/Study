@@ -223,9 +223,15 @@ print("=== Q30/Q31 (Ch5 slides 80-81) ===")
 k = np.log(2)/4+np.log(2)/2; print(f"gamble t = {np.log(100)/k:.2f} h")
 X6 = bisect(lambda x: x/(1-x)**2-12, 0.5, 0.999); print(f"6x MFR X = {X6:.3f}; PFR X = {2/3:.3f}")
 
-print("=== Q33 (Ch5 slide 83) ===")
-X = bisect(lambda x: 100*(1-x)/(1+x)*(400/1000)*(4/5)-20, 0, 1)
-XB = X*100/200; CB = 200*(1-XB)/(1+X)*(400/1000)*(4/5)
+print("=== Q31 A+3B->6R, gas, eps=0.5 (Ch5 slide 82) ===")
+# variable volume: CA = CA0(1-X)/(1+eps X), eps = yA0*delta = 0.25*2 = 0.5
+XA = (100-40)/(100+0.5*40); XB = 3*100*XA/200; CB = 200*(1-XB)/(1+0.5*XA)
+print(f"XA = {XA:.3f}; XB = {XB:.3f}; CB = {CB:.2f}")
+
+print("=== Q32 A+B->5R with T,pi change, eps=1 (Ch5 slide 83) ===")
+# CA = CA0(1-X)/(1+eps X) * (T0/T)*(pi/pi0); (1000/400)*(4/5) = 2
+X = bisect(lambda x: 100*(1-x)/(1+x)*2.0-20, 0, 1)
+XB = X*100/200; CB = 200*(1-XB)/(1+X)*2.0
 print(f"XA = {X:.4f}; XB = {XB:.4f}; CB = {CB:.2f}")
 
 print("=== Q34 sucrose MM (Ch5 slide 84) ===")

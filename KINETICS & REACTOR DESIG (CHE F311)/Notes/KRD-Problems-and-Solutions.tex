@@ -1067,81 +1067,113 @@ $C_{A0}=0.5$~mol/L, $C_{R0}=0$.  After 8~min the conversion is $33.3$\%; the
 equilibrium conversion is $66.7$\%.  Find the rate equation.
 
 \begin{qbox}
-\textbf{The integrated law to use.}  For
-$-r_A=k_1C_A-k_2C_R$ (both directions first order) the batch integral is
+\textbf{Where the working equation comes from.}  With
+$-r_A=k_1C_A-k_2C_R$ and $C_R=C_{A0}-C_A$, the rate collapses to
+$-r_A=(k_1+k_2)(C_A-C_{Ae})$: first order \emph{towards equilibrium}.
+Integrating the batch equation gives the form the deck uses,
 \[
 \ln\frac{X_e}{X_e-X}=(k_1+k_2)\,t,
 \]
-so one kinetic run plus the equilibrium conversion fixes $k_1+k_2$.
+so one kinetic point plus $X_e$ fixes the sum $k_1+k_2$.
 
-\textbf{Step 1 --- the sum.}  $\ln\frac{0.667}{0.667-0.333}=\ln2=0.693
-=(k_1+k_2)(8)$, so $k_1+k_2=0.0866$~min$^{-1}$.
+\textbf{Step 1 --- the sum from the 8-min point.}
+\[
+\ln\frac{0.667}{0.667-0.333}=\ln\frac{0.667}{0.334}=\ln2=0.693
+=(k_1+k_2)(8)\ \Rightarrow\ k_1+k_2=0.0866\ \mathrm{min^{-1}}.
+\]
 
-\textbf{Step 2 --- the ratio.}  At equilibrium the net rate vanishes:
-$K_e=\frac{C_{Re}}{C_{Ae}}=\frac{X_e}{1-X_e}=\frac{0.667}{0.333}=2=\frac{k_1}{k_2}$.
+\textbf{Step 2 --- the ratio from equilibrium.}  At $X_e$ the net rate is zero:
+\[
+K_e=\frac{C_{Re}}{C_{Ae}}=\frac{X_e}{1-X_e}=\frac{0.667}{0.333}=2=\frac{k_1}{k_2}.
+\]
 
-\textbf{Step 3 --- solve.}  $3k_2=0.0866$: $k_2=0.0289$, $k_1=0.0577$~min$^{-1}$,
-hence
+\textbf{Step 3 --- solve the two small equations.}  $k_1=2k_2$ into the sum:
+$3k_2=0.0866$, so $k_2=0.0289$ and $k_1=0.0577$~min$^{-1}$, and the rate
+equation is
 \[
 -r_A=0.058\,C_A-0.029\,C_R\quad\mathrm{mol/(L\cdot min)}.
 \]
+
+\textbf{Check.}  $k_1/k_2=2=K_e$ and $k_1+k_2=0.087$ --- both constraints hold,
+so the equation is consistent with \emph{both} data.
 \end{qbox}
-\note{Check before writing the answer: $k_1/k_2=2=K_e$ and $k_1+k_2=0.087$ --- both
-constraints must hold.}
-\begin{ansbox}$-r_A=0.058\\,C_A-0.029\\,C_R$ mol/(L$\cdot$min).\end{ansbox}
+\note{Exam habit: never quote the log formula blind --- write its origin
+(``first order towards equilibrium'') in one line, then the two constraints
+(sum from the kinetic point, ratio from $X_e$).}
+\begin{ansbox}$-r_A=0.058\\,C_A-0.029\\,C_R$ mol/(L$\\cdot$min).\end{ansbox}
 
 \qtitle{Q25 -- Half-order batch; $2A\to B$ volume change}{\label{q:25}Ch5, slide 73}
 \src{Ch5\_-\\,krd.pdf, slide 73.}
-(i) $A\to R$ with $-r_A=3C_A^{0.5}$ mol/(L$\cdot$h), $C_{A0}=1$~mol/L: what is the
-conversion after 1~h?  (ii) Gaseous $2A\to B$ (feed 80\% A, 20\% inerts) at
-constant pressure: the volume falls 20\% in 3~min; find the first-order $k$.
+(i) $A\to R$ with $-r_A=3C_A^{0.5}$ mol/(L$\\cdot$h) and $C_{A0}=1$~mol/L: what is
+the conversion after 1~h?  (ii) The gas reaction $2A\to B$ (feed 80\% A, 20\%
+inerts) runs at constant pressure; the volume falls 20\% in 3~min.  Find the
+first-order rate constant.
 
 \begin{qbox}
-\textbf{(i) Integrate the half-order law.}
-$\dfrac{dC_A}{dt}=-3C_A^{1/2}\Rightarrow
-2\left(\sqrt{C_{A0}}-\sqrt{C_A}\right)=3t$, i.e.\ $\sqrt{C_A}=1-1.5t$.
-Blindly inserting $t=1$ gives $\sqrt{C_A}=-0.5$ --- impossible.  The charge is
-\emph{fully consumed} when $\sqrt{C_A}=0$, at $t=\tfrac{2}{3}$~h $=40$~min; after
-that the rate is zero.  Hence at 1~h, $X=1$.
-
-\textbf{(ii) Read $X$ off the volume change.}  $y_{A0}=0.8$,
-$\varepsilon_A=y_{A0}\frac{1-2}{2}=-0.4$; constant $T,\pi$ gives
-$V/V_0=1+\varepsilon_A X$:
+\textbf{(i) Integrate the half-order law.}  $-dC_A/dt=3C_A^{1/2}$ separates to
+$\int_{C_{A0}}^{C_A}C_A^{-1/2}dC_A=-3t$, i.e.
 \[
-0.8=1-0.4X\ \Rightarrow\ X=0.5.
+2\left(\sqrt{C_{A0}}-\sqrt{C_A}\right)=3t\quad\Rightarrow\quad\sqrt{C_A}=1-1.5t.
 \]
-First order: $\ln\frac{1}{1-X}=kt\Rightarrow k=\frac{\ln2}{3}=0.231$~min$^{-1}$.
+Inserting $t=1$ gives $\sqrt{C_A}=-0.5$ --- impossible.  The reason: with order
+$<1$ the rate does \emph{not} vanish as $C_A\to0$, so the charge is used up in
+finite time, here when $\sqrt{C_A}=0$: $t=\tfrac{2}{3}$~h $=40$~min.  At 1~h the
+reactor has simply been empty for 20 minutes: $X=1$.
+
+\textbf{(ii) Read conversion off the shrinking volume.}  $y_{A0}=0.8$ and
+$\delta=\tfrac{1-2}{2}=-\tfrac12$, so $\varepsilon_A=y_{A0}\delta=-0.4$; at
+constant $T,\pi$, $V/V_0=1+\varepsilon_A X$:
+\[
+0.80=1-0.4X\ \Rightarrow\ X=0.5.
+\]
+First order, constant pressure: $\ln\frac{1}{1-X}=kt$, hence
+\[
+k=\frac{\ln2}{3}=0.231\ \mathrm{min^{-1}}.
+\]
 \end{qbox}
-\note{Part (i) is a trap question: half-order kinetics run out of reactant in
-finite time; state the depletion time explicitly in the exam.}
+\note{State both ``traps'' explicitly in the exam: (i) half-order kinetics
+deplete the charge in finite time --- give the depletion time; (ii) the volume
+change \emph{is} the conversion datum via $\varepsilon$.}
 \begin{ansbox}(i) $X=1$ (complete at 40 min); (ii) $k=0.231$ min$^{-1}$.\end{ansbox}
 
 \qtitle{Q26 -- $A\to3R$ in a MFR (L 5.19)}{\label{q:26}Ch5, slide 74}
 \src{Ch5\_-\\,krd.pdf, slide 74.}
 Pure A at 3 atm and 30\,°C ($C_{A0}=120$~mmol/L) enters a 1-L mixed flow
-reactor; four runs with $v_0=0.06,0.48,1.5,8.1$~L/min give
+reactor; four runs with $v_0=0.06,0.48,1.5,8.1$~L/min give exit
 $C_A=30,60,80,105$~mmol/L.  Find the rate equation.
 
 \begin{qbox}
-\textbf{Step 1 --- conversions with expansion.}  $A\to3R$: $\varepsilon_A=2$, so
-$C_A=C_{A0}\frac{1-X}{1+2X}$, inverted:
-$X=\frac{C_{A0}-C_A}{C_{A0}+2C_A}=0.50,\,0.25,\,0.143,\,0.045$.
-(Ignoring $\varepsilon$ here would halve the first conversion --- a classic slip.)
+\textbf{Step 1 --- conversions, with the expansion.}  $A\to3R$ triples moles:
+$\varepsilon_A=2$, and $C_A=C_{A0}\frac{1-X}{1+2X}$; solving for $X$,
+$X=\frac{C_{A0}-C_A}{C_{A0}+2C_A}$.  Run by run:
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+Run & 1 & 2 & 3 & 4\\
+$C_A$ (mmol/L) & 30 & 60 & 80 & 105\\
+$X$ & 0.50 & 0.25 & 0.143 & 0.045\\
+$-r_A=v_0C_{A0}X/V$ & 3.6 & 14.4 & 25.7 & 44.0\\
+\bottomrule
+\end{tabular}
+\end{center}
+($-r_A$ in mmol/(L$\\cdot$min); e.g.\ run 1: $0.06\times120\times0.5/1=3.6$.)
+A constant-density reading would give $X=0.75$ for run~1 --- wrong for a gas
+that triples its moles.
 
-\textbf{Step 2 --- one rate per run from the MFR balance.}
-$-r_A=\dfrac{v_0C_{A0}X}{V}=3.6,\,14.4,\,25.7,\,44.0$~mmol/(L$\cdot$min).
+\textbf{Step 2 --- order from the four pairs.}  The log--log slope of
+$(C_A,-r_A)$ is $2.00$: second order.
 
-\textbf{Step 3 --- order and constant.}  The log--log slope of the four
-$(C_A,-r_A)$ pairs is $2.00$; dividing, $-r_A/C_A^2=0.0040$ in all runs, so
+\textbf{Step 3 --- the constant.}  $-r_A/C_A^2=0.0040$ in \emph{all four} runs,
+so
 \[
--r_A=0.004\,C_A^2\qquad(\mathrm{mmol,\ L,\ min})\;=\;4\ \mathrm{L/(mol\cdot min)}\ \text{in molar units}.
+-r_A=0.004\,C_A^2\quad(\mathrm{mmol,\ L,\ min})\ =\ 4\ \mathrm{L/(mol\cdot min)}
+\text{ in molar units}.
 \]
 \end{qbox}
-\note{This is the same experiment as Q13 (dimerisation, slide 77 of this deck):
-a MFR run at several space velocities is the deck's standard way of generating
-$(C_A,-r_A)$ pairs.  Learn the pair once: $X$ from the stoichiometry with
-$\varepsilon$, then $-r_A=v_0C_{A0}X/V$.}
-\begin{ansbox}$-r_A=0.004\\,C_A^2$ with $C_A$ in mmol/L (i.e. $k=4$ L/(mol$\cdot$min)).\end{ansbox}
+\note{Same method as Q13 (slide 77 of this deck): a MFR at several space
+velocities manufactures $(C_A,-r_A)$ pairs; the only extra care here is the
+$\varepsilon=2$ inversion in Step~1.}
+\begin{ansbox}$-r_A=0.004\\,C_A^2$ with $C_A$ in mmol/L (i.e. $k=4$ L/(mol$\\cdot$min)).\end{ansbox}
 
 \qtitle{Q27 -- $A\to2.5R$ batch, partial-pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
 \src{Ch5\_-\\,krd.pdf, slide 76.}

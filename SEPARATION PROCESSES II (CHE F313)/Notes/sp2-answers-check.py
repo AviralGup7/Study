@@ -320,8 +320,89 @@ def q11():
     show("P2", E2 * 140.0, "kW")
 
 
+# =============================================================================
+#  MODULE 2 PROBLEMS  (Q12 - Q15)
+# =============================================================================
+
+# ---- Q12 clarifying centrifuge: Mod 2 Lec 8, slide 26 -----------------------
+def q12():
+    head("Q12  CLARIFYING CENTRIFUGE   (Mod 2 Lec 8, slide 26)")
+    D, L, b = 0.600, 0.075, 0.400                # m
+    r2, r1 = D / 2, D / 2 - L
+    N, SG_l, SG_s = 1200.0, 1.2, 1.6
+    mu = 2e-3                                    # Pa s
+    Dpc = 30e-6                                  # m
+    rho, rho_p = SG_l * 1000, SG_s * 1000
+    w = 2 * math.pi * N / 60
+    show("r1, r2", f"{r1:.4f}, {r2:.4f}", "m")
+    show("omega", w, "rad/s")
+    show("omega^2", w * w, "rad^2/s^2")
+    part = math.pi * b * w * w * (rho_p - rho) * Dpc**2 / (18 * mu)
+    show("particle term", part, "m^3/s")
+    geom = (r2**2 - r1**2) / math.log(2 * r2 / (r1 + r2))
+    show("geometry term", geom)
+    q = part * geom
+    show("q_c", q, "m^3/s")
+    show("q_c", q * 3600, "m^3/h")
+    V = math.pi * b * (r2**2 - r1**2)
+    s = L
+    q_thin = 2 * V * w * w * r2 * Dpc**2 * (rho_p - rho) / (18 * mu * s)
+    show("V (liquid in bowl)", V, "m^3")
+    show("thin-layer cross-check q_c", q_thin * 3600, "m^3/h")
+    show("thin / cut-point", q_thin / q)
+
+
+# ---- Q13 ball mill speed: Problems.pptx slide 2 -----------------------------
+def q13():
+    head("Q13  MILL SPEED WITH 50-MM BALLS   (Problems.pptx, slide 2)")
+    R, r1, r2, n1 = 1.000, 0.050, 0.025, 15.0    # m, m, m, rpm
+    nc1 = math.sqrt(9.81 / (R - r1)) / (2 * math.pi)
+    nc2 = math.sqrt(9.81 / (R - r2)) / (2 * math.pi)
+    show("critical speed, 100-mm balls", nc1, "rev/s")
+    show("critical speed, 100-mm balls", nc1 * 60, "rpm")
+    show("fraction of critical (15 rpm)", n1 / (nc1 * 60))
+    show("critical speed, 50-mm balls", nc2 * 60, "rpm")
+    n2 = (n1 / (nc1 * 60)) * (nc2 * 60)
+    show("new speed", n2, "rpm")
+    show("same, directly 15*sqrt(0.95/0.975)", n1 * math.sqrt((R - r1) / (R - r2)), "rpm")
+
+
+# ---- Q14 plate-and-frame washing: Problems.pptx slides 3-4 -------------------
+def q14():
+    head("Q14  WASHING TIME, DOUBLED AREA   (Problems.pptx, slides 3-4)")
+    V, t, Vw = 30.0, 10.0, 3.0                    # m^3, h, m^3
+    K = V * V / t
+    show("K = V^2/t", K, "m^6/h")
+    rate = K / (2 * V)
+    show("dV/dt at end of run", rate, "m^3/h")
+    wash = rate / 4
+    show("washing rate (quarter of filtration rate)", wash, "m^3/h")
+    show("washing time", Vw / wash, "h")
+    K2 = 4 * K
+    show("K' = 4K (area doubled)", K2, "m^6/h")
+    show("time for 30 m^3 at K'", V * V / K2, "h")
+
+
+# ---- Q15 ore / rock classifier: Problems.pptx slide 5 -----------------------
+def q15():
+    head("Q15  PURITY OF DRESSED ORE   (Problems.pptx, slide 5, Example 6.3)")
+    SG_ore, SG_rock, D_ore = 2.1, 5.4, 1.0        # mm
+    frac = [("+2-5", 0.43), ("+0.5-2", 0.47), ("<0.5", 0.10)]
+    ratio = math.sqrt((SG_ore - 1) / (SG_rock - 1))
+    show("equal-settling ratio D_ore/D_rock", 1 / ratio)
+    show("equal-settling rock size", D_ore * ratio, "mm")
+    coarse = sum(f for name, f in frac if name != "<0.5")
+    show("rock coarser than 0.5 mm", coarse)
+    rock, ore = 0.30, 0.70
+    retained = coarse * rock
+    show("rock retained with the ore", retained)
+    show("purity = ore/(ore+retained rock)", ore / (ore + retained))
+    show("purity", 100 * ore / (ore + retained), "%")
+
+
 if __name__ == "__main__":
     print("CHE F313  --  arithmetic record for the solutions document")
-    for fn in (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11):
+    for fn in (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11,
+               q12, q13, q14, q15):
         fn()
     print("\n" + SEP + "\ndone.\n" + SEP)

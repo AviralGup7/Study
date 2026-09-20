@@ -926,6 +926,238 @@ $\boxed{P_2=\SI{367.2}{\kilo\watt}}$ (specific energy \SI{2.62}{\kilo\watt\hour\
 that the \SI{320}{\kilo\watt} is the total power drawn; unlike Q4, no empty-mill allowance is given
 here, so no deduction is made.}
 
+\spsection{PART D --- MODULE 2 PROBLEMS (from \texttt{Problems.pptx} and the Lec.~8 deck)}
+
+\qtitle{Q12 --- Capacity of a clarifying centrifuge}{Module 2 \textperiodcentered{}\label{q:12} Lecture 8 \textperiodcentered{} slide 26}
+\src{\texttt{Slides/Mod 2-Lecture 8-compressed.pdf}, slide 26 (``Problem on Centrifugal Sedimentation'')}
+
+\begin{qbox}
+``What is the capacity in cubic meters per hour of a clarifying centrifuge operating under the
+following conditions?'' Bowl diameter \SI{600}{mm}; thickness of liquid layer \SI{75}{mm}; depth of
+bowl \SI{400}{mm}; speed \SI{1200}{r/min}; specific gravity of liquid 1.2; specific gravity of solid
+1.6; viscosity of liquid \SI{2}{cP}; cut size of particles \SI{30}{\micro\meter}.
+\end{qbox}
+
+\begin{mthbox}
+\textbf{Method from the slides} (Mod 2 Lec 8, slide 26): the cut-point equation printed on that slide,
+\[
+q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
+    \frac{r_2^{2}-r_1^{2}}{\ln\left[\dfrac{2r_2}{r_1+r_2}\right]}
+\]
+with $b$ the bowl depth, $r_1$ and $r_2$ the inner radii of the liquid layer and of the bowl, and
+$D_{pc}$ the cut size.
+\end{mthbox}
+
+\spsub{Data in consistent units}
+$r_2=\SI{0.300}{m}$; liquid layer \SI{75}{mm} thick, so $r_1=0.300-0.075=\SI{0.225}{m}$;
+$b=\SI{0.400}{m}$; $\rho_p=1600$ and $\rho=1200$~kg/m$^3$ (specific gravities 1.6 and 1.2);
+$\mu=2$~cP $=\SI{0.002}{Pa.s}$; $D_{pc}=\SI{30e-6}{m}$; and
+\[
+\omega=\frac{2\pi(1200)}{60}=\SI{125.66}{rad/s},\qquad \omega^{2}=\SI{15791}{rad^2/s^2}
+\]
+
+\spsub{Solution --- the slide's cut-point equation}
+Particle term:
+\[
+\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}
+=\frac{\pi(0.4)(15791)(400)(9\times10^{-10})}{0.036}
+=\SI{0.19844}{m^3/s}
+\]
+Geometry term:
+\[
+\frac{r_2^{2}-r_1^{2}}{\ln[2r_2/(r_1+r_2)]}
+=\frac{0.09-0.050625}{\ln[0.6/0.525]}
+=\frac{0.039375}{0.13353}=0.29487
+\]
+\[
+q_c=0.19844\times0.29487=\SI{0.058515}{m^3/s}
+\]
+
+\begin{ansbox}
+$\boxed{q_c=\SI{210.7}{m^3/h}}$ (equivalently \SI{0.0585}{m^3/s}).
+\end{ansbox}
+
+\note{Cross-check with the other form the deck carries for the same problem, the thin-liquid-layer
+result $q_c=\dfrac{2V\omega^{2}r_2D_p^{2}(\rho_p-\rho)}{18\mu s}$ of slide 23, using
+$V=\pi b(r_2^{2}-r_1^{2})=\SI{0.04948}{m^3}$ and $s=\SI{0.075}{m}$: this gives
+\SI{225.0}{m^3/h}, about 6.8\,\% higher, which is what the thin-layer approximation is expected to
+do. The cut-point equation of slide 26 (with $r_A=(r_1+r_2)/2$) is the one printed with the problem
+and is the answer quoted.}
+
+\qtitle{Q13 --- Mill speed when the grinding balls are replaced}{Module 1 \textperiodcentered{}\label{q:13} Lecture 6 (critical-speed relation), from \texttt{Problems.pptx} slide 2}
+\src{\texttt{Slides/Problems.pptx}, slide 2}
+
+\begin{qbox}
+``In a ball mill of 2000-mm diameter, 100-mm diameter steel balls are being used for grinding.
+Presently for the material being ground, the mill is running at 15 rpm. At what speed will the mill
+have to run if the 100-mm balls are replaced with 50-mm balls, all the other conditions remaining
+same?''
+\end{qbox}
+
+\begin{mthbox}
+\textbf{Method from the slides} (Mod 1 Lec 6): the critical speed of a ball mill, in revolutions per
+second,
+\[
+n_c=\frac{1}{2\pi}\sqrt{\frac{g}{R-r}}
+\]
+with $R$ the radius of the mill and $r$ the radius of the grinding elements. A mill is run at a fixed
+fraction of its critical speed (65--80\,\%, from the same slide), so that fraction is what is held
+constant when the ball size changes.
+\end{mthbox}
+
+\spsub{Solution}
+$R=1.000$~m; the original balls have $r=0.050$~m, so $R-r=0.950$~m:
+\[
+n_{c,1}=\frac{1}{2\pi}\sqrt{\frac{9.81}{0.950}}=0.51144\ \text{rev/s}=30.69\ \text{rpm}
+\]
+The mill runs at \SI{15}{rpm}, that is
+\[
+\frac{n_1}{n_{c,1}}=\frac{15}{30.69}=0.4888
+\]
+For 50-mm balls, $r=0.025$~m and $R-r=0.975$~m:
+\[
+n_{c,2}=\frac{1}{2\pi}\sqrt{\frac{9.81}{0.975}}=0.50484\ \text{rev/s}=30.29\ \text{rpm}
+\]
+Keeping the same fraction of critical speed,
+\[
+n_2=0.4888\times30.29=\SI{14.81}{rpm}
+\]
+and the same result directly: $n_2=n_1\sqrt{(R-r_1)/(R-r_2)}=15\sqrt{0.950/0.975}$.
+
+\begin{ansbox}
+$\boxed{n_2=\SI{14.8}{rpm}}$ --- slightly slower than the present \SI{15}{rpm}: smaller balls raise the
+critical speed only a little, and the operating point (the same fraction of critical speed) is
+unchanged.
+\end{ansbox}
+
+\qtitle{Q14 --- Washing time and doubled filter area in a plate-and-frame press}{from \texttt{Problems.pptx}, slides 3--4 \textperiodcentered{}\label{q:14}}
+\src{\texttt{Slides/Problems.pptx}, slide 3 (question) and slide 4 (the deck's own worked solution)}
+
+\begin{qbox}
+``A sludge filtered in a washing plate and frame filter press is of such nature that the filtration
+equation is $V^{2}=Kt$ where $V$ is the volume of filtrate obtained in time $t$, when the pressure is
+constant. \SI{30}{m^3} of filtrate is produced in 10 hours. \SI{3}{m^3} of wash water is forced
+through the cake at the end of filtration. (a) What is the length of the washing time? (b) If the
+filtering surface of the press is doubled, all other conditions remaining constant, how long would it
+take to produce \SI{30}{m^3} of filtrate?''
+\end{qbox}
+
+\begin{mthbox}
+\textbf{Method: the deck's own solution slide}, using $V^{2}=Kt$ (constant pressure) together with the
+cake-resistance group of Mod 2 Lec 4/5: $K=\dfrac{A^{2}\Delta P^{\,1-s}}{Z}$ with
+$Z=\mu\alpha_0c/2$ a constant, and
+\[
+\frac{\mathrm{d}t}{\mathrm{d}V}=\frac{\mu}{A\Delta P}\Big(\alpha c\,\frac{V}{A}+R_m\Big)
+\qquad\text{filter-medium resistance $R_m$ neglected, as the slide does.}
+\]
+\end{mthbox}
+
+\spsub{Solution (a) --- washing time}
+From the run, $V=\SI{30}{m^3}$ in $t=\SI{10}{h}$:
+\[
+K=\frac{V^{2}}{t}=\frac{30\times30}{10}=\SI{90}{m^6/h}
+\]
+Rate of filtration at the end of the run:
+\[
+\frac{\mathrm{d}V}{\mathrm{d}t}=\frac{K}{2V}=\frac{90}{2\times30}=\SI{1.5}{m^3/h}
+\]
+Washing rate of a plate-and-frame press $=\tfrac14\times$ rate of filtration $=\SI{0.375}{m^3/h}$
+(one quarter, because only a quarter of the flow path is available to the wash water in a frame
+press), so
+\[
+t_w=\frac{\text{volume of wash water}}{\text{rate of washing}}=\frac{3}{0.375}=\SI{8}{h}
+\]
+
+\spsub{Solution (b) --- filtering surface doubled}
+With $A'=2A$ and everything else unchanged ($\Delta P$, $s$, $Z$ constant),
+\[
+K'=\frac{A'^{2}\Delta P^{\,1-s}}{Z}=\frac{(2A)^{2}\Delta P^{\,1-s}}{Z}=4K
+=4\times90=\SI{360}{m^6/h}
+\]
+and the same \SI{30}{m^3} is now obtained in
+\[
+t'=\frac{V^{2}}{K'}=\frac{30^{2}}{360}=\SI{2.5}{h}
+\]
+
+\begin{ansbox}
+(a) $t_w=\SI{8}{h}$;\qquad (b) $t'=\SI{2.5}{h}$ (a quarter of the original time, because $K\propto A^{2}$).
+\end{ansbox}
+
+\note{Both answers are the deck's own boxed results (8 hours and 2.5 hours). The $V^{2}=Kt$ form of
+the filtration equation is the one the question itself states; the deck's solution reloads it for the
+new area through $K\propto A^{2}$, which is what makes part (b) a quarter of the original time.}
+
+\qtitle{Q15 --- Purity of dressed ore from a hydraulic classifier}{from \texttt{Problems.pptx}, slide 5 (Example 6.3) \textperiodcentered{}\label{q:15}}
+\src{\texttt{Slides/Problems.pptx}, slide 5}
+
+\begin{qbox}
+``An ore sample having a specific gravity of 2.1 is to be separated from rock associated with it
+using a hydraulic classifier. The ore consists of 1~mm spherical particles. The rock particles have
+an average specific gravity of 5.4 and the screen analysis gives the following:
+
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+Particle size / \si{\milli\meter} & Mass fraction\\
+\midrule
+$+2-5$ & 0.43\\
+$+0.5-2$ & 0.47\\
+$<0.5$ & 0.10\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The ore--rock mixture contains 30\,\% rock particles. Estimate the \,\% purity of the dressed ore.
+Assume settling to be laminar.''
+\end{qbox}
+
+\begin{mthbox}
+\textbf{Method from the slides} (Mod 2 Lec 7, differential settling; Stokes' law regime): equal-settling
+particles of two materials A and B in a medium of density $\rho$ are related by
+\[
+\frac{D_A}{D_B}=\sqrt{\frac{\rho_B-\rho}{\rho_A-\rho}}
+\qquad\text{so}\qquad
+D_{rock}=D_{ore}\sqrt{\frac{\rho_{ore}-\rho}{\rho_{rock}-\rho}}
+\]
+With \SI{1}{mm} ore particles in water (\SI{1000}{kg/m^3}),
+\[
+D_{rock}=1\times\sqrt{\frac{2.1-1}{5.4-1}}=1\times\sqrt{\frac{1.1}{4.4}}=\SI{0.5}{mm}
+\]
+so a \SI{1}{mm} ore particle settles at exactly the same rate as a \SI{0.5}{mm} rock particle.
+\end{mthbox}
+
+\spsub{Reading the classification}
+Set the classifier so that no ore is lost --- the cut velocity is the terminal velocity of a \SI{1}{mm}
+ore particle:
+\begin{itemize}
+  \item rock \emph{coarser} than the equal-settling size \SI{0.5}{mm} settles faster than the ore and is
+        retained with it: the $+2-5$ and $+0.5-2$ fractions, $0.43+0.47=0.90$ of the rock;
+  \item rock \emph{finer} than \SI{0.5}{mm} settles more slowly and is carried away in the overflow,
+        the remaining $0.10$ of the rock.
+\end{itemize}
+Per unit mass of the ore--rock mixture: ore $=0.70$, rock $=0.30$, of which retained
+$=0.90\times0.30=0.270$. Therefore
+\[
+\text{purity}=\frac{\text{ore}}{\text{ore}+\text{retained rock}}
+=\frac{0.70}{0.70+0.27}=\frac{0.70}{0.97}=0.7216
+\]
+
+\begin{ansbox}
+$\boxed{\text{purity}\approx72\,\%}$ --- in one pass at the \SI{1}{mm} cut the dressed ore is 72.2\,\%
+ore, the balance being rock of \SI{0.5}{mm} and coarser that settles with it.
+\end{ansbox}
+
+\begin{warnbox}
+\textbf{Where this problem is under-specified, and what was assumed.} The slide prints the screen
+analysis after naming the rock, so the fractions are read as the \emph{rock's} own size distribution
+(the ore is stated separately as \SI{1}{mm} particles). Read instead as the size distribution of the
+\emph{mixture}, the same numbers cannot hold: with 30\,\% rock the mixture would be 70\,\% ore, yet the
+whole of the ore would have to lie inside the $+0.5-2$ fraction, which is only 47\,\% of the mixture.
+The slide gives no worked answer, so the cut is stated explicitly above (no ore lost) and the answer
+is quoted for that cut; another cut gives another purity, and the last line of the calculation is
+redone in one step: $\text{purity}=0.70/(0.70+0.90x)$ with $x$ the retained fraction of the rock.
+\end{warnbox}
+
 \vspace{2mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}

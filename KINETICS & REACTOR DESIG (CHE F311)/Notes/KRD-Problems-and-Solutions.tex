@@ -532,61 +532,74 @@ arrangement rules).}
 \qtitle{Q9 -- Relative rates: NO oxidation}{\label{q:9}Ch3, slides 5--7}
 \src{Ch3-krd.pdf, slides 5--7 (``Example'').}
 For $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$, NO$_2$ is formed at
-$4$~mol/(m$^3\cdot$s).  What are the rates of reaction of NO and of O$_2$?
+$4$~mol/(m$^3\\cdot$s).  What are the rates of reaction of NO and of O$_2$?
 
 \begin{qbox}
-\textbf{The rule (slide 5).}  For $aA+bB\to cC+dD$ the stoichiometry ties every
-species rate together:
+\textbf{Why one rule solves everything.}  A reaction has only \emph{one} rate;
+each species merely reports it through its own coefficient.  Dividing every
+species rate by its stoichiometric number (negative for reactants) makes all
+reports agree (slide 5):
 \[
-\frac{r_A}{-a}=\frac{r_B}{-b}=\frac{r_C}{c}=\frac{r_D}{d},
+\frac{r_A}{-a}=\frac{r_B}{-b}=\frac{r_C}{c}=\frac{r_D}{d}.
 \]
-i.e.\ divide each rate by its own coefficient (taken negative for reactants) and
-all four ratios equal the same single ``rate of reaction''.  Sign convention:
-$r_i>0$ means formation, $r_i<0$ consumption.
+Sign convention the deck uses throughout: $r_i>0$ = formed, $r_i<0$ = consumed,
+and $-r_i$ = rate of disappearance.
 
-\textbf{Step 1 --- write the chain for this reaction} ($a_{NO}=2$, $b_{O_2}=1$,
-$c_{NO_2}=2$):
+\textbf{Step 1 --- write the chain and the shared number.}  With coefficients
+$2,1,2$ and the known rate $r_{\mathrm{NO_2}}=+4$:
 \[
-\frac{r_{\mathrm{NO}}}{-2}=\frac{r_{\mathrm{O_2}}}{-1}=\frac{r_{\mathrm{NO_2}}}{+2}.
+\frac{r_{\mathrm{NO}}}{-2}=\frac{r_{\mathrm{O_2}}}{-1}=\frac{r_{\mathrm{NO_2}}}{+2}
+=\frac{4}{2}=2.
 \]
+Evaluating the known ratio as one number ($4/2=2$) is the exam trick: every
+other rate is that number times its own coefficient.
 
-\textbf{Step 2 --- scale by the known rate.}  With $r_{\mathrm{NO_2}}=+4$:
+\textbf{Step 2 --- read the two rates off.}
 \[
-r_{\mathrm{NO}}=\frac{-2}{+2}(4)=-4\ \mathrm{mol/(m^3\cdot s)},\qquad
-r_{\mathrm{O_2}}=\frac{-1}{+2}(4)=-2\ \mathrm{mol/(m^3\cdot s)}.
+r_{\mathrm{NO}}=(-2)(2)=-4,\qquad
+r_{\mathrm{O_2}}=(-1)(2)=-2\quad\mathrm{mol/(m^3\cdot s)},
 \]
+exactly the values printed on the deck's solution slide~7.
 
-\textbf{Step 3 --- check.}  $|r_{NO}|:|r_{O_2}|:|r_{NO_2}|=4:2:4=2:1:2$ --- the
-coefficients themselves, as the rule demands (this is the deck's solution slide 7).
+\textbf{Step 3 --- check by ratios.}  $4:2:4=2:1:2$ --- the coefficients
+themselves; NO disappears as fast as NO$_2$ appears (equal coefficients) and
+O$_2$ reacts at half that rate, which is exactly what the equation says.
 \end{qbox}
-\note{In the exam also state $-r_{\mathrm{NO}}=4$ mol/(m$^3\cdot$s): ``NO is
-consumed as fast as NO$_2$ is formed; O$_2$ at half that rate.''}
-\begin{ansbox}$r_{\mathrm{NO}}=-4$, $r_{\mathrm{O_2}}=-2$ mol/(m$^3\cdot$s).\end{ansbox}
+\note{Exam wording: ``NO is consumed as fast as NO$_2$ is formed; O$_2$ at half
+that rate.''  Also state $-r_{\mathrm{NO}}=4$~mol/(m$^3\\cdot$s) in case the
+question asks for the rate of \emph{disappearance}.}
+\begin{ansbox}$r_{\mathrm{NO}}=-4$, $r_{\mathrm{O_2}}=-2$ mol/(m$^3\\cdot$s).\end{ansbox}
 
 \qtitle{Q10 -- Relative rates: $2A+3B\to5C$}{\label{q:10}Ch3, slides 6--7}
 \src{Ch3-krd.pdf, slides 6--7 (``Exercise'').}
-The reaction $2A+3B\to5C$ is carried out in a reactor.  At a particular point the
-rate of disappearance of A is $10$~mol/(dm$^3\cdot$s); what are the rates of B
-and C?
+The reaction $2A+3B\to5C$ is carried out in a reactor.  At a particular point
+the rate of disappearance of A is $10$~mol/(dm$^3\\cdot$s); what are the rates of
+B and C?
 
 \begin{qbox}
-\textbf{Step 1 --- the chain.}  Same rule as Q9:
-$\dfrac{r_A}{-2}=\dfrac{r_B}{-3}=\dfrac{r_C}{5}$, and ``disappearance of A is
-10'' means $r_A=-10$.
+\textbf{Step 1 --- translate the given into the sign convention.}
+``Disappearance of A is 10'' means $-r_A=10$, i.e.\ $r_A=-10$ (A is consumed).
+Getting this sign right is the whole question.
 
-\textbf{Step 2 --- B (slide 7, left column).}
+\textbf{Step 2 --- the chain and the shared number.}
 \[
-r_B=\frac{-3}{-2}\,r_A=\frac{-3}{-2}(-10)=-15\ \mathrm{mol/(dm^3\cdot s)}.
+\frac{r_A}{-2}=\frac{r_B}{-3}=\frac{r_C}{5}=\frac{-10}{-2}=5.
 \]
 
-\textbf{Step 3 --- C (slide 7, right column).}
+\textbf{Step 3 --- B and C (slide 7 prints this very arithmetic).}
 \[
-r_C=\frac{5}{-2}\,r_A=\frac{5}{-2}(-10)=+25\ \mathrm{mol/(dm^3\cdot s)}.
+r_B=(-3)(5)=-15\ \mathrm{mol/(dm^3\cdot s)}\quad(\text{B is consumed}),
+\]
+\[
+r_C=(+5)(5)=+25\ \mathrm{mol/(dm^3\cdot s)}\quad(\text{C is produced}).
 \]
 
-\textbf{Check.}  $10:15:25 = 2:3:5$ --- the coefficients; B is consumed, C formed.
+\textbf{Step 4 --- check.}  $10:15:25=2:3:5$ --- the coefficients; signs say
+A, B consumed and C produced, as the stoichiometry demands.
 \end{qbox}
-\begin{ansbox}$r_B=-15$, $r_C=+25$ mol/(dm$^3\cdot$s).\end{ansbox}
+\note{Classic exam slip: feeding $+10$ in as $r_A$ and flipping every sign.  The
+ratio check in Step~4 catches it immediately, so always write it.}
+\begin{ansbox}$r_B=-15$, $r_C=+25$ mol/(dm$^3\\cdot$s).\end{ansbox}
 
 \qtitle{Q11 -- Saponification stoichiometric table}{\label{q:11}Ch3, slides 42--44}
 \src{Ch3-krd.pdf, slides 41--44 (batch stoichiometric table + worked example).}

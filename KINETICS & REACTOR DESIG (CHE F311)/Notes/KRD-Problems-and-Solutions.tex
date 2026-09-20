@@ -531,34 +531,100 @@ arrangement rules).}
 
 \qtitle{Q9 -- Relative rates: NO oxidation}{\label{q:9}Ch3, slides 5--7}
 \src{Ch3-krd.pdf, slides 5--7 (``Example'').}
-$2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$; NO$_2$ forms at 4 mol/(m$^3\cdot$s).
+For $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$, NO$_2$ is formed at
+$4$~mol/(m$^3\cdot$s).  What are the rates of reaction of NO and of O$_2$?
+
 \begin{qbox}
-$\frac{r_{NO}}{-2}=\frac{r_{O_2}}{-1}=\frac{r_{NO_2}}{2}$ gives
-$r_{NO}=-4$ and $r_{O_2}=-2$ mol/(m$^3\cdot$s), exactly as on the deck's solution slide.
+\textbf{The rule (slide 5).}  For $aA+bB\to cC+dD$ the stoichiometry ties every
+species rate together:
+\[
+\frac{r_A}{-a}=\frac{r_B}{-b}=\frac{r_C}{c}=\frac{r_D}{d},
+\]
+i.e.\ divide each rate by its own coefficient (taken negative for reactants) and
+all four ratios equal the same single ``rate of reaction''.  Sign convention:
+$r_i>0$ means formation, $r_i<0$ consumption.
+
+\textbf{Step 1 --- write the chain for this reaction} ($a_{NO}=2$, $b_{O_2}=1$,
+$c_{NO_2}=2$):
+\[
+\frac{r_{\mathrm{NO}}}{-2}=\frac{r_{\mathrm{O_2}}}{-1}=\frac{r_{\mathrm{NO_2}}}{+2}.
+\]
+
+\textbf{Step 2 --- scale by the known rate.}  With $r_{\mathrm{NO_2}}=+4$:
+\[
+r_{\mathrm{NO}}=\frac{-2}{+2}(4)=-4\ \mathrm{mol/(m^3\cdot s)},\qquad
+r_{\mathrm{O_2}}=\frac{-1}{+2}(4)=-2\ \mathrm{mol/(m^3\cdot s)}.
+\]
+
+\textbf{Step 3 --- check.}  $|r_{NO}|:|r_{O_2}|:|r_{NO_2}|=4:2:4=2:1:2$ --- the
+coefficients themselves, as the rule demands (this is the deck's solution slide 7).
 \end{qbox}
+\note{In the exam also state $-r_{\mathrm{NO}}=4$ mol/(m$^3\cdot$s): ``NO is
+consumed as fast as NO$_2$ is formed; O$_2$ at half that rate.''}
 \begin{ansbox}$r_{\mathrm{NO}}=-4$, $r_{\mathrm{O_2}}=-2$ mol/(m$^3\cdot$s).\end{ansbox}
 
 \qtitle{Q10 -- Relative rates: $2A+3B\to5C$}{\label{q:10}Ch3, slides 6--7}
 \src{Ch3-krd.pdf, slides 6--7 (``Exercise'').}
-$-r_A = 10$ mol/(dm$^3\cdot$s); find the rates of B and C.
+The reaction $2A+3B\to5C$ is carried out in a reactor.  At a particular point the
+rate of disappearance of A is $10$~mol/(dm$^3\cdot$s); what are the rates of B
+and C?
+
 \begin{qbox}
-$\frac{r_A}{-2}=\frac{r_B}{-3}=\frac{r_C}{5}$:
-$r_B=\frac{-3}{-2}(-10)=-15$; $r_C=\frac{5}{-2}(-10)=+25$ mol/(dm$^3\cdot$s) (deck values).
+\textbf{Step 1 --- the chain.}  Same rule as Q9:
+$\dfrac{r_A}{-2}=\dfrac{r_B}{-3}=\dfrac{r_C}{5}$, and ``disappearance of A is
+10'' means $r_A=-10$.
+
+\textbf{Step 2 --- B (slide 7, left column).}
+\[
+r_B=\frac{-3}{-2}\,r_A=\frac{-3}{-2}(-10)=-15\ \mathrm{mol/(dm^3\cdot s)}.
+\]
+
+\textbf{Step 3 --- C (slide 7, right column).}
+\[
+r_C=\frac{5}{-2}\,r_A=\frac{5}{-2}(-10)=+25\ \mathrm{mol/(dm^3\cdot s)}.
+\]
+
+\textbf{Check.}  $10:15:25 = 2:3:5$ --- the coefficients; B is consumed, C formed.
 \end{qbox}
 \begin{ansbox}$r_B=-15$, $r_C=+25$ mol/(dm$^3\cdot$s).\end{ansbox}
 
 \qtitle{Q11 -- Saponification stoichiometric table}{\label{q:11}Ch3, slides 42--44}
-\src{Ch3-krd.pdf, slides 42--44 (``Example'').}
-$3\,\mathrm{NaOH} + (\mathrm{C_{17}H_{35}COO})_3\mathrm{C_3H_5} \to
-3\,\mathrm{C_{17}H_{35}COONa} + \mathrm{C_3H_5(OH)_3}$, i.e. $3A+B\to3C+D$, liquid phase,
-$X$ = conversion of NaOH.
+\src{Ch3-krd.pdf, slides 41--44 (batch stoichiometric table + worked example).}
+Given the saponification for the formation of soap from aqueous caustic soda and
+glyceryl stearate,
+\[
+3\,\mathrm{NaOH}(aq)+(\mathrm{C_{17}H_{35}COO})_3\mathrm{C_3H_5}
+\to 3\,\mathrm{C_{17}H_{35}COONa}+\mathrm{C_3H_5(OH)_3},
+\]
+i.e.\ $3A+B\to3C+D$, let $X$ be the conversion of sodium hydroxide.  Set up a
+stoichiometric table expressing the concentration of \emph{each species} in terms
+of its initial concentration and the conversion.
+
 \begin{qbox}
-$\Theta_B=\tfrac13,\ \Theta_C=\Theta_D=0$ (as fed):
-$C_A=C_{A0}(1-X)$; $C_B=C_{A0}\left(\Theta_B-\tfrac{X}{3}\right)$;
-$C_C=C_{A0}X$; $C_D=C_{A0}\tfrac{X}{3}$ --- the deck's table (slides 43--44), with
-$V=V_0$ because the mixture is liquid.
+\textbf{Step 1 --- coefficients and changes (slide 41's generic table).}
+$a=3,\ b=1,\ c=3,\ d=1$.  Per mole of A reacted the changes are
+$-N_{A0}X$ (A), $-\frac{b}{a}N_{A0}X=-\frac13 N_{A0}X$ (B),
+$+\frac{c}{a}N_{A0}X=+N_{A0}X$ (C), $+\frac{d}{a}N_{A0}X=+\frac13 N_{A0}X$ (D);
+with $\Theta_i=N_{i0}/N_{A0}$ the remaining moles are $N_i=N_{A0}(\Theta_i+\nu_i X/a)$.
+
+\textbf{Step 2 --- liquid phase kills the volume term (slide 43).}
+``We know that this is a liquid-phase reaction. Therefore $V=V_0$'', so
+$C_i=N_i/V_0$ and $N_{A0}/V_0=C_{A0}$:
+\begin{align*}
+C_A &= C_{A0}(1-X), &
+C_B &= C_{A0}\!\left(\Theta_B-\tfrac{1}{3}X\right),\\
+C_C &= C_{A0}\!\left(\Theta_C+X\right), &
+C_D &= C_{A0}\!\left(\Theta_D+\tfrac{1}{3}X\right).
+\end{align*}
+This is exactly the deck's filled table (slide 44).
+
+\textbf{Step 3 --- what the feed gives.}  As fed there is no soap or glycerine,
+$\Theta_C=\Theta_D=0$; if caustic soda and stearate are charged stoichiometrically
+$\Theta_B=\tfrac13$, in which case B is exhausted exactly when $X=1$.
 \end{qbox}
-\begin{ansbox}Concentrations as above; e.g. with $\Theta_B = N_{B0}/N_{A0}$ the B entry is $C_{A0}(\Theta_B - X/3)$.\end{ansbox}
+\note{Exam one-liner: ``liquid phase $\Rightarrow V=V_0$, so divide the mole table
+by $V_0$ and replace $N_{A0}/V_0$ with $C_{A0}$.''}
+\begin{ansbox}$C_A=C_{A0}(1-X)$, $C_B=C_{A0}(\Theta_B-X/3)$, $C_C=C_{A0}(\Theta_C+X)$, $C_D=C_{A0}(\Theta_D+X/3)$.\end{ansbox}
 
 \qtitle{Q12 -- Flow-system table for $A+2B\to C+D$}{\label{q:12}Ch3, slides 48--51}
 \src{Ch3-krd.pdf, slides 48--51 (``Example'').}

@@ -438,7 +438,7 @@ the measurements is $4A\to B+2C$.
 \note{Exam phrasing: ``the reactor is a CSTR, hence each species obeys
 $r_i=(C_i-C_{i0})/\tau$; the signs give consumption/production and the ratio of
 the rates gives the stoichiometric coefficients.''}
-\begin{ansbox}$-r_A=0.08$, $r_B=0.02$, $r_C=0.04$ mol/(L$\\cdot$min); the data imply $4A\to B+2C$.\end{ansbox}
+\begin{ansbox}$-r_A=0.08$, $r_B=0.02$, $r_C=0.04$ mol/(L$\cdot$min); the data imply $4A\to B+2C$.\end{ansbox}
 
 \qtitle{Q7 -- PFRs in two parallel branches}{\label{q:7}Ch2, slides 45--46}
 \src{Ch2-krd (1).pdf, slides 45--46.}
@@ -875,7 +875,7 @@ $\ln C_A$: slope $=1.99\approx2$ --- \emph{second order in trityl}.
 
 \textbf{Step 2 --- integral check.}  If $\alpha=2$,
 $\frac{1}{C_A}-\frac{1}{C_{A0}}=k't$ must be a straight line through the origin;
-it is, with slope $k'=0.124\approx0.125$~dm$^3$/(mol$\\cdot$min).  Two independent
+it is, with slope $k'=0.124\approx0.125$~dm$^3$/(mol$\cdot$min).  Two independent
 methods agreeing is the deck's point.
 
 \textbf{Step 3 --- split off the methanol order.}  With $-r_A=kC_A^2C_B$ and
@@ -885,7 +885,7 @@ nonlinear-regression slides return $\alpha\approx2$ with the same $k'$.)
 \note{Exam wording: ``differential method gives the order from the log--log slope;
 the integral method confirms it and supplies $k'$; the excess reactant converts
 $k'$ back to $k$.''}
-\begin{ansbox}Second order in trityl; $k'=0.125$ dm$^3$/(mol$\\cdot$min), $k=0.25$ dm$^6$/(mol$^2\\cdot$min).\end{ansbox}
+\begin{ansbox}Second order in trityl; $k'=0.125$ dm$^3$/(mol$\cdot$min), $k=0.25$ dm$^6$/(mol$^2\cdot$min).\end{ansbox}
 
 \qtitle{Q23 -- Dimethyl ether decomposition bomb}{\label{q:23}Ch5, slide 75}
 \src{Ch5\_-\\,krd.pdf, slide 75 (``F 5.8'').}
@@ -920,7 +920,7 @@ $k\approx4.4\times10^{-4}$~s$^{-1}$.
 \end{qbox}
 \note{The same trick --- ``$p_A$ from the total pressure using $p_{A,\infty}$'' ---
 is used in Q27, Q28 and Q35; learn it once.}
-\begin{ansbox}$\pi_0\approx310$ mmHg; first order, $k\approx4.4\\times10^{-4}$ s$^{-1}$.\end{ansbox}
+\begin{ansbox}$\pi_0\approx310$ mmHg; first order, $k\approx4.4\times10^{-4}$ s$^{-1}$.\end{ansbox}
 
 \qtitle{Q24 -- First-order reversible $A\rightleftharpoons R$}{\label{q:24}Ch5, slide 72}
 \src{Ch5\_-\\,krd.pdf, slide 72.}
@@ -949,40 +949,80 @@ hence
 \end{qbox}
 \note{Check before writing the answer: $k_1/k_2=2=K_e$ and $k_1+k_2=0.087$ --- both
 constraints must hold.}
-\begin{ansbox}$-r_A=0.058\\,C_A-0.029\\,C_R$ mol/(L$\\cdot$min).\end{ansbox}
+\begin{ansbox}$-r_A=0.058\\,C_A-0.029\\,C_R$ mol/(L$\cdot$min).\end{ansbox}
 
 \qtitle{Q25 -- Half-order batch; $2A\to B$ volume change}{\label{q:25}Ch5, slide 73}
-\src{Ch5\_-\,krd.pdf, slide 73.}
-(i) $A\to R$, $-r_A=3C_A^{0.5}$ mol/(L$\cdot$h), $C_{A0}=1$ mol/L: conversion after 1 h?
-(ii) Gas $2A\to B$, 80\% A, constant pressure: volume falls 20\% in 3 min; first-order $k$?
+\src{Ch5\_-\\,krd.pdf, slide 73.}
+(i) $A\to R$ with $-r_A=3C_A^{0.5}$ mol/(L$\cdot$h), $C_{A0}=1$~mol/L: what is the
+conversion after 1~h?  (ii) Gaseous $2A\to B$ (feed 80\% A, 20\% inerts) at
+constant pressure: the volume falls 20\% in 3~min; find the first-order $k$.
+
 \begin{qbox}
-(i) $2(\sqrt{C_{A0}}-\sqrt{C_A})=3t$ gives $\sqrt{C_A}<0$ for $t>0.667$ h: the charge is
-consumed in 40 min, so $X(1\,\mathrm{h})=1$.
-(ii) $V/V_0=1+\varepsilon_A X$ with $\varepsilon_A=0.8\times\frac{1-2}{2}=-0.4$; $0.8=1-0.4X
-\Rightarrow X=0.5$; $k=\ln\frac1{1-0.5}/3=0.231$ min$^{-1}$.
+\textbf{(i) Integrate the half-order law.}
+$\dfrac{dC_A}{dt}=-3C_A^{1/2}\Rightarrow
+2\left(\sqrt{C_{A0}}-\sqrt{C_A}\right)=3t$, i.e.\ $\sqrt{C_A}=1-1.5t$.
+Blindly inserting $t=1$ gives $\sqrt{C_A}=-0.5$ --- impossible.  The charge is
+\emph{fully consumed} when $\sqrt{C_A}=0$, at $t=\tfrac{2}{3}$~h $=40$~min; after
+that the rate is zero.  Hence at 1~h, $X=1$.
+
+\textbf{(ii) Read $X$ off the volume change.}  $y_{A0}=0.8$,
+$\varepsilon_A=y_{A0}\frac{1-2}{2}=-0.4$; constant $T,\pi$ gives
+$V/V_0=1+\varepsilon_A X$:
+\[
+0.8=1-0.4X\ \Rightarrow\ X=0.5.
+\]
+First order: $\ln\frac{1}{1-X}=kt\Rightarrow k=\frac{\ln2}{3}=0.231$~min$^{-1}$.
 \end{qbox}
+\note{Part (i) is a trap question: half-order kinetics run out of reactant in
+finite time; state the depletion time explicitly in the exam.}
 \begin{ansbox}(i) $X=1$ (complete at 40 min); (ii) $k=0.231$ min$^{-1}$.\end{ansbox}
 
 \qtitle{Q26 -- $A\to3R$ in a MFR (L 5.19)}{\label{q:26}Ch5, slide 74}
-\src{Ch5\_-\,krd.pdf, slide 74.}
-Pure A at 3 atm, 30\,°C ($C_{A0}=120$ mmol/L) into a 1-L MFR; $v_0=0.06,0.48,1.5,8.1$ L/min
-with $C_A=30,60,80,105$ mmol/L.
-\begin{qbox}
-$\varepsilon_A=2$: $X=\frac{C_{A0}-C_A}{C_{A0}+2C_A}=0.50,0.25,0.143,0.045$;
-$-r_A=v_0C_{A0}X/V=3.6,14.4,25.7,44.0$ mmol/(L$\cdot$min).  Log--log slope $=2.00$;
-$-r_A/C_A^2=0.0040$ in all four runs.
-\end{qbox}
-\begin{ansbox}$-r_A=0.004\,C_A^2$ ($C_A$ in mmol/L, $-r_A$ in mmol/(L$\cdot$min)), i.e. $4$ L/(mol$\cdot$min) in molar units.\end{ansbox}
+\src{Ch5\_-\\,krd.pdf, slide 74.}
+Pure A at 3 atm and 30\,°C ($C_{A0}=120$~mmol/L) enters a 1-L mixed flow
+reactor; four runs with $v_0=0.06,0.48,1.5,8.1$~L/min give
+$C_A=30,60,80,105$~mmol/L.  Find the rate equation.
 
-\qtitle{Q27 -- $A\to2.5R$ batch, pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
-\src{Ch5\_-\,krd.pdf, slide 76.}
-0\,°C, constant volume, pure A: $p_A$ (mm) $=760,600,475,380,320,275,240,215,150$ at
-$t=0,2,\dots,14,\infty$.
 \begin{qbox}
-$p_{A,\infty}=150\neq0$: the reaction approaches equilibrium.  First order towards it:
-$\ln\frac{p_{A0}-p_{Ae}}{p_A-p_{Ae}}=kt$ gives $k=0.152$--$0.162$ at every point
-(fit $0.160$ min$^{-1}$) --- a first-order reversible rate equation represents the data.
+\textbf{Step 1 --- conversions with expansion.}  $A\to3R$: $\varepsilon_A=2$, so
+$C_A=C_{A0}\frac{1-X}{1+2X}$, inverted:
+$X=\frac{C_{A0}-C_A}{C_{A0}+2C_A}=0.50,\,0.25,\,0.143,\,0.045$.
+(Ignoring $\varepsilon$ here would halve the first conversion --- a classic slip.)
+
+\textbf{Step 2 --- one rate per run from the MFR balance.}
+$-r_A=\dfrac{v_0C_{A0}X}{V}=3.6,\,14.4,\,25.7,\,44.0$~mmol/(L$\cdot$min).
+
+\textbf{Step 3 --- order and constant.}  The log--log slope of the four
+$(C_A,-r_A)$ pairs is $2.00$; dividing, $-r_A/C_A^2=0.0040$ in all runs, so
+\[
+-r_A=0.004\,C_A^2\qquad(\mathrm{mmol,\ L,\ min})\;=\;4\ \mathrm{L/(mol\cdot min)}\ \text{in molar units}.
+\]
 \end{qbox}
+\begin{ansbox}$-r_A=0.004\\,C_A^2$ with $C_A$ in mmol/L (i.e. $k=4$ L/(mol$\cdot$min)).\end{ansbox}
+
+\qtitle{Q27 -- $A\to2.5R$ batch, partial-pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
+\src{Ch5\_-\\,krd.pdf, slide 76.}
+At 0\,°C, constant volume, pure A: $p_A$ (mm) $=760,600,475,380,320,275,240,215$
+at $t=0,2,\dots,14$~min and $150$ at $t=\infty$.  Find a rate equation that
+represents the data.
+
+\begin{qbox}
+\textbf{Step 1 --- the tail is not zero: equilibrium.}  $p_{A,\infty}=150\neq0$:
+the reaction stops short, so it is reversible and the rate must be tested as a
+first-order \emph{approach to equilibrium}:
+\[
+\ln\frac{p_{A0}-p_{Ae}}{p_A-p_{Ae}}=kt.
+\]
+
+\textbf{Step 2 --- evaluate at each reading.}  With $p_{A0}-p_{Ae}=610$ the eight
+values of $k$ come out $0.152$--$0.162$~min$^{-1}$ (least-squares fit $0.160$) ---
+flat enough to accept the form.
+
+\textbf{Conclusion.}  A first-order reversible rate equation (forward and reverse
+each first order) represents the data with $k_1+k_2\approx0.16$~min$^{-1}$.
+\end{qbox}
+\note{Same family as Q24: whenever a batch run levels off above zero, test
+$\ln[(p_0-p_e)/(p-p_e)]$ vs $t$ before anything else.}
 \begin{ansbox}First-order approach to $p_{Ae}=150$ mm with $k\approx0.16$ min$^{-1}$.\end{ansbox}
 
 \qtitle{Q28 -- Reaction bomb $2A\to B$ at 100\,°C}{\label{q:28}Ch5, slides 78--79}

@@ -1162,6 +1162,140 @@ Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
   \item Food processing and pharmacy; textile and paper industry; wastewater treatment and water purification; dairy industry.
 \end{itemize}
 
+% ---- Module 2, Lecture 8 : centrifugal sedimentation ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 8 --- Centrifugal Sedimentation}
+
+\spsub{Cyclone separators}
+\begin{itemize}
+  \item Most centrifugal separators for removing particles from gas streams contain \emph{no moving parts}. The body is a vertical cylinder with a conical bottom, a \textbf{tangential inlet} near the top and an outlet for dust at the bottom of the cone; the inlet is usually rectangular, and the outlet pipe is extended into the cylinder to prevent short-circuiting of air from inlet to outlet.
+  \item The incoming dust-laden air travels in a \emph{spiral path} around and down the cylindrical body. The centrifugal force developed in the vortex moves the particles radially toward the wall, and particles that reach the wall slide down into the cone and are collected.
+  \item The cyclone is therefore basically a settling device in which a strong \emph{centrifugal} force acting radially is used in place of the relatively weak \emph{gravitational} force acting vertically.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Centrifugal force at radius }r:\quad & F_c=\frac{m\,u_{tan}^{2}}{r}
+ &&\text{(}m=\text{particle mass},\; u_{tan}=\text{tangential velocity)}\\[3pt]
+\text{Ratio to gravity:}\quad & \frac{F_c}{F_g}=\frac{m\,u_{tan}^{2}/r}{mg}=\frac{u_{tan}^{2}}{rg}
+ &&\text{\textbf{separation factor}}
+\end{align*}
+\end{formulabox}
+
+\spsub{Hydrocyclones (hydroclones)}
+\begin{itemize}
+  \item Cyclones are also used for separating solids from \emph{liquids}, sometimes as thickeners but much more commonly as classifiers. In this service they are called hydrocyclones or hydroclones.
+  \item The feed enters tangentially at high velocity near the top. The liquid follows a spiral path near the vessel wall, forming a strong \emph{downward vortex}; large or heavy solid particles separate to the wall and are pushed downward and out of the cyclone as a slurry or paste.
+  \item A variable-discharge orifice controls the consistency of the underflow. Most of the liquid goes back upward in an \emph{inner vortex} and leaves through the central discharge pipe, known as the \textbf{vortex finder}.
+\end{itemize}
+
+\spsub{Centrifugal decanters --- separating immiscible liquids}
+\begin{itemize}
+  \item Immiscible liquids are separated industrially in centrifugal decanters. The separating force is much larger than that of gravity, and it acts in the direction \emph{away from the axis of rotation} instead of downward towards the earth's surface.
+  \item The main types are \textbf{tubular centrifuges} and \textbf{disk centrifuges}.
+\end{itemize}
+
+\spsub{Tubular centrifuge}
+\begin{itemize}
+  \item Feed enters from a stationary nozzle inserted through an opening in the bottom of the bowl, and separates into two concentric layers of liquid inside the bowl.
+  \item The inner (lighter) layer spills over a \emph{weir} at the top of the bowl; it is thrown outward into a stationary discharge cover and from there to a spout. The heavy liquid flows over another weir into a separate cover and discharge spout.
+  \item The weir over which the heavy liquid flows is removable and may be replaced with another having an opening of a different size --- this is how the position of the heavy--light interface is set.
+\end{itemize}
+
+\spsub{Disk centrifuge}
+\begin{itemize}
+  \item Feed enters from above through a stationary pipe set into the neck of the bowl. Two liquid layers form as in a tubular centrifuge, and flow over adjustable dams into separate discharge spouts.
+  \item Inside the bowl, and rotating with it, are closely spaced ``disks'' --- actually cones of sheet metal set one above the other. Matching holes in the disks, about halfway between the axis and the wall of the bowl, form channels through which the liquids pass.
+  \item Feed liquor enters the bowl at the bottom, flows into the channels and upward past the disks. Heavier liquid is thrown outward, displacing lighter liquid toward the centre of the bowl. In its travel the heavy liquid very soon strikes the underside of a disk and flows beneath it to the periphery of the bowl without meeting any more light liquid; light liquid similarly flows inward and upward over the upper surfaces of the disks.
+  \item Because the disks are closely spaced, the distance a drop of either liquid must travel to escape from the other phase is short --- much shorter than in the comparatively thick liquid layers of a tubular centrifuge.
+  \item Disk centrifuges are particularly valuable where the purpose of centrifuging is not complete separation but the \emph{concentration} of one fluid phase, as in separating cream from milk and concentrating rubber latex.
+\end{itemize}
+
+\spsub{Nozzle-discharge centrifuge}
+\begin{itemize}
+  \item A modified disk-type centrifuge with a \emph{double conical} bowl. At the periphery of the bowl, at its maximum diameter, is a set of small holes or nozzles, perhaps \SI{3}{mm} in diameter.
+  \item The central part of the bowl operates in the same way as the usual disk centrifuge, overflowing either one or two streams of clarified liquid.
+  \item Solids are thrown to the periphery of the bowl and escape continuously through the nozzles, together with a considerable quantity of liquid.
+\end{itemize}
+
+\spsub{Principle of centrifugal sedimentation}
+\begin{itemize}
+  \item A particle of a given size is \emph{removed} when it reaches the wall of the separator bowl. The particle moves radially outward with its terminal velocity, and the diameter of the smallest particle that is removed is what the design calculates.
+  \item Feed enters at the bottom, liquid discharges at the top; the liquid moves upward through the bowl at a constant velocity, carrying the solid particles with it.
+  \item Geometry: $r_1$ = radius of the inner surface of the liquid (the liquid interface), $r_2$ = inside radius of the bowl, $r_A$ = radius at which the feed enters, $r_B$ = radial position reached by the particle at the end of settling, $b$ = height of the bowl.
+  \item If $r_B<r_2$ the particle leaves the bowl with the liquid, i.e.\ it is \emph{not} removed. If $r_B=r_2$ the particle has been deposited on the bowl wall and is removed from the liquid.
+\end{itemize}
+
+\spsub{Residence time and settling time --- Stokes' law regime}
+\begin{formulabox}
+\begin{align*}
+\text{Terminal velocity at radius }r:\quad & u_t=\frac{\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}
+ &&\text{(Stokes' law regime)}\\[3pt]
+& u_t=\frac{\mathrm{d}r}{\mathrm{d}t}
+ \qquad\Longrightarrow\qquad
+ \mathrm{d}t=\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\,\frac{\mathrm{d}r}{r}\\[4pt]
+\text{Integrate:}\quad & \text{limits } r=r_A \text{ at } t=0,\quad r=r_B \text{ at } t=t_T\\[3pt]
+& t_T=\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\,\ln\frac{r_B}{r_A}
+ &&\text{settling time}\\[4pt]
+& t_T=\frac{\text{volume of liquid in bowl}}{\text{volumetric flow rate}}=\frac{V}{q},
+ \qquad V=\pi b\left(r_2^{2}-r_1^{2}\right)
+ &&\text{residence time}
+\end{align*}
+\end{formulabox}
+\notetext{$\omega$ = angular velocity of the bowl (rad/s), $\rho_p$ = particle density, $\rho$ = liquid density, $\mu$ = liquid viscosity, $D_p$ = particle diameter. The settling time available is limited by the residence time of the liquid in the bowl; a particle is removed only if the two are comparable in the way the design requires.}
+
+\spsub{Volumetric flow rate and the cut point}
+\begin{formulabox}
+Equating the two times gives the volumetric flow rate for a given cut size:
+\begin{align*}
+\frac{\pi b\left(r_2^{2}-r_1^{2}\right)}{q}
+ =\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\ln\frac{r_B}{r_A}
+ \qquad\Longrightarrow\qquad
+ q=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}\,
+    \frac{r_2^{2}-r_1^{2}}{\ln\left(r_B/r_A\right)}
+\end{align*}
+\textbf{Cut point} $D_{pc}$: the diameter of the particle that reaches \emph{half} the distance between $r_1$ and $r_2$ during the settling time, i.e.
+\[r_B=r_2,\qquad r_A=\frac{r_1+r_2}{2}\]
+so that
+\[\boxed{\;q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
+   \frac{r_2^{2}-r_1^{2}}{\ln\left[\dfrac{2r_2}{r_1+r_2}\right]}\;}
+\]
+Particles larger than $D_{pc}$ are removed at this flow rate; particles smaller than $D_{pc}$ stay in the liquid.
+\end{formulabox}
+
+\spsub{Thin liquid layer --- the simple scaling form}
+\begin{itemize}
+  \item When $r_1\simeq r_2$ --- the thickness of the liquid layer is very small --- the settling velocity is effectively constant through the layer and is evaluated at the bowl radius:
+\end{itemize}
+\begin{formulabox}
+\[u_t=\frac{D_p^{2}(\rho_p-\rho)\omega^{2}r_2}{18\mu}\]
+Writing $s$ for the settling distance and $t_T$ for the settling time, $u_t=\dfrac{s}{t_T}$ and $t_T=\dfrac{V}{q_c}$, so
+\[q_c=\frac{2V\,u_t}{s}
+ =\frac{2V}{\omega^{2}}\cdot\frac{\omega^{2}D_p^{2}(\rho_p-\rho)r_2}{18\mu\,s}
+ =\boxed{\;\frac{2V\omega^{2}r_2D_p^{2}(\rho_p-\rho)}{18\mu\,s}\;}\]
+\end{formulabox}
+
+\spsub{Sigma value and scale-up}
+\begin{itemize}
+  \item For industrial centrifuges the thin-layer flow equation is modified by replacing $r_2$ and $s$ by average values $r_e$ and $s_e$ for the type of centrifuge under consideration:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+q_c&=\frac{2V\omega^{2}r_e}{g\,s_e}\cdot\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
+     =\boxed{\;2\,\Sigma\,u_g\;}\\[3pt]
+\Sigma&=\frac{V\omega^{2}r_e}{g\,s_e}
+ &&\text{characteristic of the centrifuge}\\[3pt]
+u_g&=\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
+ &&\text{terminal settling velocity of the particle under gravity}
+\end{align*}
+$\Sigma$ is the \emph{cross-sectional area of a gravity settling tank of the same separation capacity as the centrifuge}.
+\end{formulabox}
+\notetext{Because $q_c=2\Sigma u_g$, a centrifuge and a gravity settler that must do the same job are compared through $\Sigma$ alone: double $\Sigma$ and the same cut is achieved at double the flow rate. The deck's Table 30.5 lists $\Sigma$ values for commercial sedimenting centrifuges (tubular, disk, helical-conveyor, axial-flow-conveyor types) against bowl diameter and speed.}
+
+\spsub{Worked problem set by the deck (Mod 2 Lec 8, slide 26)}
+\begin{daybox}
+\textbf{Capacity of a clarifying centrifuge.} What is the capacity in cubic metres per hour of a clarifying centrifuge operating under the following conditions? Bowl diameter \SI{600}{mm}; thickness of the liquid layer \SI{75}{mm}; depth of bowl \SI{400}{mm}; speed \SI{1200}{r/min}; specific gravity of liquid $1.2$; specific gravity of solid $1.6$; viscosity of liquid \SI{2}{cP}; cut size of particles \SI{30}{\micro\meter}.
+\end{daybox}
+\notetext{The solution, with every substituted number, is worked in \texttt{SP2-Problems-and-Solutions.tex} (Q12) and checked by \texttt{sp2-answers-check.py}.}
+
 \spsection{PRACTICE PROBLEMS FROM THE SLIDES}
 
 \spsub{1 \textperiodcentered{} Screen analysis of a clay catalyst (Lec.~3)}

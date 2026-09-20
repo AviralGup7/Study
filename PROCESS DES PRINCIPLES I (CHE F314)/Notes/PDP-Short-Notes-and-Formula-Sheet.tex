@@ -1,0 +1,637 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=18mm,right=18mm,top=15mm,bottom=17mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{color}
+\usepackage{array,tabularx,longtable,multicol,calc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent2,citecolor=accent}
+
+%--------------------------------------------------------------- palette
+% The base `color` package (no xcolor here) understands only rgb/cmyk/gray, so
+% the SP2 HTML values are expanded to rgb triplets at generation time.
+\definecolor{accent}{rgb}{0.0431,0.2353,0.3647}
+\definecolor{accent2}{rgb}{0.1137,0.4353,0.6471}
+\definecolor{boxbg}{rgb}{0.9451,0.9569,0.9686}
+\definecolor{boxframe}{rgb}{0.7765,0.8196,0.8549}
+\definecolor{rule}{rgb}{0.6235,0.7020,0.7608}
+\definecolor{inbox}{rgb}{0.0549,0.1412,0.1882}
+\definecolor{notecol}{rgb}{0.2745,0.3255,0.3608}
+\definecolor{white}{rgb}{1.0000,1.0000,1.0000}
+
+%--------------------------------------------------------------- headings
+\newcommand{\spsection}[1]{%
+  \par\addvspace{10pt}\noindent
+  \colorbox{accent}{%
+    \begin{minipage}{\dimexpr\linewidth-14pt\relax}%
+      \color{white}\bfseries\large\strut #1\strut
+    \end{minipage}}\par\vspace{4pt}\nopagebreak}
+
+\newcommand{\spsub}[1]{\par\addvspace{7pt}\noindent{\color{accent}\bfseries #1}\par\addvspace{3pt}\nopagebreak}
+
+\newcommand{\notetext}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
+%--------------------------------------------------------------- boxes
+% tcolorbox is unavailable, so every box is an lrbox'd minipage inside a
+% \fcolorbox.  \bgroup/\egroup CANNOT be used here: they silently discard the
+% box body.  All of these are ENVIRONMENTS, not macros -- calling them as
+% \warnbox{...} leaves a minipage open and TeX dies on "main memory size".
+\newsavebox{\spboxa}
+\newenvironment{formulabox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{daybox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{notecol}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{qbox}{%
+  \par\addvspace{6pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{mthbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{ansbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{warnbox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newcommand{\qtitle}[2]{%
+  \par\addvspace{8pt}\noindent{\color{accent}\bfseries Q#1.\hspace{0.5em}}{\small\color{notecol}#2}\par\addvspace{3pt}\nopagebreak}
+
+%--------------------------------------------------------------- tables
+% booktabs is unavailable; map its rules onto \hline so both source styles work.
+\providecommand{\toprule}{\hline}
+\providecommand{\midrule}{\hline}
+\providecommand{\bottomrule}{\hline}
+
+%--------------------------------------------------------------- glyphs
+% No EC/TS1 metrics in this tree, so build the few needed text glyphs from math.
+\providecommand{\textperiodcentered}{\ensuremath{\cdot}}
+\providecommand{\textdegree}{\ensuremath{^\circ}}
+\newcommand{\microm}{\ensuremath{\,\mu\mathrm{m}}}
+\newcommand{\degreec}{\ensuremath{^\circ\mathrm{C}}}
+\newcommand{\degreef}{\ensuremath{^\circ\mathrm{F}}}
+\newcommand{\degreek}{\ensuremath{^\circ\mathrm{K}}}
+
+%--------------------------------------------------------------- lists
+\setlength{\leftmargini}{1.1em}
+\setlength{\leftmarginii}{1.5em}
+\setlength{\partopsep}{2pt}
+\setlength{\parsep}{0pt}
+\setlength{\itemsep}{1.5pt}
+\setlength{\topsep}{2pt}
+\renewcommand{\labelitemi}{\textbullet}
+\renewcommand{\labelitemii}{\textendash}
+
+%--------------------------------------------------------------- layout
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+\setlength{\emergencystretch}{3em}
+
+%--------------------------------------------------------------- footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F314 \textperiodcentered{} Process Design Principles I --- Short Notes \& Formula Sheet}
+\fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
+
+\begin{document}
+
+%=======================================================================
+%  CHE F314 - Process Design Principles I : Short Notes & Formula Sheet
+%  Built to the SP2-notes.tex standard (see tools/latex/preamble.tex).
+%  Every worked number is reproduced by pdp-answers-check.py.
+%=======================================================================
+
+%=============================================================== cover
+\begin{center}
+{\LARGE\bfseries\color{accent} PROCESS DESIGN PRINCIPLES I}\\[2pt]
+{\color{accent2} CHE F314 \textperiodcentered{} BITS Pilani \textperiodcentered{} I-Semester 2026-27}\\[4pt]
+{\color{rule}\rule{0.6\linewidth}{0.8pt}}\\[6pt]
+{\Large\bfseries\color{accent} Short Notes \& Formula Sheet}\\[4pt]
+{\color{accent2} Process synthesis \textperiodcentered{} The hierarchy of decisions\\
+ Case studies: HDA, vinyl chloride, acetone recovery\\
+ Absorber design \textperiodcentered{} Economic optimisation \textperiodcentered{} Energy integration}\\[3pt]
+{\footnotesize\color{notecol} Lecture-1, 04-08-2026}
+\end{center}
+
+\vspace{2mm}
+\begin{daybox}
+\textbf{Compiled from:} the five course slide decks in \texttt{Slides/} --- \texttt{L-1.pdf} (22~pp), \texttt{L-2.pdf} (35~pp), \texttt{L-4.pdf} (42~pp), \texttt{EDM.pdf} (97~pp) and \texttt{EIA\_Selected\_Slides.pdf} (6~pp).\\[2pt]
+\textbf{Companion documents:} \texttt{PDP-Problems-and-Solutions.pdf} works every numerical the decks pose (P1--P7); \texttt{pdp-answers-check.py} reproduces every number quoted below and exits~0.\\[2pt]
+\textbf{One caveat about a source:} \texttt{EIA\_Selected\_Slides.pdf} is the only deck in the set with \emph{no text layer} --- its six pages are images, so section~5 carries only what is legible there and is correspondingly shorter than the others. The other four decks were read directly from their text.
+\end{daybox}
+
+\spsub{What is inside}
+\begin{tabularx}{\linewidth}{@{}Xr@{}}
+\toprule
+\textbf{\color{accent}Topic} & \textbf{Deck}\\
+\midrule
+What process design is; synthesis vs analysis; why design problems are
+ under-defined; the five-level hierarchy of decisions; batch vs continuous & L-1\\
+The hierarchical approach; the five synthesis steps; the HDA case study;
+ ordering rules for VRS, LSS and EIA; input--output economics & L-2\\
+Pathway economics and gross profit; the vinyl chloride case study; pressure
+ decisions; block, process and instrumentation flow diagrams & L-4\\
+Economic potential; recovery-route selection; the acetone case study; absorber
+ heuristics and the Kremser equation; optimum solute loss; approach temperature;
+ minimum trays & EDM\\
+Composite curves, the pinch, exchanger area and the grid diagram & EIA\\
+\bottomrule
+\end{tabularx}
+
+\spsub{Notation used throughout}
+{\small
+\begin{tabularx}{\linewidth}{@{}l X l X@{}}
+\toprule
+$L,\,G$ & solvent and gas molar flows & $m$ & equilibrium slope, $y^*=mx$\\
+$N$ & theoretical stages & $x,\,y$ & liquid, gas solute mole fractions\\
+$\gamma_s$ & solvent activity coefficient & $P_s^{\circ}$ & solute vapour pressure\\
+$\mathrm{EP}$ & economic potential & $\mathrm{TAC}$ & total annualised cost\\
+$U$ & overall heat-transfer coefficient & $A$ & exchanger area\\
+$\Delta T_{lm}$ & log-mean temperature difference & $\Delta T_{min}$ & minimum approach temperature\\
+$Q$ & exchanger duty & $\alpha$ & relative volatility\\
+$N_{min}$ & minimum number of trays & $\lambda$ & latent heat of vaporisation\\
+$F,\,c_p$ & stream mass flow, heat capacity & $C_A,\,C_N,\,C_s$ & area, stage and solute costs\\
+\bottomrule
+\end{tabularx}}
+
+%================================================================== L-1
+\spsection{1 \enspace Introduction and the Hierarchy of Decisions}
+\notetext{Source: \texttt{L-1.pdf}.}
+
+\spsub{1.1 \enspace What process design is}
+\begin{itemize}
+\item \textbf{Chemical process design is about finding a sustainable process that can convert the raw materials to the desired chemical products.} The deck's own framing: \emph{``a combination of science and art in a creative activity.''}
+\item \textbf{The purpose of engineering is to create new material wealth}, and in chemical engineering that is accomplished \emph{via the chemical transformation and/or separation of materials}. Every flowsheet decision in this course is one of those two.
+\item \textbf{Scale of the opportunity:} about \textbf{50\,\% of the chemical products sold were developed during the last few decades} (30--40 years) --- the deck's evidence that the engineering effort works.
+\item \textbf{Process and plant design} is the creative activity of generating ideas and translating them into equations and processes, either to produce new materials or to \emph{significantly upgrade the value of existing ones}.
+\end{itemize}
+
+\spsub{1.2 \enspace Synthesis versus analysis}
+\begin{itemize}
+\item \textbf{Synthesis} --- \emph{building} the flowsheet. \textbf{Analysis} --- \emph{understanding} a given one. The two need different tools, and the course is mostly synthesis.
+\item \textbf{The goal of a conceptual design} is twofold: to find the \textbf{best process flowsheet}, and to estimate the \textbf{optimum design conditions}.
+\item \textbf{Why synthesis is hard:} design problems are \emph{under-defined}, and $\mathbf{10^{4}}$\textbf{--}$\mathbf{10^{9}}$ \textbf{alternatives can be generated for a single product plant}. With that many possibilities and only a small chance of success, a strategy is not optional.
+\item \textbf{The missing information must be assumed:} what type of process units to use, how they are interconnected, and what temperatures, pressures and flow rates are required. That act of assuming \emph{is} the synthesis activity.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{heuristics} &\;\longrightarrow\; \text{set structure and some design variables}
+ &&\text{first resort}\\[3pt]
+\text{shortcut methods} &\;\longrightarrow\; \text{where heuristics run out}
+ &&\text{second resort}
+\end{align*}
+\end{formulabox}
+
+\spsub{1.3 \enspace The objective}
+\begin{itemize}
+\item Out of the $10^{4}$--$10^{9}$ alternatives we must find the one that has the \textbf{lowest cost}, is \textbf{safe}, \textbf{satisfies environmental constraints}, and is \textbf{easy to start up and operate}. Those four are the standing test applied to every case study in this course.
+\end{itemize}
+
+\spsub{1.4 \enspace The hierarchy of decisions}
+\begin{daybox}
+\textbf{Five levels, taken in order.} Each level's answer constrains the next, which is why they cannot be taken out of sequence.
+\begin{enumerate}
+\item \textbf{Level 1 --- Batch vs continuous.}
+\item \textbf{Level 2 --- Input--output structure} of the flowsheet.
+\item \textbf{Level 3 --- Recycle structure} of the flowsheet.
+\item \textbf{Level 4 --- General structure of the separation system}, split into \textbf{4a. VRS} (vapour recovery system) and \textbf{4b. LSS} (liquid separation system).
+\item \textbf{Level 5 --- Energy integration analysis (EIA).}
+\end{enumerate}
+\end{daybox}
+\begin{itemize}
+\item \textbf{Level 1, batch vs continuous:} batch is preferred for \emph{small capacities}, \emph{campaign operation}, \emph{fouling} services, or where there is a \emph{proven batch market}; continuous otherwise.
+\end{itemize}
+
+%================================================================== L-2
+\spsection{2 \enspace The Hierarchical Approach --- the HDA Case Study}
+\notetext{Source: \texttt{L-2.pdf}.}
+
+\spsub{2.1 \enspace The five synthesis steps}
+\begin{daybox}
+\textbf{Synthesis as the elimination of differences, in order:}
+\begin{enumerate}
+\item \textbf{Eliminate differences in molecular type} --- by chemical reaction.
+\item \textbf{Distribute the chemicals} --- match sources to sinks.
+\item \textbf{Eliminate differences in composition} --- by separation.
+\item \textbf{Eliminate differences in temperature, pressure and phase.}
+\item \textbf{Integrate the tasks} into unit operations.
+\end{enumerate}
+\end{daybox}
+
+\spsub{2.2 \enspace The HDA process}
+\begin{itemize}
+\item \textbf{Reaction:} toluene $+$ H$_2$ $\to$ benzene $+$ CH$_4$.
+\item \textbf{Reactor conditions, and why:}
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+$1150$--$1300\,\degreef$ & below the range the reaction is too slow; above it \textbf{hydrocracking} takes over\\
+$500$~psia ($\approx34$~atm) & operating pressure\\
+excess H$_2$ & suppresses \textbf{coking}\\
+purge & required because \textbf{CH$_4$ builds up} in the recycle loop\\
+toluene recycled & unconverted feed returns to the reactor\\
+\bottomrule
+\end{tabularx}
+\begin{itemize}
+\item \textbf{Boiling points set the separation sequence} (all in \degreef):
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l*{5}{r}@{}}
+\toprule
+ & H$_2$ & CH$_4$ & benzene & toluene & diphenyl\\
+\midrule
+$T_b$ (\degreef) & $-423$ & $-259$ & 176 & 232 & 491\\
+\bottomrule
+\end{tabularx}
+\notetext{The gap between $-259$ and $176$\,\degreef{} is enormous, so a \textbf{flash / light-gas split comes first} and \textbf{distillation follows}. Reading a boiling-point table before choosing separators is the habit this deck is teaching.}
+
+\spsub{2.3 \enspace Ordering rules that the hierarchy forces}
+\begin{itemize}
+\item \textbf{The VRS is designed \emph{before} the LSS}, because the VRS's losses fix the purge composition --- and the purge composition is an input to the liquid separation.
+\item \textbf{EIA is done \emph{last}}, after the distillation train is fixed, because heat-exchanger network synthesis needs \emph{every} stream's flow, composition and temperature. Those do not exist until the earlier levels are settled.
+\end{itemize}
+
+\spsub{2.4 \enspace Why input--output structure dominates the economics}
+\begin{itemize}
+\item \textbf{Raw materials are normally $33$--$85\,\%$ of total product cost.} Nothing else in the flowsheet comes close, which is why Level~2 is decided before anything is sized.
+\item \textbf{Overall material balances are therefore evaluated first}, and any alternative whose \emph{products are worth less than its feeds} is discarded immediately --- no amount of downstream cleverness rescues it.
+\end{itemize}
+
+%================================================================== L-4
+\spsection{3 \enspace Pathway Economics --- the Vinyl Chloride Case Study}
+\notetext{Source: \texttt{L-4.pdf}.}
+
+\spsub{3.1 \enspace Gross profit as the pathway selector}
+\begin{formulabox}
+\begin{align*}
+\text{gross profit} &= \text{value of products} - \text{cost of reactants}
+ &&\text{per lb of vinyl chloride}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item Paths are compared on \textbf{lb per lb of VC from stoichiometry, times the price in cents per lb}. The deck's prices:
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l*{6}{r}@{}}
+\toprule
+ & ethylene & acetylene & Cl$_2$ & VC & HCl & water\\
+\midrule
+cents/lb & 18 & 50 & 11 & 22 & 18 & 0\\
+\bottomrule
+\end{tabularx}
+
+\spsub{3.2 \enspace Path-3 flowsheet, balanced for 100\,000 lb/h VC}
+\begin{tabularx}{\linewidth}{@{}X r@{}}
+\toprule
+\textbf{Stream} & \textbf{lb/h}\\
+\midrule
+vinyl chloride product & 100\,000\\
+Cl$_2$ feed & 113\,400\\
+C$_2$H$_4$ feed & 44\,900\\
+DCE to pyrolysis & 158\,300\\
+DCE recycle (from 60\,\% per-pass conversion) & 105\,500\\
+\bottomrule
+\end{tabularx}
+\notetext{Chlorination runs at \textbf{100\,\% conversion}; pyrolysis at \textbf{60\,\% per pass}, which is what creates the DCE recycle. Note that the recycle is larger than the fresh feed of either reactant --- a typical and easily missed consequence of a modest per-pass conversion.}
+
+\spsub{3.3 \enspace Pressure decisions, and the reasoning behind each}
+\begin{tabularx}{\linewidth}{@{}l l X@{}}
+\toprule
+\textbf{Unit} & \textbf{Pressure} & \textbf{Why}\\
+\midrule
+chlorination & 1.5~atm & above atmospheric so there is \textbf{no air ingress}\\
+pyrolysis & 26~atm & ---\\
+first column & 12~atm & HCl boils at $-26.2\,\degreec$; bottoms bubble point $93\,\degreec$ --- keeps operation \textbf{away from the critical region}\\
+second column & 4.8~atm & distillate at $33\,\degreec$ \textbf{condenses on cooling water}; bottoms at $146\,\degreec$ on \textbf{medium-pressure steam}\\
+\bottomrule
+\end{tabularx}
+\begin{itemize}
+\item \textbf{Feed temperature $\geq 35\,\degreec$.}
+\item \textbf{Pump liquids, not vapours} --- molar volume is far smaller, so the compression work is far lower.
+\item \textbf{Cool the pyrolysis effluent by partial condensation} to set the feed condition for the column.
+\end{itemize}
+\notetext{Every pressure in this table is chosen to make a \emph{utility} available at ordinary conditions: cooling water on one condenser, medium-pressure steam on one reboiler. That is the whole point of choosing column pressure early.}
+
+\spsub{3.4 \enspace The three levels of flow diagram}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{BFD} & block flow diagram --- functional blocks only\\
+\textbf{PFD} & process flow diagram --- all major units, numbered stream diamonds, stream table, utilities, equipment summary\\
+\textbf{P\&ID} & piping and instrumentation diagram --- \emph{every} instrument and control loop; \textbf{the construction document}\\
+\bottomrule
+\end{tabularx}
+
+%================================================================== EDM
+\spsection{4 \enspace Economic Decision Making --- the Acetone Case Study}
+\notetext{Source: \texttt{EDM.pdf} (97 slides).}
+
+\spsub{4.1 \enspace Economic potential}
+\begin{formulabox}
+\begin{align*}
+\mathrm{EP} &= \text{product value} - \text{raw-material cost}
+ &&\text{the first screen on any project}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{The case:} $10.3$~mol/h of acetone in $687$~mol/h of air. This gives
+\[
+\mathrm{EP} = \text{Rs } 5.26\ \text{Cr/yr} \;\;(\approx \$1.315\times10^{6}/\text{yr at } 8150\ \text{h/yr})
+\]
+\item \textbf{$8150$~h/yr} is the annual operating hours used throughout this deck; it converts any hourly figure to an annual one.
+\end{itemize}
+
+\spsub{4.2 \enspace Choosing the recovery route}
+\begin{itemize}
+\item \textbf{The alternatives:} condensation (high pressure / low temperature), absorption, adsorption, membrane, and reaction.
+\item \textbf{The heuristic:} if the solute is \textbf{$<5$~mol\,\%} in the gas, \textbf{adsorption is cheapest}.
+\[
+\frac{10.3}{697.3} = 1.47\,\% \;\;\Longrightarrow\;\; \text{the heuristic applies here}
+\]
+\end{itemize}
+
+\spsub{4.3 \enspace The four absorber heuristics}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{H1} & If a raw-material component can act as the absorber \emph{solvent} (here, water), consider \textbf{feeding the process through the gas absorber}. This justifies discarding part of the process water: \textbf{\$25\,600/yr} against the economic potential above.\\
+\textbf{H2} & Recover \textbf{$>99\,\%$} of valuable material; use \textbf{$99.5\,\%$} as the first guess.\\
+\textbf{H3} & For an \textbf{isothermal dilute} absorber, take $\boxed{\;L = 1.4\,mG\;}$.\\
+\textbf{H4} & \textbf{Avoid adiabatic absorbers} --- their minimum $L$ can be $\sim10\times$ larger, $L \approx 14\,mG$.\\
+\bottomrule
+\end{tabularx}
+\notetext{H3 and H4 are the same instruction from two directions: keep the absorber isothermal, because letting it heat up costs an order of magnitude in solvent.}
+
+\spsub{4.4 \enspace Equilibrium slope and solvent rate}
+\begin{formulabox}
+\begin{align*}
+m &= \frac{\gamma_s P_s^{\circ}}{P}
+ &&\text{equilibrium slope from the solvent activity coefficient}\\[4pt]
+m &= \frac{6.7 \times 229}{760} = 2.02
+ &&\text{acetone--water at } 25\,\degreec,\ 1\ \text{atm}\\[4pt]
+L &= 1.4\,mG = 1943\ \text{mol/h}
+ &&\text{from H3}
+\end{align*}
+\end{formulabox}
+
+\spsub{4.5 \enspace The Kremser equation}
+\notetext{Valid for an \emph{isothermal, dilute} absorber with straight equilibrium and operating lines --- exactly the conditions H3 and H4 arrange.}
+\begin{formulabox}
+\begin{align*}
+N+1 &= \frac{\ln\!\left[\left(\dfrac{y_{in}-m x_{in}}{y_{out}-m x_{in}}\right)\!\left(1-\dfrac{mG}{L}\right)+\dfrac{mG}{L}\right]}{\ln\!\left(L/mG\right)}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item With $L/mG = 1.4$ and $x_{in}=0$ (clean solvent):
+\[
+99\,\%\ \text{recovery} \;\Longrightarrow\; N \approx 10\ (\text{exact } 10.1);
+\qquad 99.9\,\% \;\Longrightarrow\; N \approx 16
+\]
+\item \textbf{Keep $\mathbf{1 < L/mG < 2}$.} The reasoning is the part worth remembering: $L/mG < 1$ needs \emph{infinitely many trays}, while $L/mG > 2$ \emph{starves the downstream distillation column's feed}. $1.4$ is the trade-off, not an arbitrary factor.
+\end{itemize}
+
+\spsub{4.6 \enspace Optimum solute loss from the TAC model}
+\begin{formulabox}
+\begin{align*}
+\mathrm{TAC} &= C_s\,G\,y_{in}\!\left(\frac{y_{out}}{y_{in}}\right) 8150 \;+\; C_N\left[N+2\right]
+ &&\text{solute loss} + \text{stages}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item Minimising gives a result of the form
+$\dfrac{y_{out}}{y_{in}} \approx \sqrt{\dfrac{C_N \ln(L/mG)}{8150\,C_s\,G\,y_{in}}}$, and numerically
+\[
+\boxed{\;\frac{y_{out}}{y_{in}} \approx 0.004\;}\qquad\text{i.e. } 99.6\,\%\ \text{recovery}
+\]
+\item \textbf{This optimum is insensitive to $\pm100\,\%$ changes in the cost parameters.} That insensitivity is the practical payoff: H2's ``recover $>99\,\%$'' is not a guess, it is within a factor of two of the true optimum, so the heuristic is safe to apply without a costing study.
+\end{itemize}
+
+\spsub{4.7 \enspace How the design variables move the answer}
+\begin{tabularx}{\linewidth}{@{}X X@{}}
+\toprule
+\textbf{Change} & \textbf{Effect}\\
+\midrule
+double $P_T$ & halves $L$ (smaller still), same number of trays\\
+hotter solvent & raises $\gamma_s$ and $P_s^{\circ}$, so raises $m$ and therefore $L$\\
+use MIBK ($\gamma = 1$) & shrinks $L$, but the solvent's own cost kills the saving\\
+\bottomrule
+\end{tabularx}
+\notetext{All three say the same thing: $m$ is the lever. Anything that lowers $m$ lowers $L$, and pressure and temperature both act on $m$ through $P_s^{\circ}$.}
+
+\spsub{4.8 \enspace The approach-temperature heuristic}
+\begin{itemize}
+\item \textbf{Rule of thumb:} a $\mathbf{10\,\degreef}$ approach, applied from ambient up to the boiling point of organics.
+\item \textbf{The deck then tests its own rule} on a waste stream with $F = 51\,000$~lb/h, $c_p = 1.0$, $U_c = 30$ and $U_s = 20$~Btu/h$\cdot$ft$^2\cdot\degreef$, and $C_A = \$11.38$/yr$\cdot$ft$^2$. The optimum comes out near \textbf{$21.5\,\degreef$} --- so the $10\,\degreef$ rule is \emph{conservative}. Section~6.1 quantifies what that conservatism costs.
+\end{itemize}
+
+\spsub{4.9 \enspace Minimum trays: back-of-envelope versus Fenske}
+\begin{formulabox}
+\begin{align*}
+N_{min} &\approx \frac{T_{b1}+T_{b2}}{3\left(T_{b2}-T_{b1}\right)}
+ &&\text{back-of-envelope, boiling points only}\\[6pt]
+N_{min} &= \frac{\log\!\left[\dfrac{x_D}{1-x_D}\cdot\dfrac{1-x_B}{x_B}\right]}{\log\alpha}
+ &&\text{Fenske}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item The deck's claim is that the first expression \emph{is} Fenske's equation when $\lambda/R \approx 5080$~K. Section~6.2 tests that claim numerically rather than accepting it.
+\end{itemize}
+
+%================================================================== EIA
+\spsection{5 \enspace Energy Integration}
+\notetext{Source: \texttt{EIA\_Selected\_Slides.pdf} --- six image-only pages, so this section is shorter than the others and carries only what is legible there.}
+
+\spsub{5.1 \enspace Composite curves and the pinch}
+\begin{itemize}
+\item \textbf{Hot and cold streams are drawn as enthalpy--temperature composite curves.} The closest vertical distance between them is $\Delta T_{min}$; the deck works with the $10\,\degreef$ approach of \S4.8.
+\item \textbf{The pinch} is where the two curves touch at $\Delta T_{min}$. It splits the problem in two:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{above the pinch:}\quad & \text{only hot utility}
+ &&\text{no heat crosses the pinch}\\[3pt]
+\text{below the pinch:}\quad & \text{only cold utility}
+ &&\text{no heat crosses the pinch}
+\end{align*}
+\end{formulabox}
+
+\spsub{5.2 \enspace Exchanger duty, area and the grid diagram}
+\begin{formulabox}
+\begin{align*}
+Q &= U\,A\,\Delta T_{lm}
+ &&\Longrightarrow\quad A = \frac{Q}{U\,\Delta T_{lm}}\\[5pt]
+\Delta T_{lm} &= \frac{\Delta T_1 - \Delta T_2}{\ln\!\left(\Delta T_1/\Delta T_2\right)}
+ &&\text{log-mean temperature difference}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{The grid diagram} records the matches: exchangers appear as circles or lozenges between stream lines, with heaters and coolers at the ends. \textbf{Matches that cross the pinch are the retrofit targets} --- each one is destroying available driving force.
+\end{itemize}
+
+%================================================================== worked
+\spsection{6 \enspace Worked from the Decks}
+\notetext{Both examples below are reproduced in full by \texttt{pdp-answers-check.py}, which exits~0.}
+
+\spsub{6.1 \enspace P1 --- How much does the $10\,\degreef$ rule actually cost?}
+\notetext{\texttt{EDM.pdf}, slides 94--95. Waste stream $FC_p = 51\,000$~Btu/h$\cdot\degreef$; heat available above $100\,\degreef$ is $1.3566\times10^{7}$~Btu/h, enough to raise $14\,529.3$~lb/h of steam.}
+\begin{tabularx}{\linewidth}{@{}r*{6}{r}@{}}
+\toprule
+$T_1$\,(\degreef) & $dt_s$ & $dt_c$ & $A_s$/ft$^2$ & $A_c$/ft$^2$ & TAC\,(\$/yr)\\
+\midrule
+277 & 10.0 & 157.0 & 5846 & 5637 & 49\,745\\
+280 & 13.0 & 160.0 & 5177 & 5656 & 46\,207\\
+285 & 18.0 & 165.0 & 4347 & 5688 & 43\,552\\
+\textbf{290} & 23.0 & 170.0 & 3722 & 5720 & \textbf{43\,220}\\
+295 & 28.0 & 175.0 & 3220 & 5750 & 44\,286\\
+300 & 33.0 & 180.0 & 2801 & 5781 & 46\,286\\
+310 & 43.0 & 190.0 & 2126 & 5840 & 52\,124\\
+320 & 53.0 & 200.0 & 1593 & 5897 & 59\,552\\
+340 & 73.0 & 220.0 & 777  & 6005 & 77\,190\\
+360 & 93.0 & 240.0 & 159  & 6107 & 97\,017\\
+\bottomrule
+\end{tabularx}
+\notetext{Refined by optimisation rather than read off the table:}
+\begin{mthbox}
+\begin{align*}
+T_1^{\text{opt}} &= 288.5\,\degreef\\[2pt]
+\text{approach, steam-generator cold end} &= 21.5\,\degreef\\[2pt]
+A_s &= 3894.02\ \mathrm{ft^2}\\[2pt]
+A_c &= 5710.18\ \mathrm{ft^2}\\[2pt]
+\text{area cost} &= \$109\,296\\[2pt]
+\text{CW cost} &= \$23\,675\\[2pt]
+\text{steam credit} &= \$89\,828\\[4pt]
+\boxed{\;\mathrm{TAC}_{\text{opt}} = \$43\,143/\text{yr}\;}
+\end{align*}
+\end{mthbox}
+\begin{ansbox}
+\begin{align*}
+\mathrm{TAC}\ \text{at the } 10\,\degreef\ \text{rule} &= \$49\,745/\text{yr}\\
+\text{penalty against the optimum} &= \boxed{\;15.3\,\%\;}
+\end{align*}
+\end{ansbox}
+\begin{itemize}
+\item \textbf{The rule is conservative but not free.} Designing to a $10\,\degreef$ approach costs $15.3\,\%$ of the annualised cost against the true optimum of $21.5\,\degreef$.
+\item \textbf{How flat is the optimum?} Within $5\,\%$ of the optimum TAC, $T_1$ ranges over
+\[
+281.25 \le T_1 \le 297.75\,\degreef
+\qquad\Longleftrightarrow\qquad
+14.25 \le \text{approach} \le 30.75\,\degreef
+\]
+\item \textbf{The practical conclusion.} The optimum is broad --- a $\pm8\,\degreef$ window either side costs less than $5\,\%$. So the $10\,\degreef$ heuristic is defensible as a \emph{starting} design point, and the $15.3\,\%$ is the known price of stopping there rather than optimising. Note also that the approach at the \emph{cooler} hot end is $168.5\,\degreef$: the two ends of this network are nowhere near equally tight, and a single approach-temperature rule cannot capture that.
+\end{itemize}
+
+\spsub{6.2 \enspace P2 --- Is the boiling-point rule really Fenske's equation?}
+\notetext{\texttt{EDM.pdf}, slide 96. Toluene/benzene, $T_{avg} = 368.515$~K.}
+\begin{mthbox}
+\begin{align*}
+S_{99\,\%} &= 9801, &\qquad \ln S &= 9.19024\\
+S_{99.9\,\%} &= 998\,001, &\qquad \ln S &= 13.8135
+\end{align*}
+\end{mthbox}
+\begin{itemize}
+\item \textbf{The value of $\lambda/R$ that makes the two expressions agree:}
+\[
+\frac{\lambda}{R} = 5080.11\ \mathrm{K}
+\qquad\Longleftrightarrow\qquad
+\lambda = 42.236\ \mathrm{kJ/mol} = 10.0942\ \mathrm{kcal/mol}
+\]
+\item \textbf{At that value the two methods agree to three significant figures:}
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l r r r@{}}
+\toprule
+$\lambda/R$ (K) & $\ln\alpha$ & $\alpha$ & Fenske $N$\\
+\midrule
+\textbf{5080} & 1.14403 & 3.13938 & \textbf{8.033}\\
+3800 & 0.855748 & 2.35313 & 10.739\\
+\midrule
+back-of-envelope & --- & --- & 8.047\\
+\bottomrule
+\end{tabularx}
+\begin{ansbox}
+\[
+\text{back-of-envelope } N = 8.047 \qquad\text{vs.}\qquad \text{Fenske } N = 8.033
+\qquad\Longrightarrow\qquad \boxed{\;\text{the claim holds at } \lambda/R \approx 5080\ \mathrm{K}\;}
+\]
+\end{ansbox}
+\begin{itemize}
+\item \textbf{The rule is not unit-dependent.} Repeating the back-of-envelope calculation in \textbf{degrees Rankine} gives $N = 8.04706$ --- identical. The factor of $3$ in the denominator absorbs the scale, which is why the rule survives a change of temperature unit.
+\item \textbf{But it is sensitive to $\lambda$.} At $\lambda/R = 3800$~K, Fenske gives $10.74$ trays --- $33\,\%$ more than at $5080$~K. The rule works because $\lambda/R \approx 5080$~K is typical for the organic separations it is used on, not because it is exact.
+\item \textbf{Reading it backwards is also useful.} With $\lambda/R = 5000$~K ($\lambda = 10$~kcal/mol), the implied separation is $\ln S = 9.06086$, $S = 8611.55$, i.e.\ a \textbf{$98.93\,\%$ split of each component} --- slightly short of the $99\,\%$ the rule is normally quoted for.
+\end{itemize}
+
+%================================================================== formula sheet
+\spsection{Formula Sheet}
+\begin{formulabox}
+\begin{align*}
+\mathrm{EP} &= \text{product value} - \text{raw-material cost}
+ &&\text{economic potential}\\[3pt]
+\text{gross profit} &= \text{value of products} - \text{cost of reactants}
+ &&\text{per lb of product}\\[4pt]
+m &= \frac{\gamma_s P_s^{\circ}}{P}
+ &&\text{equilibrium slope}\\[3pt]
+L &= 1.4\,mG
+ &&\text{isothermal dilute absorber (H3)}\\[4pt]
+N+1 &= \frac{\ln\!\left[\left(\frac{y_{in}-mx_{in}}{y_{out}-mx_{in}}\right)\!\left(1-\frac{mG}{L}\right)+\frac{mG}{L}\right]}{\ln(L/mG)}
+ &&\text{Kremser}\\[6pt]
+\mathrm{TAC} &= C_s G y_{in}\!\left(\frac{y_{out}}{y_{in}}\right)8150 + C_N[N+2]
+ &&\text{absorber cost model}\\[5pt]
+N_{min} &\approx \frac{T_{b1}+T_{b2}}{3(T_{b2}-T_{b1})}
+ &&\text{back-of-envelope trays}\\[5pt]
+N_{min} &= \frac{\log\!\left[\frac{x_D}{1-x_D}\cdot\frac{1-x_B}{x_B}\right]}{\log\alpha}
+ &&\text{Fenske}\\[5pt]
+Q &= UA\Delta T_{lm},
+ &\qquad \Delta T_{lm} &= \frac{\Delta T_1-\Delta T_2}{\ln(\Delta T_1/\Delta T_2)}
+ &&\text{exchanger}
+\end{align*}
+\end{formulabox}
+
+\spsub{The heuristics, in one place}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+Solute $<5$~mol\,\% in the gas & adsorption is the cheapest recovery route\\
+A raw material can be the solvent & feed the process through the absorber\\
+Valuable material & recover $>99\,\%$; first guess $99.5\,\%$\\
+Isothermal dilute absorber & $L = 1.4\,mG$, i.e.\ $1 < L/mG < 2$\\
+Adiabatic absorber & avoid; $L \approx 14\,mG$\\
+Approach temperature & $10\,\degreef$ from ambient to the organic boiling point\\
+Raw-material share of product cost & normally $33$--$85\,\%$\\
+\bottomrule
+\end{tabularx}
+
+\spsub{The order things must be decided in}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+1 & Batch or continuous\\
+2 & Input--output structure (dominates economics; discard any path whose products are worth less than its feeds)\\
+3 & Recycle structure\\
+4a & Vapour recovery system --- \emph{before} the LSS, since its losses fix the purge composition\\
+4b & Liquid separation system\\
+5 & Energy integration --- \emph{last}, since HENS needs every stream's flow, composition and temperature\\
+\bottomrule
+\end{tabularx}
+
+\vspace{3mm}
+{\color{rule}\hrule height 0.6pt}
+\vspace{2mm}
+\notetext{Prepared from the five CHE F314 slide decks named in the box on page~1; every number is reproduced by \texttt{pdp-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). \texttt{EIA\_Selected\_Slides.pdf} has no text layer, so section~5 carries only what is legible on its six image pages --- that limit is stated there rather than filled in from another source. Symbols: $L$ solvent molar flow, $G$ gas molar flow, $m$ equilibrium slope $y^*=mx$, $N$ theoretical stages, $x$ and $y$ liquid and gas solute mole fractions, $\gamma_s$ solvent activity coefficient, $P_s^{\circ}$ solute vapour pressure, $\mathrm{EP}$ economic potential, $\mathrm{TAC}$ total annualised cost, $U$ overall heat-transfer coefficient, $A$ exchanger area, $\Delta T_{lm}$ log-mean temperature difference, $\Delta T_{min}$ minimum approach temperature, $Q$ exchanger duty, $\alpha$ relative volatility, $N_{min}$ minimum number of trays, $\lambda$ latent heat of vaporisation, $F$ stream mass flow, $c_p$ heat capacity, $C_A$ area cost, $C_N$ stage cost, $C_s$ solute cost, VRS vapour recovery system, LSS liquid separation system, EIA energy integration analysis, HENS heat-exchanger network synthesis, BFD block flow diagram, PFD process flow diagram, P\&ID piping and instrumentation diagram, HDA hydrodealkylation, DCE dichloroethane, VC vinyl chloride, MIBK methyl isobutyl ketone.}
+
+\end{document}

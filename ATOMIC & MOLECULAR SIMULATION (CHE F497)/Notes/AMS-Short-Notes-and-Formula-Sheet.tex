@@ -1,0 +1,496 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=18mm,right=18mm,top=15mm,bottom=17mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{color}
+\usepackage{array,tabularx,longtable,multicol,calc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent2,citecolor=accent}
+
+%--------------------------------------------------------------- palette
+% The base `color` package (no xcolor here) understands only rgb/cmyk/gray, so
+% the SP2 HTML values are expanded to rgb triplets at generation time.
+\definecolor{accent}{rgb}{0.0431,0.2353,0.3647}
+\definecolor{accent2}{rgb}{0.1137,0.4353,0.6471}
+\definecolor{boxbg}{rgb}{0.9451,0.9569,0.9686}
+\definecolor{boxframe}{rgb}{0.7765,0.8196,0.8549}
+\definecolor{rule}{rgb}{0.6235,0.7020,0.7608}
+\definecolor{inbox}{rgb}{0.0549,0.1412,0.1882}
+\definecolor{notecol}{rgb}{0.2745,0.3255,0.3608}
+\definecolor{white}{rgb}{1.0000,1.0000,1.0000}
+
+%--------------------------------------------------------------- headings
+\newcommand{\spsection}[1]{%
+  \par\addvspace{10pt}\noindent
+  \colorbox{accent}{%
+    \begin{minipage}{\dimexpr\linewidth-14pt\relax}%
+      \color{white}\bfseries\large\strut #1\strut
+    \end{minipage}}\par\vspace{4pt}\nopagebreak}
+
+\newcommand{\spsub}[1]{\par\addvspace{7pt}\noindent{\color{accent}\bfseries #1}\par\addvspace{3pt}\nopagebreak}
+
+\newcommand{\notetext}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
+%--------------------------------------------------------------- boxes
+% tcolorbox is unavailable, so every box is an lrbox'd minipage inside a
+% \fcolorbox.  \bgroup/\egroup CANNOT be used here: they silently discard the
+% box body.  All of these are ENVIRONMENTS, not macros -- calling them as
+% \warnbox{...} leaves a minipage open and TeX dies on "main memory size".
+\newsavebox{\spboxa}
+\newenvironment{formulabox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{daybox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{notecol}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{qbox}{%
+  \par\addvspace{6pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{mthbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{ansbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{warnbox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newcommand{\qtitle}[2]{%
+  \par\addvspace{8pt}\noindent{\color{accent}\bfseries Q#1.\hspace{0.5em}}{\small\color{notecol}#2}\par\addvspace{3pt}\nopagebreak}
+
+%--------------------------------------------------------------- tables
+% booktabs is unavailable; map its rules onto \hline so both source styles work.
+\providecommand{\toprule}{\hline}
+\providecommand{\midrule}{\hline}
+\providecommand{\bottomrule}{\hline}
+
+%--------------------------------------------------------------- glyphs
+% No EC/TS1 metrics in this tree, so build the few needed text glyphs from math.
+\providecommand{\textperiodcentered}{\ensuremath{\cdot}}
+\providecommand{\textdegree}{\ensuremath{^\circ}}
+\newcommand{\microm}{\ensuremath{\,\mu\mathrm{m}}}
+\newcommand{\degreec}{\ensuremath{^\circ\mathrm{C}}}
+\newcommand{\degreef}{\ensuremath{^\circ\mathrm{F}}}
+\newcommand{\degreek}{\ensuremath{^\circ\mathrm{K}}}
+
+%--------------------------------------------------------------- lists
+\setlength{\leftmargini}{1.1em}
+\setlength{\leftmarginii}{1.5em}
+\setlength{\partopsep}{2pt}
+\setlength{\parsep}{0pt}
+\setlength{\itemsep}{1.5pt}
+\setlength{\topsep}{2pt}
+\renewcommand{\labelitemi}{\textbullet}
+\renewcommand{\labelitemii}{\textendash}
+
+%--------------------------------------------------------------- layout
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+\setlength{\emergencystretch}{3em}
+
+%--------------------------------------------------------------- footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F497 \textperiodcentered{} Atomic and Molecular Simulations --- Short Notes \& Formula Sheet}
+\fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
+
+\begin{document}
+
+%=======================================================================
+%  CHE F497 - Atomic and Molecular Simulations : Short Notes & Formula Sheet
+%  Built to the SP2-notes.tex standard (see mknotes.py / PREAMBLE).
+%  Sources: the three course decks in Slides/ (exact filenames in the daybox).
+%=======================================================================
+
+%=============================================================== cover
+\begin{center}
+{\LARGE\bfseries\color{accent} ATOMIC AND MOLECULAR SIMULATIONS}\\[2pt]
+{\color{accent2} CHE F497 \textperiodcentered{} BITS Pilani \textperiodcentered{} I-Semester 2026-27}\\[4pt]
+{\color{rule}\rule{0.6\linewidth}{0.8pt}}\\[6pt]
+{\Large\bfseries\color{accent} Short Notes \& Formula Sheet}\\[4pt]
+{\color{accent2} Module I --- Introduction to Atomic \& Molecular Simulation Methods\\
+ and Recap of Statistical Thermodynamics\\
+ Module II --- Quantum Chemical Methods}\\[3pt]
+{\footnotesize\color{notecol} Dr.\ Sarbani Ghosh, Department of Chemical Engineering}
+\end{center}
+
+\vspace{2mm}
+\begin{daybox}
+\textbf{Compiled from:} the course slide decks \texttt{L1\_L2\_AMS\_2026.pdf} (Lecture Class I, II \& III --- 4th, 6th \& 7th Aug 2026), \texttt{L4-L5.pdf} (Lecture Class IV \& V --- 11th \& 13th Aug 2026) and \texttt{L6-7.pdf} (Module II continuation).\\[2pt]
+\textbf{Tools named on the slides:} VMD (visualisation, Linux), Avogadro (molecular modelling); C, Fortran or MATLAB for the exercises.\\[2pt]
+\textbf{Nature of the source:} these decks are conceptual --- they develop method ideas rather than pose worked numericals. Every statement below is traceable to a named deck; nothing has been supplied from outside them.
+\end{daybox}
+
+\spsub{What is inside}
+\begin{tabularx}{\linewidth}{@{}Xr@{}}
+\toprule
+\textbf{\color{accent}Module I --- Simulation methods \& statistical thermodynamics} & \textbf{Lecture}\\
+\midrule
+Why computer simulation; history from MANIAC to the first MD run & I\\
+Atomistic vs.\ molecular simulation; micro-, meso-, macro-scale & I\\
+Three levels of method: QM-based, classical MD, hybrid QM-MM & I\\
+Thermodynamics vs.\ statistical mechanics; micro/macrostates & I--II\\
+Boltzmann relation, partition function, ensembles, averages & II--III\\
+\midrule
+\textbf{\color{accent}Module II --- Quantum chemical methods} & \\
+\midrule
+Why quantum mechanics; matter--radiation theory; wave--particle duality & IV\\
+The wave function and Born's statistical interpretation & IV\\
+Born--Oppenheimer approximation and the adiabatic potential energy surface & IV--V\\
+Dimensionality of the many-body problem; Hartree product; electron density & V\\
+Hohenberg--Kohn theorems, Kohn--Sham equations, self-consistent cycle & V\\
+Periodic structures, supercells, lattice parameters, BCC/FCC & V\\
+Exchange--correlation functionals: LDA, GGA, PW91, PBE & VI\\
+Localized vs.\ spatially extended basis functions & VI\\
+Hartree--Fock, spin orbitals, antisymmetry, Slater determinant & VI--VII\\
+\bottomrule
+\end{tabularx}
+
+\spsub{Notation used throughout}
+{\small
+\begin{tabularx}{\linewidth}{@{}l X l X@{}}
+\toprule
+$\Psi(\mathbf{r},t)$ & wave function & $\Omega(N,V,E)$ & degeneracy / density of states\\
+$E$ & ground-state energy & $Q$ & partition function\\
+$n(\mathbf{r})$ & electron density & $S$ & entropy\\
+$N$ & number of electrons & $F$ & Helmholtz free energy\\
+$M$ & number of nuclei & $k_B$ & Boltzmann constant\\
+$P_i$ & probability of state $i$ & $T$ & temperature\\
+$\hat{H}$ & Hamiltonian operator & $E_{XC}$ & exchange--correlation functional\\
+$\Psi_i(\mathbf{r})$ & single-electron (Kohn--Sham) wave function & $V_H$, $V_{XC}$ & Hartree / exchange--correlation potential\\
+$a$ & lattice constant & $\mathbf{R}_1,\ldots,\mathbf{R}_M$ & nuclear positions\\
+\bottomrule
+\end{tabularx}}
+
+%================================================================ Module I
+\spsection{Module I --- Introduction to Atomic and Molecular Simulation Methods}
+\notetext{Source: \texttt{L1\_L2\_AMS\_2026.pdf}, Lecture Class I, II \& III.}
+
+\spsub{1.1 \enspace Why computer simulation}
+\begin{itemize}
+\item \textbf{Before simulation:} properties of real materials were predicted from \emph{approximate} theories --- the \textbf{van der Waals equation} for dense gases, \textbf{Debye--H\"uckel theory} for electrolytes, the \textbf{Boltzmann equation} for transport properties of dilute gases.
+\item \textbf{The promise:} obtain essentially exact results for a \emph{given model system} without relying on approximate theories. That is what computer simulation delivers.
+\item \textbf{History.} Computing machines were developed during the Second World War for nuclear weapons and code-breaking; \textbf{Colossus} (British, 1943--1945) was the first large-scale electronic computer. In the 1950s computers became partly available for non-military use, beginning computer simulation; the \textbf{first simulation of a liquid} was run at Los Alamos National Laboratory on the \textbf{MANIAC} machine. In \textbf{1959 Vineyard} (Brookhaven) performed the \textbf{first MD simulation of a real material} --- radiation damage in crystalline Cu.
+\item \textbf{Scope:} use a computer to simulate the behaviour of materials at the atomic and molecular scale; learn the tools of modern computational materials science at the atomistic level; evaluate the tools and their applicability to diverse materials problems.
+\end{itemize}
+
+\spsub{1.2 \enspace Atomistic vs.\ molecular simulation, and the three scales}
+\begin{itemize}
+\item \textbf{Atomistic simulation} models materials at the level of atoms; the methods differ in sophistication but share the feature that the \textbf{location of atomic nuclei is of principal interest}.
+\item \textbf{Molecular simulation} deals with molecules; \textbf{atoms are presented explicitly} in the simulation.
+\item \textbf{Timescale classes} into which materials simulations divide:
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l l X@{}}
+\toprule
+\textbf{Scale} & \textbf{Timescale} & \textbf{Representative methods}\\
+\midrule
+microscale & 1 ns & atomistic, coarse-grained, kinetic Monte-Carlo\\
+mesoscale  & 1 \ensuremath{\mathrm{\mu s}} & dissipative particle dynamics, etc.\\
+macroscale & 1 s & ---\\
+\bottomrule
+\end{tabularx}
+
+\spsub{1.3 \enspace Three levels of method}
+\begin{itemize}
+\item \textbf{1. QM-based methods} (DFT, DFTB): single-point energy evaluation and dynamics of a \emph{small} system. Limited to the range of \textbf{hundreds of atoms}; very short times in dynamical simulations (\textbf{$<100$ ps}) even on a supercomputer. The \textbf{most reliable MD method} available --- to be used when nothing else can, e.g.\ for the \emph{explicit} treatment of chemical reactions.
+\item \textbf{2. Classical MD}: for \textbf{large systems}, \textbf{long time scales}, or \textbf{long series of events}. The most reliable \emph{classical} molecular simulation; applications range from biochemistry to materials science (bio-molecules and proteins, ion collisions, materials).
+\item \textbf{3. Hybrid QM-MM}: QM and classical molecular simulations applied \emph{simultaneously}. Example on the slides --- QM-MM MD used to simulate the \textbf{microsolvation structure of glycine in water}; core-electron binding energies were evaluated in static DFT-based QM-MM mechanics.
+\end{itemize}
+
+\spsub{1.4 \enspace Mechanics, thermodynamics, statistical mechanics}
+\begin{itemize}
+\item \textbf{Mechanics} --- study of position, velocity, force and energy. \emph{Classical mechanics (molecular mechanics):} molecules or molecular segments are treated as rigid objects (point, sphere, cube, \ldots) obeying \textbf{Newton's laws of motion}. \emph{Quantum mechanics:} molecules are composed of electrons and nuclei, and \textbf{Schr\"odinger's equation} yields the wave function.
+\item \textbf{Thermodynamics} --- relationships between \emph{macroscopic} properties: volume, pressure, compressibility, \ldots
+\item \textbf{Statistical mechanics (statistical thermodynamics)} --- how those macroscopic properties arise as a consequence of the \emph{microscopic} nature of the system (positions and momenta of individual molecules). It is the \textbf{link between microscopic and bulk properties}.
+\end{itemize}
+
+\spsub{1.5 \enspace Why statistical thermodynamics is unavoidable}
+\begin{itemize}
+\item We perform \emph{computer} experiments (MD, MC), but we cannot compare simulated results with real experiment directly: \textbf{no real experiment can provide such detailed information}.
+\item A typical experiment measures \textbf{average} properties --- averaged over a large number of particles and over the time of measurement.
+\item If simulation is to be the \textbf{numerical counterpart of experiment}, we must know \emph{which averages} to compute. Hence the language of statistical mechanics.
+\item It turns out to be easier to derive the basic laws of statistical mechanics using the language of \textbf{quantum mechanics}.
+\item \textbf{Thermodynamic system:} an assembly of submicroscopic entities (atoms, molecules, photons, electrons) in a very large number of ever-changing quantum states; each entity has a \textbf{probability} of being in a particular state.
+\item \textbf{Numbers are enormous:} $N\sim10^{23}$; molecules interact via collisions; an assembly tends towards the \textbf{most probable state} --- highest disorder, highest entropy, equilibrium.
+\end{itemize}
+
+\spsub{1.6 \enspace Microstates and macrostates}
+\begin{itemize}
+\item \textbf{Microstate} --- specified by the number of particles in each \emph{energy state}; equivalently by the position and momentum of \emph{each} particle.
+\item \textbf{Macrostate} --- specified by the number of particles in each of the energy \emph{levels}; described by $T$, $P$, $V$, \ldots (far fewer variables).
+\item \textbf{Basic postulate:} \emph{all possible microstates of an isolated assembly are equally probable.}
+\item \textbf{Slide example (4 particles).} Take the macrostate ``2 particles in state~1 and 2 particles in state~2''. There are \textbf{six} distinct rearrangements of the four particles --- all six have the \emph{same} macrostate but \emph{different} microstates.
+\item \textbf{Probability slide example.} Tossing $N=4$ coins can give 4, 3, 2, 1 or 0 heads --- i.e.\ \textbf{5 macrostates}, with $N_1$ = number of heads and $N_2$ = number of tails.
+\end{itemize}
+
+\spsub{1.7 \enspace Statistical mechanics in quantum-mechanical terms}
+\begin{formulabox}
+\begin{align*}
+S(N,V,E) &\approx k_B \ln \Omega(N,V,E) &&\text{Boltzmann: entropy from density of states}\\[2pt]
+\frac{1}{T} &= \left(\frac{\partial S}{\partial E}\right)_{V,N}
+ &&\Longrightarrow\quad \delta S = \frac{1}{T}\,\delta E
+ \;\Longleftrightarrow\; \frac{\delta S}{k_B}=\frac{\delta E}{k_B T}\\[2pt]
+\ln\Omega &= -\frac{E}{k_B T}
+ &&\Longrightarrow\quad \boxed{\;\Omega = \exp\!\left(-\frac{E}{k_B T}\right)\;}\\[4pt]
+F &= -k_B T \ln Q
+ &&\text{Helmholtz free energy from the partition function}\\[2pt]
+Q &= \sum_i \exp\!\left(-E_i/k_B T\right)
+ &&\text{sum over all quantum states of the Boltzmann factor}\\[4pt]
+P_i &= \frac{\Omega_B(E-E_i)}{\sum_j \Omega_B(E-E_j)}
+ &&\text{probability that system A is in state } i\\[2pt]
+\langle E\rangle &= \sum_i E_i P_i
+ &&\text{average energy at temperature } T
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{$\Omega(E,V,N)$} is the \emph{degeneracy of the energy levels} --- the number of eigenstates with energy $E$, particle number $N$ and volume $V$. A system with fixed $N$, $V$, $E$ is equally likely to be found in any of its $\Omega(E)$ eigenstates.
+\item \textbf{Thermal equilibrium between subsystems:} with $E = E_A + E_B$, maximising the total entropy gives $\delta S/\delta E = k_B \cdot \delta S/(k_B\delta E) = 1/(k_B T)$, which is the route to the Boltzmann factor above.
+\item \textbf{Ensemble average} --- an average over all possible quantum states of a system.
+\item \textbf{In MD we measure a \emph{time} average}, on two assumptions: the simulated time is \emph{sufficiently long}, and the time average \emph{does not depend on the initial conditions}.
+\end{itemize}
+
+%================================================================ Module II
+\spsection{Module II --- Quantum Chemical Methods}
+\notetext{Source: \texttt{L4-L5.pdf} (Lecture Class IV \& V) and \texttt{L6-7.pdf}.}
+
+\spsub{2.1 \enspace Why quantum mechanics}
+\begin{itemize}
+\item The simplest answer on the slides: \textbf{we live in a quantum world}. Quantum mechanics is needed to make and control \textbf{electronic, opto-electronic and optical devices}, to understand \textbf{band gap} and device physics, and underpins semiconductor devices, lasers and quantum optics.
+\item \textbf{Classical mechanics cannot explain quantization.} Its failure to explain \textbf{blackbody radiation}, the \textbf{photoelectric effect}, \textbf{atomic stability} and \textbf{atomic spectroscopy} cleared the way for new ideas. Light waves are quantized into particles called \textbf{photons}; the colour of visible light is associated with different wavelengths.
+\end{itemize}
+
+\spsub{2.2 \enspace Matter--radiation theory and wave--particle duality}
+\begin{itemize}
+\item \textbf{Classical picture.} The Universe = matter + radiation. Matter consists of particles whose motion is governed by \textbf{Newton's} mechanics: at an instant $t_0$ the state is the position vector $\mathbf{r}_0$ and momentum $\mathbf{p}_0$. Radiation is governed by \textbf{Maxwell's} electromagnetism, with dynamical variables the electric field $\mathbf{E}$ and magnetic field $\mathbf{B}$. Unlike matter, the radiation field consists of \emph{waves}.
+\item Until the turn of the twentieth century it was firmly believed that \emph{all} phenomena could be explained within matter--radiation theory; atomic and subatomic structure then showed \textbf{non-classical behaviour}.
+\item \textbf{Quantum picture.} Objects do not exist in a specific place at a specific time; they exist in a \emph{haze of probability} --- a certain chance of being at point A, another at point B. Particles have wavelike properties governed by the \textbf{Schr\"odinger equation}.
+\item \textbf{Wave--particle duality (complementarity).} Electrons and photons sometimes behave as particles, sometimes as waves. Neutrons, protons and electrons seem like particles with mass and momentum, yet on an appropriate length or time-scale they exhibit \textbf{superposition and interference}. \emph{Measuring the particle properties destroys the wave features, and vice versa} --- we can obtain either, but not both together.
+\end{itemize}
+
+\spsub{2.3 \enspace The wave function and Born's interpretation}
+\begin{formulabox}
+\begin{align*}
+\Psi &= \Psi(\mathbf{r},t),\qquad \mathbf{r}=\{x,y,z\}
+ &&\text{state of the system at time } t\\[3pt]
+P &= \int_V |\Psi(\mathbf{r},t)|^2\,dV
+ &&\Longrightarrow\quad \boxed{\;|\Psi|^2 = \text{probability density}\;}\\[3pt]
+P &= \Psi^*(\mathbf{r}_1,\ldots,\mathbf{r}_N)\,\Psi(\mathbf{r}_1,\ldots,\mathbf{r}_N)
+ &&\text{for } N \text{ electrons } (^*\text{ = complex conjugate})\\[3pt]
+n(\mathbf{r}) &= 2\sum_i |\Psi_i(\mathbf{r})|^2
+ &&\text{electron density; sum over occupied orbitals}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item All information about a particle is encoded in its \textbf{wave function}, a complex-valued function roughly analogous to the amplitude of a wave at each point in space; it evolves according to the Schr\"odinger equation. Each wave function is associated with a particular energy $E$.
+\item \textbf{Statistical interpretation (Max Born):} $\Psi(\mathbf{r},t)$ has no physical meaning of its own; $|\Psi(\mathbf{r},t)|^2$ is the \textbf{probability density} for locating the particle, so $P$ is the probability of finding it in the volume element $\Delta V = dx\,dy\,dz$.
+\item \textbf{Complex conjugate:} replace every occurrence of $i=\sqrt{-1}$ by $-i$; the product $\Psi^*\Psi$ is therefore always \emph{real}, eliminating complex numbers from all predictions.
+\item \textbf{The factor 2} in $n(\mathbf{r})$ appears because electrons have \textbf{spin} and the \textbf{Pauli exclusion principle} allows each individual electron wave function to be occupied by two electrons \emph{provided they have different spins}.
+\item \textbf{Pauli exclusion principle:} no two electrons in the same atom can have identical values for all four quantum numbers; two electrons in the same orbital must have opposite spins. This is purely quantum mechanical, with \emph{no counterpart in classical physics}.
+\item \textbf{The payoff:} $n(\mathbf{r})$ depends on only \textbf{three} coordinates yet contains a great amount of what is physically observable from a wave function of $3N$ coordinates.
+\end{itemize}
+
+\spsub{2.4 \enspace The Schr\"odinger equation}
+\begin{formulabox}
+\begin{align*}
+i\hbar\,\frac{\partial \Psi(\mathbf{r},t)}{\partial t} &= \hat{H}\,\Psi(\mathbf{r},t)
+ &&\text{time-dependent form}\\[4pt]
+\hat{H}\Psi_n &= E_n\Psi_n
+ &&\text{time-independent, non-relativistic}\\[2pt]
+&&&\text{$\Psi_n$ eigenstates, $E_n$ real eigenvalues}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item The energy Hamiltonian $\hat{H}$ is a function of \textbf{kinetic energy} and \textbf{potential energy} $V$; the potential term includes the \textbf{electron--electron interaction} and the \textbf{external potential}.
+\item For well-known cases with a simple Hamiltonian --- \textbf{particle in a box}, \textbf{harmonic oscillator} --- the equation can be solved \emph{exactly}. With multiple electrons interacting with multiple nuclei it becomes much more complicated, so \textbf{approximations are needed}; the complete description is retained as the target.
+\end{itemize}
+
+\spsub{2.5 \enspace Born--Oppenheimer approximation and the potential energy surface}
+\begin{itemize}
+\item To locate an atom we must define \textbf{(1) where its nucleus is} and \textbf{(2) where its electrons are}.
+\item \textbf{Mass separation:} atomic nuclei are much heavier than electrons --- each proton or neutron has \textbf{more than 1800 times} the mass of an electron --- so electrons respond far more rapidly to changes in their surroundings than nuclei can.
+\item The physical question therefore splits in two: \textbf{(1)} for \emph{fixed} nuclear positions, solve the equations describing electron motion and find the lowest-energy configuration, the \textbf{ground state}; \textbf{(2)} let the nuclei move on the resulting surface.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+E &= E(\mathbf{R}_1,\ldots,\mathbf{R}_M)
+ &&\Longrightarrow\quad \boxed{\;\text{adiabatic potential energy surface}\;}
+\end{align*}
+\end{formulabox}
+\notetext{\textbf{Born--Oppenheimer approximation} = the separation of nuclei and electrons into separate mathematical problems.}
+
+\spsub{2.6 \enspace Why the many-body problem is hard}
+\begin{itemize}
+\item The electronic wave function depends on the spatial coordinates of \emph{each} of the $N$ electrons: $\Psi=\Psi(\mathbf{r}_1,\ldots,\mathbf{r}_N)$. $N$ = number of electrons, $M$ = number of nuclei, and \textbf{$N\gg M$} simply because each atom has one nucleus and many electrons.
+\item \textbf{Dimensionality, from the slides:} a single \textbf{CO$_2$} molecule has $N=22$ electrons and $M=3$ nuclei, so the full wave function is a \textbf{66-dimensional} function (3 dimensions per electron). A nanocluster of \textbf{100 Pt atoms} needs \textbf{more than 23\,000 dimensions}.
+\item The \textbf{electron--electron interaction} term in $\hat{H}$ is the critical one: an individual electron wave function $\Psi(\mathbf{r})$ cannot be found without simultaneously considering \emph{all} the others. The Schr\"odinger equation is therefore a \textbf{many-body problem}.
+\item \textbf{Hartree product} --- the first approximation: $\Psi = \Psi_1(\mathbf{r})\Psi_2(\mathbf{r})\cdots\Psi_N(\mathbf{r})$, a product of individual one-electron wave functions.
+\end{itemize}
+
+\spsub{2.7 \enspace Density functional theory}
+\begin{itemize}
+\item DFT rests on \textbf{two theorems of Hohenberg and Kohn} plus a \textbf{set of equations derived by Kohn and Sham} in the mid-1960s.
+\item \textbf{First Hohenberg--Kohn theorem:} the ground-state energy from Schr\"odinger's equation is a \emph{unique functional} of the electron density, $E[n(\mathbf{r})]$ --- there is a one-to-one mapping between the ground-state wave function and the ground-state electron density. The ground-state electron density uniquely determines \emph{all} properties of the ground state, including the energy and the wave function.
+\item \textbf{Why it matters:} we can solve for a function of \emph{three} spatial variables instead of one of $3N$. For the 100-Pd-atom nanocluster this reduces the problem from $>23\,000$ dimensions to \textbf{just 3}.
+\item \textbf{Functional:} takes a \emph{function} and returns a single \emph{number} (cf.\ an ordinary function, which takes a number and returns a number).
+\item \textbf{Second Hohenberg--Kohn theorem:} the electron density that \emph{minimizes} the energy of the overall functional is the \emph{true} electron density of the full Schr\"odinger solution. The theorem guarantees that a functional exists but says \emph{nothing about what it is}; in practice one applies this \textbf{variational principle} with \emph{approximate} forms.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+E[\{\Psi_i\}] &= \text{electron kinetic energies}
+ &&\text{(1)}\\
+&\quad + \text{Coulomb: electrons}\leftrightarrow\text{nuclei}
+ &&\text{(2)}\\
+&\quad + \text{Coulomb: pairs of electrons}
+ &&\text{(3)}\\
+&\quad + \text{Coulomb: pairs of nuclei}
+ &&\text{(4)}\\
+&\quad + E_{XC}[\{\Psi_i\}]
+ &&\text{exchange--correlation: all the rest}
+\end{align*}
+\end{formulabox}
+\notetext{Terms (1)--(4) are the ``known'' contributions; $E_{XC}$ is \emph{defined} to contain all quantum-mechanical effects not included in them.}
+
+\spsub{2.8 \enspace Kohn--Sham equations and the self-consistent cycle}
+\begin{itemize}
+\item The Kohn--Sham equations have \textbf{three potentials}: $V$, $V_H$ and $V_{XC}$.
+\item \textbf{$V$} is common to the Kohn--Sham and full Schr\"odinger equations and belongs to the ``known'' part of the functional; it defines the \textbf{interaction between an electron and the collection of atomic nuclei}.
+\item \textbf{$V_H$ (Hartree potential)} describes the Coulomb repulsion between the electron being considered and the \emph{total} electron density defined by all electrons. It contains an unphysical \textbf{self-interaction} contribution, because the electron described by the equation is itself part of that total density.
+\item \textbf{$V_{XC}$} defines the exchange and correlation contributions, and is formally the \textbf{functional derivative} of the exchange--correlation energy.
+\item \textbf{The circularity:} to solve the Kohn--Sham equations we need $V_H$; to define $V_H$ we need the electron density; to find the density we need the single-electron wave functions; to get those we must solve the Kohn--Sham equations.
+\end{itemize}
+\begin{daybox}
+\textbf{Breaking the circle --- the self-consistent algorithm as given on the slides.}
+\begin{enumerate}
+\item Define an \textbf{initial, trial electron density} $n(\mathbf{r})$.
+\item \textbf{Solve the Kohn--Sham equations} built on that trial density to obtain the single-particle wave functions $\Psi(\mathbf{r})$.
+\item \textbf{Recalculate} the density from those wave functions, $n_{KS}(\mathbf{r})$.
+\item \textbf{Compare} $n_{KS}(\mathbf{r})$ with the $n(\mathbf{r})$ used in step 2. If they are the same, this is the \textbf{ground-state electron density} and can be used to compute the total energy. If they differ, \textbf{update} the trial density and return to step 2.
+\end{enumerate}
+\vspace{2pt}
+\textbf{Open questions the slides flag:} how close must the two densities be before we call them the same? What is a good way to update the trial density? How should the initial density be defined?
+\end{daybox}
+
+\spsub{2.9 \enspace Exchange--correlation functionals: LDA and GGA}
+\begin{itemize}
+\item The one critical complication: to solve the Kohn--Sham equations we must specify $E_{XC}[\{\Psi_i\}]$, and \textbf{its true form is simply not known}.
+\item \textbf{Uniform electron gas} is the one case where the functional can be derived \emph{exactly}: the electron density is constant everywhere, $n(\mathbf{r}) = \text{constant}$.
+\item \textbf{Local density approximation (LDA):} set the exchange--correlation potential at each position equal to the \emph{known} uniform-electron-gas value at the density \emph{observed at that position}. This completely defines the Kohn--Sham equations --- but the result is not the exact Schr\"odinger solution, because the true functional is not being used.
+\item \textbf{Generalized gradient approximation (GGA):} uses the local electron density \emph{and} the \textbf{local gradient} of the electron density. Because gradient information can be folded in many ways, there are a large number of distinct GGA functionals.
+\item \textbf{Most widely used for solids:} the \textbf{Perdew--Wang functional (PW91)} and the \textbf{Perdew--Burke--Ernzerhof functional (PBE)}.
+\item \textbf{Caveat stated on the slides:} it is tempting to think that because GGA includes more physical information than LDA it must be more accurate --- \emph{this is not always correct}.
+\end{itemize}
+
+\spsub{2.10 \enspace Localized vs.\ spatially extended functions}
+\begin{itemize}
+\item \textbf{Spatially localized functions} approach zero rapidly for large $|x|$. They are entirely appropriate for the wave function or electron density of an \textbf{isolated atom}, and more individual functions can be added to build up multi-atom descriptions. They suit isolated molecules because those wave functions really do decay to zero far from the molecule.
+\item \textbf{Periodic (spatially extended) functions} are the useful alternative for \textbf{bulk materials} --- the atoms in solid silicon, or the atoms beneath the surface of a metal catalyst --- because in a bulk material the electron density and wave function really \emph{are} spatially periodic.
+\end{itemize}
+
+\spsub{2.11 \enspace Wave-function-based methods and Hartree--Fock}
+\begin{itemize}
+\item A second classification is by \emph{what is calculated}: \textbf{DFT computes the electron density}, whereas \textbf{wave-function-based methods} compute the full electron wave function. Given infinite computer time, wave-function methods \textbf{can converge to the exact} solution of the Schr\"odinger equation.
+\item Approximate wave functions must still exhibit the mathematical properties of real electrons. In particular the \textbf{Pauli exclusion principle} prohibits two electrons with the same spin from existing at the same physical location simultaneously.
+\item \textbf{Neglecting electron--electron interaction}, the Hamiltonian is a sum of one-electron operators $\hat{H}=\sum_i \hat{h}_i$, where $\hat{h}_i$ describes the kinetic and potential energy of electron $i$. Each one-electron equation $\hat{h}_i\chi_j = E_j\chi_j$ has several eigenfunctions, called \textbf{spin orbitals}, labelled so that $j=1$ is lowest in energy, $j=2$ next, and so on. $\mathbf{x}_i$ denotes the coordinates \emph{and spin state} (up or down) of electron $i$.
+\item Because $\hat{H}$ is a sum of one-electron operators, its eigenfunctions are \textbf{products} of the one-electron spin orbitals, with energy $E = E_{j_1}+\cdots+E_{j_N}$. This is again the \textbf{Hartree product}.
+\item \textbf{The flaw:} electrons are \emph{fermions}, so the wave function must \textbf{change sign when two electrons exchange places} --- the \textbf{antisymmetry principle}. Exchanging two electrons does \emph{not} change the sign of the Hartree product, which is a serious drawback.
+\item \textbf{Fix: the Slater determinant} --- the $N$-electron wave function written as the determinant of an $N\times N$ matrix of single-electron spin orbitals.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\hat{H} &= \sum_i \hat{h}_i
+ &&\text{neglecting electron--electron interaction}\\[2pt]
+\hat{h}_i\chi_j(\mathbf{x}_i) &= E_j\,\chi_j(\mathbf{x}_i)
+ &&\text{spin-orbital equation}\\[2pt]
+E &= E_{j_1}+\cdots+E_{j_N}
+ &&\text{Hartree-product energy}\\[4pt]
+\Psi(\mathbf{x}_1,\mathbf{x}_2) &= \frac{1}{\sqrt{2}}
+ \begin{vmatrix}
+  \chi_{j_1}(\mathbf{x}_1) & \chi_{j_2}(\mathbf{x}_1)\\
+  \chi_{j_1}(\mathbf{x}_2) & \chi_{j_2}(\mathbf{x}_2)
+ \end{vmatrix}
+ &&\text{two-electron Slater determinant}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item The coefficient $1/\sqrt{2}$ is simply a \textbf{normalization factor}; the determinant describes electron exchange \emph{implicitly} because it changes sign on exchange.
+\item It \textbf{vanishes} if two electrons have the same coordinates, or if two of the one-electron wave functions are the same --- so it satisfies the \textbf{Pauli exclusion principle}. Generalised to $N$ electrons it is the determinant of an $N\times N$ matrix of single-electron spin orbitals.
+\item \textbf{Consequence:} by using a Slater determinant we ensure the method includes \textbf{exchange}.
+\end{itemize}
+
+\spsub{2.12 \enspace Periodic structures, supercells and lattice parameters}
+\begin{itemize}
+\item \textbf{Plane-wave DFT} for a simple solid: fill 3D space with cubes of side length $a$ and place a single metal atom at the corner of each cube --- the \textbf{simple cubic} structure, e.g.\ \textbf{polonium}.
+\item \textbf{Two tasks} completely define the crystal structure of such an element: \textbf{(1)} define just one atom and locate it at $(0,0,0)$; \textbf{(2)} define a volume that fills space when repeated in all directions. The value of the \textbf{lattice constant $a$} is required.
+\item The vectors that define the cell volume together with the atom positions within the cell are collectively referred to as the \textbf{supercell}.
+\item \textbf{Structure examples named on the slides:} \textbf{BCC} --- iron, chromium, tungsten, niobium. \textbf{FCC} --- aluminium, calcium, nickel, copper, strontium, rhodium, palladium, silver, ytterbium, iridium, platinum, gold, lead, actinium.
+\end{itemize}
+
+\spsub{2.13 \enspace Application case: ammonia synthesis on heterogeneous catalysts}
+\begin{itemize}
+\item Ammonia is fertiliser for agriculture: \textbf{$>100$ million tons of NH$_3$} are produced commercially each year, and \textbf{1\, \% of all energy used in the world} is consumed in NH$_3$ production, at \textbf{$T>400$\,\degreec} and \textbf{$P>100$ atm}.
+\item \textbf{Catalysts:} metals such as \textbf{iron (Fe)} or \textbf{ruthenium (Ru)}, identified \textbf{100 years ago} --- yet much is still unknown about the mechanism of the reactions occurring on their surfaces.
+\item Metal nanoparticles are dispersed through highly porous materials to \textbf{increase surface area}. To understand reactivity, surface atoms are characterised by their \textbf{local coordination}, because a difference in coordination causes a difference in reactivity.
+\item \textbf{Overall surface reactivity} $= f(\text{shape of NP},\ \text{reactivity of each type of atom})$.
+\item \textbf{12--26 distinct steps} are involved, and their rates depend strongly on the local coordination of the metal atoms involved. DFT calculations give the most detailed answers, allowing the stability of many different local coordinations to be studied and the \textbf{detailed NP shape to be predicted as a function of particle size}.
+\end{itemize}
+
+\spsub{2.14 \enspace Milestone}
+\notetext{The \textbf{1998 Nobel Prize in Chemistry} was awarded jointly to \textbf{Walter Kohn}, for developing the foundations of DFT, and \textbf{John Pople}, for developing a quantum-chemistry computer code for calculating the electronic structure of atoms and molecules. The slides note this was the \emph{first time} a Nobel prize in chemistry or physics was awarded for the development of a \textbf{numerical method}.}
+
+%================================================================ formula sheet
+\spsection{Formula Sheet --- every relation stated on the decks}
+\begin{formulabox}
+\begin{align*}
+S(N,V,E) &\approx k_B\ln\Omega(N,V,E) &\qquad& \frac{1}{T}=\left(\frac{\partial S}{\partial E}\right)_{V,N}\\[3pt]
+\Omega &= \exp\!\left(-E/k_BT\right) && Q=\sum_i\exp\!\left(-E_i/k_BT\right)\\[3pt]
+F &= -k_BT\ln Q && P_i=\dfrac{\Omega_B(E-E_i)}{\sum_j\Omega_B(E-E_j)}\\[6pt]
+\langle E\rangle &= \sum_i E_iP_i && E=E(\mathbf{R}_1,\ldots,\mathbf{R}_M)\\[6pt]
+P &= \int_V|\Psi|^2\,dV && P=\Psi^*\Psi\\[3pt]
+n(\mathbf{r}) &= 2\sum_i|\Psi_i(\mathbf{r})|^2 && \hat{H}\Psi_n=E_n\Psi_n\\[4pt]
+\hat{H} &= \sum_i\hat{h}_i && E=E_{j_1}+\cdots+E_{j_N}
+\end{align*}
+\end{formulabox}
+
+\spsub{Order of approximations, as the decks build them}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Step} & \textbf{What is assumed or replaced}\\
+\midrule
+Born--Oppenheimer & nuclei held fixed while the electrons are solved; $E$ becomes a function of nuclear positions only\\
+Hartree product & $\Psi$ written as a product of one-electron wave functions (ignores exchange)\\
+Hartree--Fock & Hartree product replaced by a \textbf{Slater determinant}, restoring antisymmetry and exchange\\
+Hohenberg--Kohn & $\Psi(\mathbf{r}_1,\ldots,\mathbf{r}_N)\to n(\mathbf{r})$; $3N$ variables reduced to 3\\
+Kohn--Sham & many-body problem recast as single-particle equations with $V$, $V_H$, $V_{XC}$\\
+LDA & $E_{XC}$ taken from the uniform electron gas at the local density\\
+GGA & $E_{XC}$ also uses the local density \emph{gradient} (PW91, PBE)\\
+\bottomrule
+\end{tabularx}
+
+\vspace{3mm}
+{\color{rule}\hrule height 0.6pt}
+\vspace{2mm}
+\notetext{Prepared from the three CHE F497 slide decks \texttt{L1\_L2\_AMS\_2026.pdf}, \texttt{L4-L5.pdf} and \texttt{L6-7.pdf}; every statement above is drawn from them and no external material has been added. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Symbols: $\Psi$ wave function, $\mathbf{r}$ position vector, $E$ ground-state energy, $\hat{H}$ Hamiltonian operator, $\hat{h}_i$ one-electron operator, $\chi_j$ spin orbital, $E_j$ spin-orbital energy, $N$ number of electrons, $M$ number of nuclei, $n(\mathbf{r})$ electron density, $\Omega$ degeneracy (density of states), $Q$ partition function, $S$ entropy, $F$ Helmholtz free energy, $k_B$ Boltzmann constant, $T$ temperature, $P_i$ probability of microstate $i$, $E_{XC}$ exchange--correlation functional, $V_H$ Hartree potential, $V_{XC}$ exchange--correlation potential, $\mathbf{R}_1\ldots\mathbf{R}_M$ nuclear positions, $a$ lattice constant, LDA local density approximation, GGA generalized gradient approximation, PW91 Perdew--Wang functional, PBE Perdew--Burke--Ernzerhof functional, QM-MM hybrid quantum/classical mechanics, MD molecular dynamics, MC Monte-Carlo, PES potential energy surface.}
+
+\end{document}

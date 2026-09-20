@@ -1,0 +1,1424 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=18mm,right=18mm,top=15mm,bottom=17mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{color}
+\usepackage{array,tabularx,longtable,multicol,calc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent2,citecolor=accent}
+
+%--------------------------------------------------------------- palette
+% The base `color` package (no xcolor here) understands only rgb/cmyk/gray, so
+% the SP2 HTML values are expanded to rgb triplets at generation time.
+\definecolor{accent}{rgb}{0.0431,0.2353,0.3647}
+\definecolor{accent2}{rgb}{0.1137,0.4353,0.6471}
+\definecolor{boxbg}{rgb}{0.9451,0.9569,0.9686}
+\definecolor{boxframe}{rgb}{0.7765,0.8196,0.8549}
+\definecolor{rule}{rgb}{0.6235,0.7020,0.7608}
+\definecolor{inbox}{rgb}{0.0549,0.1412,0.1882}
+\definecolor{notecol}{rgb}{0.2745,0.3255,0.3608}
+\definecolor{white}{rgb}{1.0000,1.0000,1.0000}
+
+%--------------------------------------------------------------- headings
+\newcommand{\spsection}[1]{%
+  \par\addvspace{10pt}\noindent
+  \colorbox{accent}{%
+    \begin{minipage}{\dimexpr\linewidth-14pt\relax}%
+      \color{white}\bfseries\large\strut #1\strut
+    \end{minipage}}\par\vspace{4pt}\nopagebreak}
+
+\newcommand{\spsub}[1]{\par\addvspace{7pt}\noindent{\color{accent}\bfseries #1}\par\addvspace{3pt}\nopagebreak}
+
+\newcommand{\notetext}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
+%--------------------------------------------------------------- boxes
+% tcolorbox is unavailable, so every box is an lrbox'd minipage inside a
+% \fcolorbox.  \bgroup/\egroup CANNOT be used here: they silently discard the
+% box body.  All of these are ENVIRONMENTS, not macros -- calling them as
+% \warnbox{...} leaves a minipage open and TeX dies on "main memory size".
+\newsavebox{\spboxa}
+\newenvironment{formulabox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{daybox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{notecol}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{qbox}{%
+  \par\addvspace{6pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{mthbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{boxframe}{boxbg}{\usebox{\spboxa}}\par\addvspace{3pt}}
+
+\newenvironment{ansbox}{%
+  \par\addvspace{3pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{warnbox}{%
+  \par\addvspace{4pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}%
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newcommand{\qtitle}[2]{%
+  \par\addvspace{8pt}\noindent{\color{accent}\bfseries Q#1.\hspace{0.5em}}{\small\color{notecol}#2}\par\addvspace{3pt}\nopagebreak}
+
+%--------------------------------------------------------------- tables
+% booktabs is unavailable; map its rules onto \hline so both source styles work.
+\providecommand{\toprule}{\hline}
+\providecommand{\midrule}{\hline}
+\providecommand{\bottomrule}{\hline}
+
+%--------------------------------------------------------------- glyphs
+% No EC/TS1 metrics in this tree, so build the few needed text glyphs from math.
+\providecommand{\textperiodcentered}{\ensuremath{\cdot}}
+\providecommand{\textdegree}{\ensuremath{^\circ}}
+\newcommand{\microm}{\ensuremath{\,\mu\mathrm{m}}}
+\newcommand{\degreec}{\ensuremath{^\circ\mathrm{C}}}
+\newcommand{\degreef}{\ensuremath{^\circ\mathrm{F}}}
+\newcommand{\degreek}{\ensuremath{^\circ\mathrm{K}}}
+
+%--------------------------------------------------------------- lists
+\setlength{\leftmargini}{1.1em}
+\setlength{\leftmarginii}{1.5em}
+\setlength{\partopsep}{2pt}
+\setlength{\parsep}{0pt}
+\setlength{\itemsep}{1.5pt}
+\setlength{\topsep}{2pt}
+\renewcommand{\labelitemi}{\textbullet}
+\renewcommand{\labelitemii}{\textendash}
+
+%--------------------------------------------------------------- layout
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+\setlength{\emergencystretch}{3em}
+
+%--------------------------------------------------------------- footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Separation Processes II --- Short Notes \& Formula Sheet}
+\fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
+
+
+%=============================================================== cover
+\begin{center}
+{\LARGE\bfseries\color{accent} SEPARATION PROCESSES II}\\[2pt]
+{\color{accent2} CHE F313 \textperiodcentered{} BITS Pilani \textperiodcentered{} I-Semester 2026-27}\\[4pt]
+{\color{rule}\rule{0.6\linewidth}{0.8pt}}\\[6pt]
+{\Large\bfseries\color{accent} Short Notes \& Formula Sheet}\\[4pt]
+{\color{accent2} Module 1 --- Properties and Handling of Particulate Solids (Ch.~28)\\
+ Module 2 --- Mechanical Separations (Ch.~29)}
+\end{center}
+
+\vspace{2mm}
+\begin{daybox}
+\textbf{Compiled from:} Module 1 Lectures 1--6 and Module 2 Lectures 1--2 --- the course slide decks (\texttt{Mod1-Lecture 1--5.pptx}, \texttt{Mod1-Lecture 6-compressed.pdf}, \texttt{Mod 2-Lecture 1-compressed.pdf}, \texttt{Mod 2-Lecture 2.pptx}).\\[2pt]
+\textbf{Reference texts:} McCabe, Smith \& Harriott, \emph{Unit Operations of Chemical Engineering}, 7e (Ch.~28, 29); Swain, Patra \& Roy, \emph{Mechanical Operations}, Tata McGraw Hill.
+\end{daybox}
+
+\spsub{What is inside}
+\begin{tabularx}{\linewidth}{@{}Xr@{}}
+\toprule
+\textbf{\color{accent}Module 1 --- Properties \& Handling of Particulate Solids} & \textbf{Lecture}\\
+\midrule
+Introduction and characterisation of solid particles & 1\\
+Screening and screen analysis & 2\\
+Mixed particle sizes, average diameters and specific surface --- derivations & 3\\
+Particulate masses: properties, storage, conveying and mixing & 4\\
+Size reduction (comminution): energy laws and work index & 5\\
+Equipment for size reduction: crushers, grinders, mills, circuits & 6\\
+\midrule
+\textbf{\color{accent}Module 2 --- Mechanical Separations} & \\
+\midrule
+Screening and screen effectiveness --- material balance and overall effectiveness & 1\\
+Filtration: media, filter aids, cake filtration and pressure drop & 2\\
+Practice problems set from the slides & ---\\
+\bottomrule
+\end{tabularx}
+
+\spsub{Notation used throughout}
+{\small
+\begin{tabularx}{\linewidth}{@{}l X l X@{}}
+\toprule
+$D_p$ & particle diameter (equivalent or nominal) & $A_w$ & specific surface area of the mixture (\ensuremath{\mathrm{ m}^{2}/\mathrm{k g}})\\
+$\overline{D}_s$ & volume--surface (Sauter) mean diameter & $N_w$ & number of particles per unit mass\\
+$\overline{D}_v$ & volume mean diameter & $N_i,\,N_T$ & particles in fraction $i$, total number\\
+$\overline{D}_N$ & arithmetic (number) mean diameter & $x_i$ & mass fraction of fraction $i$\\
+$\overline{D}_w$ & mass mean diameter & $a$ & volume shape factor, $v_p=aD_p^3$\\
+$\Phi_s$ & sphericity of the particle & $W_i$ & Bond work index (\ensuremath{\mathrm{k W}\,\mathrm{ h}}/short ton)\\
+$\rho_p$ & density of the particle & $\eta_c,\,\eta_m$ & crushing, mechanical efficiency\\
+$s_p,\,v_p$ & surface area, volume of one particle & $\varepsilon$ & porosity of the bed / cake\\
+\bottomrule
+\end{tabularx}}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 1 --- Introduction and Characterisation of Solid Particles}
+
+\spsub{Why particulate solids matter}
+\begin{itemize}
+  \item Solids are more difficult to handle than liquids or gases; of all the shapes and sizes found in solids, the small particle is the most important from a chemical-engineering standpoint.
+  \item Designing processes and equipment for streams containing solids needs an understanding of the characteristics of masses of particulate solids.
+  \item Most important properties of pieces of solids: density (mass per unit volume), hardness (resistance to scratching), fragility (how easily a particle crumbles), tenacity (resistance to collisions).
+\end{itemize}
+
+\spsub{Characterisation: size, shape and density}
+\begin{itemize}
+  \item Every particle is characterised by size $D_p$, shape and density $\rho_p$.
+  \item \textbf{Density}: particles of homogeneous solids have the same density as the bulk material; particles from a composite solid (e.g.\ metal-bearing ore) have various densities, usually different from the bulk.
+  \item \textbf{Size}: for regular (equidimensional) particles size and shape are easily specified (spheres, cubes); non-equidimensional particles are characterised by the \emph{second longest major dimension}; for needle-like particles $D_p$ refers to the thickness, not the length; for irregular particles (sand grains, mica flakes) size and shape must be defined arbitrarily.
+  \item \textbf{Equivalent (nominal) diameter}: the size of a spherical particle having the same controlling characteristic as the particle considered. The controlling characteristic depends on the system and the process:
+  \begin{itemize}
+    \item surface area controls (irregular catalyst particle) $\rightarrow$ surface diameter $D_{ps}$;
+    \item mass/volume controls (gravitational free settling in a liquid) $\rightarrow$ volume diameter $D_{pv}$;
+    \item both area and volume control $\rightarrow$ volume--surface (Sauter) diameter $D_{vs}$.
+  \end{itemize}
+\end{itemize}
+
+\begin{formulabox}
+\begin{align*}
+\text{Surface diameter:}\quad & s_p=\pi D_{ps}^2 &&\Longrightarrow\quad D_{ps}=\sqrt{\frac{s_p}{\pi}}\\[2pt]
+\text{Volume diameter:}\quad & v_p=\frac{\pi D_{pv}^3}{6} &&\Longrightarrow\quad D_{pv}=\left(\frac{6v_p}{\pi}\right)^{1/3}\\[2pt]
+\text{Sauter diameter:}\quad & D_{vs}=\frac{6v_p}{s_p} &&\Longrightarrow\quad \frac{s_p}{v_p}=\frac{\pi D_{vs}^2}{\pi D_{vs}^3/6}=\frac{6}{D_{vs}}\\[2pt]
+\text{Sphericity:}\quad & \Phi_s=\frac{6v_p}{D_p\,s_p} &&\Longrightarrow\quad \Phi_s = 1 \text{ for a sphere}
+\end{align*}
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering\small
+Screen-average size: $D_p=\tfrac12\bigl(\text{aperture of the screen it passes}+\text{aperture of the screen that retains it}\bigr)$
+\end{minipage}
+\end{center}
+\end{formulabox}
+
+\notetext{Sphericity $=$ (surface-area-to-volume ratio of a sphere of the same diameter) $\div$ (surface-area-to-volume ratio of the particle). It is independent of particle size and is tabulated for common shapes in Table~28.1 of the text. For granular materials the exact $v_p$ and $s_p$ cannot be measured, so $D_p$ is the nominal size from screen analysis or microscopy.}
+
+\spsub{Size ranges and measurement}
+\begin{itemize}
+  \item Coarse particles: inches or millimetres; fine: screen size; very fine: micrometres or nanometres; ultrafine: sometimes described by surface area per unit mass (\ensuremath{\mathrm{ m}^{2}/\mathrm{ g}}).
+  \item Screening $>50\microm$; sedimentation and elutriation $>1\microm$; permeability method $\approx1\microm$.
+  \item Instrumental analysers: electronic particle counter (Coulter counter), laser-diffraction analysers, X-ray or photo-sedimentometers, dynamic light-scattering techniques.
+\end{itemize}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 2 --- Screening and Screen Analysis}
+
+\spsub{Screen geometry}
+\begin{formulabox}
+\begin{align*}
+\text{Mesh number} &= \text{number of openings per linear inch}\\
+\text{Clear opening (inch)} &= \frac{1}{\text{mesh number}}-\text{wire thickness}\\
+p &= w+d
+\qquad (p=\text{pitch},\; w=\text{aperture width},\; d=\text{wire diameter})
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+  \item \textbf{Aperture width} $w$: distance between two adjacent warp or weft wires, measured in the projected plane at the mid positions.
+  \item \textbf{Warp}: wires running lengthwise of the woven cloth; \textbf{weft}: wires running across.
+  \item Standard series: BSS (British Standard Screen), IMM (Institute of Mining \& Metallurgy), U.S.\ Tyler mesh (Appendix 5 of the text), U.S.\ ASTM.
+\end{itemize}
+
+\spsub{Notation and experimental procedure}
+\begin{itemize}
+  \item $14/20$ means ``through 14 mesh and on 20 mesh''; $-14+20$ means ``passes 14 and is retained on 20''.
+  \item Minus ($-$) material / undersize passes the screen; plus ($+$) material / oversize is retained on it.
+  \item A set of standard screens is stacked with the smallest mesh at the bottom and the largest at the top. The sample goes on the top screen and the stack is shaken mechanically for a definite time ($\sim\ensuremath{20\,\mathrm{ min}}$). Each increment is removed and weighed, and the masses are converted to mass fractions or percentages of the total sample. Particles passing the finest screen are caught in the bottom pan.
+\end{itemize}
+
+\spsub{The standard screen series}
+\begin{formulabox}
+\begin{align*}
+\text{Base:}\quad & \text{opening of the 200-mesh screen} = \ensuremath{0.074\,\mathrm{m m}}\\
+\text{Ratio:}\quad & \text{area of the openings of a screen} = 2\times\text{area of the next smaller screen}\\
+\Longrightarrow\quad & \text{mesh-dimension ratio} = \sqrt{2} = 1.41\\
+\text{Intermediate screens:}\quad & \text{mesh dimension} = \sqrt[4]{2} = 1.189 \text{ times the next smaller standard screen}
+\end{align*}
+\end{formulabox}
+
+\spsub{Differential vs cumulative analysis}
+\begin{itemize}
+  \item \textbf{Differential analysis} tabulates the mass (or number) fraction in each size increment against the average particle size (or size range) of the increment.
+  \item \textbf{Cumulative analysis} adds the individual increments consecutively, starting with the increment containing the smallest particles, and plots the cumulative sums against the maximum particle diameter of the increment.
+  \item Methods based on the cumulative analysis are more precise in principle, since the assumption that all particles in a fraction are of equal size is not needed; measurement accuracy rarely justifies it, so calculations are nearly always based on the differential analysis.
+  \item For mixtures of particles of various sizes and densities: sort the mixture into fractions of constant density and approximately constant size, weigh each fraction (or count the particles), apply the area and number equations to each fraction and add the results.
+\end{itemize}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 3 --- Mixed Particle Sizes: Derivations and Average Diameters}
+
+\spsub{Basis}
+\begin{itemize}
+  \item A sample of uniform particles of diameter $D_p$ is separated into a number of fractions, each fraction $i$ consisting of particles of average size $D_{pi}$ and constant density $\rho_p$.
+  \item $m$ = total mass of the sample; $m_i$ = mass of the $i$-th fraction; $x_i=m_i/m$ = mass fraction of the $i$-th increment.
+  \item Other symbols: $v_p$ = volume of one particle, $s_p$ = surface area of one particle, $N$ = number of particles.
+\end{itemize}
+
+\spsub{Step 1 --- surface area and specific surface area}
+\begin{formulabox}
+\begin{align*}
+(1)\quad \text{Sphericity:}\quad & \Phi_s=\frac{6v_p}{D_p s_p}
+   &&\Longrightarrow\quad s_p=\frac{6v_p}{D_p\Phi_s}\\[2pt]
+(2)\quad \text{Number of particles:}\quad & N=\frac{m}{\rho_p v_p}\\[2pt]
+(3)\quad \text{Total surface area:}\quad & A=Ns_p=\frac{m}{\rho_p v_p}\cdot\frac{6v_p}{\Phi_s D_p}
+   =\frac{6m}{\rho_p\Phi_s D_p}\\[2pt]
+(4)\quad \text{Area of the }i\text{-th fraction:}\quad & A_i=\frac{6m_i}{\rho_p\Phi_s D_{pi}}\\[2pt]
+(5)\quad \text{Specific surface area:}\quad & \frac{A_i}{m_i}=\frac{6}{\rho_p\Phi_s D_{pi}}\\[2pt]
+(6)\quad \text{Net specific surface area}\quad & A_w=\frac{6x_1}{\rho_p\Phi_s D_{p1}}+\frac{6x_2}{\rho_p\Phi_s D_{p2}}+\dots
+   =\frac{6}{\rho_p\Phi_s}\sum_{i=1}^{n}\frac{x_i}{D_{pi}}\\[2pt]
+(7)\quad & A_w=\frac{6}{\Phi_s\rho_p\overline{D}_s}\\[2pt]
+(8)\quad \text{Volume--surface (Sauter) mean:}\quad & \boxed{\;\overline{D}_s=\frac{1}{\displaystyle\sum_{i=1}^{n}\frac{x_i}{D_{pi}}}
+   =\frac{6}{\Phi_s\rho_p A_w}\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Step 2 --- number of particles (volume shape factor)}
+\begin{itemize}
+  \item Write the volume of a particle as $v_p=aD_p^3$, where $a$ is the \textbf{volume shape factor} ($a=\pi/6$ for a sphere); $a$ is constant and independent of size.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+(9)\quad & N=\frac{m}{a\rho_p D_p^3}\\[2pt]
+(10)\quad & N_i=\frac{m_i}{a\rho_p D_{pi}^3} &&\text{(the }i\text{-th fraction)}\\[2pt]
+(11)\quad & \frac{N_i}{m_i}=\frac{1}{a\rho_p D_{pi}^3} &&\text{(specific number)}\\[2pt]
+(12)\quad & N_w=\frac{1}{a\rho_p}\sum_{i=1}^{n}\frac{x_i}{D_{pi}^3} &&\text{(particles per unit mass)}\\[2pt]
+(13)\quad & N_w=\frac{1}{a\rho_p\overline{D}_v^3}
+   &&\Longrightarrow\quad \overline{D}_v=\left[\frac{1}{\sum x_i/D_{pi}^3}\right]^{1/3}
+   =\left(\frac{1}{N_w a\rho_p}\right)^{1/3}
+\end{align*}
+\end{formulabox}
+
+\spsub{Summary of average particle sizes (from the slides)}
+\begin{formulabox}
+\begin{align*}
+\text{Sauter (volume--surface):}\quad & \overline{D}_s=\frac{6}{\Phi_s\rho_p A_w}=\frac{1}{\sum_{i=1}^{n}\dfrac{x_i}{D_{pi}}}\\[3pt]
+\text{Volume mean:}\quad & \overline{D}_v=\left[\frac{1}{\sum x_i/D_{pi}^3}\right]^{1/3}\\[3pt]
+\text{Arithmetic mean:}\quad & \overline{D}_N=\frac{\sum N_iD_{pi}}{\sum N_i}=\frac{\sum N_iD_{pi}}{N_T}\\[3pt]
+\text{Mass mean:}\quad & \overline{D}_w=\sum_{i=1}^{n}x_iD_{pi}\\[3pt]
+\text{Particles per unit mass:}\quad & N_w=\frac{1}{a\rho_p}\sum_{i=1}^{n}\frac{x_i}{D_{pi}^3}
+\end{align*}
+\end{formulabox}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 4 --- Particulate Masses: Properties, Storage, Conveying, Mixing}
+
+\spsub{Properties of particulate masses}
+\begin{itemize}
+  \item Masses of dry, non-sticky solid particles have many of the properties of a fluid, but differ as follows:
+  \begin{itemize}
+    \item the pressure is not the same in all directions;
+    \item a shear stress applied at the surface of a mass is transmitted throughout a static mass of particles unless failure occurs;
+    \item the density of the mass varies with the degree of packing of the grains;
+    \item before a tightly packed mass can flow it must increase in volume, so that interlocking grains can move past one another;
+    \item when granular solids are piled on a flat surface the sides of the pile are at a definite reproducible angle with the horizontal (angle of repose; the related angle of internal friction is also used).
+  \end{itemize}
+  \item By flow properties, particulate solids are divided into \textbf{non-cohesive} materials (grain, dry sand, plastic chips) that flow readily out of a bin or silo, and \textbf{cohesive} solids (wet clay) characterised by reluctance to flow through openings.
+\end{itemize}
+
+\spsub{Bulk storage, bins and silos}
+\begin{itemize}
+  \item Coarse solids (gravel, coal) are stored outside in large piles unprotected from the weather; outdoor storage can cause dusting or leaching of soluble material. Solids too valuable or too soluble to expose are stored in bins, hoppers or silos.
+  \item In a bin or silo the lateral pressure exerted on the walls at any point is \emph{less} than that predicted from the head of material above that point.
+  \item Wall--solid friction, whose effect is felt throughout the mass because of interlocking, offsets the weight of the solid and reduces the pressure on the floor; the vertical pressure on the floor or packing support is much smaller than that of a column of liquid of the same density and height.
+  \item Solids are best discharged through an opening in the floor: flow through a side opening is uncertain, increases the lateral pressure on the other side while flowing, and a bottom outlet is less likely to clog and does not induce abnormally high wall pressures.
+\end{itemize}
+
+\spsub{Conveying}
+\begin{itemize}
+  \item Belt conveyors and bucket elevators, closed-belt conveyors with zipper-like fasteners, drag and flight conveyors --- all include a return leg carrying the empty belt or chain from the discharge back to the loading point.
+  \item Vibrating, pneumatic and screw conveyors have no return leg but operate only over relatively short distances.
+\end{itemize}
+
+\spsub{Mixing of solids --- statistical measures of mixer performance}
+\begin{itemize}
+  \item Mixing of solids, free-flowing or cohesive, resembles to some extent the mixing of low-viscosity liquids: two or more separate components are intermingled to form a more or less uniform product. Some equipment used for blending liquids can occasionally be used for solids.
+  \item Mixing is harder to define for solids and pastes than for liquids; quantitative measures are based on statistical procedures applied to spot samples taken from the mix at various times. A mixture in which one component is randomly distributed through another is said to be \textbf{completely mixed}.
+\end{itemize}
+\begin{formulabox}
+\textbf{Granular non-cohesive solids} --- $N$ spot samples, each of $n$ particles:
+\begin{align*}
+s &= \sqrt{\frac{\sum_{i=1}^{N}(x_i-\bar{x})^2}{N-1}}
+   &&\text{standard deviation of the sample analyses}\\[2pt]
+\sigma_e &= \sqrt{\frac{\mu_p(1-\mu_p)}{n}}
+   &&\text{theoretical s.d.\ for a completely random mixture}\\[2pt]
+I_s &= \frac{\sigma_e}{s} &&\text{mixing index (increases as mixing proceeds)}
+\end{align*}
+\vspace{2pt}
+\textbf{Cohesive solids and pastes} --- mass fractions instead of numbers:
+\begin{align*}
+\sigma_0 &= \sqrt{\mu(1-\mu)} &&\text{theoretical s.d.\ at zero mixing}\\
+I_s &= \frac{\sigma_0}{s} &&\text{mixing index for pastes}
+\end{align*}
+\end{formulabox}
+\notetext{$x_i$ = fraction of component A in each sample (number fraction for non-cohesive, mass fraction for cohesive); $\bar{x}$ = average of the measured fractions; $\mu_p$ = overall number fraction of A in the mixture; $\mu$ = overall mass fraction of A. $s$ diminishes towards zero and $I_s$ increases as mixing proceeds, so a low $s$ (high $I_s$) means good mixing.}
+
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 5 --- Size Reduction (Comminution)}
+
+\spsub{Purpose, mechanisms, influencing factors}
+\begin{itemize}
+  \item Cutting or breaking solids into smaller pieces is called \textbf{comminution}. Reasons: to get a workable size, to increase reactivity, to separate unwanted ingredients by mechanical methods, to handle and dispose easily.
+  \item Objectives: increase the surface area, because in most chemical reactions and some unit operations (drying, adsorption, leaching) the reaction or transfer is directly proportional to the area of contact between the solid and the second phase; produce particles of the desired shape, size or size range and specific surface; separate unwanted particles effectively; dispose of solid wastes easily; mix solid particles more intimately; improve handling, storage and transportation characteristics.
+  \item \textbf{Mechanisms}: compression (nutcracker --- coarse reduction of hard solids, very few fines); impact (hammer --- coarse, medium and fine products); attrition or rubbing (file --- very fine products); cutting or shear (a pair of shears --- definite particle size with few or no fines).
+  \item \textbf{Properties of solids affecting size reduction}: hardness (affects power consumption and wear of the machine); toughness (resistance to impact, the reverse of friability or brittleness); structure (granular, e.g.\ coal or rock, or fibrous); friability (tendency to fracture during normal handling); moisture content; explosive nature (must be ground wet or in an inert environment); soapiness (a low coefficient of friction of the surface makes crushing more difficult); heat sensitivity (heat generated during size reduction can cause loss of heat-sensitive components).
+  \item \textbf{Process factors}: moisture and sticky material in the equipment feed; fines in the feed; segregation of feed particles in the crushing chamber; lack of feed control; wrong motor size; insufficient crusher discharge area; insufficient capacity of the crusher discharge conveyor; extremely hard material; surface energy of solids; power consumption; selection of an appropriate crushing chamber.
+\end{itemize}
+
+\spsub{Energy and power requirement}
+\begin{itemize}
+  \item The cost of power is a major expense in crushing and grinding. During size reduction the feed particles are first distorted and strained; the work to strain them is stored temporarily in the solid as mechanical energy of stress, like energy in a coiled spring. As more force is applied the particles distort beyond their ultimate strength and suddenly rupture into fragments, generating new surface.
+  \item Since a unit area of solid has a definite surface energy, creating new surface requires work, supplied by the release of stress energy when the particle breaks. By conservation of energy, all stress energy in excess of the new surface energy created must appear as heat.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Crushing efficiency:}\quad & \eta_c=\frac{\text{surface energy created}}{\text{energy absorbed by the solids}}
+  =\frac{e_s(A_{wb}-A_{wa})}{W_n}\\[3pt]
+\text{Mechanical efficiency:}\quad & \eta_m=\frac{\text{energy absorbed by solids}}{\text{total energy input}}=\frac{W_n}{W}\\[3pt]
+\text{Hence}\quad & W=\frac{W_n}{\eta_m}=\frac{e_s(A_{wb}-A_{wa})}{\eta_c\eta_m}
+\end{align*}
+\vspace{2pt}
+{\small
+$e_s$ = surface energy per unit area (\ensuremath{\mathrm{ J}/\mathrm{ m}^{2}}); \quad
+$A_w$ = specific surface area (\ensuremath{\mathrm{ m}^{2}/\mathrm{k g}}): $A_{wb}$ product, $A_{wa}$ feed; \quad
+$W_n$ = energy absorbed by unit mass of material (\ensuremath{\mathrm{ J}/\mathrm{k g}}).}
+\vspace{3pt}
+\begin{align*}
+\text{Power required by the machine }(\dot m = \text{feed rate}):\quad
+P &= \dot m W
+   = \frac{6\dot m e_s}{\eta_c\eta_m\rho_p}
+     \left[\frac{1}{\Phi_{sb}\overline{D}_{sb}}-\frac{1}{\Phi_{sa}\overline{D}_{sa}}\right]
+\end{align*}
+{\small using $A_w=\dfrac{6}{\Phi_s\overline{D}_s\rho_p}$ for product ($b$) and feed ($a$), with $\rho_a=\rho_b=\rho_p$.}
+\end{formulabox}
+
+\spsub{The three empirical laws}
+\begin{itemize}
+  \item \textbf{Rittinger (1867)}: the work required in crushing is proportional to the new surface created.
+  \item \textbf{Kick (1885)}: the work required for crushing a given mass of material is constant for the same reduction ratio $=$ (initial particle size)/(final particle size).
+  \item \textbf{Bond (1952)}: the work required to form particles of size $D_p$ from a very large feed is proportional to the square root of the surface-to-volume ratio of the product.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Rittinger:}\quad & \frac{P}{\dot m}=K_R\left[\frac{1}{\overline{D}_{sb}}-\frac{1}{\overline{D}_{sa}}\right],
+   \qquad K_R=\frac{6e_s}{\Phi_s\rho_p}\quad(\text{1}/K_R=\text{Rittinger's number})\\[2pt]
+& \text{valid for fine grinding, feed}<\ensuremath{0.05\,\mathrm{m m}}\text{ with }\Phi_{sb}=\Phi_{sa}\\[4pt]
+\text{Kick:}\quad & \frac{P}{\dot m}=K_k\ln\frac{\overline{D}_{sa}}{\overline{D}_{sb}}\\[4pt]
+\text{Bond:}\quad & \frac{P}{\dot m}\propto\sqrt{\frac{s_p}{v_p}}=\sqrt{\frac{6}{\Phi_sD_p}}
+   =K\sqrt{\frac{6}{\Phi_s}}\sqrt{\frac{1}{D_p}}=\frac{K_b}{\sqrt{D_p}}\\[3pt]
+& \frac{P}{\dot m}=K_b\left[\frac{1}{\sqrt{D_{pb}}}-\frac{1}{\sqrt{D_{pa}}}\right]\\[3pt]
+& \xrightarrow[\text{very large feed}]{\;1/\sqrt{D_{pa}}\to 0\;}\quad
+   \frac{P}{\dot m}=\frac{K_b}{\sqrt{D_{pb}}},\qquad K_b=0.3162\,W_i\\[3pt]
+& \frac{P}{\dot m}=0.3162\,W_i\left[\frac{1}{\sqrt{D_{pb}}}-\frac{1}{\sqrt{D_{pa}}}\right]
+   \qquad (D_p \text{ in mm}, \; P \text{ in kW}, \; \dot m \text{ in tonne/h})
+\end{align*}
+\end{formulabox}
+\notetext{$K_b$ = Bond constant, depends on the type of machine and on the material being crushed; $K_b=W_i\sqrt{100\times10^{-6}}=0.3162W_i$, which follows from the 100\microm definition of $W_i$. Both Kick's and Rittinger's laws apply to limited ranges of particle size.}
+
+\spsub{Work index and the generalised law}
+\begin{itemize}
+  \item \textbf{Work index} $W_i$: the gross energy requirement in kilowatt-hours per short ton (2000\,lb) of feed needed to reduce a very large feed to such a size that 80\% of the product passes a 100\microm screen; units \ensuremath{\mathrm{k W}\,\mathrm{ h}} per short ton. \quad 1 short ton $=2000$\,lb $=\ensuremath{908\,\mathrm{k g}}$.
+  \item Work indices include friction in the crusher (Table 28.2 of the text). For dry grinding $W_i$ should be multiplied by $4/3$.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Generalised differential law:}\quad
+dW=d\!\left(\frac{P}{\dot m}\right) &= -K\,\frac{d\overline{D}_s}{\overline{D}_s^{\,n}}\\[4pt]
+n=1 \;\rightarrow\; \text{Kick:}\qquad
+W &= -K\ln\overline{D}_s
+   =K\left\{\ln\frac{1}{\overline{D}_{sb}}-\ln\frac{1}{\overline{D}_{sa}}\right\}
+   =K\ln\frac{\overline{D}_{sa}}{\overline{D}_{sb}}\\[4pt]
+n=2 \;\rightarrow\; \text{Rittinger:}\qquad
+W &= K\left[\frac{1}{\overline{D}_{sb}}-\frac{1}{\overline{D}_{sa}}\right]\\[4pt]
+n=3 \;\rightarrow\; \text{Bond:}\qquad
+W &= K\left[\frac{1}{\sqrt{D_{pb}}}-\frac{1}{\sqrt{D_{pa}}}\right]
+\end{align*}
+{\small (Integration used throughout: $\displaystyle\int x^n\,dx=\frac{x^{n+1}}{n+1}+C$.)}
+\end{formulabox}
+
+% ---- Module 1, Lecture 6 : equipment for size reduction ----
+\spsection{MODULE 1 \textperiodcentered{} LECTURE 6 --- Equipment for Size Reduction}
+
+\spsub{Classification of size-reduction equipment}
+The classification follows the method by which the force is applied:
+\begin{itemize}
+  \item \textbf{Impact}: impact at one surface; impact between particles.
+  \item \textbf{Compression}: crushing; grinding.
+  \item \textbf{Rubbing / attrition} between surfaces.
+  \item \textbf{Shear / cutting} of the solid.
+  \item \textbf{Non-mechanical} introduction of energy: thermal shock; explosive shattering; electrohydraulic crushing; cryogenic crushing; ultrasonic crushing.
+\end{itemize}
+
+\spsub{Equipment classes (by size of feed and product)}
+{\small
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+\textbf{Class} & \textbf{Duty} & \textbf{Typical sizes}\\
+\midrule
+Crushers & heavy work of breaking large pieces of solid material into small lumps & \emph{primary}: operates on run-of-mine material, accepting anything that comes from the run-of-mine face and breaking it into 150--250\,mm lumps; \emph{secondary}: reduces lumps to perhaps 6\,mm\\
+Grinders & reduce crushed feed to powder & \emph{intermediate}: product might pass a 40-mesh screen; \emph{fine}: most of the product passes a 200-mesh screen with a 74\,\microm\ opening\\
+Ultrafine grinders & very fine powders & accepts feed no larger than 6\,mm; product typically 1--50\,\microm\\
+Cutting machines & particles of definite size and shape & 2--10\,mm in length\\
+\bottomrule
+\end{tabularx}}
+
+\spsub{Principal types of size-reduction machines}
+{\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{A. Crushers} (coarse and fine) & 1.\ jaw crushers;\; 2.\ gyratory crushers;\; 3.\ crushing rolls\\
+\textbf{B. Grinders} (intermediate and fine) & 1.\ hammer mills, impactors;\; 2.\ rolling-compression mills (a.\ bowl mills, b.\ roller mills);\; 3.\ attrition mills;\; 4.\ tumbling mills (a.\ rod mills, b.\ ball and pebble mills, c.\ tube and compartment mills)\\
+\textbf{C. Ultrafine grinders} & 1.\ hammer mills with internal classification;\; 2.\ fluid-energy mills;\; 3.\ agitated mills;\; 4.\ colloid mills\\
+\textbf{D. Cutting machines} & 1.\ knife cutters, dicers, slitters\\
+\bottomrule
+\end{tabularx}}
+
+\spsub{Selection criteria for size-reduction equipment}
+\begin{itemize}
+  \item It should produce the material of the desired shape and size, or the desired size distribution; accept the maximum input size expected; have a large capacity; and not choke or plug.
+  \item It should pass unbreakable material without damaging itself, and operate economically with minimum supervision and maintenance.
+  \item The power input per unit weight of product should be small, and it should resist abrasive wear.
+  \item It should be dependable, with a prolonged service life, and its replacement parts should be readily available at a cheap price.
+  \item The initial fixed cost and the operating cost should be minimum; it should be easy and safe to operate, with easy access to internal parts for maintenance.
+\end{itemize}
+
+\spsub{Crushers}
+\begin{itemize}
+  \item Types: jaw crushers, gyratory crushers, smooth-roll crushers, toothed-roll crushers. Principle: \emph{compression}, to break large lumps of very hard materials. Applications: mining, cement manufacture and large-scale operations.
+  \item \textbf{Working principle (jaw / gyratory)}: a conical crushing head gyrates inside a funnel-shaped casing that is open at the top; an eccentric drives the shaft carrying the crushing head; solids caught between the head and the casing are broken and re-broken until they pass out at the bottom.
+  \item \textbf{Smooth-roll crushers}: secondary crushers producing a product 1--12\,mm in size; they are limited by the size of the particle that can be \emph{nipped} by the rolls, and the feed ranges in size from 12 to 75\,mm.
+\end{itemize}
+
+\spsub{Grinders (intermediate size-reduction duty; the product from a crusher is fed to a grinder)}
+\begin{itemize}
+  \item Types: hammer mills and impactors; rolling-compression machines; attrition mills; tumbling mills (ball mill).
+  \item \textbf{Hammer mills and impactors}: a high-speed rotor turns inside a cylindrical casing, usually with the shaft horizontal; feed dropped into the top of the casing is broken and falls out through a bottom opening; the particles are broken by sets of swing hammers.
+  \item \textbf{Roller mills}: solids are caught and crushed between vertical cylindrical rollers and a stationary anvil ring or bull ring; the rotors are driven at moderate speeds in a circular path; plows lift the solid lumps from the floor of the mill and direct them between the ring and the rolls; a stream of air sweeps the product to a classifier-separator, and oversized particles are returned to the mill for further reduction. Applications: reduction of limestone, cement clinker and coal.
+  \item \textbf{Attrition mills}; \textbf{tumbling (ball) mills} --- in a ball mill most of the reduction is done by \emph{impact}.
+\end{itemize}
+
+\begin{formulabox}
+\textbf{Critical speed of a ball mill} (revolutions per second):
+\[
+n_c=\frac{1}{2\pi}\sqrt{\frac{g}{R-r}}
+\]
+$g$ = acceleration due to gravity (\ensuremath{\mathrm{ m}/\mathrm{ s}^{2}});\quad
+$R$ = radius of the mill (\ensuremath{\mathrm{ m}});\quad
+$r$ = radius of the grinding elements (\ensuremath{\mathrm{ m}}).\\[3pt]
+The operating speed must be \emph{less} than the critical speed --- usually 65--80\,\% of it, and lower for wet grinding in viscous suspensions.
+\end{formulabox}
+
+\spsub{Ultrafine grinders}
+\begin{itemize}
+  \item Many commercial powders must contain particles averaging 1--20\,\microm, with substantially all the particles passing a standard 325-mesh screen whose openings are 44\,\microm\ wide. Mills that reduce solids to such fine particles are called \textbf{ultrafine grinders}.
+  \item Ultrafine grinding of dry powder is done by grinders such as high-speed hammer mills provided with internal or external classification, and by fluid-energy or jet mills. Ultrafine \emph{wet} grinding is done in agitated mills.
+  \item \textbf{Fluid-energy (jet) mills}: the particles are suspended in a high-velocity gas stream. In some designs the gas flows in a circular or elliptical path; in others jets oppose one another or vigorously agitate a fluidized bed. Some reduction occurs when particles strike or rub against the walls of the confining chamber, but most of the reduction is believed to be caused by \emph{interparticle attrition}. Internal classification keeps the larger particles in the mill until they are reduced to the desired size.
+\end{itemize}
+
+\spsub{Cutting machines}
+In some size-reduction problems the feed stocks are too tenacious or too resilient to be broken by compression, impact or attrition; in others the feed must be reduced to particles of fixed dimensions. These requirements are met by devices that cut, chop or tear the feed into a product with the desired characteristics.
+
+\spsub{Equipment operation}
+A crusher, grinder or cutter cannot be expected to perform satisfactorily unless
+\begin{enumerate}
+  \item the feed is of suitable size and enters at a uniform rate;
+  \item the product is removed as soon as possible after the particles are of the desired size;
+  \item unbreakable material is kept out of the machine; and
+  \item in the reduction of low-melting or heat-sensitive products, the heat generated in the mill is removed.
+\end{enumerate}
+
+\spsub{Open-circuit and closed-circuit operation}
+\begin{itemize}
+  \item \textbf{Open circuit}: the feed is broken into particles of satisfactory size by passing it once through the mill; no attempt is made to return oversize particles to the machine for further reduction. This may require excessive amounts of power, because much energy is wasted in regrinding particles that are already fine enough.
+  \item \textbf{Closed circuit}: the term applied to the action of a mill and a separator connected so that the oversize particles are returned to the mill.
+\end{itemize}
+
+\spsub{Energy consumption and heat removal}
+\begin{itemize}
+  \item Size reduction is probably the most inefficient of all unit operations: over 99\,\% of the energy goes into operating the equipment and producing undesirable heat and noise, leaving less than 1\,\% for creating new surface.
+  \item As processes have been developed that require finer and finer particles as feed to a kiln or reactor, the total energy requirement has increased --- reduction to very fine sizes is much more costly in energy than simple crushing to relatively coarse products. Energy consumed per tonne rises steeply as the product size falls (special mills $\gg$ ball mills $>$ rod mills $>$ crushers).
+  \item Only a very small fraction of the energy supplied to the solid is used in creating new surface; the bulk is converted to heat, which may raise the temperature of the solid by many degrees. The solid may melt, decompose or explode unless this heat is removed. Cooling water or refrigerated brine is often circulated through coils or jackets in the mill; sometimes the air blown through the mill is refrigerated, or solid carbon dioxide (dry ice) is admitted with the feed; still more drastic temperature reduction is achieved with liquid nitrogen, giving grinding temperatures below $-75$\,\ensuremath{^{\circ}\mathrm{C}}. The purpose of such low temperatures is to alter the breaking characteristics of the solid, usually by making it more friable.
+\end{itemize}
+
+% ---- Module 2, Lecture 1 : screening and screen effectiveness ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 1 --- Screening and Screen Effectiveness}
+
+\spsub{Mechanical separations --- scope}
+\begin{itemize}
+  \item Mechanical separations are applicable to \emph{heterogeneous mixtures}, not to homogeneous solutions; the techniques are based on physical differences between the particles such as size, shape or density.
+  \item They are applicable to separating solids from gases, liquid drops from gases, solids from solids and solids from liquids.
+  \item General methods of mechanical separation:
+  \begin{itemize}
+    \item the use of a sieve (screening), septum or porous membrane (filtration) --- such as a screen or a filter --- which retains one component and allows the other to pass;
+    \item utilisation of differences in the rate of sedimentation of particles or drops as they move through a liquid or a gas;
+    \item utilisation of surface, electrical or magnetic properties of particles.
+  \end{itemize}
+\end{itemize}
+
+\spsub{Screening}
+\begin{itemize}
+  \item Screening is a method of separating particles \emph{according to size alone}. In industrial screening the solids are dropped on, or thrown against, a screening surface; the undersize (fines) pass through the screen openings while the oversize (tails) do not.
+  \item Applications: mining and mineral processing, food, chemical, agriculture, plastics, recycling and pharmaceuticals.
+  \item Screening is done with the help of screening equipment. Particles drop through the openings with the help of gravity; in a few machines they are pushed through by a brush or by centrifugal force. Coarse particles can easily drop through large openings in a stationary surface, but fine particles need to be agitated in order to pass.
+  \item There are two methods of agitation: \textbf{shaking} and \textbf{gyrating}. Motions used in practice: gyrations in the horizontal plane; gyrations in the vertical plane; gyrations at one end with shaking at the other; shaking; mechanically vibrated; electrically vibrated; stationary inclined screens and grizzlies.
+  \item Screening equipment: stationary screens and grizzlies (for the coarse feed from a primary crusher), gyrating screens and vibrating screens.
+\end{itemize}
+
+\spsub{Ideal and actual screens}
+\begin{itemize}
+  \item \textbf{Objective of a screen}: to accept a feed containing a mixture of particles of various sizes and separate it into two fractions --- oversize and undersize; both may be products.
+  \item \textbf{Ideal screen}: would sharply separate the feed mixture in such a way that the smallest particle in the overflow is just larger than the largest particle in the underflow.
+  \item \textbf{Cut diameter} $D_{pc}$ marks the point of separation between the fractions and is chosen close to the mesh opening of the screen.
+  \item Actual screens do \emph{not} give perfect separation about the cut diameter. A commercial screen gives poorer separation, whereas a testing screen gives good separation. For a 10-mesh screen the opening is 1.651\,mm, so oversize is $>1.651$\,mm and undersize $<1.651$\,mm.
+\end{itemize}
+
+\spsub{Material balance over a screen}
+\begin{formulabox}
+\begin{align*}
+& F=\text{mass flow rate of feed},\quad D=\text{overflow},\quad B=\text{underflow}\\
+& x_F,\;x_D,\;x_B=\text{mass fraction of \emph{oversize} particles in feed, overflow, underflow}\\
+& 1-x_F,\;1-x_D,\;1-x_B=\text{the corresponding mass fractions of \emph{undersize}}\\[3pt]
+\text{Overall material balance:}\quad & F=D+B \tag{1}\\[2pt]
+\text{Oversize material balance:}\quad & F x_F=D x_D+B x_B \tag{2}\\[2pt]
+\text{Eliminating }B:\quad & F x_F=D x_D+(F-D)x_B
+  \;\Longrightarrow\; F(x_F-x_B)=D(x_D-x_B)\\[2pt]
+\Longrightarrow\quad & \boxed{\;\frac{D}{F}=\frac{x_F-x_B}{x_D-x_B}\;}
+  \;=\;\frac{\text{overflow mass flow rate}}{\text{feed mass flow rate}} \tag{3}\\[5pt]
+\text{Eliminating }D:\quad & F x_F=(F-B)x_D+B x_B
+  \;\Longrightarrow\; F(x_F-x_D)=B(x_B-x_D)\\[2pt]
+\Longrightarrow\quad & \boxed{\;\frac{B}{F}=\frac{x_F-x_D}{x_B-x_D}\;}
+  \;=\;\frac{\text{underflow mass flow rate}}{\text{feed mass flow rate}} \tag{4}
+\end{align*}
+\end{formulabox}
+
+\spsub{Screen effectiveness}
+\begin{itemize}
+  \item Screen effectiveness measures the success of a screen in closely separating oversize (A) and undersize (B) particles.
+  \item If the efficiency were 100\,\%, all of D would report to the overflow and all of B to the underflow.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+E_A &= \frac{\text{oversize material in overflow}}{\text{amount of A in feed}}
+     =\frac{D x_D}{F x_F}\\[4pt]
+E_B &= \frac{\text{undersize material in underflow}}{\text{amount of B in feed}}
+     =\frac{B(1-x_B)}{F(1-x_F)}
+\end{align*}
+\vspace{3pt}
+\textbf{Combined overall effectiveness}\quad
+$E=E_AE_B=\dfrac{D x_D}{F x_F}\cdot\dfrac{B(1-x_B)}{F(1-x_F)}
+=\dfrac{D}{F}\,\dfrac{B}{F}\,\dfrac{x_D}{x_F}\,\dfrac{1-x_B}{1-x_F}$
+\vspace{4pt}
+
+Replacing $D/F$ and $B/F$ from (3) and (4), the product $\dfrac{x_F-x_B}{x_D-x_B}\cdot\dfrac{x_F-x_D}{x_B-x_D}$ rearranges to $\dfrac{(x_F-x_B)(x_D-x_F)}{(x_D-x_B)^2}$, so that
+\[
+E=\frac{x_D}{x_F}\,\frac{1-x_B}{1-x_F}\,
+   \frac{(x_F-x_B)(x_D-x_F)}{(x_D-x_B)^2}
+\]
+The same result may also be written as
+\[
+\boxed{\;E=\frac{x_D}{x_F}\,\frac{x_F-x_B}{x_D-x_B}
+  \left[1-\frac{1-x_D}{1-x_F}\,\frac{x_F-x_B}{x_D-x_B}\right]\;}
+\]
+{\small (In the slide's written form the denominator appears as $(x_B-x_D)^2$; since it is squared this is the same as $(x_D-x_B)^2$.)}
+\end{formulabox}
+
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 2 --- Filtration}
+
+\spsub{Definition, driving force, classification}
+\begin{itemize}
+  \item \textbf{Filtration} is the removal of solid particles from a fluid by passing the fluid (slurry) through a filtering medium (a porous septum) on which the solids are deposited. Industrial filtration ranges from simple straining to highly complex separations. The fluid may be a liquid or a gas; the valuable stream may be the fluid, or the solids, or both --- and sometimes neither, as when waste solids must be separated from waste liquid before disposal.
+  \item The fluid flows through the medium by virtue of a pressure differential across it: pressure above atmospheric on the upstream side of the medium, a vacuum on the downstream side, or gravity. In a gravity filter the medium can be no finer than a coarse screen or a bed of coarse particles such as sand.
+  \item Filters are divided into three main groups: \textbf{cake filters}, \textbf{clarifying filters} and \textbf{crossflow filters}.
+  \begin{itemize}
+    \item \emph{Cake filter}: at the start some particles enter the pores of the medium and are immobilised, but soon others collect on the septum surface. After this brief initial period the cake of solids does the filtration, not the septum; a visible cake of appreciable thickness builds up on the surface and must be periodically removed.
+    \item \emph{Clarifying (depth) filter}: removes small amounts of solids to produce a clean gas or sparkling clear liquids such as beverages. The particles are trapped inside the medium, whose pores are much larger in diameter than the particles to be removed.
+    \item \emph{Crossflow filter}: the feed suspension flows under pressure at fairly high velocity across the medium; a thin layer of solids may form but the high velocity keeps it from building up. The medium is a ceramic, metal or polymer membrane with pores small enough to exclude most suspended particles; clear liquid passes through, leaving a concentrated suspension behind.
+  \end{itemize}
+\end{itemize}
+
+\spsub{Filter media and filter aids}
+\begin{itemize}
+  \item A filter medium must: retain the solids to be filtered, giving a reasonably clear filtrate; not plug or blind; be chemically resistant and physically strong enough to withstand the process conditions; permit the cake to discharge cleanly and completely; not be prohibitively expensive.
+  \item Common medium: canvas cloth, duck or twill weave. Corrosive liquids require woollen cloth, metal cloth of monel or stainless steel, glass cloth or paper. Synthetic fabrics (nylon, polypropylene, various polyesters) are also highly resistant chemically.
+  \item Slimy or very fine solids are difficult to filter because they form a dense, impermeable cake that quickly plugs the medium; the porosity of the cake must be increased so that the filtrate flows at a reasonable rate.
+  \item \textbf{Filter aids} are generally granular or fibrous solids which form a highly permeable cake --- diatomaceous silica, perlite, purified wood cellulose or other inert porous solids. Properties: low bulk density, porous, chemically inert to the filtrate. They may be used as a precoat or mixed directly with the slurry before filtration.
+\end{itemize}
+
+\spsub{Principles of cake filtration}
+\begin{itemize}
+  \item Flow resistances increase with time as the medium clogs or a cake builds up. The quantities of interest are the flow rate through the filter and the pressure drop across the unit.
+  \item \textbf{Constant-pressure filtration}: the pressure drop is held constant and the flow rate is allowed to fall with time. \textbf{Constant-rate filtration}: the pressure drop is progressively increased.
+  \item The liquid passes through two resistances in series --- that of the cake and that of the filter medium. The medium resistance, the only resistance in clarifying filters, is normally important only during the early stages of cake filtration; the cake resistance is zero at the start and increases with time. If the cake is washed after filtering, both resistances are constant during washing and the medium resistance is usually negligible.
+  \item Rate of filtration depends on: the pressure drop across cake and medium; the resistance of the cake; the resistance of the medium; the area of the filtering surface; the viscosity of the filtrate.
+\end{itemize}
+
+\spsub{Pressure drop through a filter cake}
+\begin{formulabox}
+\begin{align*}
+\text{Darcy-type dependence:}\quad & v_0\propto\Delta P \qquad\text{and}\qquad v_0\propto\frac{1}{L}\\[4pt]
+\text{Kozeny--Carman (laminar, }Re<1\text{):}\quad
+& \frac{\Delta P}{L}=\frac{150\,\bar{v}\,\mu(1-\varepsilon)^2}{g_c\Phi_s^2D_p^2\varepsilon^3}\\[4pt]
+\text{Burke--Plummer (turbulent, }Re>1000\text{, purely empirical):}\quad
+& \frac{\Delta P}{L}=\frac{1.75\,\rho\,\bar{v}^2(1-\varepsilon)}{g_c\Phi_sD_p\varepsilon^3}\\[4pt]
+\text{Ergun (entire range of flow rates --- viscous loss }+\text{ kinetic-energy loss):}\quad
+& \frac{\Delta P}{L}=\underbrace{\frac{150\,\bar{v}\,\mu}{g_c\Phi_s^2D_p^2}\frac{(1-\varepsilon)^2}{\varepsilon^3}}_{\text{viscous}}
+   +\underbrace{\frac{1.75\,\rho\,\bar{v}^2}{g_c\Phi_sD_p}\frac{(1-\varepsilon)}{\varepsilon^3}}_{\text{kinetic energy}}
+\end{align*}
+\end{formulabox}
+\notetext{$\bar{v}$ = superficial velocity, $\varepsilon$ = bed/cake porosity, $\Phi_s$ = sphericity, $D_p$ = particle diameter, $\mu$ = fluid viscosity, $\rho$ = fluid density, $g_c$ = conversion factor. The section through the medium and cake shows the fluid pressure $P$ falling from $P_a$ at the upstream face of the cake to $P_e$ at the cake--medium interface and on to $P_b$ through the medium, plotted against the distance $L$ from the medium.}
+
+% ---- Module 2, Lecture 3 : pressure drop through the filter cake ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 3 --- Pressure Drop Through the Filter Cake}
+
+\spsub{The model: flow through a bundle of channels}
+\begin{itemize}
+  \item A cake is a bed of particles, so the pressure drop needed to push filtrate through it is found from the pressure drop for flow through a \emph{pipe}, and the pipe is then replaced by the equivalent parallel channels of the bed.
+  \item Flow of liquid through a single pipe is given by the \textbf{Hagen--Poiseuille} equation,
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Delta P_s &= \frac{32\,\Delta L\,\bar{V}\,\mu}{g_c\,D^2}
+   &&\text{Hagen--Poiseuille (laminar, one pipe of diameter }D)\\[3pt]
+\Phi_s &= \frac{6/D_p}{s_p/v_p}=\frac{6v_p}{D_ps_p}
+   &&\Longrightarrow\qquad \frac{s_p}{v_p}=\frac{6}{\Phi_sD_p}\tag{1}
+\end{align*}
+\vspace{1pt}
+$s_p/v_p$ = surface-to-volume ratio of the particle; for granular solids $\Phi_s$ ranges from $0.6$ to $0.95$.
+\end{formulabox}
+
+\spsub{Equivalent channel diameter $D_{eq}$}
+\begin{itemize}
+  \item Let $\varepsilon$ = porosity and $1-\varepsilon$ = the volume fraction of particles in the bed (the \emph{external} void fraction of the bed, not the total porosity): if the particles are porous, their pores are generally too small to permit any significant flow through them, so they are not counted.
+  \item The solid surface presented to the flow, for $n$ parallel channels of length $L$, is the surface-to-volume ratio times the particle volume, $S_0L(1-\varepsilon)\cdot\dfrac{6}{\Phi_sD_p}$, and it must equal the wetted surface of the $n$ channels:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+n\pi D_{eq}L &= S_0L(1-\varepsilon)\,\frac{6}{\Phi_sD_p}\tag{2}\\[2pt]
+S_0L\varepsilon &= \frac{\pi}{4}\,nD_{eq}^2L\tag{3}
+   &&\text{(void volume of the bed = total volume of the }n\text{ channels)}
+\end{align*}
+Eliminating $S_0$ between (2) and (3):
+\[
+n\pi D_{eq}L=\frac{\frac{\pi}{4}nD_{eq}^2L}{\varepsilon}\times\frac{1-\varepsilon}{L}\times\frac{6}{\Phi_sD_p}
+\qquad\Longrightarrow\qquad \boxed{\;D_{eq}=\frac{2}{3}\,\Phi_sD_p\left(\frac{\varepsilon}{1-\varepsilon}\right)\;}
+\]
+Typically $\varepsilon=0.4$, so $D_{eq}=0.44\,\Phi_sD_p$ --- the equivalent diameter is roughly \emph{half the particle size}.
+\end{formulabox}
+
+\spsub{From channel velocity to the empty-tower velocity}
+\begin{itemize}
+  \item $\bar{V}$ = average velocity in the channels (it depends on the pressure drop); $v_0$ = velocity based on the empty tower (superficial velocity).
+  \item The flow splits between the channels, so $\bar{V}$ falls as $\varepsilon$ rises: $\bar{V}\propto v_0$ and $\bar{V}\propto 1/\varepsilon$, hence
+  \[\bar{V}=\frac{v_0}{\varepsilon}\]
+  \item $v_0$, $D_p$ and $\varepsilon$ are tangible parameters of the bed --- once they are known the pressure drop can be calculated.
+\end{itemize}
+
+\spsub{Kozeny--Carman equation}
+\begin{formulabox}
+At a very low Reynolds number ($Re\simeq1.0$) use Hagen--Poiseuille with $\Delta L\simeq L$ and $D=D_{eq}$, and substitute $\bar{V}=v_0/\varepsilon$:
+\begin{align*}
+\frac{\Delta P}{L}&\simeq\frac{32\,\mu\,\bar{V}}{g_cD_{eq}^2}
+ =\frac{32\,\mu\,\dfrac{v_0}{\varepsilon}}{g_c\left[\dfrac{2}{3}\Phi_sD_p\left(\dfrac{\varepsilon}{1-\varepsilon}\right)\right]^{2}}
+ =\frac{72\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+\end{align*}
+A correction factor $\lambda_1$ is introduced because the channels are actually \emph{tortuous}, not straight. Experiments show the constant is $150$, so
+\[\boxed{\;\frac{\Delta P}{L}=150\,\frac{v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}\;}
+\qquad\text{\textbf{Kozeny--Carman equation (valid for }$Re\simeq1$\textbf{)}}\]
+Flow is proportional to the pressure drop and inversely proportional to the fluid viscosity --- this is \textbf{Darcy's law}, used to explain the flow of liquids through porous media.
+\end{formulabox}
+
+\spsub{Burke--Plummer equation (high flow rate)}
+\begin{itemize}
+  \item As the flow rate increases, the pressure drop eventually rises faster than linearly: at very high Reynolds number $\Delta P\propto v_0^{1.8\text{ or }2}$, which gives the \emph{empirical} result
+\end{itemize}
+\begin{formulabox}
+\[\boxed{\;\frac{\Delta P}{L}=1.75\,\frac{\rho\,v_0^2}{g_c\,\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}\;}
+\qquad\text{\textbf{Burke--Plummer equation (}$Re>1000$\textbf{)}}\]
+\end{formulabox}
+
+\spsub{Ergun equation (entire range of flow rates)}
+\begin{itemize}
+  \item For the entire range of flow rates the equation is obtained by adding the two effects: the \emph{viscous loss} and the \emph{kinetic-energy loss}.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\Delta P}{L}&=
+ \underbrace{\frac{150\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}}_{\text{viscous loss}}
+ +\underbrace{\frac{1.75\,\rho\,v_0^2}{g_c\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}}_{\text{kinetic-energy loss}}
+ &&\text{\textbf{Ergun equation}}
+\end{align*}
+\end{formulabox}
+
+\spsub{Overall pressure drop at any time}
+\begin{itemize}
+  \item The overall drop is the drop over the medium \emph{plus} the drop over the cake:
+  \[\Delta P=P_a-P_b=(P_a-P')+(P'-P_b)=\Delta P_c+\Delta P_m\]
+  with $P_a$ the inlet pressure, $P_b$ the outlet pressure and $P'$ the pressure at the boundary between cake and medium.
+  \item $\Delta P_c$ is written with the Kozeny--Karman equation, $v_0\to u$ and $\Delta P/L\to \mathrm{d}P/\mathrm{d}L$ (the differential form):
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\mathrm{d}P}{\mathrm{d}L}&=\frac{150\,u\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+ &&\text{then put } \Phi_sD_p=\frac{6v_p}{s_p}\\[2pt]
+&=\frac{150\,u\,\mu\,s_p^2(1-\varepsilon)^2}{g_c\,36\,v_p^2\varepsilon^3}
+ =\boxed{\;4.17\,\frac{\mu\,u}{g_c}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\;}
+\end{align*}
+\vspace{2pt}
+{\small
+$\mathrm{d}P/\mathrm{d}L$ = pressure gradient at thickness $L$; \quad
+$\mu$ = viscosity of the filtrate; \quad
+$u$ = linear velocity of the filtrate, based on the \emph{filter} area; \quad
+$s_p$ = surface area of a single particle; \quad
+$v_p$ = volume of a single particle; \quad
+$\varepsilon$ = porosity of the cake; \quad
+$g_c$ = Newton's law proportionality constant; \quad
+usually the coefficient is $4.17$.}
+\end{formulabox}
+
+\spsub{Mass balance over the cake (eliminating $\mathrm{d}L$)}
+\begin{itemize}
+  \item For beds of \emph{compressible} particles (beds with a very low void fraction) write the filtrate flux as
+  \[u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t},\qquad V=\text{volume of filtrate collected from the start of filtration to time }t\]
+  \item Volume of solids in a layer of thickness $\mathrm{d}L$ is $A(1-\varepsilon)\,\mathrm{d}L$, so with $\rho_p$ the density of the particles,
+  \[\mathrm{d}m=\rho_pA(1-\varepsilon)\,\mathrm{d}L\qquad\text{(}m\text{ = mass of solids in the layer)}\]
+\end{itemize}
+\begin{formulabox}
+Eliminating $\mathrm{d}L$ by dividing the differential pressure drop by the mass balance,
+\begin{align*}
+\mathrm{d}P&=\frac{4.17\,\mu\,u\,(1-\varepsilon)^2}{g_c\,\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\cdot\frac{\mathrm{d}m}{\rho_pA(1-\varepsilon)}\\[2pt]
+&=\boxed{\;\frac{k_1\,\mu\,u\,(1-\varepsilon)}{g_c\,\rho_pA\,\varepsilon^3}
+   \left(\frac{s_p}{v_p}\right)^{2}\mathrm{d}m\;}\qquad (k_1 \text{ used instead of } 4.17)
+\end{align*}
+\end{formulabox}
+
+\spsub{Compressible and incompressible filter cakes}
+\begin{itemize}
+  \item For low pressure-drop filtration of slurries \emph{all} the factors are independent of $L$ except $m_c$, so the equation integrates immediately from $m=0$ to $m=m_c$:
+\end{itemize}
+\begin{formulabox}
+\[\int_{P'}^{P_a}\mathrm{d}P=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
+  \left(\frac{s_p}{v_p}\right)^{2}\int_0^{m_c}\mathrm{d}m
+\qquad\Longrightarrow\qquad
+\boxed{\;\Delta P_c=P_a-P'=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
+  \left(\frac{s_p}{v_p}\right)^{2}m_c\;}\]
+\end{formulabox}
+
+\spsub{Specific cake resistance $\alpha$}
+\begin{itemize}
+  \item For cakes that are incompressible the group in front of $m_c$ is a constant of the cake and the slurry:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\alpha&=\frac{\Delta P_c\,g_c\,A}{\mu\,u\,m_c}
+   &&\text{\textbf{specific cake resistance}}\\[2pt]
+&=k_1\left(\frac{s_p}{v_p}\right)^{2}\frac{1-\varepsilon}{\varepsilon^3\rho_p}
+\;;\qquad \text{if the particle diameter is given,}\qquad
+\alpha=\frac{k_2(1-\varepsilon)}{\varepsilon^3\rho_p(\Phi_sD_p)^2}
+\end{align*}
+$\alpha$ is independent of the pressure drop and of the position in the cake.
+\end{formulabox}
+
+\spsub{Filter medium resistance $R_m$}
+\begin{formulabox}
+\begin{align*}
+R_m&=\frac{(P'-P_b)\,g_c}{\mu\,u}=\frac{(\Delta P_m)\,g_c}{\mu\,u}
+   &&\text{dimension } L^{-1}\\[4pt]
+\Delta P&=\Delta P_c+\Delta P_m
+ =\left(\frac{\alpha\,\mu\,u\,m_c}{g_c\,A}\right)+\left(\frac{\mu\,u\,R_m}{g_c}\right)
+ =\boxed{\;\frac{\mu\,u}{g_c}\left[\frac{\alpha\,m_c}{A}+R_m\right]\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Working form and the constant-pressure straight line}
+\begin{itemize}
+  \item If $c$ is the mass of particles deposited on the filter \emph{per unit volume of filtrate}, then the mass of solids at any time is $m_c=Vc$. Substituting $u=\dfrac{1}{A}\dfrac{\mathrm{d}V}{\mathrm{d}t}$,
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Delta P&=\frac{\mu}{g_c}\left(\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t}\right)
+   \left[\frac{\alpha\,Vc}{A}+R_m\right]
+\qquad\Longrightarrow\qquad
+\boxed{\;\frac{\mathrm{d}t}{\mathrm{d}V}=\frac{\mu}{A(\Delta P)g_c}\left[\frac{Vc\alpha}{A}+R_m\right]\;}\\[4pt]
+\text{Constant }\Delta P:\quad & \left(\frac{\mathrm{d}t}{\mathrm{d}V}\right)_{0}
+   =\frac{\mu R_m}{A(\Delta P_m)g_c}=\frac{1}{q_0}
+   \qquad (t=0,\;V=0,\;\Delta P=\Delta P_m \text{ --- medium only})\\[3pt]
+& \frac{\mathrm{d}t}{\mathrm{d}V}=\frac{1}{q}=k_cV+\frac{1}{q_0},
+   \qquad k_c=\frac{\mu\,c\,\alpha}{A^2(\Delta P)g_c}\\[4pt]
+& \boxed{\;\frac{t}{V}=\left(\frac{k_c}{2}\right)V+\frac{1}{q_0}\;}
+   \qquad\text{straight line } y=mx+c:\quad \text{slope}=\frac{k_c}{2},\quad
+   \text{intercept}=\frac{1}{q_0}
+\end{align*}
+\end{formulabox}
+\notetext{From the plot of $t/V$ against $V$ both $\alpha$ (through the slope, hence $k_c$) and $R_m$ (through the intercept, hence $q_0$) can be calculated. The same plot is the bridge to the constant-rate and continuous cases of the next section.}
+
+\spsub{Compressibility of the cake}
+\begin{formulabox}
+\textbf{Empirical equation for cake resistance:}\qquad
+\[\boxed{\;\alpha=\alpha_0(\Delta P)^{s}\;}\]
+$\alpha_0$ and $s$ are empirical constants, determined purely by experiments. $s$ is the \textbf{compressibility coefficient}: $s=0$ for incompressible sludges (the cake resistance does not change with pressure), and $s$ is positive for a compressible cake, typically $0.2$--$0.8$.
+\end{formulabox}
+\notetext{The deck works this lecture from the hand-written pages numbered ``Lecture 9''; the printed front page titles it Module 2 Lecture 3. Both page numbers are the same lecture.}
+
+% ---- Module 2, Lecture 4 : constant-rate filtration ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 4 --- Constant-Rate Filtration}
+
+\spsub{The condition}
+\begin{itemize}
+  \item In \textbf{constant-rate filtration} the filtrate flows at a \emph{constant volume rate}, so the linear velocity $u$ is constant and the pressure drop must be allowed to rise through the run --- from a minimum at the start of filtration to a maximum at the end of it (the mirror image of the constant-pressure case of Lecture 3, where $\Delta P$ is held and the rate falls).
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+u\;(\text{linear velocity})&=\text{constant}\\[2pt]
+u&=\frac{1}{A}\frac{\mathrm{d}v}{\mathrm{d}t}=\frac{V}{At}
+ &&\text{(}v,V=\text{volume of filtrate collected up to time }t\text{)}\\[2pt]
+\alpha&=\frac{\Delta P_c\,g_c\,A}{\mu\,u\,m_c}
+ &&\text{specific cake resistance, from Lecture 3}
+\end{align*}
+\end{formulabox}
+
+\spsub{Pressure drop over the cake at constant rate}
+\begin{itemize}
+  \item With the cake mass written as $m_c=Vc$ ($c$ = mass of solids deposited per unit volume of filtrate) and $u$ constant, the cake resistance is unchanged during the run and the whole of the extra pressure drop goes into driving the flow through the growing cake:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{\Delta P_c}{\alpha}&=\frac{\mu}{g_cA}\left(\frac{V}{At}\right)Vc\\[3pt]
+\boxed{\;\frac{\Delta P}{\alpha}=\frac{\mu\,c}{g_c\,t}\left(\frac{V}{A}\right)^{2}\;}
+\qquad\text{i.e.}\qquad
+\Delta P=\frac{\mu\,c\,\alpha}{g_c\,t}\left(\frac{V}{A}\right)^{2}
+\end{align*}
+\vspace{2pt}
+In this equation $\Delta P$ is kept on the left-hand side because $\alpha=f(\Delta P)$ for compressible sludges --- the specific cake resistance itself grows with the pressure drop that the cake is then asked to withstand.
+\end{formulabox}
+
+\spsub{Closing the loop for a compressible cake}
+\begin{itemize}
+  \item Substituting the empirical cake-resistance law $\alpha=\alpha_0(\Delta P)^{s}$ from Lecture 3 into the constant-rate result gives the pressure drop the pump must deliver at time $t$:
+\end{itemize}
+\begin{formulabox}
+\[\Delta P=\frac{\mu\,c\,\alpha_0(\Delta P)^{s}}{g_c\,t}\left(\frac{V}{A}\right)^{2}
+\qquad\Longrightarrow\qquad
+\boxed{\;\Delta P^{\,1-s}=\frac{\mu\,c\,\alpha_0}{g_c\,t}\left(\frac{V}{A}\right)^{2}\;}
+\]
+(For an incompressible cake $s=0$ and this collapses to the equation above with $\alpha=\alpha_0$: at a fixed rate $\Delta P$ grows linearly with $V^2/t$, that is with $t$ itself, since $V=uAt$.)
+\end{formulabox}
+\notetext{The two limiting schedules now sit side by side: \emph{constant pressure} --- $\Delta P$ fixed, rate falls, $t/V$ against $V$ is a straight line; \emph{constant rate} --- rate fixed, $\Delta P$ rises, and for an incompressible cake $\Delta P\propto t$. Both are worked with the same pair of resistances, cake and medium.}
+
+% ---- Module 2, Lecture 5 : continuous filtration ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 5 --- Continuous Filtration}
+
+\spsub{What a continuous filter does}
+\begin{itemize}
+  \item In a continuous filter such as the rotary-drum filter the feed, the filtrate and the cake move at \emph{steady constant rates}; but for any particular element of the filter surface the conditions are \emph{not} steady, they are transient.
+  \item The process consists of several steps in series --- \textbf{cake formation}, \textbf{washing}, \textbf{drying} and \textbf{discharging} --- and each step involves a gradual, continual change in conditions. The pressure drop across the filter during cake formation is held constant, so the equations of discontinuous constant-pressure filtration (Lecture 3) may be applied to a continuous filter with some modification.
+  \item Rotary-drum filter: a cloth-covered outer drum turns in a slurry trough; as each element of the drum passes through the trough a cake is formed by the vacuum inside, the element then emerges for washing (wash spray) and drying, and the cake is finally removed by the doctor blade. The depth to which the drum is immersed is therefore the fraction of the cycle available for cake formation (sketches on slides~5--6 of the deck).
+\end{itemize}
+
+\spsub{The constant-pressure equations the continuity is built on}
+\begin{formulabox}
+From the constant-pressure result of Lecture 3, written for a filter of area $A$:
+\begin{align*}
+\frac{t}{V}&=\left(\frac{k_c}{2}\right)V+\frac{1}{q_0}\\[2pt]
+t&=\left(\frac{k_c}{2}\right)V^{2}+\frac{V}{q_0}
+ \qquad\text{--- a quadratic in }V:\\[2pt]
+\left(\frac{k_c}{2}\right)V^{2}+\left(\frac{1}{q_0}\right)V-t&=0
+ \qquad\text{compare }Ax^2+Bx+C=0,\quad x=\frac{-B\pm\sqrt{B^2-4AC}}{2A}\\[2pt]
+\boxed{\;V=\frac{-\dfrac{1}{q_0}\pm\sqrt{\dfrac{1}{q_0^{2}}+4\times\dfrac{k_c}{2}\times t}}{2\times\dfrac{k_c}{2}}\;}
+\end{align*}
+{\small with the two cake and medium constants of Lecture 3,}
+\[
+k_c=\frac{\mu\,c\,\alpha}{A^{2}(\Delta P)g_c},
+\qquad
+\frac{1}{q_0}=\frac{\mu R_m}{A(\Delta P)g_c}
+\]
+\end{formulabox}
+
+\spsub{The symbols of the continuous case}
+\begin{formulabox}
+\begin{align*}
+& V=\text{volume of filtrate collected in time }t
+ && \frac{V}{t}=\text{rate of filtrate collection}\\[2pt]
+& A=\text{submerged area of filter}
+ && \dot m_c=\text{rate of solids production}\\[2pt]
+& t_c=\text{cycle time}
+ && n=\text{drum speed of the continuous filter, rps }=\frac{1}{t_c}\\[2pt]
+& A_T=\text{total filter area}
+ && f=\frac{A}{A_T}=\frac{\text{submerged area of filter}}{\text{total area}}
+   =\text{fraction of the drum submerged}\\[2pt]
+& t=f\,t_c=\frac{f}{n}
+ && t=\text{time available for cake formation in one cycle}
+\end{align*}
+\end{formulabox}
+
+\spsub{Design equation for continuous filtration}
+\begin{itemize}
+  \item The mass of solids laid down is proportional to the filtrate collected, so
+  \[m_c=Vc\qquad\Longrightarrow\qquad \dot m_c=c\left(\frac{V}{t}\right)\]
+  \item Writing the constant-pressure solution in terms of the rate of filtrate collection per unit area, dividing throughout by $c\alpha$ and replacing the cycle by the drum speed gives the deck's master equation:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\left(\frac{V}{tA}\right)&=
+\frac{\left[\left(\dfrac{2\,\Delta P\,g_c\,c\,\alpha}{\mu\,t}\right)
+      +\left(\dfrac{R_m}{t}\right)^{2}\right]^{1/2}-\dfrac{R_m}{t}}{c\,\alpha}
+ &&\text{(hand-worked page of the deck)}\\[6pt]
+\text{and with } A/A_T=f:\qquad
+\frac{\dot m_c}{A_T}&=
+\frac{\left[\dfrac{2c\alpha\Delta P f n}{\mu}+(nR_m)^{2}\right]^{1/2}-nR_m}{\alpha}
+ &&\text{(printed design equation, }R_m\neq0\text{)}
+\end{align*}
+\vspace{2pt}
+{\small $R_m$ is the filter-medium resistance: it is \emph{not} removed by the discharge mechanism and is carried through to the next cycle. If the filter medium is washed properly $R_m$ becomes negligible, and then}
+\begin{align*}
+\frac{\dot m_c}{A_T}&=\left(\frac{2c\,\Delta P\,g_c\,f\,n}{\alpha\,\mu}\right)^{1/2}
+ &&\text{(medium resistance neglected)}\\[2pt]
+\alpha&=\alpha_0(\Delta P)^{s}\qquad\Longrightarrow\qquad
+\boxed{\;\frac{\dot m_c}{A_T}=\left(\frac{2c\,\Delta P^{\,1-s}g_c\,f\,n}{\alpha_0\,\mu}\right)^{1/2}\;}
+\end{align*}
+\end{formulabox}
+
+\spsub{Notation of the design equation}
+\begin{formulabox}
+\begin{align*}
+c&=\text{mass of solids deposited in the filter per unit volume of filtrate}\\
+\Delta P&=\text{overall pressure drop in the filter}\\
+f&=\frac{A}{A_T}=\text{fraction of the drum submerged}\\
+n&=\text{drum speed of the continuous filter (rps)}=\frac{1}{t_c}\\
+t_c&=\text{cycle time};\qquad t=f t_c=\frac{f}{n}\\
+\alpha&=\text{specific cake resistance }(\ensuremath{\mathrm{ m}/\mathrm{k g}})\\
+\mu&=\text{viscosity of the filtrate};\qquad
+s=\text{compressibility coefficient of the cake }(0.1\text{--}0.8)\\
+\dot m_c&=\text{mass flow rate of solids from the continuous filter};\qquad
+A_T=\text{total area of the continuous filter}
+\end{align*}
+\end{formulabox}
+\notetext{The two printed forms of the design equation stand to each other as follows: the compressible one is the incompressible one with $\alpha$ replaced by $\alpha_0(\Delta P)^{s}$, so the pressure drop appears to the power $1-s$. For an incompressible cake $s=0$ and the two coincide. Slide~8 of the deck prints the $R_m=0$ and $R_m\neq0$ forms together with ``Incompressible, $s=0$, $\alpha=\alpha_0$'' between them.}
+
+% ---- Module 2, Lecture 6 : centrifugal filtration and washing ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 6 --- Centrifugal Filtration and Washing Rate}
+
+\spsub{Centrifugal filtration --- where it applies}
+\begin{itemize}
+  \item A centrifuge may hold the bowl stationary (sedimentation in a rotated imperforate bowl) or filter through a perforated basket; this section is the \emph{filtering} case --- a perforated basket, a filter cloth, and a cake thrown against the cloth.
+  \item The basic theory of constant-pressure filtration can be modified to apply to filtration in a centrifuge. It applies \emph{after} the cake has been deposited, and during the flow of clear filtrate or fresh water through the cake.
+  \item In the basket (sketch on slide~6): $r_1$ = radius of the inner surface of the liquid, $r_i$ = radius of the inner face of the cake, $r_2$ = inside radius of the basket, $b$ = height of the basket.
+\end{itemize}
+
+\spsub{Assumptions}
+\begin{itemize}
+  \item The effect of gravity and the change in kinetic energy of the liquid are neglected.
+  \item The pressure drop from the centrifugal action equals the drag of the liquid through the cake.
+  \item The cake is completely filled with liquid; the flow of liquid is laminar.
+  \item The resistance of the filter medium is constant and the cake is nearly incompressible.
+\end{itemize}
+
+\spsub{Derivation as printed and worked on the deck}
+\begin{formulabox}
+\begin{align*}
+\text{Hydrostatic:}\quad
+& \Delta P=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}{2}
+ &&\text{(centrifugal field, }\omega=\text{ angular velocity)}\\[2pt]
+\text{Constant-pressure filtration:}\quad
+& \Delta P=\mu u\left(\frac{\alpha\,m_c}{A}+R_m\right)\\[2pt]
+\text{Linear velocity:}\quad
+& u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t}=\frac{q}{A}
+ &&\text{(}q=\text{ volumetric flow rate)}\\[2pt]
+\text{Substituting }u:\quad
+& \Delta P=\mu q\left(\frac{\alpha\,m_c}{A^{2}}+\frac{R_m}{A}\right)\\[2pt]
+\text{Equating the two:}\quad
+& \frac{\rho\omega^{2}(r_2^{2}-r_1^{2})}{2}
+ =\mu q\left(\frac{\alpha\,m_c}{A^{2}}+\frac{R_m}{A}\right)
+\end{align*}
+\begin{align*}
+\Longrightarrow\quad
+q&=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
+ {2\mu\left(\dfrac{\alpha\,m_c}{A^{2}}+\dfrac{R_m}{A}\right)}
+ &&\text{(area }A\text{ of the cake taken as constant)}
+\end{align*}
+\end{formulabox}
+\notetext{$\rho$ = density of the liquid, $\omega$ = angular velocity of the basket, $A$ = area of the filtering surface, $m_c$ = mass of solids in the cake, $q$ = volumetric rate of filtrate.}
+
+\spsub{Case 1 --- the change of area with radius may be neglected}
+\begin{itemize}
+  \item Permissible for a thin cake in a large-diameter centrifuge: the area for flow does not change with radius, so $A$ may be taken out of the integral.
+\end{itemize}
+\begin{formulabox}
+\[\boxed{\;q=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
+  {2\mu\left(\dfrac{\alpha\,m_c}{\overline{A}_L\overline{A}_a}
+   +\dfrac{R_m}{A_2}\right)}\;}
+\]
+\begin{align*}
+A_2&=\text{area of filter medium (inside area of the centrifuge basket)}\\
+\overline{A}_a&=\text{arithmetic mean of the cake area}=(r_i+r_2)\pi b\\
+\overline{A}_L&=\text{logarithmic mean of the cake area}=\frac{2\pi b(r_2-r_i)}{\ln(r_2/r_i)}
+\end{align*}
+\end{formulabox}
+
+\spsub{Case 2 --- the change of area with radius is too large to be neglected}
+\begin{itemize}
+  \item Then the cake area must be carried through the integration as a function of radius and the arithmetic and logarithmic mean areas above are what come out of it: $\overline{A}_a$ from the cake's inner face to the basket wall, $\overline{A}_L$ from the logarithmic mean of the same two radii.
+\end{itemize}
+
+\spsub{Limits of the equation (as the deck states them)}
+\begin{itemize}
+  \item It applies to a cake of \emph{definite} mass --- it is not integrable over the entire range starting from the beginning of filtration.
+  \item For compressible cakes the specific resistance $\alpha$ increases with the centrifugal force, so $\alpha$ is no longer the constant the equation assumed.
+\end{itemize}
+\notetext{The hydrostatic step is printed on the deck as ``Eq 33 (McCabe Smith) 7th Ed.'' --- the deck's own reference, kept here rather than re-derived.}
+
+\spsub{Washing rates}
+\begin{itemize}
+  \item \textbf{Batch filters}: washing the cake is done at the end of filtration.
+  \item \textbf{Filter press}: the rate of washing is $\tfrac14$ of the normal rate of filtration; the rate of wash water is different from that of the slurry and only half the area is available for washing.
+  \item \textbf{Leaf filter}: washing is done at the \emph{same} pressure as filtration and the rate of washing is a \emph{fixed} ratio of the rate of filtration --- the rate of slurry and of wash water is the same, and hence the same area is available for washing.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\left(\frac{\mathrm{d}V}{\mathrm{d}t}\right)_{f}&=f(V)
+ &&\text{the filtration rate at the end of the run, } V=\text{final volume collected}\\[3pt]
+\text{Washing time:}\quad & t_w=\frac{V_w}{\text{rate of washing}}
+ &&\text{(}V_w=\text{volume of wash water)}\\[2pt]
+& \boxed{\;t_w=\frac{V_w}{(\mathrm{d}V/\mathrm{d}t)_{\text{washing}}}\;}
+\end{align*}
+\begin{align*}
+\text{Idle time }(t_i)&=\text{time for dismantling, dumping, reassembling}\\
+\text{Filtration time }(t_f)&=\text{time required for filtration}\\[2pt]
+\text{Cycle time:}\quad & \boxed{\;t_c=t_f+t_w+t_i\;}\\[2pt]
+\text{Cycles per day:}\quad & n_{\text{cyc}}=\frac{24\;\ensuremath{\mathrm{ h}}}{t_c\;(\ensuremath{\mathrm{ h}})}\\[2pt]
+\text{Daily filtrate:}\quad & V_{\text{day}}=\frac{24\;V_f}{t_c}
+ &&\text{(}V_f=\text{filtrate per cycle)}
+\end{align*}
+\end{formulabox}
+
+\spsub{Continuous filter}
+\begin{itemize}
+  \item Here washing is an \emph{integral part} of filtration --- the rotary-drum filter of Lecture 5 washes the cake as it turns, before the doctor blade removes it; there is no separate washing step to be timed.
+\end{itemize}
+
+% ---- Module 2, Lecture 7 (a) : clarifying, crossflow and membrane filters ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 7 --- Clarifying Filters, Crossflow and Membrane Filters; Sedimentation}
+
+\spsub{Clarifying filters}
+\begin{itemize}
+  \item Clarifying filters remove \emph{small amounts} of solids or liquid droplets from either liquids or gases.
+  \item The particles are caught by \emph{surface forces} and immobilised on the surfaces or within the flow channels. They reduce the effective diameter of the channels but usually do not block them completely.
+  \item Clarification differs from screening in that the pores in the filter medium are larger --- sometimes much larger --- than the particles to be removed.
+  \item \textbf{Liquid clarification}: clarifying filters for liquids include the gravity-bed filters used in water treatment; cake filters are also used extensively for clarification. In batch units the filtration rate and the filtration efficiency stay constant for a long period, and eventually reach a \textbf{breakthrough} value, after which backwashing or replacement becomes necessary.
+  \item \textbf{Gas cleaning}: filters for gas cleaning include pad filters for atmospheric dust, and granular beds and bag filters for process dusts. Air is cleaned by passing it through pads of cellulose pulp, cotton, felt, glass fibre or metal screening; the pad material may be dry or coated with a viscous oil to act as a dust holder.
+\end{itemize}
+
+\spsub{Principles of clarification}
+\begin{itemize}
+  \item \textbf{Direct sieving}: the solid particles being removed completely plug the pores of the filter medium, and the rate of plugging is constant with time.
+  \item \textbf{Standard blocking}: the particles partially block the pores, giving a gradual reduction in pore size.
+  \item \textbf{Impingement}: in cleaning gases the separation is by impingement of the particles against a solid surface placed in the flowing stream. The particles, because of their inertia, are expected to cross the streamlines of the fluid, strike the solid, and adhere to it, from which they can subsequently be removed.
+\end{itemize}
+
+\spsub{Crossflow filtration}
+\begin{itemize}
+  \item The feed is passed through a membrane or bed, the solids being trapped in the filter and the filtrate released at the other end.
+  \item The majority of the feed flow travels \emph{tangentially across the surface} of the filter, rather than into the filter.
+  \item The principal advantage is that the filter cake is substantially washed away during the filtration process, increasing the length of time that a filter unit can stay operational --- compare the dead-end arrangement, where all the feed is forced through the medium and the cake builds up on it.
+  \item Applied to concentrate suspensions of fine particles or colloidal particles.
+\end{itemize}
+
+\spsub{Membrane filters}
+\begin{itemize}
+  \item \textbf{Types of membranes}: polymer membranes (cellulose acetate, polyacrylonitrile, polysulfone, polyether sulfone, polyamide, etc.); metallic membranes (sintered stainless steel or other metals); inorganic membranes (porous carbon or alumina).
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Technique} & \textbf{Pore size and what is retained}\\
+\midrule
+Microfiltration (MF) & \ensuremath{10\,\mathrm{\mu m}}--\ensuremath{0.1\,\mathrm{\mu m}} (100\,nm): suspended solids, bacteria/algae and viruses are held back; water and dissolved ions pass.\\
+Ultrafiltration (UF) & \ensuremath{0.1\,\mathrm{\mu m}}--\ensuremath{0.01\,\mathrm{\mu m}} (10\,nm): as MF, with viruses rejected more completely; ions still pass.\\
+Nanofiltration (NF) & \ensuremath{10} nm--\ensuremath{1} nm: multivalent ions, viruses, bacteria/algae and suspended solids are rejected; monovalent ions and water pass.\\
+Hyperfiltration / reverse osmosis (RO) & $<\ensuremath{1} nm$: water passes and essentially everything else is rejected --- monovalent ions, multivalent ions, viruses, bacteria/algae and suspended solids.\\
+\bottomrule
+\end{tabularx}}
+\end{formulabox}
+
+\spsub{General equation for ultrafiltration}
+\begin{itemize}
+  \item The \textbf{volume flux} is the superficial permeate velocity normal to the surface:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+J_v&=\frac{\Delta P-\Delta\pi}{R_m+R_{gel}}
+ =\frac{\Delta P-\Delta\pi}{R_m(\mu/\mu_0)+R_{gel}}
+\end{align*}
+\vspace{2pt}
+{\small
+$\Delta P$ = trans-membrane pressure drop; \quad
+$\Delta\pi$ = osmotic pressure drop; \quad
+$R_m$ = membrane resistance; \quad
+$R_{gel}$ = gel-layer resistance; \quad
+$\mu$ = viscosity of the permeate at the operating temperature; \quad
+$\mu_0$ = viscosity of water at room temperature. \quad
+The membrane resistance is corrected by the permeate-to-water viscosity ratio $\mu/\mu_0$; the deck writes that factor in the denominator of the bracketed form.}
+\end{formulabox}
+
+\spsub{Concentration polarization}
+\begin{itemize}
+  \item As permeate is drawn through the membrane, solute is carried towards the surface faster than it can diffuse back, so the concentration at the surface rises above the bulk value. In \textbf{RO} the surface concentration is only moderately higher than the bulk concentration; in \textbf{UF} the surface concentration is large, and a gel layer forms.
+  \item The boundary layer has thickness $\delta$. Writing $C_s$ for the concentration at the surface ($x=0$) and $C_1$ for the bulk concentration at $x=\delta$, with $C_2$ the solute concentration in the permeate:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+J_v&=K_c\ln\frac{C_s-C_2}{C_1-C_2}
+ &&\text{volume flux with concentration polarization}
+\end{align*}
+\vspace{2pt}
+{\small $C_s$ = concentration at the surface ($x=0$);\quad $C_1$ = bulk concentration at $x=\delta$, the edge of the gel boundary layer;\quad $C_2$ = solute concentration in the permeate.}
+\end{formulabox}
+
+\spsub{Mass-transfer coefficient and the Sherwood correlation}
+\begin{formulabox}
+\begin{align*}
+K_c&=\frac{D_v}{\delta}
+ &&\text{mass-transfer coefficient}\\[2pt]
+Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
+ &&\text{Sherwood number}\\[2pt]
+&\boxed{\;Sh=0.0096\,Re^{\,0.913}Sc^{\,0.346}\;}
+\end{align*}
+\vspace{2pt}
+{\small $K_c$ in \ensuremath{\mathrm{c m}/\mathrm{ s}}, $D_v$ (diffusivity) in \ensuremath{\mathrm{c m}^{2}/\mathrm{ s}}, $L$ a characteristic length; the boxed correlation is the one the deck uses to get $K_c$.}
+\end{formulabox}
+
+\spsub{Complete solute rejection}
+\begin{itemize}
+  \item When $C_2=0$, that is complete solute rejection and no solute in the permeate, the flux expression collapses to
+\end{itemize}
+\begin{formulabox}
+\[J_v=K_c\ln\frac{C_s}{C_1}\]
+\end{formulabox}
+
+\spsub{Applications of ultrafiltration (from the deck)}
+\begin{itemize}
+  \item Food processing and pharmacy; textile and paper industry; wastewater treatment and water purification; dairy industry.
+\end{itemize}
+
+% ---- Module 2, Lecture 8 : centrifugal sedimentation ----
+\spsection{MODULE 2 \textperiodcentered{} LECTURE 8 --- Centrifugal Sedimentation}
+
+\spsub{Cyclone separators}
+\begin{itemize}
+  \item Most centrifugal separators for removing particles from gas streams contain \emph{no moving parts}. The body is a vertical cylinder with a conical bottom, a \textbf{tangential inlet} near the top and an outlet for dust at the bottom of the cone; the inlet is usually rectangular, and the outlet pipe is extended into the cylinder to prevent short-circuiting of air from inlet to outlet.
+  \item The incoming dust-laden air travels in a \emph{spiral path} around and down the cylindrical body. The centrifugal force developed in the vortex moves the particles radially toward the wall, and particles that reach the wall slide down into the cone and are collected.
+  \item The cyclone is therefore basically a settling device in which a strong \emph{centrifugal} force acting radially is used in place of the relatively weak \emph{gravitational} force acting vertically.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Centrifugal force at radius }r:\quad & F_c=\frac{m\,u_{tan}^{2}}{r}
+ &&\text{(}m=\text{particle mass},\; u_{tan}=\text{tangential velocity)}\\[3pt]
+\text{Ratio to gravity:}\quad & \frac{F_c}{F_g}=\frac{m\,u_{tan}^{2}/r}{mg}=\frac{u_{tan}^{2}}{rg}
+ &&\text{\textbf{separation factor}}
+\end{align*}
+\end{formulabox}
+
+\spsub{Hydrocyclones (hydroclones)}
+\begin{itemize}
+  \item Cyclones are also used for separating solids from \emph{liquids}, sometimes as thickeners but much more commonly as classifiers. In this service they are called hydrocyclones or hydroclones.
+  \item The feed enters tangentially at high velocity near the top. The liquid follows a spiral path near the vessel wall, forming a strong \emph{downward vortex}; large or heavy solid particles separate to the wall and are pushed downward and out of the cyclone as a slurry or paste.
+  \item A variable-discharge orifice controls the consistency of the underflow. Most of the liquid goes back upward in an \emph{inner vortex} and leaves through the central discharge pipe, known as the \textbf{vortex finder}.
+\end{itemize}
+
+\spsub{Centrifugal decanters --- separating immiscible liquids}
+\begin{itemize}
+  \item Immiscible liquids are separated industrially in centrifugal decanters. The separating force is much larger than that of gravity, and it acts in the direction \emph{away from the axis of rotation} instead of downward towards the earth's surface.
+  \item The main types are \textbf{tubular centrifuges} and \textbf{disk centrifuges}.
+\end{itemize}
+
+\spsub{Tubular centrifuge}
+\begin{itemize}
+  \item Feed enters from a stationary nozzle inserted through an opening in the bottom of the bowl, and separates into two concentric layers of liquid inside the bowl.
+  \item The inner (lighter) layer spills over a \emph{weir} at the top of the bowl; it is thrown outward into a stationary discharge cover and from there to a spout. The heavy liquid flows over another weir into a separate cover and discharge spout.
+  \item The weir over which the heavy liquid flows is removable and may be replaced with another having an opening of a different size --- this is how the position of the heavy--light interface is set.
+\end{itemize}
+
+\spsub{Disk centrifuge}
+\begin{itemize}
+  \item Feed enters from above through a stationary pipe set into the neck of the bowl. Two liquid layers form as in a tubular centrifuge, and flow over adjustable dams into separate discharge spouts.
+  \item Inside the bowl, and rotating with it, are closely spaced ``disks'' --- actually cones of sheet metal set one above the other. Matching holes in the disks, about halfway between the axis and the wall of the bowl, form channels through which the liquids pass.
+  \item Feed liquor enters the bowl at the bottom, flows into the channels and upward past the disks. Heavier liquid is thrown outward, displacing lighter liquid toward the centre of the bowl. In its travel the heavy liquid very soon strikes the underside of a disk and flows beneath it to the periphery of the bowl without meeting any more light liquid; light liquid similarly flows inward and upward over the upper surfaces of the disks.
+  \item Because the disks are closely spaced, the distance a drop of either liquid must travel to escape from the other phase is short --- much shorter than in the comparatively thick liquid layers of a tubular centrifuge.
+  \item Disk centrifuges are particularly valuable where the purpose of centrifuging is not complete separation but the \emph{concentration} of one fluid phase, as in separating cream from milk and concentrating rubber latex.
+\end{itemize}
+
+\spsub{Nozzle-discharge centrifuge}
+\begin{itemize}
+  \item A modified disk-type centrifuge with a \emph{double conical} bowl. At the periphery of the bowl, at its maximum diameter, is a set of small holes or nozzles, perhaps \ensuremath{3\,m\,m} in diameter.
+  \item The central part of the bowl operates in the same way as the usual disk centrifuge, overflowing either one or two streams of clarified liquid.
+  \item Solids are thrown to the periphery of the bowl and escape continuously through the nozzles, together with a considerable quantity of liquid.
+\end{itemize}
+
+\spsub{Principle of centrifugal sedimentation}
+\begin{itemize}
+  \item A particle of a given size is \emph{removed} when it reaches the wall of the separator bowl. The particle moves radially outward with its terminal velocity, and the diameter of the smallest particle that is removed is what the design calculates.
+  \item Feed enters at the bottom, liquid discharges at the top; the liquid moves upward through the bowl at a constant velocity, carrying the solid particles with it.
+  \item Geometry: $r_1$ = radius of the inner surface of the liquid (the liquid interface), $r_2$ = inside radius of the bowl, $r_A$ = radius at which the feed enters, $r_B$ = radial position reached by the particle at the end of settling, $b$ = height of the bowl.
+  \item If $r_B<r_2$ the particle leaves the bowl with the liquid, i.e.\ it is \emph{not} removed. If $r_B=r_2$ the particle has been deposited on the bowl wall and is removed from the liquid.
+\end{itemize}
+
+\spsub{Residence time and settling time --- Stokes' law regime}
+\begin{formulabox}
+\begin{align*}
+\text{Terminal velocity at radius }r:\quad & u_t=\frac{\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}
+ &&\text{(Stokes' law regime)}\\[3pt]
+& u_t=\frac{\mathrm{d}r}{\mathrm{d}t}
+ \qquad\Longrightarrow\qquad
+ \mathrm{d}t=\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\,\frac{\mathrm{d}r}{r}\\[4pt]
+\text{Integrate:}\quad & \text{limits } r=r_A \text{ at } t=0,\quad r=r_B \text{ at } t=t_T\\[3pt]
+& t_T=\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\,\ln\frac{r_B}{r_A}
+ &&\text{settling time}\\[4pt]
+& t_T=\frac{\text{volume of liquid in bowl}}{\text{volumetric flow rate}}=\frac{V}{q},
+ \qquad V=\pi b\left(r_2^{2}-r_1^{2}\right)
+ &&\text{residence time}
+\end{align*}
+\end{formulabox}
+\notetext{$\omega$ = angular velocity of the bowl (rad/s), $\rho_p$ = particle density, $\rho$ = liquid density, $\mu$ = liquid viscosity, $D_p$ = particle diameter. The settling time available is limited by the residence time of the liquid in the bowl; a particle is removed only if the two are comparable in the way the design requires.}
+
+\spsub{Volumetric flow rate and the cut point}
+\begin{formulabox}
+Equating the two times gives the volumetric flow rate for a given cut size:
+\begin{align*}
+\frac{\pi b\left(r_2^{2}-r_1^{2}\right)}{q}
+ =\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\ln\frac{r_B}{r_A}
+ \qquad\Longrightarrow\qquad
+ q=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}\,
+    \frac{r_2^{2}-r_1^{2}}{\ln\left(r_B/r_A\right)}
+\end{align*}
+\textbf{Cut point} $D_{pc}$: the diameter of the particle that reaches \emph{half} the distance between $r_1$ and $r_2$ during the settling time, i.e.
+\[r_B=r_2,\qquad r_A=\frac{r_1+r_2}{2}\]
+so that
+\[\boxed{\;q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
+   \frac{r_2^{2}-r_1^{2}}{\ln\left[\dfrac{2r_2}{r_1+r_2}\right]}\;}
+\]
+Particles larger than $D_{pc}$ are removed at this flow rate; particles smaller than $D_{pc}$ stay in the liquid.
+\end{formulabox}
+
+\spsub{Thin liquid layer --- the simple scaling form}
+\begin{itemize}
+  \item When $r_1\simeq r_2$ --- the thickness of the liquid layer is very small --- the settling velocity is effectively constant through the layer and is evaluated at the bowl radius:
+\end{itemize}
+\begin{formulabox}
+\[u_t=\frac{D_p^{2}(\rho_p-\rho)\omega^{2}r_2}{18\mu}\]
+Writing $s$ for the settling distance and $t_T$ for the settling time, $u_t=\dfrac{s}{t_T}$ and $t_T=\dfrac{V}{q_c}$, so
+\[q_c=\frac{2V\,u_t}{s}
+ =\frac{2V}{\omega^{2}}\cdot\frac{\omega^{2}D_p^{2}(\rho_p-\rho)r_2}{18\mu\,s}
+ =\boxed{\;\frac{2V\omega^{2}r_2D_p^{2}(\rho_p-\rho)}{18\mu\,s}\;}\]
+\end{formulabox}
+
+\spsub{Sigma value and scale-up}
+\begin{itemize}
+  \item For industrial centrifuges the thin-layer flow equation is modified by replacing $r_2$ and $s$ by average values $r_e$ and $s_e$ for the type of centrifuge under consideration:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+q_c&=\frac{2V\omega^{2}r_e}{g\,s_e}\cdot\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
+     =\boxed{\;2\,\Sigma\,u_g\;}\\[3pt]
+\Sigma&=\frac{V\omega^{2}r_e}{g\,s_e}
+ &&\text{characteristic of the centrifuge}\\[3pt]
+u_g&=\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
+ &&\text{terminal settling velocity of the particle under gravity}
+\end{align*}
+$\Sigma$ is the \emph{cross-sectional area of a gravity settling tank of the same separation capacity as the centrifuge}.
+\end{formulabox}
+\notetext{Because $q_c=2\Sigma u_g$, a centrifuge and a gravity settler that must do the same job are compared through $\Sigma$ alone: double $\Sigma$ and the same cut is achieved at double the flow rate. The deck's Table 30.5 lists $\Sigma$ values for commercial sedimenting centrifuges (tubular, disk, helical-conveyor, axial-flow-conveyor types) against bowl diameter and speed.}
+
+\spsub{Worked problem set by the deck (Mod 2 Lec 8, slide 26)}
+\begin{daybox}
+\textbf{Capacity of a clarifying centrifuge.} What is the capacity in cubic metres per hour of a clarifying centrifuge operating under the following conditions? Bowl diameter \ensuremath{600\,m\,m}; thickness of the liquid layer \ensuremath{75\,m\,m}; depth of bowl \ensuremath{400\,m\,m}; speed \ensuremath{1200\,r\,/\,m\,i\,n}; specific gravity of liquid $1.2$; specific gravity of solid $1.6$; viscosity of liquid \ensuremath{2\,c\,P}; cut size of particles \ensuremath{30\,\mathrm{\mu m}}.
+\end{daybox}
+\notetext{The solution, with every substituted number, is worked in \texttt{SP2-Problems-and-Solutions.tex} (Q12) and checked by \texttt{sp2-answers-check.py}.}
+
+\spsection{PRACTICE PROBLEMS FROM THE SLIDES}
+
+\spsub{1 \textperiodcentered{} Screen analysis of a clay catalyst (Lec.~3)}
+Finely divided clay used as a catalyst in the petroleum industry: density \ensuremath{1.2\,\mathrm{ g}/\mathrm{c m}^{3}}, sphericity $0.5$. Size analysis:
+\begin{center}
+\begin{tabular}{@{}l r r r r r@{}}
+\toprule
+$D_{pi}$ / \ensuremath{\mathrm{m m}} & 0.0252 & 0.0178 & 0.0126 & 0.0089 & 0.0038\\
+$x_i$ (\ensuremath{\mathrm{ g}/\mathrm{ g}}) & 0.088 & 0.178 & 0.293 & 0.194 & 0.247\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}
+  \item Show the differential and cumulative screen analysis of the mixture.
+  \item Find the specific surface area $A_w$ and the Sauter mean diameter of the clay.
+  \item Find the number of particles in a \ensuremath{1\,\mathrm{ g}} sample.
+\end{itemize}
+\notetext{Use $A_w=\dfrac{6}{\rho_p\Phi_s}\sum\dfrac{x_i}{D_{pi}}$ with $D_{pi}$ in \ensuremath{\mathrm{m m}} and $\rho_p$ in \ensuremath{\mathrm{ g}/\mathrm{m m}^{3}} (\ensuremath{1.2\,\mathrm{ g}/\mathrm{c m}^{3}}=\ensuremath{1.2\times 10^{-3}\,\mathrm{ g}/\mathrm{m m}^{3}}), then
+$\overline{D}_s=1/\sum\frac{x_i}{D_{pi}}$ and $N_w=\dfrac{1}{a\rho_p}\sum\dfrac{x_i}{D_{pi}^3}$.}
+
+\spsub{2 \textperiodcentered{} Screen analysis of crushed quartz (Lec.~3)}
+The screen analysis applies to a sample of crushed quartz. Density of the particles \ensuremath{2650\,\mathrm{k g}/\mathrm{ m}^{3}} (\ensuremath{0.00265\,\mathrm{ g}/\mathrm{m m}^{3}}); shape factors $a=0.8$ and $\Phi_s=0.571$. For the material between 4-mesh and 200-mesh, calculate:
+\begin{itemize}
+  \item[(a)] $A_w$ in \ensuremath{\mathrm{m m}^{2}/\mathrm{ g}} and $N_w$ in particles per gram,
+  \item[(b)] $\overline{D}_v$, \quad (c) $\overline{D}_s$, \quad (d) $\overline{D}_w$,
+  \item[(e)] $N_i$ for the 150/200-mesh increment,
+  \item[(f)] the fraction of the total number of particles in the 150/200-mesh increment.
+\end{itemize}
+
+\spsub{3 \textperiodcentered{} Mixing index in a muller mixer (Lec.~4)}
+A silty soil containing 14\,\% moisture was mixed in a large muller mixer with 10\,\text{wt}\% of a tracer consisting of dextrose and picric acid. After \ensuremath{3\,\mathrm{ min}} of mixing, 12 random samples were taken and analysed colorimetrically for tracer material. Measured concentrations (wt\% tracer):
+\begin{center}
+\begin{tabular}{@{}r r r r r r@{}}
+10.24 & 9.30 & 7.94 & 10.24 & 11.08 & 10.03\\
+11.91 & 9.72 & 9.20 & 10.76 & 10.97 & 10.55\\
+\end{tabular}
+\end{center}
+Calculate the mixing index $I_p$ and the standard deviation.
+
+\spsub{4 \textperiodcentered{} Crusher power by Rittinger's law (Lec.~5)}
+Particles of average feed size \ensuremath{50\times 10^{-4}\,\mathrm{ m}} are crushed to an average product size of \ensuremath{10\times 10^{-4}\,\mathrm{ m}} at the rate of \ensuremath{20\,1/\mathrm{ h}}. At this rate the crusher consumes \ensuremath{40\,\mathrm{k W}}, of which \ensuremath{5\,\mathrm{k W}} is required for running the mill empty. Calculate the power consumption if \ensuremath{12\,1/\mathrm{ h}} of this product is crushed to \ensuremath{5\times 10^{-4}\,\mathrm{ m}} size in the same mill. Assume Rittinger's law is applicable.
+\notetext{Net power $=40-5=\ensuremath{35\,\mathrm{k W}}$ for the first duty; $K_R$ is found from that duty, then the new size range and feed rate are substituted. The empty-mill power is added back at the end.}
+
+\spsub{5 \textperiodcentered{} Screen effectiveness of a quartz mixture (Mod 2, Lec.~1)}
+A quartz mixture with the screen analysis below is screened through a standard 10-mesh screen (opening 1.651\,mm), so the cut diameter is $D_{pc}=\ensuremath{1.651\,\mathrm{m m}}$. Calculate the mass ratios of the overflow and the underflow to the feed, and the overall effectiveness of the screen.
+\begin{center}
+\begin{tabular}{@{}l r r r r r@{}}
+\toprule
+\multicolumn{2}{@{}l}{Cumulative fraction \emph{larger} than $D_p$} & & & &\\
+\cline{1-2}
+Mesh & $D_p$ / \ensuremath{\mathrm{m m}} & {Feed} & {Overflow} & {Underflow}\\
+\midrule
+4  & 4.699 & 0     & 0    & \\
+6  & 3.327 & 0.025 & 0.071 & \\
+8  & 2.362 & 0.15  & 0.43  & 0\\
+10 & 1.651 & 0.47  & 0.85  & 0.195\\
+14 & 1.168 & 0.73  & 0.97  & 0.58\\
+20 & 0.833 & 0.885 & 0.99  & 0.83\\
+28 & 0.589 & 0.94  & 1.00  & 0.91\\
+35 & 0.417 & 0.96  &       & 0.94\\
+65 & 0.208 & 0.98  &       & 0.975\\
+Pan&       & 1.00  &       & 1.00\\
+\bottomrule
+\end{tabular}
+\end{center}
+\notetext{Reading the table at the cut size ($D_p=\ensuremath{1.651\,\mathrm{m m}}$, 10 mesh) gives $x_F=0.47$, $x_D=0.85$, $x_B=0.195$. Then
+$\dfrac{D}{F}=\dfrac{x_F-x_B}{x_D-x_B}=0.42$,
+$\dfrac{B}{F}=1-\dfrac{D}{F}=0.58$ (check: $\dfrac{D}{F}x_D+\dfrac{B}{F}x_B=0.470=x_F$ \checkmark),
+$E_A=\dfrac{D}{F}\dfrac{x_D}{x_F}=0.76$,
+$E_B=\dfrac{B}{F}\dfrac{1-x_B}{1-x_F}=0.88$, and
+$E=E_AE_B=0.67$, i.e.\ about 67\,\%.}
+
+\vspace{3mm}
+{\color{rule}\hrule height 0.6pt}
+\vspace{2mm}
+\notetext{Prepared from the Module 1 (Lectures 1--6) and Module 2 (Lectures 1--2) slide decks of the course. Results follow the notation used on the slides; where a slide carried a hand-worked derivation, the intermediate steps are reproduced above. Symbols: $D_p$ particle diameter, $D_{pc}$ cut diameter of a screen, $F$, $D$, $B$ feed, overflow and underflow mass flow rates, $x_F$, $x_D$, $x_B$ mass fractions of oversize in feed, overflow and underflow, $E_A$, $E_B$, $E$ screen effectiveness, $n_c$ ball-mill critical speed, $\Phi_s$ sphericity, $\rho_p$ particle density, $s_p$ surface area of a particle, $v_p$ volume of a particle, $x_i$ mass fraction, $N_i$ particles in a fraction, $N_T$ total number, $A_w$ specific surface area, $N_w$ particles per unit mass, $a$ volume shape factor, $W_i$ work index, $\eta_c$ crushing efficiency, $\eta_m$ mechanical efficiency, $\varepsilon$ bed porosity, $K_R,K_k,K_b$ the Rittinger, Kick and Bond constants.}
+
+\end{document}

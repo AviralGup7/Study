@@ -1,0 +1,20 @@
+# Python build artefacts
+__pycache__/
+*.py[cod]
+
+# LaTeX build artefacts (keep the .tex sources and the committed .pdf output)
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp

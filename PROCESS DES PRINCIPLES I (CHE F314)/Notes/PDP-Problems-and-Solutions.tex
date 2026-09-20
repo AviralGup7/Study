@@ -1,0 +1,533 @@
+%=========================================================================
+%  CHE F314 - Process Design Principles I
+%  PROBLEMS AND SOLUTIONS
+%
+%  The two problems posed in the uploaded lecture decks (Slides/):
+%    P1  approach temperature in a heat exchanger      EDM.pdf, slides 94-95
+%    P2  minimum trays vs Fenske's equation            EDM.pdf, slide 96
+%
+%  Data and method are taken from those decks; every number is reproduced
+%  by pdp-answers-check.py in this folder.
+%
+%  Compile:  latexmk -xelatex PDP-Problems-and-Solutions.tex
+%=========================================================================
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=19mm,right=19mm,top=15mm,bottom=17mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{siunitx}
+\usepackage[colorlinks=true,linkcolor=accent,urlcolor=accent2]{hyperref}
+
+\definecolor{accent}{HTML}{3B2A6B}
+\definecolor{accent2}{HTML}{6B5BA6}
+\definecolor{qframe}{HTML}{1B5E20}
+\definecolor{qbg}{HTML}{EAF5EC}
+\definecolor{mframe}{HTML}{1D6FA5}
+\definecolor{mbg}{HTML}{EAF1F8}
+\definecolor{boxbg}{HTML}{F4F1F7}
+\definecolor{rule}{HTML}{A99FC4}
+\definecolor{inbox}{HTML}{1A1430}
+\definecolor{notecol}{HTML}{4E5260}
+\definecolor{warncol}{HTML}{8E2B0F}
+\definecolor{warnbg}{HTML}{FDF2EC}
+
+\sisetup{detect-all,per-mode=symbol}
+
+\newtcolorbox{qbox}{breakable,enhanced,colback=qbg,colframe=qframe!65,
+  boxrule=0.6pt,arc=1.5pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+  before skip=5pt,after skip=4pt,fontupper=\small}
+\newtcolorbox{mthbox}{breakable,enhanced,colback=mbg,colframe=mframe!65,
+  boxrule=0.6pt,arc=1.5pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+  before skip=5pt,after skip=4pt,fontupper=\small}
+\newtcolorbox{ansbox}{enhanced,colback=boxbg,colframe=accent,boxrule=0.9pt,
+  arc=1.5pt,left=6pt,right=6pt,top=5pt,bottom=5pt,before skip=5pt,after skip=6pt,
+  fontupper=\small\color{inbox}}
+\newtcolorbox{warnbox}{breakable,enhanced,colback=warnbg,colframe=warncol!60,
+  boxrule=0.6pt,arc=1.5pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+  before skip=5pt,after skip=4pt,fontupper=\small}
+
+\newcommand{\spsection}[1]{%
+  \par\addvspace{10pt}%
+  \noindent\begin{tcolorbox}[colback=accent,colframe=accent,boxrule=0pt,arc=1.2pt,
+      left=7pt,right=7pt,top=5pt,bottom=5pt,width=\linewidth,before skip=0pt,after skip=7pt]
+    \color{white}\bfseries\large #1
+  \end{tcolorbox}\par\vspace{-2pt}\nopagebreak}
+\newcommand{\spsub}[1]{\par\addvspace{7pt}\noindent{\color{accent}\bfseries #1}\par\addvspace{3pt}\nopagebreak}
+\newcommand{\qtitle}[2]{%
+  \par\addvspace{9pt}\noindent
+  \begin{tcolorbox}[colback=accent2!12,colframe=accent2,boxrule=0.8pt,arc=1.5pt,
+      left=7pt,right=7pt,top=4pt,bottom=4pt,before skip=0pt,after skip=4pt,width=\linewidth]
+    {\large\bfseries\color{accent}#1}\hfill{\small\color{accent2}#2}
+  \end{tcolorbox}\par\vspace{1pt}}
+\newcommand{\src}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}\textbf{Source:} #1}\par\vspace{3pt}}
+\newcommand{\note}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
+\setlist[itemize]{leftmargin=1.2em,topsep=2pt,itemsep=1.5pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.6em,topsep=2pt,itemsep=1.5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+\emergencystretch=2em
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F314 \textperiodcentered{} Problems \& Solutions}
+\fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{accent} PROCESS DESIGN PRINCIPLES I}\\[2pt]
+{\color{accent2} CHE F314 \textperiodcentered{} Problems and Solutions \textperiodcentered{} I-Semester 2026-27}\\[4pt]
+{\color{rule}\rule{0.6\linewidth}{0.8pt}}\\[6pt]
+{\large\bfseries\color{accent} The problems posed in the uploaded lecture decks, with their solutions}
+\end{center}
+
+\vspace{1mm}
+The four uploaded decks are \texttt{Slides/L-1.pdf} (introduction to process design),
+\texttt{L-2.pdf} (steps in design and retrofit), \texttt{L-4.pdf} (synthesis step 2) and
+\texttt{EDM.pdf} (economic decision making). Two of them pose a problem in so many words, both in
+\texttt{EDM.pdf}; they are solved below with the data and the method given on those slides.
+
+\spsub{Problem inventory}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l X l@{}}
+\toprule
+\textbf{ID} & \textbf{Source} & \textbf{Topic} & \textbf{Solved at}\\
+\midrule
+P1 & \texttt{EDM.pdf}, slides 94--95 & Bounds on the heat-exchanger approach temperature (the 10\,\si{\degree}F rule of thumb) & p.\,\pageref{p:1}\\
+P2 & \texttt{EDM.pdf}, slide 96 & Back-of-envelope tray count vs.\ Fenske's equation & p.\,\pageref{p:2}\\
+P3 & \texttt{EDM.pdf}, slides 3--93 & Solvent-recovery case: Q1 how to recover acetone, Q2 the cheapest alternative, Q3 discarding the process water, and the design numbers & p.\,\pageref{p:3}\\
+P4 & \texttt{L-2.pdf}, slide 29 & Hierarchy of flow sheets --- ethanol by the hydration of ethylene (the deck's worked example) & p.\,\pageref{p:4}\\
+P5 & \texttt{L-2.pdf}, slide 33 & Hierarchy of flow sheets --- the Formox process & p.\,\pageref{p:5}\\
+P6 & \texttt{L-2.pdf}, slide 34 & Hierarchy of flow sheets --- the cumene process & p.\,\pageref{p:6}\\
+P7 & \texttt{L-4.pdf}, slides 3--30 & Vinyl chloride case: pathway gross profits and the flowsheet decisions & p.\,\pageref{p:7}\\
+\bottomrule
+\end{tabularx}}
+
+\note{The decks pose two kinds of problems. \texttt{EDM.pdf} poses the two numerical/heuristic
+problems of Part~A and then works the solvent-recovery case study whose questions Part~B answers.
+\texttt{L-2.pdf} poses three flow-sheet synthesis problems --- the ethanol example and the Formox and
+cumene problems --- and \texttt{L-4.pdf} walks through the vinyl chloride case with its own
+questions; Part~C and Part~D answer them. \texttt{L-1.pdf} poses no problem: it defines design,
+synthesis and analysis.}
+
+\newpage
+\spsection{P1 --- BOUNDS ON THE HEAT-EXCHANGER APPROACH TEMPERATURE}
+\qtitle{P1 --- The 10\,\si{\degree}F approach-temperature heuristic}{EDM.pdf \textperiodcentered{} slides 94--95}\label{p:1}
+\src{\texttt{Slides/EDM.pdf}, slide 94 (``Problem'') and slide 95 (the data)}
+
+\begin{qbox}
+``A rule of thumb commonly used in design is that the approach temperature in a heat exchanger should
+be 10\,\si{\degree}F in the range from ambient to the boiling point of organics. To evaluate the
+heuristic, consider the simple system shown in Fig., where we are attempting to recover some heat
+from a waste stream by producing steam. Calculate these bounds for a case where,''
+\end{qbox}
+
+\begin{qbox}
+\textbf{System, as drawn on slide 94.} A waste stream (flow $F$, heat capacity $C_p$) enters the
+first exchanger at $T_{in}=\SI{366}{\degree F}$ and is cooled there by generating steam at
+$T_s=\SI{267}{\degree F}$ (area $A_s$, overall coefficient $U_s$, steam rate $W_s$). It leaves that
+exchanger at $T_1$ and is cooled to \SI{100}{\degree F} in a second exchanger by cooling water that
+enters at \SI{90}{\degree F} and leaves at \SI{120}{\degree F} (area $A_c$, coefficient $U_c$,
+water rate $W_c$).
+
+\textbf{Data, as printed on slide 95:}
+{\small
+\begin{itemize}
+  \item $F=\SI{51000}{lb/h}$;\quad $C_p=\SI{1.0}{Btu/(lb.\degree F)}$
+  \item $U_c=\SI{30}{Btu/(h.ft^2.\degree F)}$;\quad $U_s=\SI{20}{Btu/(h.ft^2.\degree F)}$
+  \item $C_A=\SI{11.38}{\$/(yr.ft^2)}$ (annual cost of exchanger area)
+  \item $C_w=\SI{0.07388}{\$/(lb/h)/yr}$ (cooling water);\quad $C_s=\SI{21.22}{\$/(lb/h)/yr}$ (steam produced)
+  \item $\Delta H_s=\SI{933.7}{Btu/lb}$;\quad $T_s=\SI{267}{\degree F}$;\quad $T_{in}=\SI{366}{\degree F}$
+\end{itemize}}
+\end{qbox}
+
+\begin{mthbox}
+\textbf{Method from the slides.} The decks evaluate a heuristic the same way throughout the solvent
+recovery study: write the total annual cost of the design, then find the design variable that
+minimises it, and judge the heuristic by how close it comes (EDM slides 75--79). Here the design
+variable is the temperature $T_1$ at which the waste stream leaves the steam generator, and
+\[
+\text{TAC}(T_1)=C_A\,(A_s+A_c)+C_wW_c-C_sW_s
+\]
+with the exchanger areas from the mean temperature differences and the utility rates from the duties:
+\[
+A_s=\frac{F C_p(T_{in}-T_1)}{U_s\,\Delta T_{lm,s}},\qquad
+A_c=\frac{F C_p(T_1-100)}{U_c\,\Delta T_{lm,c}},\qquad
+W_s=\frac{F C_p(T_{in}-T_1)}{\Delta H_s},\qquad
+W_c=\frac{F C_p(T_1-100)}{C_p(120-90)}
+\]
+The \SI{10}{\degree F} heuristic enters as the constraint that no exchanger may be designed with a
+smaller approach than \SI{10}{\degree F}: for the steam generator this means
+$T_1\ge T_s+10=\SI{277}{\degree F}$, and for the cooler $T_1\ge 120+10=\SI{130}{\degree F}$.
+\end{mthbox}
+
+\spsub{Solution}
+\textbf{1. Heat available and steam that could be raised.}
+\[
+F C_p=51000\times1.0=\SI{51000}{Btu/(h.\degree F)},\qquad
+Q_{\max}=F C_p(366-100)=\SI{1.357e7}{Btu/h}
+\]
+\[
+W_{s,\max}=\frac{Q_{\max}}{\Delta H_s}=\frac{1.357\times10^{7}}{933.7}=\SI{14529}{lb/h}\ \text{of steam}
+\]
+
+\textbf{2. The bounds implied by the heuristic.} The steam generator is the binding exchanger,
+because the steam condenses at a fixed \SI{267}{\degree F}: cooling the waste stream below
+$267+10=\SI{277}{\degree F}$ would need a smaller approach than the rule allows. So
+\[
+\SI{277}{\degree F}\le T_1\le\SI{366}{\degree F},
+\qquad\text{i.e. the steam-generator approach } T_1-267\ge\SI{10}{\degree F}
+\]
+At $T_1=277$\,\si{\degree F} the cooler approach is $277-120=\SI{157}{\degree F}$, far above
+\SI{10}{\degree F}, so the cooling-water exchanger never binds. The heuristic is therefore a bound on
+the \emph{steam} side only.
+
+\textbf{3. Cost of the design as a function of $T_1$.} The areas follow from the mean temperature
+differences, $\Delta T_{lm,s}=(366-T_1)/\ln\!\big(99/(T_1-267)\big)$ and
+$\Delta T_{lm,c}=\big[(T_1-120)-10\big]/\ln\!\big((T_1-120)/10\big)$, and the cooling-water rate
+from its duty; the resulting total annual cost is:
+{\footnotesize\setlength{\tabcolsep}{5pt}%
+\begin{tabular}{@{}S[table-format=3.0] S[table-format=2.1] S[table-format=4.0] S[table-format=4.0] r@{}}
+\toprule
+{$T_1$ / \si{\degree F}} & {approach / \si{\degree F}} & {$A_s$ / \si{ft^2}} & {$A_c$ / \si{ft^2}} & {TAC (\$\,yr$^{-1}$)}\\
+\midrule
+277 & 10.0 & 5846 & 5637 & 49745\\
+280 & 13.0 & 5177 & 5656 & 46207\\
+285 & 18.0 & 4347 & 5688 & 43552\\
+290 & 23.0 & 3722 & 5720 & 43220\\
+295 & 28.0 & 3220 & 5750 & 44286\\
+300 & 33.0 & 2801 & 5781 & 46286\\
+310 & 43.0 & 2126 & 5840 & 52124\\
+320 & 53.0 & 1593 & 5897 & 59552\\
+360 & 93.0 & 159 & 6107 & 97017\\
+\bottomrule
+\end{tabular}}
+
+\textbf{4. The optimum.} Minimising the same expression over $T_1$ gives
+\[
+T_1^{*}=\SI{288.5}{\degree F},\qquad\text{approach at the steam generator}=\SI{21.5}{\degree F}
+\]
+with $A_s=3894$\,\si{ft^2}, $A_c=5710$\,\si{ft^2}, area cost
+\$\num{109296}\,yr$^{-1}$, cooling water \$\num{23675}\,yr$^{-1}$, steam credit
+\$\num{89828}\,yr$^{-1}$, and
+\[
+\text{TAC}^{*}=\$\num{43143}\ \text{per year}
+\]
+The cost is flat near the optimum: any $T_1$ between \SI{281}{\degree F} and \SI{298}{\degree F}
+--- that is, an approach between \SI{14}{\degree F} and \SI{31}{\degree F} --- stays within 5\% of
+the minimum.
+
+\begin{ansbox}
+\textbf{Bounds.} The heuristic permits $T_1\ge\SI{277}{\degree F}$, i.e.\ an approach of at least
+\SI{10}{\degree F} at the steam generator ($\le\SI{366}{\degree F}$ is also needed, or no heat is
+recovered).\\
+\textbf{Evaluation.} The economically optimum approach is \SI{21.5}{\degree F}
+($T_1^{*}=\SI{288.5}{\degree F}$), with $\text{TAC}^{*}=\$\num{43143}$ per year; the range
+\SI{14}{}--\SI{31}{\degree F} is within 5\% of that. Designing at the heuristic's
+\SI{10}{\degree F} costs \$\num{49745} per year, about \textbf{15\% more} than the optimum. So the
+rule of thumb is on the safe (small-approach, large-area) side and is a reasonable first estimate for
+close-boiling organics, but it is not the economic optimum here.
+\end{ansbox}
+
+\begin{warnbox}
+\textbf{Notes.}
+\begin{itemize}
+  \item The decks give the heuristic, the system and the cost data, but no worked solution to this
+        problem; the calculation above follows the deck's own cost-model method (slides 75--79) and
+        its cost figures.
+  \item The \SI{5}{\degree F} or \SI{10}{\degree F} answers depend on the cost data, not on the
+        physics: where energy is cheaper than area, the optimum approach moves up, and the reverse
+        moves it down. The optimum found here (\SI{21.5}{\degree F}) is above the rule-of-thumb
+        value, i.e.\ the rule buys area it does not need at these prices.
+  \item Heat-exchanger areas are computed with the log-mean temperature difference for the two
+        counter-current services drawn on slide 94; the steam side is isothermal at
+        \SI{267}{\degree F}.
+\end{itemize}
+\end{warnbox}
+
+\newpage
+\spsection{P2 --- MINIMUM TRAYS: BACK-OF-ENVELOPE MODEL vs FENSKE}
+\qtitle{P2 --- Is the boiling-point ratio the same as Fenske's equation?}{EDM.pdf \textperiodcentered{} slide 96}\label{p:2}
+\src{\texttt{Slides/EDM.pdf}, slide 96 (``Problem'')}
+
+\begin{qbox}
+``The minimum number of trays in a distillation column for a binary mixture is estimated by taking the
+sum of the boiling points and dividing by 3 times their difference. Show that the back-of-envelope
+model is essentially equivalent to Fenskes equation for the minimum number of trays.''
+\end{qbox}
+
+\begin{mthbox}
+\textbf{The two expressions to be compared.}
+\[
+\text{back-of-envelope:}\qquad N\approx\frac{T_{b1}+T_{b2}}{3\,(T_{b1}-T_{b2})}
+\]
+\[
+\text{Fenske:}\qquad N_{\min}=\frac{\ln S}{\ln\alpha},\qquad
+S=\frac{x_D}{1-x_D}\cdot\frac{1-x_B}{x_B}
+\]
+with $T_{b1},T_{b2}$ the boiling points of the two components (the ratio is the same in \si{\kelvin}
+or in \si{\degree R} --- it must be an absolute scale, not \si{\celsius}), $\alpha$ the relative
+volatility, and $x_D$, $x_B$ the mole fractions of the light component in the distillate and the
+bottoms. The deck's method for this section is the back-of-envelope model: a simple closed form that
+captures the dominant variables (EDM slides 75--79 for the same style of analysis).
+\end{mthbox}
+
+\spsub{Solution}
+\textbf{1. Bridge between $\alpha$ and the boiling points.} For a close-boiling pair the two vapour
+pressures can be written with the Clausius--Clapeyron equation. Taking equal latent heats
+$\lambda$ and evaluating both at the mean boiling point,
+\[
+\ln\alpha=\ln\frac{P_1^{sat}}{P_2^{sat}}
+=\frac{\lambda}{R}\Big(\frac{1}{T_{b2}}-\frac{1}{T_{b1}}\Big)
+=\frac{\lambda}{R}\cdot\frac{T_{b1}-T_{b2}}{T_{b1}T_{b2}}
+=\frac{\lambda}{R}\cdot\frac{\Delta T}{T_{b1}T_{b2}}
+\]
+
+\textbf{2. Put that into Fenske's equation.}
+\[
+N_{\min}=\frac{\ln S}{\ln\alpha}
+=\ln S\cdot\frac{R}{\lambda}\cdot\frac{T_{b1}T_{b2}}{T_{b1}-T_{b2}}
+\]
+
+\textbf{3. Compare with the back-of-envelope model.} Both expressions contain the same
+$1/(T_{b1}-T_{b2})$, so they differ only in the constant. Writing $T_{b1}T_{b2}\approx T_{avg}^2$
+and $T_{b1}+T_{b2}=2T_{avg}$ for a close-boiling pair, the two are equal when
+\[
+\ln S\cdot\frac{R}{\lambda}\cdot\frac{T_{avg}^2}{\Delta T}
+=\frac{2T_{avg}}{3\Delta T}
+\qquad\Longrightarrow\qquad
+\frac{\lambda}{R}=\frac{3}{2}\,\ln S\;T_{avg}
+\]
+For a sharp split of a typical organic pair, $S\approx10^4$ ($\ln S\approx9.19$, i.e.\ about 99\%
+recovery of each component) and $T_{avg}\approx\SI{370}{\kelvin}$:
+\[
+\frac{\lambda}{R}=\frac{3}{2}(9.19)(370)\approx\SI{5100}{\kelvin}
+\qquad\Longrightarrow\qquad
+\lambda\approx\SI{42}{\kilo\joule\per\mole}\approx 10\ \text{kcal/mol}
+\]
+which is the latent heat of a typical organic. So the back-of-envelope model is Fenske's equation
+with a latent heat of about 10\,kcal/mol and a 99\% split built into its
+constant of 3 --- and, like Fenske, it says that the minimum tray count grows in proportion to
+$1/\Delta T$ as the pair gets closer-boiling.
+
+\textbf{4. Numbers for a real pair (benzene/toluene, \SI{353.25}{\kelvin} and \SI{383.78}{\kelvin}).}
+The two models are then indistinguishable:
+\[
+N\ \text{(back of envelope)}=\frac{737.03}{3(30.53)}=8.05\ \text{trays}
+\]
+\[
+\frac{\lambda}{R}=\SI{5080}{\kelvin}:\quad
+\ln\alpha=\frac{5080(30.53)}{(383.78)(353.25)}=1.144,\quad
+\alpha=3.14,\quad
+N_{\min}=\frac{9.19}{1.144}=8.03\ \text{trays}
+\]
+If instead the measured latent heat of toluene is used, $(\lambda/R)\approx\SI{3800}{\kelvin}$,
+Fenske gives $\alpha=2.35$ and $N_{\min}=10.7$ trays --- the same order as the model's 8.05, which
+is what ``essentially equivalent'' means.
+
+\begin{ansbox}
+The back-of-envelope count is Fenske's equation,
+$N_{\min}=\ln S/\ln\alpha$, with $\ln\alpha$ written from the Clausius--Clapeyron equation as
+$(\lambda/R)\,\Delta T/(T_{b1}T_{b2})$: both then have the form
+\[
+N=\frac{\text{constant}\times T_{b1}T_{b2}}{\Delta T}
+\quad\text{against}\quad
+N=\frac{T_{b1}+T_{b2}}{3\,\Delta T}
+\]
+and they agree exactly when $\lambda/R=\tfrac32\ln S\,T_{avg}$, i.e.\ for
+$\lambda\approx 10\ \text{kcal/mol}$ and a 99\% split --- typical values, which is why the
+rule of thumb works. Benzene/toluene: 8.05 trays by the model, 8.03 trays by Fenske.
+\end{ansbox}
+
+\begin{warnbox}
+\textbf{Notes.}
+\begin{itemize}
+  \item The rule must be applied on an absolute temperature scale. In \si{\celsius} the same
+        benzene/toluene pair would give $(80.1+110.6)/(3\times30.5)=2.1$, which is not a tray count;
+        in \si{\kelvin} or \si{\degree R} it gives 8.05 either way.
+  \item Both models ignore the tray efficiency and the reflux ratio; they give the \emph{minimum}
+        trays (total reflux), as Fenske's equation does.
+  \item The deck states the two expressions but gives no worked solution, so the bridge above ---
+        Clausius--Clapeyron, then Fenske --- is the derivation, and the benzene/toluene numbers are
+        the check.
+\end{itemize}
+\end{warnbox}
+
+% ---------------------------------------------------------------------
+%  Part B: the solvent-recovery case study (EDM.pdf)
+% ---------------------------------------------------------------------
+\newpage
+\spsection{PART B --- THE SOLVENT-RECOVERY CASE STUDY}
+
+\qtitle{P3 --- Solvent recovery from a flare-bound stream}{EDM.pdf \textperiodcentered{} slides 3--93}\label{p:3}
+\src{\texttt{Slides/EDM.pdf}: problem definition slide 3; questions slides 5, 7 and 13; answers and design slides 4, 8, 14--16, 27--41, 56--79}
+
+\begin{qbox}
+\textbf{Problem definition (slide 3).} ``As a part of a process design problem --- Assume that there is a stream --- Containing 10.3 mol/hr of acetone and 687 mol/hr of air --- That is being fed to a flare system (to avoid air pollution).''
+\end{qbox}
+
+\spsub{Question 1 --- How to recover acetone?}
+\src{EDM slide 5; answered on slides 6, 8 and 10--21}
+\begin{ansbox}
+\textbf{Ans 1.} The alternatives the deck lists (slide 6) are: (1) condensation --- (a) high pressure, (b) low temperature, (c) a combination of the two; (2) absorption; (3) adsorption; (4) a membrane separation system; (5) a reaction process, using the acetone as a raw material for a new product. Which is the cheapest depends on how dilute the solute is (Ans 2). The deck develops the \emph{absorption} alternative with water as the solvent (slides 10--21): water is a raw material of the parent process, is cheap, and dissolves acetone well.
+
+\textbf{Economic potential of the stream (slide 4).} Since the stream comes from the same process, the raw-material cost is zero, so EP $=$ product value $=$ $(10.3\ \text{mol/hr})(58\ \text{lb/mol})(\text{Rs}\;10.80/\text{lb})(8150\ \text{hr/yr})=\text{Rs}\;5.26$ Cr/yr, which the deck quotes as \$$\num{1.315e6}$ per year (slide 35). Recovering this acetone is therefore worth designing for.
+\end{ansbox}
+
+\spsub{Question 2 --- Which is the cheapest alternative?}
+\src{EDM slide 7; answered on slides 8--9}
+\begin{ansbox}
+\textbf{Ans 2.} If the solute mole fraction in the gas is less than 5\%, adsorption is the cheapest process; in this case it is about 1.5\% --- $10.3/(687+10.3)=0.0147$ --- so adsorption may be chosen (slide 8). In practice, however, many petroleum companies prefer condensation or absorption. The judgment is as much about experience as about cost (slide 9): a technology the company knows well is preferred to a relatively new one. The deck carries the \emph{absorption-with-water} alternative forward.
+\end{ansbox}
+
+\spsub{Question 3 --- Can discarding the process water ever be justified even when a pollution-treatment facility is available?}
+\src{EDM slide 13; answered on slides 14--16 and 35}
+\begin{ansbox}
+\textbf{Ans 3.} Yes --- when the water can be taken from the process, used in the absorber and then discarded, without first having to cool or treat it, and when the cost is small against the value of the acetone recovered. The check is the temperature (slide 14): cooling water is supplied from the cooling towers at \SI{90}{\degree F} and must be returned below \SI{120}{\degree F}. The solvent water costs \$\,25\,600 per year (slide 35) against an economic potential of \$$\num{1.315e6}$ per year, so all the water-related costs together are essentially negligible. This reasoning is the basis of the deck's heuristic (slide 16):
+
+\smallskip
+\textbf{H1:} ``If a raw material component is used as the solvent (like water) in a gas absorber, consider feeding the process through the gas absorber.''
+\end{ansbox}
+
+\spsub{The design the deck builds: the numbers}
+\begin{itemize}
+  \item \textbf{Equilibrium slope (slide 29).} For the acetone--water system at \SI{77}{\degree F} (\SI{25}{\celsius}) and 1 atm: activity coefficient $\gamma_s=6.7$, vapour pressure of acetone $P_s^{0}=229$ mm Hg, air flow $G=687$ mol/hr. The slope of the equilibrium line is
+        \[m=\frac{\gamma_s P_s^{0}}{P_T}=\frac{6.7(229)}{760}=2.02\]
+  \item \textbf{Solvent flow rate (H3, slides 28 and 30).} $L=1.4\,mG=1.4(2.02)(687)=\SI{1943}{mol/hr}$ (the deck writes mol/hr).
+  \item \textbf{Recovery level (H2, slides 27 and 30).} Recover more than 99\% of valuable material; use 99.5\% as a first guess. Then acetone lost from the top of the absorber $=0.005(10.3)=0.05$ mol/hr; acetone to the still $=0.995(10.3)=10.25$ mol/hr; acetone as distillate $=0.995(10.25)=10.20$ mol/hr.
+  \item \textbf{Product specification (slide 31).} With 99\% acetone in the distillate, the water in the product stream (distillate) is $\left(\tfrac{1}{0.99}-1\right)(10.20)=0.10$ mol/hr; the bottoms flows are acetone $0.005(10.25)=0.05$ mol/hr and water $1943-0.1=1942.9$ mol/hr.
+  \item \textbf{Stream costs (slides 33--35).} Acetone lost in the absorber overhead, valued at \$0.27 per lb,
+        $=(0.27)(58)(0.0515)(8150)=\$6600$ per yr; acetone lost in the still bottom $=\$6600$ per yr;
+        pollution treatment, at \$0.25 per lb BOD with 1 lb BOD per lb acetone, $=(0.25)(58)(0.05)(8150)=\$6100$ per yr;
+        sewer charges, at \$0.20 per 1000 gal $=\$6800$ per yr; solvent water, at \$0.75 per 1000 gal $=\$25\,600$ per yr.
+        The deck's conclusion: each of these is negligible against the economic potential of \$$\num{1.315e6}$ per yr, so the design is worth developing.
+  \item \textbf{An alternative solvent (slides 36--41).} With a solvent in the homologous series of the solute (MIBK, $\gamma=1$) the solvent loss follows $y_s=P_s^{0}/P_T=0.0237/1=0.0237$. At \$0.35 per lb of MIBK $=\$35$ per mol, the slide puts the MIBK lost at \$\,4.464$\times10^{6}$ per yr, several times the EP, so any idea of using MIBK is dropped. \note{(The three factors printed on slide 41 give \$\,5.62$\times10^{6}$ per yr, not \$\,4.464$\times10^{6}$ per yr; either value is far above the EP, so the decision is unaffected.)}
+  \item \textbf{Trays in the absorber (slides 56--69).} Kremser's equation for an isothermal, dilute absorber, with the rules of thumb $L/mG=1.4$ and $y_{out}/y_{in}=0.01$, gives in the back-of-the-envelope form about 10 trays for 99\% recovery (the exact value is 10.1) and 16 trays for 99.9\% --- a very good estimation.
+  \item \textbf{Trade-off in the solvent rate (slides 70--74).} $L/mG<1$ needs an infinite number of trays for near-complete recovery; $L/mG=2$ needs about 5 plates; $L/mG>2$ gives tiny absorbers but a very expensive distillation column. Hence $1<L/mG<2$, and the common rule of thumb is $L/mG=1.4$ with almost 100\% recovery.
+  \item \textbf{Optimum recovery (slides 75--78).} With $\text{TAC}=C_sGy_{out}(8150)+6C_N\ln(y_{in}/y_{out})$, minimising gives
+        \[y_{out}/y_{in}=\frac{6C_N}{8150\,C_s\,Gy_{in}}\]
+        and with $C_s=\$15.5$ per mol, $Gy_{in}=10$ mol/hr and $C_N=\$850$ per plate-year (from \$2550 per plate and a capital-charge factor of $1/3$ yr$^{-1}$) this is 0.004 --- a 0.4\% loss of solute, i.e. 99.6\% recovery. Doubling $C_N$, $C_s$ or $Gy_{in}$ still leaves the recovery above 99\%, so the result is insensitive to the cost data.
+  \item \textbf{The case's heuristics (slides 16, 27, 28, 93).} H1 (Ans 3); H2: recover more than 99\% of valuable material, 99.5\% as a first guess; H3: $L=1.4\,mG$; H4: avoid the use of adiabatic absorbers unless the temperature rise across them is small (for an adiabatic absorber the minimum solvent rate can be about ten times the rule-of-thumb value, $L\approx14\,mG$).
+\end{itemize}
+
+% ---------------------------------------------------------------------
+%  Part C: flow-sheet synthesis problems (L-2.pdf)
+% ---------------------------------------------------------------------
+\newpage
+\spsection{PART C --- FLOW-SHEET SYNTHESIS PROBLEMS}
+
+\note{The deliverable in these problems is a hierarchy of flow sheets, not a number, so each answer below is the structure itself, written out (the deck's own answer slides are diagrams). The hierarchy is the one the deck teaches (slide 27): batch versus continuous; the input--output structure; the recycle structure; the general structure of the separation system (vapour recovery and liquid separation); and energy integration.}
+
+\qtitle{P4 --- Ethanol by the hydration of ethylene}{L-2.pdf \textperiodcentered{} slides 29--32}\label{p:4}
+\src{\texttt{Slides/L-2.pdf}, slides 29--32 (Example)}
+
+\begin{qbox}
+``Ethanol is produced by the hydration of ethylene. \dots Initially, the feed (90\% ethylene, 8\% ethane, and 2\% methane) and water are heated by passing through the primary heater. This heated feed is sent to the reactor. The reaction takes place at 560 K and 69 bar. The fractional conversion of ethylene in the reactor is 0.07. The reactants and products are sent to the separator where gaseous and liquid products and reactants are separated. All gaseous products and reactants are scrubbed in a scrubber. Unconverted ethylene and inert gases (ethane and methane) are recycled back. To avoid the accumulation of inert components, some amount of recycled stream is purged. The liquid products and the bottom products of scrubber are sent to the series of distillation columns where side product diethyl ether and water are separated out. The diethyl ether is recycled back and mixed with the feed stream. Ethanol--water azeotrope is produced from the final distillation column. Draw the following: General structure of the flow sheet; Recycle structure of the flow sheet; Input--output structure of the flow sheet.''
+\end{qbox}
+
+\begin{ansbox}
+\textbf{Ans 1 --- General structure (slide 30).} The process block is drawn between its feeds and its products: ethylene and water enter; the ethanol--water azeotrope and the diethyl ether (DEE) side product leave; the purge of ethylene $+$ ethane $+$ methane leaves. Inside, the block is made of a reactor section followed by a \emph{phase split}, then a \emph{vapour recovery system} (scrubber) and a \emph{liquid recovery system} (the distillation train), with the gas recycle (ethylene, ethane, methane) returning to the reactor.
+
+\textbf{Ans 2 --- Recycle structure (slide 31).} The two recycles become explicit: (i) the gas recycle --- unconverted ethylene together with the inert ethane and methane returns from the separation system to the process, with a purge taken from it to stop the inerts accumulating; (ii) the liquid recycles --- diethyl ether from the distillation train is returned and mixed with the feed, and water is returned to the scrubber/absorber.
+
+\textbf{Ans 3 --- Input--output structure (slide 32).} Only the boundary of the process is drawn: in --- ethylene and water; out --- the ethanol--water azeotrope, the diethyl ether side product and the purge (ethylene, ethane, methane) --- with the internal recycles represented as a single ``process'' block. This is the simplest structure and the first one to be fixed in the hierarchy, because the overall material balance dominates the economics (slide 25: raw-material costs are 33--85\% of the product cost).
+
+\note{The deck's own answer slides are the diagrams on slides 30--32; the text above is their description.}
+\end{ansbox}
+
+\qtitle{P5 --- Formox process: methanol to formaldehyde}{L-2.pdf \textperiodcentered{} slide 33}\label{p:5}
+\src{\texttt{Slides/L-2.pdf}, slide 33 (Problem)}
+
+\begin{qbox}
+``In a formox process, a mixture of metal oxides, consisting of Fe, MO, and V, is used as a catalyst for the partial oxidation of methanol to formaldehyde. \dots Methanol feed is passed through a steam-heated evaporator. Ambient air, containing 0.011 kg moisture/kg dry air, is heated by a product gas stream, leaving the reactor, and mixed with methanol vapors in a static mixer. The gaseous feed, containing 8.4\% methanol (by volume on a wet basis), employs excess air and is a flammable mixture. It is passed at 170 kPa through catalyst-filled tubes in a heat-exchanging type reactor. Downtherm -- A circulates outside the tubes and removes the heat of reaction. Reactions take place isothermally at 613 K (340 \si{\celsius}). Steam is generated at 6 bar in a waste heat boiler (WHB) by condensing Downtherm -- A vapors. Gas mixture from the reactor is cooled to 383 K (110 \si{\celsius}) in a heat exchanger by heating incoming air. The gas mixture then enters the bottom of the absorber. Formaldehyde concentration at the bottom of the absorber is controlled at 37\% (by mass) by freshwater, entering at the top at 303 K (50 \si{\celsius}). Tail gas leaves the absorber at 120 kPa and 323 K (50 \si{\celsius}) at the top. Assume 99\% conversion of methanol with 90\% yield of formaldehyde. Draw the following hierarchy of flow sheets: General structure; Recycle structure; Input-Output structure.''
+\end{qbox}
+
+\begin{ansbox}
+\note{The deck poses this problem but gives no worked answer, so the three structures below are built from the deck's own process description by the deck's hierarchy (slide 27).}
+
+\textbf{Ans 1 --- General structure.} The synthesis step is \emph{eliminate differences in molecular types} (the reactor), the rest are separation steps: \emph{distribute the chemicals} (methanol $+$ air feeds), \emph{eliminate differences in composition} (the absorber, which also fixes the 37 mass\% product specification with fresh water as the solvent), and \emph{eliminate differences in temperature, pressure and phase} (the steam-heated evaporator, the feed--effluent exchanger that heats the air against the reactor product gas, the Dowtherm-A circuit with the waste-heat boiler generating 6-bar steam, and the absorber feed cooler to 383 K). So the general structure is: \emph{methanol evaporator/mixer $\rightarrow$ air preheater $\rightarrow$ static mixer $\rightarrow$ isothermal tubular reactor (613 K, 170 kPa) $\rightarrow$ waste-heat boiler + feed--effluent exchanger $\rightarrow$ absorber $\rightarrow$ formaldehyde solution (37 mass\%) and tail gas}.
+
+\textbf{Ans 2 --- Recycle structure.} The deck's description contains no recycle: methanol conversion is 99\% and the water introduced with the air (0.011 kg/kg dry air) plus the water formed in the reaction leaves with the product solution. The gaseous effluent after the absorber --- the \emph{tail gas} at 120 kPa and 323 K, containing the nitrogen of the excess air, unreacted methanol, the side-reaction products and water vapour --- is the natural bleed that keeps the inerts from accumulating, so no gas recycle is needed. Steam generated at 6 bar in the waste-heat boiler is an energy export, not a material recycle.
+
+\textbf{Ans 3 --- Input--output structure.} In: methanol and ambient air (each 1 kg dry air carrying 0.011 kg moisture). Out: the formaldehyde solution at 37 mass\%, the tail gas, and the 6-bar steam raised in the waste-heat boiler. Since 99\% of the methanol reacts and 90\% of it goes to formaldehyde, the unreacted 1\% of methanol and the rest of the carbon (side reactions printed on the slide) leave in the tail gas or in the absorber water; the nitrogen and the unused oxygen of the excess air leave in the tail gas. Fixing these flows is the first decision level, and it also gives the reactor duty the Dowtherm-A circuit has to remove at 613 K.
+\end{ansbox}
+
+\qtitle{P6 --- Cumene process: benzene with propylene}{L-2.pdf \textperiodcentered{} slide 34}\label{p:6}
+\src{\texttt{Slides/L-2.pdf}, slide 34 (Problem)}
+
+\begin{qbox}
+``Cumene (C$_6$H$_5$C$_3$H$_7$) is manufactured by reacting benzene (C$_6$H$_6$) with propylene (C$_3$H$_6$) in a fixed-bed catalytic reactor. A gas stream containing butane and propylene and a liquid stream containing essentially pure benzene are fed to the reactor. Fresh benzene and recycled benzene (both at \SI{770}{\degree F}) are mixed and passed through a heat exchanger where they are heated by the reactor effluent before being fed to the reactor. The reactor effluent enters this exchanger at \SI{4000}{\degree F} and leaves at \SI{2000}{\degree F}. The pressure in the reactor is sufficient to maintain the effluent stream as a liquid. After being cooled in the heat exchanger, the reactor effluent is fed to a distillation column. All of the butane and unreacted propylene are removed as overhead products from the column, and the cumene and unreacted benzene are removed as bottom products and fed to a second distillation column where they are separated. The benzene leaving from the top of the second column is recycled and mixed with the fresh benzene feed. Show the following hierarchy of flow sheets: General structure; Recycle structure; Input-Output structure.''
+\end{qbox}
+
+\begin{ansbox}
+\note{As with P5, the deck gives no worked answer; the structures below follow the deck's hierarchy from the deck's own description. (The temperatures are printed on the slide as 770 \si{\degree F}, 4000 \si{\degree F} and 2000 \si{\degree F}.)}
+
+\textbf{Ans 1 --- General structure.} \emph{Molecular types:} a fixed-bed catalytic reactor for the alkylation C$_6$H$_6$ $+$ C$_3$H$_6$ $\rightarrow$ C$_6$H$_5$C$_3$H$_7$. \emph{Distribute the chemicals:} a propylene-rich gas stream (with butane) and a benzene-rich liquid stream enter the reactor; fresh benzene is combined with the recycled benzene before the feed--effluent exchanger. \emph{Composition:} two distillation columns in series --- the first removes butane and unreacted propylene overhead, the second separates cumene (product) from benzene. \emph{Temperature, pressure and phase:} the reactor pressure keeps the effluent liquid, and the feed--effluent exchanger cools the reactor effluent from \SI{4000}{\degree F} to \SI{2000}{\degree F} while heating the combined benzene feed to the reactor.
+
+\textbf{Ans 2 --- Recycle structure.} One material recycle: the benzene leaving the top of the second column is returned and mixed with the fresh benzene feed, then heated with the reactor effluent. Nothing else recycles: the butane and the unreacted propylene leave as the first column's overhead, and the cumene leaves as the second column's bottom. (The inerts enter with the propylene-rich gas and leave with that overhead, so no separate purge is required.)
+
+\textbf{Ans 3 --- Input--output structure.} In: the propylene/butane gas stream and the fresh benzene. Out: the cumene product, the overhead of the first column (butane $+$ unreacted propylene), and the small purge/vent implied by the light ends. The recycle is drawn as internal to the process block. This structure is fixed first, because the overall material balance decides whether the process is worth designing at all (the deck: raw-material costs are 33--85\% of the product cost).
+\end{ansbox}
+
+% ---------------------------------------------------------------------
+%  Part D: vinyl chloride case (L-4.pdf)
+% ---------------------------------------------------------------------
+\newpage
+\spsection{PART D --- VINYL CHLORIDE CASE}
+
+\qtitle{P7 --- Vinyl chloride manufacture}{L-4.pdf \textperiodcentered{} slides 3--30}\label{p:7}
+\src{\texttt{Slides/L-4.pdf}, slides 3--30 (the case the deck works through, with its own questions)}
+
+\begin{qbox}
+\textbf{Question (slides 11--13).} Which reaction path should be used to make vinyl chloride (C$_2$H$_3$Cl)? Compare the alternatives by gross profit, and discuss the role of the HCl price.
+
+\textbf{Question (slides 14--17).} With the chosen path, distribute the chemicals: what flows does a \SI{100000}{lb/hr} vinyl-chloride plant need?
+
+\textbf{Question (slides 21--24, 26--27).} Which separation operation should be used, and under what operating conditions, feed condition, and temperature/pressure/phase changes?
+\end{qbox}
+
+\begin{ansbox}
+\textbf{Ans 1 --- Which path (slides 11--13).} Reaction path 1 is eliminated for its low selectivity. The remaining four are compared by gross profit per lb of vinyl chloride (slide 12):
+\begin{center}\small
+\begin{tabular}{@{}l l S[table-format=-1.2]@{}}
+\toprule
+Path & Overall reaction & {Gross profit / (cents/lb VC)}\\
+\midrule
+2 & C$_2$H$_2$ + HCl $\rightarrow$ C$_2$H$_3$Cl & -9.33\\
+3 & C$_2$H$_4$ + Cl$_2$ $\rightarrow$ C$_2$H$_3$Cl + HCl & 11.94\\
+4 & C$_2$H$_4$ + HCl + O$_2$ $\rightarrow$ C$_2$H$_3$Cl + H$_2$O & 3.42\\
+5 & 2C$_2$H$_4$ + Cl$_2$ + O$_2$ $\rightarrow$ 2C$_2$H$_3$Cl + H$_2$O & 7.68\\
+\bottomrule
+\end{tabular}
+\end{center}
+The slide shows the calculation for path 3: with prices 18, 11, 22 and 18 cents/lb for C$_2$H$_4$, Cl$_2$, C$_2$H$_3$Cl and HCl, and 1 lb of VC needing 0.449 lb of C$_2$H$_4$, 1.134 lb of Cl$_2$ and giving 0.583 lb of HCl,
+\[\text{gross profit}=22(1)+18(0.583)-18(0.449)-11(1.134)=11.94\ \text{cents/lb VC}\]
+The price of HCl strongly influences paths 3 and 4 --- path 5 lies midway between them (slide 13) --- so the design team is advised to examine how the gross profits vary with the HCl price before proceeding. Path 3 is carried forward to a preliminary flow sheet (slide 14).
+
+\textbf{Ans 2 --- The flows (slides 14--17).} A capacity of 800 MM lb/year over 330 days per year means \SI{100000}{lb/hr} of vinyl chloride. On that basis, and with each flow of the preliminary flow sheet being 1600 lbmol/hr: Cl$_2$ \SI{113400}{lb/hr} and C$_2$H$_4$ \SI{44900}{lb/hr} feed the direct chlorination; the dichloroethane (C$_2$H$_4$Cl$_2$) produced is \SI{158300}{lb/hr}, and pyrolysis gives \SI{100000}{lb/hr} of C$_2$H$_3$Cl and \SI{58300}{lb/hr} of HCl. Because the pyrolysis conversion is only 60\%, 158\,300 lb/h of dichloroethane would give only 60\,000 lb/h of VC; the extra dichloroethane needed is, by mass balance,
+\[\frac{1-0.6}{0.6}\times \SI{158300}{lb/hr}=\SI{105500}{lb/hr}\]
+which comes from the recycle of unreacted dichloroethane separated from the vinyl chloride, so the mixer sees $158\,300+105\,500=\SI{263800}{lb/hr}$. The heat duties are also fixed here: the chlorination reaction releases 150 million Btu/hr at \SI{90}{\celsius}, while the pyrolysis needs 52 million Btu/hr at \SI{500}{\celsius} --- the heat source is too cool to be used for the pyrolysis (slide 18).
+
+\textbf{Ans 3 --- Separation and conditions (slides 21--27).} Distillation, ``because of large volatility differences''. At 1 atm, HCl boils at \SI{-84.8}{\celsius}, which would need very costly refrigeration to condense the reflux; at 26 atm (the pyrolysis pressure) HCl boils at \SI{0}{\celsius}; the recommended condition is \emph{12 atm}, where HCl boils at \SI{-26.2}{\celsius} and the bottom product has a bubble point of \SI{93}{\celsius} --- further away from the critical points of the vinyl chloride--dichloroethane pair, with a lower pressure chosen to avoid operating in the critical region (slide 22). The feed condition preferred is \SI{35}{\celsius} or higher (saturated liquid at 12 atm would be \SI{6}{\celsius}, needing mild refrigeration), achieved by completing the cooling and partial condensation of the pyrolysis effluent with cooling water --- accepting the extra vapour load in the \SI{-26.2}{\celsius} condenser (slide 23). The second column is specified at 4.8 atm: its distillate boils at \SI{33}{\celsius} and can be condensed with cooling water available at \SI{25}{\celsius}, and its bottoms at \SI{146}{\celsius} can be boiled with medium-pressure steam (slide 24).
+
+For the temperature, pressure and phase changes (slides 26--27): liquid dichloroethane from the recycle mixer at \SI{112}{\celsius} and 1.5 atm is pumped to 26 atm, heated to its boiling point \SI{242}{\celsius}, vaporised there and superheated to the pyrolysis temperature of \SI{500}{\celsius}; putting the pump and the heater after the vaporiser is uneconomical because compressing a vapour costs far more than pumping a liquid. The hot effluent (500 \si{\celsius}, 26 atm) is then cooled to its dew point, \SI{170}{\celsius} at 26 atm, and condensed to its bubble point, \SI{6}{\celsius} at 12 atm, by lowering the pressure, cooling and removing the latent heat.
+\end{ansbox}
+
+\vspace{2mm}
+{\color{rule}\hrule height 0.6pt}
+\vspace{2mm}
+\note{Problems, data and method: the uploaded decks in \texttt{Slides/}. Arithmetic: every number
+above is reproduced by \texttt{pdp-answers-check.py} in this folder. Where a deck states a problem
+without giving a worked solution, that is said so in the notes above.}
+
+\end{document}

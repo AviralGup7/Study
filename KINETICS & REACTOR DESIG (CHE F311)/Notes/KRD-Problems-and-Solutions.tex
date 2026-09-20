@@ -1536,35 +1536,65 @@ used adiabatically --- the exotherm outruns the limit.
 \begin{ansbox}$X\approx0.84$--$0.85$ at $T\approx611$--$613$ R ($\approx151$\,°F) $>125$\,°F --- not acceptable.\end{ansbox}
 
 \qtitle{Q41 -- The same CSTR with a cooling coil}{\label{q:41}Ch7, slides 60--74}
-\src{Ch7-\_krd.pdf, slides 60--74.}
-A 40 ft$^2$ coil, $U=100$ Btu/(h$\cdot$ft$^2\cdot$°F), coolant at 85\,°F (545 R).  Does the
+\src{Ch7-\_Krd.pdf, slides 60--74.}
+The 300-gal CSTR of Q40 now gets a 40~ft$^2$ cooling coil,
+$U=100$~Btu/(h$\\cdot$ft$^2\\cdot$°F), coolant at 85\,°F (545~R).  Does the
 125\,°F constraint now hold?
+
 \begin{qbox}
-Energy balance adds $UA(T-T_a)=4000(T-545)$ Btu/h:
-$X=\frac{17\,379(T-535)+4000(T-545)}{43.04\times36\,400}$ together with the mole balance.
-Intersection: $X\approx0.35$--$0.36$, $T\approx562$--$564$ R $=102$--$104$\,°F --- the deck's
-fsolve gives $X=0.364$, $T=563.7$ R.  The constraint is satisfied with the coil.
+\textbf{Step 1 --- the coil enters the energy balance.}  The heat removed is
+$UA(T-T_a)=100\times40\times(T-545)=4000(T-545)$~Btu/h, so the energy line of
+Q40 gains that term:
+\[
+X=\frac{17\,379\,(T-535)+4000\,(T-545)}{43.04\times36\,400},
+\]
+where $17\,379=\sum F_iC_{p,i}$ on the feed basis.
+
+\textbf{Step 2 --- intersect with the mole balance again.}
+Solving together with $X=k(T)\tau/(1+k(T)\tau)$:
+$X\approx0.35$--$0.36$ at $T\approx562$--$564$~R $=102$--$104$\,°F --- the deck's
+fsolve gives $X=0.364$, $T=563.7$~R.
+
+\textbf{Step 3 --- the constraint.}  $104<125$\,°F: satisfied --- but notice the
+price: conversion collapses from 0.84 to 0.36, because the coil holds the
+reactor below the temperature where $k$ is large (the deck's multiple-steady-
+state discussion, slides 69--74, is exactly this trade-off).
 \end{qbox}
 \begin{ansbox}Yes: $X\approx0.36$ at $T\approx564$ R ($\approx104$\,°F) $<125$\,°F.\end{ansbox}
 
 \qtitle{Q42 -- Parallel reactions in a PFR with heat effects}{\label{q:42}Ch7, slide 95}
-\src{Ch7-\_krd.pdf, slide 95.}
-$A\to B$ ($r_B=k_1C_A$), $2A\to C$ ($r_C=k_2C_A^2$); pure A at 100 mol/s, 150\,°C,
-$C_{A0}=0.1$ mol/dm$^3$; $\Delta H_1=-20\,000$, $\Delta H_2=-60\,000$ J/mol A;
-$C_{pA}=C_{pB}=90$, $C_{pC}=180$ J/(mol$\cdot$°C); $E_1/R=4000$ K, $E_2/R=9000$ K;
-$k_1=10$, $k_2=0.09$ (as printed, per min).  Determine the temperature and flow-rate
-profiles down the reactor.
+\src{Ch7-\_Krd.pdf, slide 95.}
+$A\to B$ ($r_1=k_1C_A$) and $2A\to C$ ($r_2=k_2C_A^2$); pure A at 100~mol/s,
+150\,°C, $C_{A0}=0.1$~mol/dm$^3$; $\Delta H_1=-20\,000$, $\Delta H_2=-60\,000$
+J/mol~A; $C_{pA}=C_{pB}=90$, $C_{pC}=180$~J/(mol$\\cdot$°C); $E_1/R=4000$~K,
+$E_2/R=9000$~K; $k_1=10$, $k_2=0.09$ (as printed, per min).  Determine the
+temperature and molar-flow profiles down the reactor.
+
 \begin{qbox}
-Coupled ODEs (per the deck's PFR heat-effects balances):
-$\frac{dF_A}{dV}=-(r_1+2r_2)$, $\frac{dF_C}{dV}=r_2$,
-$\frac{dT}{dV}=\frac{r_1(-\Delta H_1)+r_2(-\Delta H_2)}{F_AC_{pA}+F_BC_{pB}+F_CC_{pC}}$
-with $C_A=F_A/\dot V_0$, $\dot V_0=60\,000$ dm$^3$/min (taking the printed rate constants as
-per minute).  Integrating to $V=10$ m$^3$: $F_A\to0$, $F_C\to0$ (B dominates), and $T$ rises
-to $\approx645$ K --- the adiabatic limit for complete conversion to B
-($\Delta T = 100\times20\,000/(100\times90)\approx222$ K above 423 K).
+\textbf{Step 1 --- the coupled balances (deck's PFR heat-effects form).}
+\[
+\frac{dF_A}{dV}=-(r_1+2r_2),\qquad \frac{dF_C}{dV}=r_2,
+\]
+\[
+\frac{dT}{dV}=\frac{r_1(-\Delta H_1)+r_2(-\Delta H_2)}
+{F_AC_{pA}+F_BC_{pB}+F_CC_{pC}},
+\]
+with $C_A=F_A/\dot V_0$ and $\dot V_0=60\,000$~dm$^3$/min (taking the printed
+rate constants as per minute).
+
+\textbf{Step 2 --- what the integration shows.}  Both reactions are fast and
+exothermic: they complete within the first m$^3$, and essentially all A leaves
+as B (the first-order path outruns the second-order one at $C_A=0.1$).
+
+\textbf{Step 3 --- the temperature ceiling.}  With B the product, the adiabatic
+rise is $\Delta T=F_{A0}(-\Delta H_1)/(F_{A0}C_{pB})=20\,000/90\approx222$~K, so
+$T\to423+222\approx645$~K and stays there (no further reaction, no exchange).
 \end{qbox}
+\begin{warnbox}The slide states the problem and data but no units for $k_1,k_2$
+beyond ``min''; the profile above takes them as printed.  The qualitative result
+--- fast exothermic run to the adiabatic temperature, B the dominant product ---
+is unaffected.\end{warnbox}
 \begin{ansbox}Both reactions complete within the first m$^3$; $T\to\approx645$ K, product essentially B.\end{ansbox}
-\begin{warnbox}The slide states the problem and the data but no units for $k_1,k_2$ beyond ``min''; the profile above takes them as printed (per minute).  The qualitative result (fast exothermic run to the adiabatic temperature rise) is unaffected.\end{warnbox}
 
 %============================= PART H =====================================
 \spsection{Part H -- Catalysis (Catalysis\_Krd.pdf)}

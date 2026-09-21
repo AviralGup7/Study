@@ -1171,12 +1171,12 @@ W = \int_0^X \frac{F_{A0}\,dX}{-r_A'}\ \ (\text{PBR, per catalyst mass})
 \begin{align*}
 \text{Liquid ($\varepsilon = 0$):}\quad
 V &= \frac{v_0}{k\,C_{A0}^{\,n-1}}\int_0^X\frac{dX}{(1-X)^{n}}
-&&\text{1st order: } \frac{v_0}{k}\ln\frac{1}{1-X};\quad
-\text{2nd order: } \frac{v_0}{kC_{A0}}\frac{X}{1-X}\\[6pt]
+&&\text{1st: } \tfrac{v_0}{k}\ln\tfrac{1}{1-X};\ 
+\text{2nd: } \tfrac{v_0}{kC_{A0}}\tfrac{X}{1-X}\\[6pt]
 V_{\text{PFR}} &= \frac{v_0}{kC_{A0}}\left[
  2\varepsilon(1+\varepsilon)\ln(1-X) + \varepsilon^{2}X
  + \frac{(1+\varepsilon)^{2}X}{1-X}\right]
- &&\text{2nd order, gas phase (slide~42, red box)}
+ &&\text{2nd order, gas (slide~42)}
 \end{align*}
 \end{formulabox}
 \begin{mthbox}
@@ -1205,16 +1205,17 @@ pressure-drop problem of \S4.5--4.7 a \emph{coupled} system.}
  \left(\frac{1-X}{1+\varepsilon X}\right)^{2}\left(\frac{P}{P_0}\right)^{2}
  &&\text{PBR, 2nd order with drop (slide~47)}\\[6pt]
 \frac{dP}{dz} &= -\frac{G(1-\phi)}{\rho_g g_c D_p \phi^{3}}
- \left[\frac{150(1-\phi)\mu}{D_p} + 1.75\,G\right]\cdot(\text{property corrections})
+ \left[\frac{150(1-\phi)\mu}{D_p} + 1.75\,G\right]
  &&\text{Ergun (slide~48)}\\[6pt]
 \beta_0 &= \frac{G(1-\phi)}{\rho_0 D_p \phi^{3}}
  \left[\frac{150(1-\phi)\mu}{D_p} + 1.75\,G\right]
- &&\text{(slide~49; $g_c = 32.174\ \mathrm{lb_m\,ft/(lb_f\,s^2)}$ in English units)}\\[6pt]
+ &&\text{(slide~49)}\\[6pt]
 W &= z\,A_c\,\rho_b = z\,A_c\,(1-\phi)\rho_c
  &&\text{catalyst mass (slide~50)}\\[6pt]
-\frac{dP}{dW} &= -\frac{\beta_0}{A_c(1-\phi)\rho_c}\cdot\frac{P_0}{P}\cdot\frac{T}{T_0}\cdot\frac{F_T}{F_{T0}},
- &\qquad
+\frac{dP}{dW} &= -\frac{\beta_0}{A_c(1-\phi)\rho_c}\cdot\frac{P_0}{P}\cdot\frac{T}{T_0}\cdot\frac{F_T}{F_{T0}}
+\\[6pt]
 \alpha &\equiv \frac{2\beta_0}{A_c(1-\phi)\rho_c}\cdot\frac{1}{P_0}
+ &&\text{the lumped drop parameter}
 \end{align*}
 \end{formulabox}
 \begin{mthbox}
@@ -1232,7 +1233,9 @@ $2p\,dp = -\alpha\,dW \Rightarrow p = (1-\alpha W)^{1/2}$ --- the formula of \S4
 \item \textbf{$\phi$} is the bed porosity (void fraction), $(1-\phi)$ the solid fraction, $G = \dot m/A_c$ the
 superficial mass flux, $D_p$ the particle diameter, $\rho_c$ the \emph{solid} catalyst density and
 $\rho_b = (1-\phi)\rho_c$ the \emph{bulk} density. $\beta_0$ is the \textbf{Ergun equation} in the form the deck
-uses (viscous $+$ inertial terms).
+uses (viscous $+$ inertial terms). The slide's full $dP/dz$ form multiplies $\beta_0$ by the property corrections
+$\frac{P_0}{P}\frac{T}{T_0}\frac{F_T}{F_{T0}}$, and the English-unit form carries
+$g_c = 32.174\ \mathrm{lb_m\,ft/(lb_f\,s^2)}$ (force--mass bridge).
 \item The grouping $A_c(1-\phi)\rho_c$ in $\alpha$ is purely the conversion from bed \emph{length} to catalyst
 \emph{mass}: $zA_c$ is the bed volume, $(1-\phi)$ the solid volume fraction, $\rho_c$ the solid density.
 Everything packing- and flow-specific sits in $\beta_0$; everything geometric or material sits outside.

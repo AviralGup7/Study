@@ -20,6 +20,13 @@
 | `Mod1-Lecture 6-compressed.pdf` | pdf | Equipment for size reduction — crushers, grinders, ultrafine grinders, cutting machines, circuits, energy consumption |
 | `Mod 2-Lecture 1-compressed.pdf` | pdf | Mechanical separations; screening and screen effectiveness — material balance and overall effectiveness |
 | `Mod 2-Lecture 2.pptx` | pptx | Filtration — media, filter aids, cake filtration, Kozeny–Carman / Burke–Plummer / Ergun |
+| `Mod 2-Lecture 3 - Copy.pptx` | pptx | Pressure drop through the filter cake — channel model, working equations |
+| `Mod 2-Lecture 4-compressed.pdf` | pdf | Constant-rate filtration |
+| `Mod 2-Lecture 5.pptx` | pptx | Continuous filtration — the rotary-drum filter |
+| `Mod 2-Lecture 6.pptx` | pptx | Centrifugal filtration and washing rate |
+| `Mod 2-Lecture 7.pptx` | pptx | Clarifying, crossflow and membrane filters; sedimentation |
+| `Mod 2-Lecture 8-compressed.pdf` | pdf | Centrifugal sedimentation |
+| `Problems.pptx` | pptx | Practice problems — ball-mill speed, plate-and-frame washing time, hydraulic classifier (answers as Q13–Q15 in the questions document) |
 
 ### `Tutorials/` — tutorial sheets (as uploaded)
 
@@ -37,21 +44,26 @@
 
 ### `Notes/` — written here
 
-- `SP2-notes.tex` — short notes + formula sheet, covering Module 1 Lectures 1–6 and Module 2
-  Lectures 1–2. Definitions, the derivation steps (including the hand-worked Lecture 3, Lecture 5
-  and Mod 2 Lecture 1 derivations), every formula on the slides, and the practice problems.
+- `SP2-notes.tex` — short notes + formula sheet, covering **all 14 lecture decks**: Module 1
+  Lectures 1–6 and Module 2 Lectures 1–8. Definitions, the derivation steps (including the
+  hand-worked Lecture 3, Lecture 5 and Mod 2 Lecture 1 derivations), every formula on the
+  slides, and the practice problems.
   **This is the canonical standard** for notes structure, style and depth across the whole
   repository; the other subjects' notes are built to match it. It is written for XeLaTeX with a
   full TeX Live (`xcolor`, `tcolorbox`, `siunitx`, `booktabs`, `enumitem`, `mathtools`, `multirow`).
 - `SP2-Short-Notes-and-Formula-Sheet.tex` — the same document **ported to the base TeX tree**, so
   it rebuilds with `tools/latex` like every other subject's notes. Produced by
-  `tools/latex/mknotes.py:port()` from `SP2-notes.tex`; edit `SP2-notes.tex` and re-port rather
-  than editing this file. Verified equivalent: 13 pp (same as the original), 0 errors,
-  0 overfull, character counts 39293 vs 39271.
-- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 13-page A4 PDF.
-- `SP2-Problems-and-Solutions.tex` — **every numerical question in the uploaded slides, tutorials and
-  tests, with its solution** (Q1–Q11, each followed by its `Ans` block, segregated by source).
-- `SP2-Problems-and-Solutions.pdf` — 14-page A4 PDF compiled from `SP2-Problems-and-Solutions.tex`.
+  `tools/latex/port.py` from `SP2-notes.tex`; edit `SP2-notes.tex` and re-port rather
+  than editing this file. Verified equivalent: rebuilding through `tools/latex/gen.py`
+  reproduces the committed PDF word for word (25 pp, 0 errors, 0 overfull).
+  (The standalone file briefly carried a generator regression — `port.py` dropped the
+  `\begin{document}` line; fixed 20-09-2026, and the file now also compiles on its own:
+  25 pp, 0 errors, 0 overfull.)
+- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 25-page A4 PDF.
+- `SP2-Problems-and-Solutions.tex` — **every numerical question in the uploaded slides, tutorials,
+  tests and `Problems.pptx`, with its solution** (Q1–Q15, each followed by its `Ans` block,
+  segregated by source; Part D holds the Module 2 / `Problems.pptx` problems Q12–Q15).
+- `SP2-Problems-and-Solutions.pdf` — 16-page A4 PDF compiled from `SP2-Problems-and-Solutions.tex`.
 - `sp2-sizing-curves.png` — the differential and cumulative size-distribution figure used by Q6,
   plotted here from the sieve table printed on `Tutorials/Tutorial 3.pptx` slide 2.
 - `sp2-answers-check.py` — the arithmetic record. Reproduces every derived number in the solutions
@@ -108,6 +120,10 @@ Rules that follow:
 | Q9 | Tutorial 4, problem 2 | Energy per kg (Kick's law) | **`E` = 8.05 kJ/kg** |
 | Q10 | `Tests/Quiz1_Soln.pdf` | Mixing index of a binary mixture | `I_s` = 15.6 from the unrounded `s` = 0.03197, 16.1 with the instructor's rounded `s` = 0.031 (instructor's boxed value 16.12) |
 | Q11 | `Tests/TT1_Solution.pdf` | Bond work index | **`W_i` = 12.78 kWh/t**, `E₂` = 2.623 kWh/t, `P₂` = 367.2 kW (instructor's boxed value 367.22 kW) |
+| Q12 | Mod 2 Lec 8, slide 26 | Clarifying-centrifuge capacity | `q_c` = 210.7 m³/h (0.0585 m³/s) |
+| Q13 | `Problems.pptx` slide 2 (critical-speed relation, Mod 1 Lec 6) | Mill speed when the grinding balls are replaced | `n₂` = 14.8 rpm — slightly slower than the present 15 rpm |
+| Q14 | `Problems.pptx` slides 3–4 | Plate-and-frame press: washing time; time with doubled area | `K` = 90 m⁶/h, washing rate 0.375 m³/h, `t_w` = 8 h; doubled area: `K` = 360 m⁶/h, 2.5 h |
+| Q15 | `Problems.pptx` slide 5 (Example 6.3) | Purity of dressed ore from a hydraulic classifier | purity ≈ 72 % at the 1 mm cut (equal-settling rock size 0.5 mm, 90 % of the rock retained) |
 
 ### Practice problems collected in the notes
 

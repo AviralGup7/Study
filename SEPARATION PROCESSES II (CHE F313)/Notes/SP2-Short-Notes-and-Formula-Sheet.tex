@@ -75,6 +75,11 @@
 }{\end{minipage}\end{lrbox}%
   \fcolorbox{accent}{white}{\usebox{\spboxa}}\par\addvspace{6pt}}
 
+% The problems documents define these two of their own; provided here so a ported
+% body compiles unchanged.
+\providecommand{\src}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}\textbf{Source:} #1}\par\vspace{3pt}}
+\providecommand{\note}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
+
 \newcommand{\qtitle}[2]{%
   \par\addvspace{8pt}\noindent{\color{accent}\bfseries Q#1.\hspace{0.5em}}{\small\color{notecol}#2}\par\addvspace{3pt}\nopagebreak}
 
@@ -113,10 +118,10 @@
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0.4pt}
-\fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Separation Processes II --- Short Notes \& Formula Sheet}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} SEPARATION PROCESSES II --- Short Notes \& Formula Sheet}
 \fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
 
-
+\begin{document}
 %=============================================================== cover
 \begin{center}
 {\LARGE\bfseries\color{accent} SEPARATION PROCESSES II}\\[2pt]
@@ -149,6 +154,12 @@ Equipment for size reduction: crushers, grinders, mills, circuits & 6\\
 \midrule
 Screening and screen effectiveness --- material balance and overall effectiveness & 1\\
 Filtration: media, filter aids, cake filtration and pressure drop & 2\\
+Pressure drop through the filter cake: Kozeny--Carman, Burke--Plummer, Ergun & 3\\
+Constant-rate filtration & 4\\
+Continuous filtration: the rotary-drum filter & 5\\
+Centrifugal filtration and washing rate & 6\\
+Clarifying, crossflow and membrane filters; sedimentation begins & 7\\
+Centrifugal sedimentation & 8\\
 Practice problems set from the slides & ---\\
 \bottomrule
 \end{tabularx}
@@ -206,6 +217,24 @@ Screen-average size: $D_p=\tfrac12\bigl(\text{aperture of the screen it passes}+
 \end{formulabox}
 
 \notetext{Sphericity $=$ (surface-area-to-volume ratio of a sphere of the same diameter) $\div$ (surface-area-to-volume ratio of the particle). It is independent of particle size and is tabulated for common shapes in Table~28.1 of the text. For granular materials the exact $v_p$ and $s_p$ cannot be measured, so $D_p$ is the nominal size from screen analysis or microscopy.}
+
+\spsub{Statistical diameters --- measuring one irregular particle under the microscope}
+For an irregular particle whose size and shape are defined arbitrarily, each of the following
+quantities can be read directly off the magnified image of the particle and used as its
+``diameter'' (Lec.~1, slide~12):
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Name} & \textbf{Dimension measured}\\
+\midrule
+Feret's diameter & distance between two tangents on opposite sides of the particle\\
+Martin's diameter & length of the line which bisects the image of the particle\\
+Shear diameter & particle width obtained with an image-shearing eyepiece\\
+Maximum cord diameter & maximum length of a line limited by the contour of the particle\\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \spsub{Size ranges and measurement}
 \begin{itemize}
@@ -325,6 +354,24 @@ p &= w+d
   \item By flow properties, particulate solids are divided into \textbf{non-cohesive} materials (grain, dry sand, plastic chips) that flow readily out of a bin or silo, and \textbf{cohesive} solids (wet clay) characterised by reluctance to flow through openings.
 \end{itemize}
 
+\begin{formulabox}
+\textbf{Angles of repose and internal friction} (table given on Lec.~4, slide~5):
+\begin{center}
+\begin{tabular}{@{}lcp{4mm}lc@{}}
+\toprule
+\textbf{Material} & \textbf{Repose} $\alpha_r$ && \textbf{Material} & \textbf{Internal friction} $\alpha_i$\\
+\midrule
+Anthracite coal  & \ensuremath{27^{\circ}}          && Granular solids & \ensuremath{15^{\circ}}--\ensuremath{30^{\circ}}\\
+Fine sand        & \ensuremath{31^{\circ}}          && Cohesive solids & $\simeq\ensuremath{90^{\circ}}$\\
+Bituminous coal  & \ensuremath{35^{\circ}}          &&&\\
+Wet clay         & \ensuremath{17^{\circ}}          &&&\\
+Gravel           & \ensuremath{39^{\circ}}--\ensuremath{48^{\circ}}&&&\\
+\bottomrule
+\end{tabular}
+\end{center}
+The angle of repose is the pile-side angle with the horizontal; the angle of internal friction is the slope angle of the shear-strength $\tau$ vs normal-stress $\sigma_n$ line (cohesive solids sheared at the unconfined surface fail nearly vertically, hence $\alpha_i\rightarrow\ensuremath{90^{\circ}}$).
+\end{formulabox}
+
 \spsub{Bulk storage, bins and silos}
 \begin{itemize}
   \item Coarse solids (gravel, coal) are stored outside in large piles unprotected from the weather; outdoor storage can cause dusting or leaching of soluble material. Solids too valuable or too soluble to expose are stored in bins, hoppers or silos.
@@ -337,6 +384,7 @@ p &= w+d
 \begin{itemize}
   \item Belt conveyors and bucket elevators, closed-belt conveyors with zipper-like fasteners, drag and flight conveyors --- all include a return leg carrying the empty belt or chain from the discharge back to the loading point.
   \item Vibrating, pneumatic and screw conveyors have no return leg but operate only over relatively short distances.
+  \item Pneumatic conveying (deck's Fig.~7.15): solids and air are entrained through suction nozzles into a multiple-inlet line; the stream then passes a cyclone and a dust collector (each discharging solids to a bin) before the air leaves through the exhauster --- an adjustable tube at the nozzle sets the air--solids ratio.
 \end{itemize}
 
 \spsub{Mixing of solids --- statistical measures of mixer performance}

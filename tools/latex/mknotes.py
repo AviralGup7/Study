@@ -224,6 +224,13 @@ def render_si(s):
     s = re.sub(r'\\num\s*(?:\[[^\]]*\])?\s*\{([^{}]*)\}',
                lambda m: r'\ensuremath{' + _num(m.group(1)) + '}', s)
     s = re.sub(r'\\sisetup\s*\{[^{}]*\}', '', s)
+
+    def ang(m):
+        # siunitx \ang{} formats an angle; every current use is in degrees,
+        # so render the value followed by the degree sign.
+        v = _num(m.group('val'))
+        return r'\ensuremath{' + v + r'^{\circ}}'
+    s = re.sub(r'\\ang\s*(?:\[[^\]]*\])?\s*\{(?P<val>(?:[^{}]|\{[^{}]*\})*)\}', ang, s)
     return s
 
 

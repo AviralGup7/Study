@@ -6,6 +6,8 @@
     --prefix NAME   file names become NAME-01.png ... (default: deck stem)
     --width  N      rendered page width in pixels (default 1500)
     --pages  1,2,5  render only these page numbers
+    --pad    N      extend the .pptx canvas N px below the slide so text that
+                    overflows the bottom edge stays readable, not clipped
     --sheet N       write montage sheets of N pages each into <outdir>/sheets/
                     with every tile labelled '#<page>', for reading in batches
 
@@ -415,7 +417,10 @@ def _ink_fix(im):
 
 # ------------------------------------------------------------------ pptx
 def _xfrm(el):
-    x = el.find('.//' + A + 'xfrm')
+    # graphicFrame stores its transform as <p:xfrm>, everything else as <a:xfrm>
+    x = el.find(P + 'xfrm')
+    if x is None:
+        x = el.find('.//' + A + 'xfrm')
     if x is None:
         return None
     off, ext = x.find(A + 'off'), x.find(A + 'ext')
@@ -455,14 +460,17 @@ def _placeholder_box(tree, key):
 
 
 class PptxRenderer:
-    def __init__(self, path, width=1500):
+    def __init__(self, path, width=1500, pad=0):
         self.z = zipfile.ZipFile(path)
         pres = ET.fromstring(self.z.read('ppt/presentation.xml'))
         sz = pres.find(P + 'sldSz')
         self.sw, self.sh = int(sz.get('cx')), int(sz.get('cy'))
         self.W = width
         self.scale = width / self.sw
-        self.H = int(round(self.sh * self.scale))
+        # Text shapes that overflow the slide bottom are clipped out of
+        # existence by the fixed canvas; pad lets them stay visible (same as
+        # the pasteboard area around a slide in PowerPoint's editor).
+        self.H = int(round(self.sh * self.scale)) + pad
         names = [n for n in self.z.namelist() if re.match(r'ppt/slides/slide\d+\.xml$', n)]
         self.slides = sorted(names, key=lambda n: int(re.search(r'(\d+)', n.split('/')[-1]).group(1)))
 
@@ -610,7 +618,10 @@ class PptxRenderer:
             texts.append((x0, y0, paras))
 
     def _text(self, dr, x0, y0, paras):
-        sc = self.scale * 72 / 914400.0
+        # 1 pt = 914400/72 EMU; self.scale is px/EMU, so px-per-pt = scale*914400/72.
+        # (72/914400 is the inverse -- it made every label collapse to the 8px
+        # floor, dropping typed text and table cells at large --width.)
+        sc = self.scale * 914400.0 / 72
         y = y0
         for line, size, bold in paras:
             px = max(8, int(round(size * sc * 1.6)))
@@ -672,8 +683,8 @@ def pdf_pages(path, width):
     return out
 
 
-def pptx_pages(path, width):
-    r = PptxRenderer(path, width)
+def pptx_pages(path, width, pad=0):
+    r = PptxRenderer(path, width, pad)
     return [r.render(part) for part in r.slides]
 
 
@@ -720,9 +731,10 @@ def main():
                 per = val
     if '--pages' in args:
         pages = [int(x) for x in args[args.index('--pages') + 1].split(',')]
+    pad = int(args[args.index('--pad') + 1]) if '--pad' in args else 0
     os.makedirs(outdir, exist_ok=True)
     prefix = prefix or os.path.splitext(os.path.basename(deck))[0]
-    imgs = pdf_pages(deck, width) if deck.lower().endswith('.pdf') else pptx_pages(deck, width)
+    imgs = pdf_pages(deck, width) if deck.lower().endswith('.pdf') else pptx_pages(deck, width, pad)
     idx = list(range(1, len(imgs) + 1))
     if pages:
         keep = [i for i in idx if i in pages]

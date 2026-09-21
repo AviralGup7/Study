@@ -25,18 +25,18 @@ from the slide pictures (OCR-checked by eye at high resolution).
 
 ### `Notes/` — written here
 
-- `KRD-Short-Notes-and-Formula-Sheet.tex` — short notes + formula sheet at the depth of the course
+- `KRD-Short-Notes-and-Formula-Sheet.tex` — notes + formula sheet at the depth of the course (Ch3 expanded into full derivation notes)
   standard (`SEPARATION PROCESSES II (CHE F313)/Notes/SP2-notes.tex`): a `Compiled from` box naming all
   nine decks, a `What is inside` index, a notation table, then one section per deck with subheads,
   the reasoning behind each formula, and the deck's own worked numbers carried through to a boxed
   answer. Closes with a consolidated formula sheet and a table of the four reactor-choice comparisons
   the course keeps asking.
-- `KRD-Short-Notes-and-Formula-Sheet.pdf` — 14-page A4 PDF compiled from that `.tex`
+- `KRD-Short-Notes-and-Formula-Sheet.pdf` — 31-page A4 PDF compiled from that `.tex`
   (0 errors, 0 overfull boxes).
 - `KRD-Problems-and-Solutions.tex` — **every numerical question or example posed in the nine decks,
   with its solution** (Q1–Q46, each question quoted with its `Source:` line and followed by its
   answer, segregated by deck into Parts A–I).
-- `KRD-Problems-and-Solutions.pdf` — 12-page A4 PDF compiled from `KRD-Problems-and-Solutions.tex`.
+- `KRD-Problems-and-Solutions.pdf` — 22-page A4 PDF compiled from `KRD-Problems-and-Solutions.tex`.
 - `krd-answers-check.py` — the arithmetic record. Reproduces every derived number in the solutions
   document; numpy-only, run `python3 krd-answers-check.py`.
 
@@ -89,8 +89,8 @@ Rules that follow:
 | Q10 | Ch3 s.6–7 | $r_B=-15$, $r_C=+25$ |
 | Q11 | Ch3 s.42–44 | $C_A=C_{A0}(1-X)$, $C_B=C_{A0}(\Theta_B-X/3)$, $C_C=C_{A0}X$, $C_D=C_{A0}X/3$ |
 | Q12 | Ch3 s.48–51 | $\Theta_B=3.67$; $C_B=C_{A0}(3.67-2X)$, $C_C=C_D=C_{A0}X$ |
-| Q13 | Ch3 s.61 (+Ch5 s.77) | second order, $-r_A\approx0.34\,C_A^2$ (mmol, L, h) |
-| Q14 | Ch3 s.63 | $V\approx0.19$ m³ |
+| Q13 | Ch3 s.62 (+Ch5 s.77) | second order, $-r_A\approx0.34\,C_A^2$ (mmol, L, h) |
+| Q14 | Ch3 s.63 | 4PH₃→P₄+6H₂ in a PFR, $V\approx0.15$ m³ |
 | Q15 | Ch4 s.17–20 | $k\approx0.311$ min⁻¹; $t_{90}\approx7.4$ min; 6.4 h at $k=10^{-4}$ s⁻¹ |
 | Q16 | Ch4 s.29–38 | 197.3 ft³; parallel $X=0.81$; series $X=0.90$ |
 | Q17 | Ch4 s.44–45 | $V\approx1.8$ m³ (65 ft³); ≈3150 tubes |

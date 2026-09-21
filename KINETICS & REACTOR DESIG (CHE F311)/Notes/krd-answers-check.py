@@ -105,15 +105,19 @@ print(f"X = {np.round(Xs,4)}; -rA = {np.round(r,1)}; order n = {n:.2f}")
 print(f"k per run = {np.round(r/CAs**2,4)} L/(mmol.h)")
 
 print("=== Q14 phosphine PFR (Ch3 slide 63) ===")
+# 4 PH3 -> P4 + 6 H2 : products are 1 + 6 = 7 mol per 4 mol reacted (P4 is ONE
+# mole of molecules), so delta = (1+6-4)/4 = 0.75 and eps = yA0*delta = 0.75.
+# Counting atoms instead ("4 -> 10") would wrongly give eps = 1.5, V = 0.1882.
 T = 649+273.15; P = 460e3; R = 8.314
-CA0 = P/(R*T); k = 10.0; FA0 = 40.0; eps = 1.5; X = 0.8
+CA0 = P/(R*T); k = 10.0; FA0 = 40.0; eps = 0.75; X = 0.8
 V = FA0/(k*CA0)*((1+eps)*np.log(1/(1-X)) - eps*X)
 print(f"CA0 = {CA0:.2f} mol/m3; V = {V:.4f} m3")
 
-print("=== Ch3 milk sterilisation activation energy (Ch3 slide 61, notes 3.5) ===")
-# same sterilisation result => same k*t; first order. Deck prints 80C/30min vs
-# 74C/15s; hotter must be shorter, so pair 353.15K with 15s, 347.15K with 1800s.
-t1, t2 = 1800.0, 15.0; T1, T2 = 347.15, 353.15
+print("=== Ch3 milk sterilisation activation energy (Ch3 slide 61, notes 3.16) ===")
+# same sterilisation result => same k*t; first order. The slide prints
+# 63C/30min and 74C/15s (a consistent hot-brief pair): 336.15K with 1800 s,
+# 347.15K with 15 s.
+t1, t2 = 1800.0, 15.0; T1, T2 = 336.15, 347.15
 E = 8.314*np.log(t1/t2)/(1/T1 - 1/T2)
 print(f"E = {E/1000:.0f} kJ/mol")
 

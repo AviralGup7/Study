@@ -153,9 +153,12 @@
 Mole balances, rate of reaction, conversion, the four design equations & Ch1\\
 Reactor sizing from conversion; the Levenspiel plot; numerical integration;
  reactors in series and in parallel; optimum size ratio & Ch2\\
-Rate laws and stoichiometry; relative rates; units of $k$; elementary vs
- non-elementary and reversible laws; Arrhenius; stoichiometric tables
- for batch and flow, liquid and gas phase & Ch3\\
+Rate laws and stoichiometry: molecularity; relative rates; power-law
+ kinetics and the units of $k$; the law of mass action; elementary and
+ non-elementary rate laws; reversible laws and $K_C$; Arrhenius and
+ activation energy; batch and flow stoichiometric tables; concentration
+ in terms of conversion in liquid and gas systems; the deck's five
+ worked numbers & Ch3\\
 Isothermal reactor design; the algorithm; closed-form conversions;
  Damk\"ohler number; pressure drop in packed beds & Ch4\\
 Collection and analysis of rate data; differential and integral methods;
@@ -381,108 +384,688 @@ r_A = -0.08,\quad r_B = +0.02,\quad r_C = +0.04
 
 %================================================================== Ch3
 \spsection{3 \enspace Rate Laws and Stoichiometry}
-\notetext{Source: \texttt{Ch3-krd.pdf}.}
+\notetext{Source: \texttt{Ch3-krd.pdf} --- a two-part deck of 63 printed slides: \textbf{Part~1, rate laws} (slides 3--28) and \textbf{Part~2, stoichiometry} (slides 29--60), closing with three numericals (slides 61--63). Slide numbers cited below are the deck's own printed numbers, read off the slide photographs together with the handwritten callouts.}
 
-\spsub{3.1 \enspace Relative rates of reaction}
+\spsub{3.1 \enspace Molecularity --- how many particles meet (slide 4)}
+\begin{itemize}
+\item \textbf{Molecularity} is the number of atoms, ions or molecules involved in a single reaction event. The deck classifies reactions by this count and gives one example of each:
+\end{itemize}
 \begin{formulabox}
 \begin{align*}
-aA + bB &\longrightarrow cC + dD\\[3pt]
+\text{unimolecular:}\quad
+& {}^{238}\mathrm{U} \longrightarrow {}^{234}\mathrm{Th} + {}^{4}\mathrm{He}
+ &&\text{(a single nucleus disintegrates)}\\[3pt]
+\text{bimolecular:}\quad
+& \mathrm{Br}^{\boldsymbol{\cdot}} + \mathrm{C_2H_6} \longrightarrow \mathrm{HBr} + \mathrm{C_2H_5}^{\boldsymbol{\cdot}}
+ &&\text{(a radical meets a molecule)}\\[3pt]
+\text{trimolecular:}\quad
+& 2\,\mathrm{NO} + \mathrm{Cl_2} \longrightarrow 2\,\mathrm{NOCl}
+ &&\text{(three particles in one event)}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Termolecular events are already rare, and molecularity~4 is the wall:} the deck states in red that \emph{there is no known reaction with molecularity 4} --- four particles cannot arrive with the right energy and geometry at the same instant.
+\item \textbf{Why the first example is on this slide at all:} the uranium decay shows that ``reaction'' in kinetics is not limited to molecules in a beaker; the counting rules of this chapter apply to any transformation written $aA+bB\to cC+dD$.
+\item \textbf{Net reactions hide the real molecularity} (slide~4): most reaction pathways are a \emph{series of bimolecular steps}. The deck's illustration is the overall trimolecular-looking $2\,\mathrm{NO}+\mathrm{O_2}\to2\,\mathrm{NO_2}$, which in fact proceeds through bimolecular encounters. Molecularity belongs to an \emph{elementary step}; overall order (section~3.3) belongs to the \emph{measured} rate law, and the two need not agree --- the theme of slides 14--17.
+\end{itemize}
+
+\spsub{3.2 \enspace Relative rates of reaction (slides 5--7)}
+\begin{itemize}
+\item Every species in $aA+bB\to cC+dD$ has its own rate of reaction $r_i$, but the stoichiometry locks the ratios. Divide each species' rate by its own stoichiometric coefficient \emph{taken with sign} (negative for reactants, positive for products); all four quotients are equal (slide~5, callout ``Reaction Stoichiometry''):
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+aA + bB &\longrightarrow cC + dD\\[4pt]
 \frac{r_A}{-a} &= \frac{r_B}{-b} = \frac{r_C}{c} = \frac{r_D}{d}
  &&\Longrightarrow\quad \boxed{\;r_B = \frac{b}{a}\,r_A\;}
 \end{align*}
 \end{formulabox}
-\notetext{Divide each species' rate by its own stoichiometric coefficient \emph{with sign}; the results are all equal. This is the check that closes the rocket-engine problem of \S1.4.}
-
-\spsub{3.2 \enspace Form of the rate law}
-\begin{formulabox}
-\begin{align*}
--r_A &= k\,C_A^{\alpha} C_B^{\beta}
- &&\text{power law; overall order } n = \alpha + \beta\\[4pt]
-k &= A\,e^{-E/RT}
- &&\text{Arrhenius}\\[4pt]
-\ln\frac{k_2}{k_1} &= \frac{E}{R}\left(\frac{1}{T_1} - \frac{1}{T_2}\right)
- &&\text{two-temperature form}\\[4pt]
-K_C &= \frac{k_f}{k_r}
- &&\text{elementary reversible; } -r_A \to 0 \text{ at equilibrium}
-\end{align*}
-\end{formulabox}
 \begin{itemize}
-\item \textbf{$\alpha$ and $\beta$ are empirical} --- they are \emph{not} the stoichiometric coefficients unless the reaction is elementary. Determining them is the whole subject of section~5.
-\item \textbf{Units of $k$ (slide~9):} $k = (\text{concentration})^{1-n}/\text{time}$, so $\mathrm{mol\,dm^{-3}s^{-1}}$ (zero), $\mathrm{s^{-1}}$ (first), $\mathrm{dm^{3}\,mol^{-1}s^{-1}}$ (second), $\mathrm{dm^{6}\,mol^{-2}s^{-1}}$ (third) --- the units alone betray the order.
-\item \textbf{Arrhenius plot (slides 27--28):} $\ln k = \ln A - (E/R)(1/T)$ is a straight line in $1/T$; a larger $E$ means a steeper slope, i.e.\ a reaction that is far more temperature-sensitive --- high-$E$ reactions surge with a small temperature rise yet crawl at low temperature.
+\item \textbf{Sign convention, stated once and used everywhere:} $r_i>0$ means species~$i$ is being \emph{formed}, $r_i<0$ means it is being \emph{consumed}. The rate of \emph{disappearance} of a reactant is $-r_i>0$. Mixing the two readings is the classic way to lose a sign.
+\item \textbf{Why this closes Chapter~1:} the rocket-engine problem of section~1.4 balances $-r_{\mathrm{H_2}}$ against $-r_{\mathrm{O_2}}$ exactly this way ($2{:}1$, the coefficients of $2\mathrm{H_2}+\mathrm{O_2}\to2\mathrm{H_2O}$).
 \end{itemize}
 
-\spsub{3.3 \enspace Elementary, non-elementary and reversible rate laws}
-\begin{itemize}
-\item \textbf{Elementary (slide~14):} the orders \emph{are} the stoichiometric coefficients, as in $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$ with $-r_{\mathrm{NO}} = kC_{\mathrm{NO}}^2C_{\mathrm{O_2}}$; the deck notes there is no known reaction with molecularity~4. Some non-elementary reactions nonetheless \emph{follow} an elementary rate law (the orders happen to match the coefficients).
-\item \textbf{Non-elementary (slides 15--17):} homogeneous $\mathrm{CO}+\mathrm{Cl_2}\to\mathrm{COCl_2}$ with $r_{\mathrm{CO}} = kC_{\mathrm{CO}}C_{\mathrm{Cl_2}}^{3/2}$ (orders $1$, $\tfrac32$, overall $\tfrac52$); heterogeneous toluene hydrogenation $-r_T' = kP_TP_H/(1+K_BP_B+K_TP_T)^2$ and cumene hydrogenolysis $-r_C' = kP_CP_H/(1+K_BP_B+K_CP_C)$, with $K_B,K_T$ adsorption constants; enzymatic sucrose $\to$ glucose $+$ fructose (Michaelis--Menten form).
-\item \textbf{Reversible (slides 18--21):} the rate law must reduce to the thermodynamic relation $K_C = C_C^cC_D^d/(C_A^aC_B^b)$ at equilibrium. The deck's benzene dimerisation, $2\mathrm{C_6H_6} \rightleftharpoons \mathrm{C_{12}H_{10}} + \mathrm{H_2}$: forward $k_BC_B^2$, reverse $k_{-B}C_DC_H$, net
+\spsub{3.2b \enspace The two worked relative-rate problems (slides 5--7)}
+\begin{qbox}
+\textbf{Example (slides 5 and the sticky note).} For $2\,\mathrm{NO}+\mathrm{O_2}\to2\,\mathrm{NO_2}$ the rule reads
 \[
--r_B = k_B\!\left(C_B^2 - \frac{C_DC_H}{K_C}\right),\qquad \frac{k_B}{k_{-B}} = K_C .
+\frac{r_{\mathrm{NO}}}{-2}=\frac{r_{\mathrm{O_2}}}{-1}=\frac{r_{\mathrm{NO_2}}}{2}.
 \]
-\end{itemize}
-
-\spsub{3.4 \enspace Stoichiometric tables}
-\notetext{For $aA + bB \to cC + dD$, with $\Theta_i = C_{i0}/C_{A0}$.}
-\begin{tabularx}{\linewidth}{@{}l X@{}}
-\toprule
-\textbf{Batch} & $N_A = N_{A0}(1-X)$,\quad $N_B = N_{A0}\!\left(\Theta_B - \tfrac{b}{a}X\right)$,\quad
- $N_C = N_{A0}\!\left(\Theta_C + \tfrac{c}{a}X\right)$\\
-\textbf{Batch, liquid} & $V = V_0$, so $C_i = N_i/V_0$\\
-\textbf{Flow} & the same expressions with $N \to F$\\
-\textbf{Batch, gas, const.\ $P,T$} & $V = V_0(1+\varepsilon X)$,\quad
- $C_A = \dfrac{N_{A0}(1-X)}{V_0(1+\varepsilon X)}$\\
-\bottomrule
-\end{tabularx}
-\begin{formulabox}
-\begin{align*}
-C_i &= C_{A0}\,\frac{\Theta_i + \nu_i X/a}{1 + \varepsilon X}\cdot\frac{T_0}{T}\cdot\frac{P}{P_0}
- &&\text{gas-phase flow, general}\\[5pt]
-\varepsilon &= y_{A0}\,\delta,
- &\qquad \delta &= \frac{c + d - b - a}{a}
- &&\text{mole change on complete conversion}
-\end{align*}
-\end{formulabox}
-\begin{itemize}
-\item \textbf{$\varepsilon = 0$} whenever there is no change in mole number, or the feed is diluted enough that $y_{A0}$ is small. Setting $\varepsilon=0$ is the single most common legitimate simplification, and the deck's gas-phase examples all state it explicitly.
-\item \textbf{$\varepsilon > 0$} (moles increase) means the gas expands as conversion proceeds, concentrations fall faster than stoichiometry alone implies, and the reactor needs more volume than the constant-density calculation suggests.
-\end{itemize}
-
-\spsub{3.5 \enspace Worked from the deck}
-\begin{itemize}
-\item \textbf{Relative rates} (slides~5--7).
-\end{itemize}
+The handwritten note asks: \emph{``If $\mathrm{NO_2}$ formed at $4$~mol/m$^3\cdot$s, ($r_{\mathrm{NO_2}}=+4$~mol/m$^3\cdot$s), what is the rate of formation of NO?''}
+\end{qbox}
+\begin{ansbox}
+$r_{\mathrm{NO}}=\dfrac{-2}{2}(+4)=-4$~mol\,m$^{-3}$s$^{-1}$ and $r_{\mathrm{O_2}}=\dfrac{-1}{2}(+4)=-2$~mol\,m$^{-3}$s$^{-1}$.\newline
+The \emph{rate of formation} of NO is $-4$~mol\,m$^{-3}$s$^{-1}$: the minus sign is the answer --- NO is not formed at all, it is consumed at $4$~mol\,m$^{-3}$s$^{-1}$.
+\end{ansbox}
+\begin{qbox}
+\textbf{Exercise (slide 6), solved on slide 7.} The reaction $2A+3B\to5C$ is carried out in a reactor. At a particular point the rate of disappearance of $A$ is $10$~mol/dm$^3\cdot$s. What are the rates of $B$ and $C$?
+\end{qbox}
 \begin{mthbox}
 \begin{align*}
-r_{\mathrm{NO_2}} = +4 &\;\Longrightarrow\; r_{\mathrm{NO}} = -4,\quad r_{\mathrm{O_2}} = -2\ \mathrm{mol\,m^{-3}s^{-1}}\\
-r_A = -10 &\;\Longrightarrow\; r_B = -15,\quad r_C = +25\ \mathrm{mol\,dm^{-3}s^{-1}}
+\frac{r_A}{-2} &= \frac{r_B}{-3} = \frac{r_C}{5},
+ &\text{given } -r_A = 10 \text{ mol/dm}^3\text{/s, i.e. } r_A = -10;\\[4pt]
+r_B &= \frac{-3}{-2}\,(-10) = -15\ \mathrm{mol\,dm^{-3}s^{-1}},
+ &\qquad
+r_C = \frac{5}{-2}\,(-10) = +25\ \mathrm{mol\,dm^{-3}s^{-1}} .
 \end{align*}
 \end{mthbox}
+\notetext{Read the result physically: $B$ is a reactant, so $r_B<0$ (it disappears at $15$~mol/dm$^3\cdot$s); $C$ is a product, so $r_C>0$ (it appears at $25$). The three rates are in the ratio $2{:}3{:}5$ --- the stoichiometry again.}
+
+\spsub{3.3 \enspace The rate law: what it is and how it is built (slides 8, 12--13)}
 \begin{itemize}
-\item \textbf{Dimerisation in an MFR} (slide~62). Four runs give
+\item \textbf{Definition (slide 12, callout bubble):} a \emph{rate law} is a kinetic expression that gives the relationship between reaction rate and concentration. The rate of disappearance depends on \emph{temperature} and \emph{composition}, and the law is built by splitting those two dependencies:
+\end{itemize}
+\begin{formulabox}
 \[
-X = 0.2502,\ 0.4996,\ 0.6667,\ 0.7995;\qquad
--r_A = 2502.2,\ 1498.9,\ 800.0,\ 399.8\ \mathrm{mol\,L^{-1}h^{-1}}
+-r_A = \underbrace{\big[k_A(T)\big]}_{\text{temperature}}\;
+       \underbrace{\big[f_n(C_A,\,C_B,\dots)\big]}_{\text{composition}}
+\]
+\end{formulabox}
+\begin{itemize}
+\item The rate constant $k_A$ carries \emph{all} the temperature dependence (section~3.7); everything about \emph{who} reacts with \emph{whom} sits in the composition function.
+\item The subscript $A$ in $k_A$ exists because the numerical value of $k$ depends on \emph{which species' rate} is being written. When the stoichiometric coefficient of every species is~1 --- the deck's example $\mathrm{NaOH}+\mathrm{HCl}\to\mathrm{NaCl}+\mathrm{H_2O}$ (slide~13) --- the subscripts may be dropped:
+\[
+k = k_{\mathrm{NaOH}} = k_{\mathrm{HCl}} = k_{\mathrm{NaCl}} = k_{\mathrm{H_2O}} .
+\]
+\end{itemize}
+
+\spsub{3.4 \enspace Power-law kinetics, orders and the units of $k$ (slides 8--10)}
+\begin{itemize}
+\item The working assumption of this chapter (slide~8): the reaction $\sum_j \nu_j A_j=0$ takes place in a \textbf{closed, isothermal, constant-pressure} system --- a batch at uniform $T$ and $P$. Then the composition function is a \emph{power law}, a product of concentrations raised to exponents:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+r &= k\,C_1^{q_1}C_2^{q_2}\cdots C_N^{q_N} = k\prod_{j=1}^{N} C_j^{q_j}
+ &&\text{(general power law, slide 8)}\\[5pt]
+-r_A &= k\,C_A^{\alpha}\,C_B^{\beta}
+ &&\text{(two-reactant form)}\\[5pt]
+n &= \alpha + \beta
+ &&\text{overall order $=$ sum of the partial orders}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Language of orders (slide 8):} the reaction is $\alpha$ order with respect to reactant~$A$ and $\beta$ order with respect to reactant~$B$; $n=\alpha+\beta$ is the \emph{overall order}. Orders measure how violently the rate responds to each concentration: double $C_A$ and $-r_A$ multiplies by $2^{\alpha}$.
+\item \textbf{Law of mass action (slide 10):} the exponents are \emph{not} free parameters at this stage. For the extent-based rate $r$ of $\sum_j\nu_jA_j=0$ the deck writes $q_j$ in terms of the stoichiometric coefficients $\nu_j$ (negative for reactants, positive for products):
+\end{itemize}
+\begin{formulabox}
+\[
+r = k\prod_{j=1}^{N} C_j^{q_j},
+\qquad
+q_j = \tfrac{1}{2}\big(|\nu_j| - \nu_j\big)
+\]
+\end{formulabox}
+\begin{itemize}
+\item The combination $\tfrac12(|\nu_j|-\nu_j)$ is a neat switch: it returns $|\nu_j|$ for a reactant ($\nu_j<0$) and $0$ for a product ($\nu_j>0$) --- so the forward power law involves reactant concentrations only. Section~3.5 needs the mirror combination $\tfrac12(|\nu_j|+\nu_j)$, which does the opposite (products only).
+\item \textbf{The units of $k$ betray the order (slide 9).} Write any rate law as $-r_A = k\,C_A^{n}$ and demand that both sides carry (concentration)/(time):
+\end{itemize}
+\begin{formulabox}
+\[
+k = \frac{(\text{Concentration})^{1-n}}{\text{Time}}
+\]
+\end{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l X@{}}
+\toprule
+\textbf{\color{accent}Order} & \textbf{Rate law ($A\to$ products)} & \textbf{Units of $k$ (deck's print)}\\
+\midrule
+Zero $(n=0)$ & $-r_A = k_A$ & $\{k\} = \mathrm{mol\,dm^{-3}\,s^{-1}}$\\[2pt]
+First $(n=1)$ & $-r_A = k_A C_A$ & $\{k\} = \mathrm{s^{-1}}$\\[2pt]
+Second $(n=2)$ & $-r_A = k_A C_A^2$ & $\{k\} = \mathrm{dm^{3}\,mol^{-1}\,s^{-1}}$\\[2pt]
+Third $(n=3)$ & $-r_A = k_A C_A^3$ & $\{k\} = \left(\mathrm{dm^{3}/mol}\right)^{2}\,\mathrm{s^{-1}}$\\
+\bottomrule
+\end{tabularx}}
+\notetext{Practical use: convert units of concentration first (mol/L, mol/m$^3$, mmol/L \dots), because $k$ changes its number whenever the concentration unit changes. A rate constant quoted in s$^{-1}$ is first order \emph{whatever} the chemistry claims; one quoted in (dm$^3$/mol)$^2$\,s$^{-1}$ is third order.}
+
+\spsub{3.5 \enspace Elementary, non-elementary and elementary-looking laws (slides 14--17)}
+\begin{itemize}
+\item \textbf{Elementary reaction (slide 14):} a chemical reaction in which one or more of the chemical species react directly to form products in a \emph{single reaction step} and with a \emph{single transition state}. Prototypes: $A\to\text{products}$ (unimolecular) and $A+B\to\text{products}$ (bimolecular).
+\item \textbf{Elementary rate law (slide 14):} the reaction \emph{follows the elementary rate law} if the stoichiometric coefficients are \textbf{identical} to the reaction order of each species. Then the law of mass action (section~3.4) is literally true and no experiment can disagree.
+\item \textbf{The trap (slide 14):} $2\,\mathrm{NO}+\mathrm{O_2}\to2\,\mathrm{NO_2}$ is flagged on the slide as a \emph{non-elementary} reaction --- its mechanism is a series of bimolecular steps --- \emph{but} its measured law $-r_{\mathrm{NO}} = k_{\mathrm{NO}}\,C_{\mathrm{NO}}^2\,C_{\mathrm{O_2}}$ happens to look exactly like the elementary form (orders $2$ and $1$ = coefficients). Matching coefficients is therefore \emph{not} proof of an elementary mechanism; it is only permission to use the simple law.
+\item \textbf{Non-elementary rate laws (slides 15--17)} are those that \emph{do not follow} simple power laws --- fractional orders, denominators, products in numerators. The deck's catalogue:
+\end{itemize}
+\begin{itemize}
+\item[] \textbf{(a) Homogeneous, fractional orders (slide 15).} Gas-phase synthesis of phosgene, $\mathrm{CO}+\mathrm{Cl_2}\to\mathrm{COCl_2}$:
+\end{itemize}
+\begin{formulabox}
+\[
+-r_{\mathrm{CO}} = k\,C_{\mathrm{CO}}\,C_{\mathrm{Cl_2}}^{3/2}
+\qquad
+\text{first order in CO, three-halves in $\mathrm{Cl_2}$, five-halves overall.}
+\]
+\end{formulabox}
+\begin{itemize}
+\item[] Half-integer orders cannot come from any single elementary step --- they are the fingerprint of a hidden mechanism.
+\item[] \textbf{(b) Heterogeneous, on a catalyst (slides 16--17; the deck prints this example on both).} Gas-solid catalysed \emph{hydrodemethylation of toluene (T)}:
+ $\mathrm{C_6H_5CH_3}+\mathrm{H_2}\xrightarrow{\mathrm{cat}}\mathrm{C_6H_6}+\mathrm{CH_4}$, written $T+H_2\to B+M$. The rate of disappearance of toluene \emph{per mass of catalyst} (hence the prime on $r'$):
+\end{itemize}
+\begin{formulabox}
+\[
+-r_T' = \frac{k\,P_H\,P_T}{1 + K_B P_B + K_T P_T}
+\qquad
+\text{$K_B$, $K_T$ = adsorption constants.}
+\]
+\end{formulabox}
+\begin{itemize}
+\item[] Two things to notice (slide 16 callout): the law is written \emph{in terms of partial pressures rather than concentrations} --- on a surface the coverage, not the molarity, controls the rate --- and the denominator is the adsorption competition of products and reactants for the same sites (developed fully in section~8). Partial pressures and concentrations are interchangeable through $P_i = C_iRT$ only in ideal gases; the \emph{form} of the law is what matters here.
+\item[] \textbf{(c) Cumene dehydrogenation (slide 24, listing C).} Cumene (C) $\to$ benzene (B) $+$ propylene (P) over a catalyst, again per mass of catalyst:
+\end{itemize}
+\begin{formulabox}
+\[
+-r_C = \frac{k\left(P_C - \dfrac{P_B P_P}{K}\right)}{1 + K_B P_B + K_C P_C}
+\]
+\end{formulabox}
+\begin{itemize}
+\item[] The numerator is \emph{forward $-$ reverse} (the reaction is reversible; section~3.6); the denominator again collects adsorption terms. This single line already combines every ingredient of this chapter and of section~8.
+
+\spsub{3.6 \enspace Reversible rate laws (slides 11, 18--21)}
+\item[] \textbf{The thermodynamic straitjacket (slide 18).} For $aA+bB\rightleftharpoons cC+dD$, \emph{all rate laws must reduce to the thermodynamic relationship relating the reacting species concentrations at equilibrium} --- the slide's orange callout names it the Thermodynamic Equilibrium Relationship:
+\end{itemize}
+\begin{formulabox}
+\[
+K_C = \frac{C_{Ce}^{\,c}\,C_{De}^{\,d}}{C_{Ae}^{\,a}\,C_{Be}^{\,b}}
+\qquad
+\text{(concentrations at equilibrium carry the subscript $e$)}
+\]
+\end{formulabox}
+\begin{itemize}
+\item[] At equilibrium the net rate must vanish; therefore a reversible rate law is always a \emph{difference of two terms}, forward minus reverse, and the ratio of the two rate constants is tied to $K_C$:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+r &= k_f \prod_{j=1}^{N} C_j^{q_j} \;-\; k_r \prod_{j=1}^{N} C_j^{q_j^{*}}
+ &&\text{(slide 11, general form)}\\[4pt]
+q_j &= \tfrac{1}{2}\big(|\nu_j|-\nu_j\big),
+ &\qquad
+q_j^{*} &= \tfrac{1}{2}\big(|\nu_j|+\nu_j\big)
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item[] The pair $\tfrac12(|\nu_j|\mp\nu_j)$ splits every species into ``reactant side'' ($q_j$) or ``product side'' ($q_j^*$), so the forward product runs on reactant concentrations and the reverse product on product concentrations. Setting $r=0$ and rearranging gives $k_f/k_r = K_C$ --- exactly the thermodynamic constraint above.
+\item[] \textbf{Worked in full: benzene dimerisation (slides 19--21).} The deck's reaction is
+ $2\,\mathrm{C_6H_6}\rightleftharpoons\mathrm{C_{12}H_{10}}+\mathrm{H_2}$, written symbolically $2B\rightleftharpoons D+H_2$ (diphenyl $D$). Build the law step by step as the slides do:
+\end{itemize}
+\begin{mthbox}
+\textbf{Step 1 --- the two one-way rates} (slide 19). Forward: benzene disappears, second order;
+ reverse: diphenyl and hydrogen recombine, first order in each.
+\[
+-r_{B,\mathrm{forward}} = k_B C_B^2
+\qquad\text{(equivalently } r_{B,\mathrm{forward}} = -k_B C_B^2\text{)}
 \]
 \[
-\boxed{\;n = 1.96 \approx 2\;},\qquad
-k = 0.3407,\ 0.3369,\ 0.3200,\ 0.3583\ \mathrm{L\,mmol^{-1}h^{-1}}
+r_{B,\mathrm{reverse}} = k_{-B}\,C_D\,C_{\mathrm{H_2}}
 \]
-\notetext{The scatter in $k$ across the four runs --- $0.320$ to $0.358$, about $\pm6\,\%$ --- is the practical test that the assumed order is right: a wrong order makes $k$ drift systematically instead of scattering.}
-\item \textbf{Phosphine decomposition} (slide~63). $4\mathrm{PH}_3 \to \mathrm{P}_4 + 6\mathrm{H}_2$, first order, $k = 10/\mathrm{h}$, $649\,^{\circ}\mathrm{C}$, $460$~kPa, $40$~mol/h, $80\,\%$ conversion:
+\textbf{Step 2 --- net formation of benzene} (slide 20):
 \[
-C_{A0} = 60.00\ \mathrm{mol\,m^{-3}}
-\qquad\Longrightarrow\qquad \boxed{\;V = 0.1882\ \mathrm{m^3} \approx 188\ \mathrm{L}\;}
+r_B \equiv r_{B,\mathrm{net}} = r_{B,\mathrm{forward}} + r_{B,\mathrm{reverse}}
+= -k_B C_B^2 + k_{-B} C_D C_{\mathrm{H_2}}
 \]
-\notetext{$C_{A0}$ comes from $P/RT$ at the stated temperature and pressure --- the deck supplies the state, not the concentration.}
-\item \textbf{Milk sterilisation} (slide~61). The same result in $30$~min at one temperature and $15$~s at the other means the same $k\,t$; with first-order kinetics,
+\textbf{Step 3 --- multiply by $-1$} to get the rate of \emph{disappearance} of benzene, and factorise the forward constant out:
+\[
+-r_B = k_B C_B^2 - k_{-B} C_D C_{\mathrm{H_2}}
+= k_B\!\left(C_B^2 - \frac{k_{-B}}{k_B}\,C_D C_{\mathrm{H_2}}\right)
+\]
+\textbf{Step 4 --- replace the constant ratio by $K_C$} (slide 21): since $k_B/k_{-B}=K_C$ (Concentration equilibrium constant),
+\[
+\boxed{\;-r_B = k_B\!\left(C_B^2 - \frac{C_D\,C_{\mathrm{H_2}}}{K_C}\right)\;}
+\]
+\end{mthbox}
+\notetext{The structure of the boxed law is the reusable part: \emph{(forward term)} $\times$ $\big(1 - (\text{reverse})/(K_C\cdot\text{forward without }k)\big)$. At equilibrium the bracket vanishes, recovering $K_C = C_D C_{\mathrm{H_2}}/C_B^2$ --- which is slide~18's thermodynamic check done on a real example. Large $K_C$ pushes the bracket toward~1 and the reaction behaves irreversibly; chapter~5 uses exactly this limiting behaviour.}
+
+\spsub{3.7 \enspace A catalogue of rate laws from the deck (slides 22--24)}
+\notetext{Slides 22--24 print Fogler's catalogue of archetypal rate laws. Learn the \emph{shapes}; each one reappears in section~5 (how the shape is found from data) and section~8 (why the shape has a denominator).}
+\begin{itemize}
+\item \textbf{A. First-order laws (slide 22)} --- each law is first order \emph{overall}; one reversible entry:
+\end{itemize}
+{\small
+\begin{tabularx}{\linewidth}{@{}l X X@{}}
+\toprule
+\textbf{\color{accent}No.} & \textbf{Reaction} & \textbf{Rate law as printed}\\
+\midrule
+1 & $\mathrm{C_2H_6}\to\mathrm{C_2H_4}+\mathrm{H_2}$ (alkane dehydrogenation) & $-r_A = k\,C_{\mathrm{C_2H_6}}$\\[2pt]
+2 & $\varphi\mathrm{N{=}NCl}\to\varphi\mathrm{Cl}+\mathrm{N_2}$ (diazo chloride decomposes; $\varphi$ = phenyl) & $-r_A = k\,C_{\varphi\mathrm{N{=}NCl}}$\\[2pt]
+3 & ethylene oxide $+$ $\mathrm{H_2O}\xrightarrow{\mathrm{H_2SO_4}}$ ethylene glycol & $-r_A = k\,C_{\mathrm{CH_2OCH_2}}$ (the printed epoxide ring)\\[2pt]
+4 & $\mathrm{CH_3COCH_3}\to\mathrm{CH_2CO}+\mathrm{CH_4}$ (acetone $\to$ ketene) & $-r_A = k\,C_{\mathrm{CH_3COCH_3}}$\\[2pt]
+5 & $n\mathrm{C_4H_{10}}\rightleftharpoons i\mathrm{C_4H_{10}}$ (isomerisation, \emph{reversible}) & $-r_A = k\!\left(C_{n\mathrm{C_4H_{10}}} - C_{i\mathrm{C_4H_{10}}}/K_C\right)$\\
+\bottomrule
+\end{tabularx}}
+\begin{itemize}
+\item \textbf{B. Second-order laws (slide 23)} --- two irreversible, one reversible (the ester interchange $A+B\rightleftharpoons C+D$):
+\end{itemize}
+{\small
+\begin{tabularx}{\linewidth}{@{}l X X@{}}
+\toprule
+\textbf{\color{accent}No.} & \textbf{Reaction} & \textbf{Rate law as printed}\\
+\midrule
+1 & $p$-nitrochlorobenzene $+\,2\mathrm{NH_3}\to p$-nitroaniline $+\,\mathrm{NH_4Cl}$ & $-r_A = k\,C_{\mathrm{ClC_6H_4NO_2}}\,C_{\mathrm{NH_3}}$\\[2pt]
+2 & $\mathrm{CNBr}+\mathrm{CH_3NH_2}\to\mathrm{CH_3Br}+\mathrm{NCNH_2}$ & $-r_A = k\,C_{\mathrm{CNBr}}\,C_{\mathrm{CH_3NH_2}}$\\[2pt]
+3 & $\mathrm{CH_3COOC_2H_5}+\mathrm{C_3H_7OH}\rightleftharpoons\mathrm{CH_3COOC_3H_7}+\mathrm{C_2H_5OH}$ & $-r_A = k\!\left[C_A C_B - C_C C_D/K_C\right]$\\
+\bottomrule
+\end{tabularx}}
+\begin{itemize}
+\item \textbf{C. Non-elementary laws (slide 24).} (1)~Acetaldehyde cracking, $\mathrm{CH_3CHO}\to\mathrm{CH_4}+\mathrm{CO}$, is \emph{three-halves} order: $-r_{\mathrm{CH_3CHO}} = k\,C_{\mathrm{CH_3CHO}}^{3/2}$. (2)~The cumene law of section~3.5(c).
+\item \textbf{D. Enzymatic reaction (slide 24).} Urea (U) hydrolysed by the enzyme urease (E), $\mathrm{NH_2CONH_2}+\mathrm{H_2O}\xrightarrow{\text{urease}}2\mathrm{NH_3}+\mathrm{CO_2}$ --- the Michaelis--Menten shape:
+\end{itemize}
+\begin{formulabox}
+\[
+-r_U = \frac{k_3\,C_E\,C_U}{K_M + C_U}
+\qquad\text{(saturates at high $C_U$: the enzyme runs out of free time)}
+\]
+\end{formulabox}
+\begin{itemize}
+\item \textbf{E. Biomass reaction (slide 24).} Substrate (S) $+$ Cells (C) $\to$ More cells $+$ product --- living catalysts give the same saturating shape with cells in the numerator:
+\[
+-r_S = \frac{k_3\,C_C\,C_S}{K_M + C_S}
+\]
+\item \textbf{Footnote on the slide:} the rate constants and activation energies for a number of these reactions are given in the Data Bank on the CD-ROM and Summary Notes of the reference text --- the catalogue teaches \emph{forms}, not numbers.
+\end{itemize}
+
+\spsub{3.8 \enspace The rate constant $k(T)$: Arrhenius (slides 25--28)}
+\begin{itemize}
+\item \textbf{The Arrhenius equation (slide 25, callout bubble):} all the temperature dependence of a rate law hides inside $k_A(T)$:
+\end{itemize}
+\begin{formulabox}
+\[
+k_A(T) = A\,e^{-E/RT}
+\]
+\begin{align*}
+A &= \text{pre-exponential factor (frequency factor)}\\
+E &= \text{activation energy, J/mol or cal/mol}\\
+R &= \text{gas constant} = 8.314\ \mathrm{J\,mol^{-1}K^{-1}} = 1.987\ \mathrm{cal\,mol^{-1}K^{-1}}\\
+T &= \text{absolute temperature, K}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Limits (the $k$-vs-$T$ curve on slide 25):} $T\to\infty$ gives $k\to A$ --- the pre-exponential factor is the ceiling of the rate constant --- and $T\to 0$ gives $k\to0$. The curve is flat at low $T$, steep in the middle, and levels off at $A$; almost every industrial reactor lives in the steep middle.
+\item \textbf{Collision reading of the two factors (slides 25--26):}
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+A &: \text{total number of collisions}\\
+e^{-E/RT} &: \text{probability that a collision results in a reaction}\\
+k &: \text{number of collisions that result in a reaction}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Activation energy (slide 26)} is a measure of the \emph{minimum energy the reacting molecules must have} in order for the reaction to occur --- the energy required to reach the transition state. The slide's energy diagram: reactants $\mathrm{AB}+\mathrm{C}$ climb over the barrier to the activated complex $\mathrm{A\cdots B\cdots C}$ (transition state at the saddle) and roll down to products $\mathrm{A}+\mathrm{BC}$. The barrier height is $E$; a catalyst works by lowering it (section~8), never by changing the end states.
+\item \textbf{Logarithmic form (slide 27)} --- the working form for data analysis:
+\end{itemize}
+\begin{formulabox}
+\[
+k_A(T) = A\,e^{-E/RT}
+\qquad\Longrightarrow\qquad
+\ln k_A = \ln A - \frac{E}{R}\cdot\frac{1}{T}
+\]
+\end{formulabox}
+\begin{itemize}
+\item \textbf{The slide's $E$--$k$--$r$ shorthand (slide 27):} at a given temperature the activation energy and the rate constant move in \emph{opposite} directions ($E\uparrow\Rightarrow k\downarrow\Rightarrow r\downarrow$; $E\downarrow\Rightarrow k\uparrow\Rightarrow r\uparrow$). Everything the temperature does to a reactor passes through this one exponential.
+\item \textbf{Two-temperature form} --- subtract the logarithmic form written at two temperatures (the form the deck itself uses in the slide-61 pasteurisation problem):
+\end{itemize}
+\begin{formulabox}
+\[
+\boxed{\;\ln\frac{k_2}{k_1} = \frac{E}{R}\left(\frac{1}{T_1}-\frac{1}{T_2}\right)\;}
+\qquad\Longleftrightarrow\qquad
+E = \frac{R\,\ln(t_1/t_2)}{1/T_1 - 1/T_2}\ \ \text{(equal first-order conversions)}
+\]
+\end{formulabox}
+\begin{itemize}
+\item \textbf{The Arrhenius plot (slide 28)} is $\ln k$ vs $1/T$: a straight line of slope $-E/R$ and intercept $\ln A$. Two runs give $E$ without knowing $A$; five runs give a regression (section~5). The slide's conclusions, verbatim in substance:
+\end{itemize}
+\begin{itemize}
+\item[] \textbf{1.} Reactions with high activation energies are very temperature-sensitive; reactions with low activation energies are relatively temperature-insensitive.
+\item[] \textbf{2.} Any given reaction is much more temperature-sensitive at a low temperature than at a high temperature.
+\item[] (Callout bubble:) \emph{the larger the activation energy, the more temperature sensitive $k$ and thus the reaction rate.}
+\end{itemize}
+\notetext{Point~2 is quantitative: $\dfrac{d\ln k}{dT} = \dfrac{E}{RT^2}$ --- the same $E$ produces a far bigger fractional change in $k$ at small~$T$. This single derivative reappears as the slope of van't Hoff-style plots and as the sensitivity knob in the non-isothermal design of section~7.}
+
+\spsub{3.9 \enspace Part 2 opens: why stoichiometric tables (slides 29--32)}
+\begin{itemize}
+\item \textbf{Purpose of developing a stoichiometric table (slide 29):} to determine the number of moles of each species \emph{remaining} at a conversion $X$. The rate law needs concentrations; the reactor design equations of Chapter~2 need concentrations as functions of $X$; the table is the machine that manufactures them.
+\item \textbf{Components of the table (slide 30):} columns \emph{Species | Initially | Change | Remaining}. The slide's handwritten callout: \emph{``Change refers to moles of species reacted or formed''} --- negative entries for what is consumed, positive for what is made. Rows for every reactant and product, one for inerts (I), one for totals.
+\item \textbf{Conversion recalls Chapter~2 (slide 31)} for $aA+bB\to cC+dD$:
+\end{itemize}
+\begin{formulabox}
+\[
+X = \frac{N_{A0}-N_A}{N_{A0}}
+\qquad\Longrightarrow\qquad
+N_A = N_{A0}-N_{A0}X
+\qquad\Longrightarrow\qquad
+\boxed{\;N_A = N_{A0}(1-X)\;}
+\]
+\end{formulabox}
+\notetext{Callouts on slide 31: the numerator $N_{A0}-N_A$ is the \emph{moles of A reacted}; the boxed $N_A$ is the \emph{moles of A remaining in the reactor at a conversion of X}. Everything else is bookkeeping in the same style.}
+\begin{itemize}
+\item \textbf{Every other row follows from one ratio} (slide 32): moles reacted or formed are tied to moles of $A$ reacted by the stoichiometry,
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{moles B reacted} &= \frac{\text{moles B reacted}}{\text{moles A reacted}}\;\big\{\text{moles A reacted}\big\} = \frac{b}{a}\,(N_{A0}X)\\[3pt]
+\text{moles C formed} &= \frac{c}{a}\,(N_{A0}X),
+\qquad
+\text{moles D formed} = \frac{d}{a}\,(N_{A0}X)
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item Subtract the reacted amount from the initial amount (reactants) or add the formed amount (products) and the remaining moles follow (slide 33):
+\end{itemize}
+\begin{formulabox}
+\[
+N_B = N_{B0} - \frac{b}{a}N_{A0}X,
+\qquad
+N_C = N_{C0} + \frac{c}{a}N_{A0}X,
+\qquad
+N_D = N_{D0} + \frac{d}{a}N_{A0}X
+\]
+\end{formulabox}
+
+\spsub{3.10 \enspace The batch stoichiometric table and $\delta$ (slides 34--36)}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l X@{}}
+\toprule
+\textbf{\color{accent}Species} & \textbf{Initially (mol)} & \textbf{Change (mol)} & \textbf{Remaining (mol)}\\
+\midrule
+A & $N_{A0}$ & $-(N_{A0}X)$ & $N_A = N_{A0}-N_{A0}X = N_{A0}(1-X)$\\[2pt]
+B & $N_{B0}$ & $-\dfrac{b}{a}(N_{A0}X)$ & $N_B = N_{B0}-\dfrac{b}{a}N_{A0}X$\\[6pt]
+C & $N_{C0}$ & $+\dfrac{c}{a}(N_{A0}X)$ & $N_C = N_{C0}+\dfrac{c}{a}N_{A0}X$\\[6pt]
+D & $N_{D0}$ & $+\dfrac{d}{a}(N_{A0}X)$ & $N_D = N_{D0}+\dfrac{d}{a}N_{A0}X$\\[6pt]
+I & $N_{I0}$ & --- & $N_I = N_{I0}$\\[2pt]
+Total & $N_{T0}$ & $\delta N_{A0}X$ & $N_T = N_{T0}+\left(\dfrac{d}{a}+\dfrac{c}{a}-\dfrac{b}{a}-1\right)N_{A0}X$\\[6pt]
+\bottomrule
+\end{tabularx}}
+\begin{itemize}
+\item \textbf{The total row defines $\delta$ (slides 34--35):} add up the changes and the coefficient of $N_{A0}X$ is the change in the \emph{total} number of moles \emph{per mole of $A$ reacted} --- the slide's red circle and the phrase ``change in the total number of moles per mole of A reacted'':
+\end{itemize}
+\begin{formulabox}
+\[
+N_T = N_{T0} + \delta N_{A0}X,
+\qquad
+\boxed{\;\delta = \frac{d}{a}+\frac{c}{a}-\frac{b}{a}-1\;}
+\]
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Interpretation:} $\delta>0$ (moles created, e.g.\ $A\to 3R$) makes a constant-$T,P$ gas \emph{expand}; $\delta<0$ (moles destroyed, e.g.\ $2A\to R$) makes it \emph{contract}; $\delta = 0$ (equal moles each side) freezes the total. Inerts do not appear in $\delta$ --- they never react.
+\item \textbf{Why the table must also carry concentrations (slide 36):} the rate laws waiting downstream are $-r_A = kC_A$, $kC_A^2$, $kC_A^3$ --- functions of \emph{concentration}, not of moles. The next slides divide every row by the volume.
+\end{itemize}
+
+\spsub{3.11 \enspace Concentration in terms of conversion --- batch liquids (slides 36--41)}
+\notetext{For a liquid-phase batch the volume is constant, $V = V_0$ --- the deck states this explicitly on every liquid slide. Divide the remaining-moles rows by $V$ (slide 37):}
+\begin{formulabox}
+\begin{align*}
+C_A &= \frac{N_A}{V} = \frac{N_{A0}(1-X)}{V},
+&\qquad
+C_B &= \frac{N_B}{V} = \frac{N_{B0} - (b/a)N_{A0}X}{V},\\[5pt]
+C_C &= \frac{N_C}{V} = \frac{N_{C0} + (c/a)N_{A0}X}{V},
+&\qquad
+C_D &= \frac{N_D}{V} = \frac{N_{D0} + (d/a)N_{A0}X}{V}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Introduce the feed ratio $\Theta_i$ (slides 38--39):} factor $N_{A0}$ out of each bracket and the ratio $N_{i0}/N_{A0}$ appears. The deck's yellow box gives its three equivalent guises (mole, concentration and mole-fraction form):
+\end{itemize}
+\begin{formulabox}
+\[
+\Theta_i = \frac{N_{i0}}{N_{A0}} = \frac{C_{i0}}{C_{A0}} = \frac{y_{i0}}{y_{A0}}
+\]
+\end{formulabox}
+\begin{itemize}
+\item With $\Theta_B = N_{B0}/N_{A0}$ the product $N_{A0}\Theta_B$ simply \emph{is} $N_{B0}$ (slide 40 annotation), and every concentration becomes $C_{A0}\times(\text{a function of }X)$ --- which is the form the rate laws want. The complete liquid-batch set (slides 40--41):
+\end{itemize}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l X@{}}
+\toprule
+\textbf{\color{accent}Species} & \textbf{Remaining (mol)} & \textbf{Concentration ($V=V_0$)}\\
+\midrule
+A & $N_{A0}(1-X)$ & $C_A = \dfrac{N_{A0}(1-X)}{V} = C_{A0}(1-X)$\\[6pt]
+B & $N_{B0}-\dfrac{b}{a}N_{A0}X = N_{A0}\!\left(\Theta_B-\dfrac{b}{a}X\right)$ & $C_B = C_{A0}\!\left(\Theta_B-\dfrac{b}{a}X\right)$\\[8pt]
+C & $N_{C0}+\dfrac{c}{a}N_{A0}X = N_{A0}\!\left(\Theta_C+\dfrac{c}{a}X\right)$ & $C_C = C_{A0}\!\left(\Theta_C+\dfrac{c}{a}X\right)$\\[8pt]
+D & $N_{D0}+\dfrac{d}{a}N_{A0}X = N_{A0}\!\left(\Theta_D+\dfrac{d}{a}X\right)$ & $C_D = C_{A0}\!\left(\Theta_D+\dfrac{d}{a}X\right)$\\[8pt]
+I & $N_{I0}$ & $C_I = C_{I0}$\\[2pt]
+\bottomrule
+\end{tabularx}}
+\notetext{Sign check before use: for a reactant the bracket $\Theta_B-\tfrac{b}{a}X$ must stay positive up to the maximum physically possible conversion (both species run out together at $X_{\max} = a\Theta_B/b$). A negative bracket always means the assumed $X$ is impossible --- the stoichiometry, not the algebra, has failed.}
+
+\spsub{3.12 \enspace Worked from the deck: the saponification table (slides 42--44)}
+\begin{qbox}
+\textbf{Statement (slide 42).} \emph{``Given the saponification for the formation of soap from aqueous caustic soda \& glyceryl stearate is:''}
+\[
+3\,\mathrm{NaOH}(aq) + (\mathrm{C_{17}H_{35}COO})_3\mathrm{C_3H_5}
+\longrightarrow
+3\,\mathrm{C_{17}H_{35}COONa} + \mathrm{C_3H_5(OH)_3}
+\]
+\emph{``Letting $X$ the conversion of sodium hydroxide, set up a stoichiometric table expressing the concentration of each species in terms of its initial concentration and the conversion.''}
+\end{qbox}
+\begin{mthbox}
+\textbf{Step 1 --- letter the species (slide 43).} $3A + B \to 3C + D$ with $a=3$, $b=1$, $c=3$, $d=1$ ($A$ = NaOH, $B$ = glyceryl stearate, $C$ = soap, $D$ = glycerol).\\[4pt]
+\textbf{Step 2 --- liquid phase, so $V = V_0$} and
+\[
+C_A = \frac{N_{A0}(1-X)}{V} = \frac{N_{A0}(1-X)}{V_0} = C_{A0}(1-X),
+\qquad
+C_B = \frac{N_{A0}\!\left[\Theta_B-(b/a)X\right]}{V_0} = C_{A0}\!\left[\Theta_B - \tfrac{1}{3}X\right].
+\]
+\textbf{Step 3 --- fill the table (slide 44);} note $(c/a) = 1$ and $(d/a) = \tfrac13$:
+\end{mthbox}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l l X@{}}
+\toprule
+\textbf{\color{accent}Species} & \textbf{Initially} & \textbf{Change} & \textbf{Remaining} & \textbf{Concentration}\\
+\midrule
+A & $N_{A0}$ & $-(N_{A0}X)$ & $N_A = N_{A0}(1-X)$ & $C_A = C_{A0}(1-X)$\\[2pt]
+B & $N_{B0}$ & $-\tfrac{1}{3}(N_{A0}X)$ & $N_B = N_{A0}\!\left(\Theta_B-\tfrac{1}{3}X\right)$ & $C_B = C_{A0}\!\left(\Theta_B-\tfrac{1}{3}X\right)$\\[4pt]
+C & $N_{C0}$ & $+(N_{A0}X)$ & $N_C = N_{A0}(\Theta_C+X)$ & $C_C = C_{A0}(\Theta_C+X)$\\[2pt]
+D & $N_{D0}$ & $+\tfrac{1}{3}(N_{A0}X)$ & $N_D = N_{A0}\!\left(\Theta_D+\tfrac{1}{3}X\right)$ & $C_D = C_{A0}\!\left(\Theta_D+\tfrac{1}{3}X\right)$\\[4pt]
+I & $N_{I0}$ & --- & $N_I = N_{I0}$ & $C_I = C_{I0}$\\[2pt]
+Total & $N_{T0}$ & $0$ & $N_T = N_{T0}$ & ($\delta = \tfrac13+1-\tfrac13-1 = 0$)\\
+\bottomrule
+\end{tabularx}}
+\notetext{The total row is the quiet punchline: four moles in, four moles out ($3+1\to3+1$), so $\delta = 0$ and the total moles never move. If this mixture were a gas at constant $T$ and $P$ its volume would be frozen at $V_0$ --- which is why the liquid assumption $V=V_0$ (slide~43) is harmless here even in principle. The companion problem document works this table as Q11.}
+
+\spsub{3.13 \enspace The flow-system stoichiometric table (slides 45--48)}
+\begin{itemize}
+\item \textbf{Purpose (slide 45):} to determine the \emph{effluent flow rate} of each species at a conversion $X$. The molar flow $F_i$ (mol/time) replaces the moles $N_i$; the box on the slide shows feed $(F_{A0},F_{B0},F_{C0},F_{D0},F_{I0})$ entering a flow reactor that runs $A + \tfrac{b}{a}B \to \tfrac{c}{a}C + \tfrac{d}{a}D$ and the effluent $(F_A,\dots,F_{I})$ leaving.
+\item \textbf{Components (slide 46):} columns \emph{Species | Feed rate to reactor (mol/time) | Change within the reactor (mol/time) | Effluent rate from reactor (mol/time)} --- and, added on slide 47, \emph{Concentration (mol/L)}.
+\item \textbf{The full table (slide 47):} the batch table with $N\to F$ throughout, and concentrations from the volumetric flow rate at the relevant point, $C_i = F_i/v$:
+\end{itemize}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l l X@{}}
+\toprule
+\textbf{\color{accent}Species} & \textbf{Feed rate} & \textbf{Change} & \textbf{Effluent rate} & \textbf{Concentration}\\
+\midrule
+A & $F_{A0}$ & $-(F_{A0}X)$ & $F_A = F_{A0}(1-X)$ & $C_A = \dfrac{F_{A0}(1-X)}{v}$\\[6pt]
+B & $F_{B0} = \Theta_B F_{A0}$ & $-\dfrac{b}{a}(F_{A0}X)$ & $F_B = F_{A0}\!\left(\Theta_B-\dfrac{b}{a}X\right)$ & $C_B = \dfrac{F_{A0}\!\left[\Theta_B-(b/a)X\right]}{v}$\\[8pt]
+C & $F_{C0} = \Theta_C F_{A0}$ & $+\dfrac{c}{a}(F_{A0}X)$ & $F_C = F_{A0}\!\left(\Theta_C+\dfrac{c}{a}X\right)$ & $C_C = \dfrac{F_{A0}\!\left[\Theta_C+(c/a)X\right]}{v}$\\[8pt]
+D & $F_{D0} = \Theta_D F_{A0}$ & $+\dfrac{d}{a}(F_{A0}X)$ & $F_D = F_{A0}\!\left(\Theta_D+\dfrac{d}{a}X\right)$ & $C_D = \dfrac{F_{A0}\!\left[\Theta_D+(d/a)X\right]}{v}$\\[8pt]
+I & $F_{I0} = \Theta_I F_{A0}$ & --- & $F_I = F_{I0}$ & $C_I = \dfrac{F_{I0}}{v}$\\[4pt]
+Total & $F_{T0}$ & $\delta F_{A0}X$ & $F_T = F_{T0}+\delta F_{A0}X$ & $C_T = \dfrac{F_T}{v}$\\[4pt]
+\bottomrule
+\end{tabularx}}
+\begin{itemize}
+\item Here $\Theta_i$ is defined on flow rates (slide 49's pink box): $\Theta_i = F_{i0}/F_{A0} = C_{i0}/C_{A0} = y_{i0}/y_{A0}$ --- same three guises, same numbers as in a batch charge with the same feed composition.
+\item \textbf{The closing example statement (slide 48):} \emph{``Given a liquid phase reaction: $A + 2B \to C + D$. The initial concentration of A and B are $1.8$~kmol/m$^3$ and $6.6$~kmol/m$^3$ respectively. Construct a stoichiometric table for a flow system considering A as the basis of calculation.''}
+\end{itemize}
+
+\spsub{3.14 \enspace Worked from the deck: $A+2B\to C+D$ in flow (slides 49--52)}
+\begin{mthbox}
+\textbf{Step 1 --- coefficients and feed ratios (slide 49).} $a=1$, $b=2$, $c=1$, $d=1$; $C_{A0}=1.8$, $C_{B0}=6.6$~kmol/m$^3$ and $C_{C0}=C_{D0}=0$ (the slide annotates: \emph{``Since C \& D are products''}). Then
+\[
+\delta = \frac{d}{a}+\frac{c}{a}-\frac{b}{a}-1 = 1+1-2-1 = -1,
+\qquad
+\Theta_B = \frac{C_{B0}}{C_{A0}} = \frac{6.6}{1.8} = 3.67,
+\qquad
+\Theta_C = \Theta_D = 0 .
+\]
+\textbf{Step 2 --- fill the table symbolically (slide 50), then with numbers (slide 51):}
+\end{mthbox}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l X@{}}
+\toprule
+\textbf{\color{accent}Species} & \textbf{Feed rate} & \textbf{Change} & \textbf{Effluent rate (with $F_{B0} = 3.67\,F_{A0}$)}\\
+\midrule
+A & $F_{A0}$ & $-(F_{A0}X)$ & $F_A = F_{A0}(1-X)$\\[2pt]
+B & $F_{B0} = 3.67\,F_{A0}$ & $-2(F_{A0}X)$ & $F_B = F_{A0}(3.67 - 2X)$\\[2pt]
+C & $F_{C0} = 0$ & $+(F_{A0}X)$ & $F_C = F_{A0}X$\\[2pt]
+D & $F_{D0} = 0$ & $+(F_{A0}X)$ & $F_D = F_{A0}X$\\[2pt]
+Total & $F_{T0}$ & $-(F_{A0}X)$ & $F_T = F_{T0} - F_{A0}X \qquad(\delta=-1)$\\
+\bottomrule
+\end{tabularx}}
+\begin{itemize}
+\item \textbf{Into concentrations (slide 52, liquid, $V=V_0$ in batch; $v=v_0$ in flow):} each row divided by $C_{A0}$ times $C_{A0}$:
+\end{itemize}
+\begin{ansbox}
+\[
+C_A = C_{A0}(1-X),
+\qquad
+C_B = C_{A0}\,(3.67 - 2X),
+\qquad
+C_C = C_{A0}\,X,
+\qquad
+C_D = C_{A0}\,X .
+\]
+\end{ansbox}
+\notetext{$B$ is the limiting reagent if $X$ exceeds $3.67/2 = 1.835$ --- which it never can: $X\le1$ always, and $\Theta_B=3.67$ means a large excess of $B$, so the bracket stays positive with margin. The companion document works this construction as Q12.}
+
+\spsub{3.15 \enspace Concentration in terms of conversion --- the four cases (slides 52--60)}
+\notetext{Part~2's finale is a single master formula assembled case by case. Two questions decide everything: \emph{does the volume change?} (liquids: no; gases: yes) and \emph{is it batch ($N$) or flow ($F$)?}}
+
+\textbf{\color{accent}Case 1 --- liquid, batch (slide 52):} $V = V_0$ (boxed on the slide), so division by $V_0$ gives at once
+\[
+C_A = C_{A0}(1-X),\quad
+C_B = C_{A0}\!\left[\Theta_B-\tfrac{b}{a}X\right],\quad
+C_C = C_{A0}\!\left[\Theta_C+\tfrac{c}{a}X\right],\quad
+C_D = C_{A0}\!\left[\Theta_D+\tfrac{d}{a}X\right].
+\]
+
+\textbf{\color{accent}Case 2 --- liquid, flow (slide 53):} liquids are incompressible, $v = v_0$ (boxed), so $C_i = F_i/v = F_i/v_0$ and \emph{the same four formulas} hold with $N\to F$ already built in:
+\[
+C_A = \frac{F_{A0}(1-X)}{v} = C_{A0}(1-X),\quad
+C_B = C_{A0}\!\left[\Theta_B-\tfrac{b}{a}X\right],\ \dots
+\]
+
+\textbf{\color{accent}Case 3 --- gas, batch (slides 54--56):} now $V$ must come from the equation of state. The deck writes the real-gas law at any time $t$ and at the initial condition:
+\begin{align*}
+P V &= Z\,N_T\,R\,T \tag*{(1)}\\
+P_0 V_0 &= Z_0\,N_{T0}\,R\,T_0 \tag*{(2)}
+\end{align*}
+with the slide's bubble: $T$ in K, $P$ = total pressure in atm ($1\ \mathrm{atm} = 101.3$~kPa), $Z$ = compressibility factor, $R = 0.08206\ \mathrm{dm^3\,atm\,mol^{-1}K^{-1}}$ (the pressure-units gas constant). Divide (1) by (2) and solve for $V$ (slide 55):
+\[
+V = V_0\left(\frac{P_0}{P}\right)\frac{T}{T_0}\left(\frac{Z}{Z_0}\right)\frac{N_T}{N_{T0}} \tag*{(3)}
+\]
+If $Z$ does not change significantly during the reaction, $Z_0\approx Z$ (slide 55 annotation) and the compressibility ratio cancels. It remains to convert the mole ratio --- the job of $\varepsilon$ (slide 56):
+\begin{formulabox}
+\[
+\frac{N_T}{N_{T0}} = 1 + \delta\,y_{A0}X = 1 + \varepsilon X,
+\qquad
+\boxed{\;\varepsilon = y_{A0}\,\delta = \left(\frac{d}{a}+\frac{c}{a}-\frac{b}{a}-1\right)\frac{N_{A0}}{N_{T0}}\;}
+\]
+\[
+V = V_0\left(\frac{P_0}{P}\right)(1+\varepsilon X)\,\frac{T}{T_0} \tag*{(5, constant $Z$)}
+\]
+\end{formulabox}
+\begin{itemize}
+\item \textbf{The equivalent readings of $\varepsilon$} (slide 56 gives all of them; they are useful checks on any calculation):
+\end{itemize}
+\begin{formulabox}
+\[
+\varepsilon = \frac{N_T - N_{T0}}{N_{T0}\,X}
+\]
+and, at complete conversion ($X=1$, irreversible, $N_T \to N_{Tf}$):
+\[
+\varepsilon = \frac{N_{Tf}-N_{T0}}{N_{T0}} = \frac{V_{X_A=1}-V_{X_A=0}}{V_{X_A=0}}
+\]
+\end{formulabox}
+\begin{itemize}
+\item[] \textbf{Words (slide 56):} $\varepsilon$ is the \emph{fractional change in volume of the system between no conversion and complete conversion of reactant~$A$}. The annotation stresses that $N_T/N_{T0} = 1+\varepsilon X$ \emph{applies for both batch and flow systems} --- it is a statement about the \emph{gas}, not about the vessel.
+\item[] \textbf{The three regimes:} $\varepsilon = 0$ (no mole change, or so diluted that $y_{A0}\to0$) freezes the volume and all formulas collapse to the liquid ones; $\varepsilon>0$ expands the gas, diluting everything faster than $(1-X)$; $\varepsilon<0$ contracts it. Setting $\varepsilon=0$ is the single most common legitimate simplification --- the deck's own gas examples state it explicitly before using it.
+
+\textbf{\color{accent}Case 4 --- gas, flow (slides 57--60):} identical logic on molar flow rates and the volumetric flow $v$. At any point $C_T = F_T/v = P/(ZRT)$ \textit{(1)}, at the entrance $C_{T0} = F_{T0}/v_0 = P_0/(Z_0RT_0)$ \textit{(2)}; dividing \textit{(1)} by \textit{(2)} and using the flow-table total row $F_T = F_{T0}+F_{A0}\delta X$ (slide 58 annotation):
+\[
+v = v_0\,\frac{F_T}{F_{T0}}\,\frac{P_0}{P}\,\frac{T}{T_0}
+= v_0\!\left(1+\frac{F_{A0}}{F_{T0}}\delta X\right)\frac{P_0}{P}\frac{T}{T_0}
+= v_0\,(1+\varepsilon X)\,\frac{P_0}{P}\,\frac{T}{T_0} \tag*{(4)}
+\]
+(the same $\varepsilon = y_{A0}\delta$; $F_{A0}/F_{T0} = y_{A0}$). Finally substitute $v$ from (4) and $F_j = F_{A0}(\Theta_j + \nu_j X)$ \textit{(5)} --- the slide annotates $\nu_j$ as the stoichiometric coefficient of species $j$ with sign ($d/a$, $c/a$, $-b/a$, $-a$) --- into $C_j = F_j/v$ (slides 59--60):
+\end{itemize}
+\begin{formulabox}
+\[
+\boxed{\;C_j = C_{A0}\,\frac{\Theta_j + \nu_j X}{1+\varepsilon X}\cdot\frac{P}{P_0}\cdot\frac{T_0}{T}\;}
+\]
+\begin{align*}
+C_A &= C_{A0}\,\frac{1-X}{1+\varepsilon X}\cdot\frac{T_0}{T}\cdot\frac{P}{P_0},\\[5pt]
+C_B &= C_{A0}\,\frac{\Theta_B - (b/a)X}{1+\varepsilon X}\cdot\frac{T_0}{T}\cdot\frac{P}{P_0},\\[5pt]
+C_C &= C_{A0}\,\frac{\Theta_C + (c/a)X}{1+\varepsilon X}\cdot\frac{T_0}{T}\cdot\frac{P}{P_0},\\[5pt]
+C_D &= C_{A0}\,\frac{\Theta_D + (d/a)X}{1+\varepsilon X}\cdot\frac{T_0}{T}\cdot\frac{P}{P_0},\\[5pt]
+C_I &= \frac{C_{A0}\,\Theta_I}{1+\varepsilon X}\cdot\frac{T_0}{T}\cdot\frac{P}{P_0}
+\end{align*}
+\end{formulabox}
+\notetext{The three ratios are each easy to misplace; the sanity check is limits. At $X=0$ every formula must return $C_{A0}\Theta_j$; at constant $T,P$ and $\varepsilon=0$ they must reduce to the liquid forms; and $P/P_0$ appears \emph{first power up} because compression ($P>P_0$) concentrates the gas. Note $\nu_A = -a/a = -1$ per the slide's sign list, which is how $C_A$ acquires $(1-X)$. Sections 4 and 7 plug these $C_j(X)$ expressions straight into the design equations.}
+
+\spsub{3.16 \enspace The three closing numericals (slides 61--63)}
+\begin{qbox}
+\textbf{Pasteurisation (slide 61).} \emph{``Milk is pasteurized if it is heated to $63\,^{\circ}$C for 30~min, but if it is heated to $74\,^{\circ}$C it only needs 15~s for the same result. Find the activation energy of this sterilization process.''}
+\end{qbox}
+\begin{mthbox}
+Sterilisation is first-order killing: the same result means the same $k\,t$. Equating $k_1t_1 = k_2t_2$ with Arrhenius $k$'s and cancelling $A$ gives the two-temperature form of section~3.8:
 \[
 E = \frac{R\,\ln(t_1/t_2)}{1/T_1 - 1/T_2}
- = \frac{8.314\,\ln(1800/15)}{1/347.15 - 1/353.15}
- \;\Longrightarrow\; \boxed{\;E \approx 813\ \mathrm{kJ/mol}\;}
+= \frac{8.314\,\ln(1800/15)}{1/336.15 - 1/347.15}
+= \frac{8.314\times4.7875}{9.43\times10^{-5}}
+\qquad\Longrightarrow\qquad
+\boxed{\;E \approx 422\ \mathrm{kJ/mol}\;}
 \]
-\notetext{The deck prints ``$80\,^{\circ}\mathrm{C}$ for 30~min'' beside ``$74\,^{\circ}\mathrm{C}$ \dots\ 15~s''; a hotter treatment needs the \emph{shorter} time, so the printed pairing is reversed and is reported as such --- the calculation pairs $353.15$~K with $15$~s and $347.15$~K with $1800$~s. The enormous $E$ is exactly why pasteurisation is so sensitive to temperature.}
-\end{itemize}
+(Two $k$'s, two unknowns $E$ and $A$ --- but $A$ cancels, which is why a two-point sterilisation schedule determines $E$ outright.)
+\end{mthbox}
+\notetext{A note on reading the slide: an earlier pass at this photograph misread the $63\,^{\circ}$C as $80\,^{\circ}$C and concluded the printed pairing must be reversed. The photograph prints \textbf{$63\,^{\circ}$C for 30 min} and \textbf{$74\,^{\circ}$C for 15 s} --- a consistent hot-brief/cool-long pair --- and the calculation above follows the print. The enormous $E$ ($422$~kJ/mol against a typical chemical $40$--$200$) is exactly why pasteurisation is so temperature-sensitive: one extra degree buys a large factor in $k$ (section~3.8, point~2).}
+
+\begin{qbox}
+\textbf{Dimerisation in an MFR (slide 62).} \emph{``Pure gaseous reactant A ($C_{A0}=100$ milli mol/liter) is fed at a steady rate into a mixed flow reactor ($V = 0.1$ liter) where it dimerizes ($2A\to R$). For different gas feed rates the following data are obtained. Find a rate equation for this reaction.''}
+\end{qbox}
+{\small
+\begin{tabularx}{0.92\linewidth}{@{}X r r r r@{}}
+\toprule
+Run number & 1 & 2 & 3 & 4\\
+\midrule
+$v_0$, liter/hr & 10.0 & 3.0 & 1.2 & 0.5\\
+$C_{Af}$, millimol/liter & 85.7 & 66.7 & 50 & 33.4\\
+\bottomrule
+\end{tabularx}}
+\begin{mthbox}
+\textbf{Method (worked fully as Q13 in the companion document):} for $2A\to R$ with pure $A$, $\varepsilon = y_{A0}\delta = -\tfrac12$; solve $C_{Af} = C_{A0}\dfrac{1-X}{1+\varepsilon X}$ for $X$, then the MFR balance $-r_A = \dfrac{F_{A0}X}{V} = \dfrac{v_0 C_{A0} X}{V}$ gives one $(C_A,\,-r_A)$ pair per run:
+\[
+X = 0.2502,\ 0.4996,\ 0.6667,\ 0.7995;
+\qquad
+-r_A = 2502.2,\ 1498.9,\ 800.0,\ 399.8\ \mathrm{mol\,L^{-1}h^{-1}}
+\]
+A log--log fit gives $n = 1.96 \approx 2$, and dividing each run by $C_A^2$:
+\[
+\boxed{\;-r_A \approx 0.34\,C_A^2\;},\qquad
+k = 0.3407,\ 0.3369,\ 0.3200,\ 0.3583\ \mathrm{L\,mmol^{-1}h^{-1}}
+\]
+\end{mthbox}
+\notetext{The scatter in $k$ across the four runs ($0.320$ to $0.358$, about $\pm6\,\%$) is the practical test that the assumed order is right: a wrong order makes $k$ drift systematically instead of scattering (section~5 builds this test deliberately). The same numerical reappears in \texttt{Ch5\_-\_krd.pdf} (slide 77) and is solved once, as Q13.}
+
+\begin{qbox}
+\textbf{Phosphine cracking in a PFR (slide 63).} \emph{``The homogeneous gas decomposition of phosphine $4\,\mathrm{PH_3}(g)\to\mathrm{P_4}(g)+6\,\mathrm{H_2}(g)$ proceeds at $649\,^{\circ}$C with the first-order rate $-r_{\mathrm{PH_3}} = \left(\tfrac{10}{\mathrm{hr}}\right)C_{\mathrm{PH_3}}$. What size of plug flow reactor operating at $649\,^{\circ}$C and $460$~kPa can produce $80\,\%$ conversion of a feed consisting of 40~mol of pure phosphine per hour?''} The slide's sketch labels the coil $4A\to R+6S$ and asks for $V$.
+\end{qbox}
+\begin{mthbox}
+\textbf{Step 1 --- inlet concentration} at the \emph{reactor} state (ideal gas):
+\[
+C_{A0} = \frac{P}{RT} = \frac{460\,000}{8.314\times922.15} = 60.0\ \mathrm{mol/m^3}.
+\]
+\textbf{Step 2 --- expansion factor} from the mole count as written, $4\to(1+6)=7$ moles per 4 reacted (\emph{P$_4$ is one mole} of product molecules):
+\[
+\delta = \frac{1}{4}+\frac{6}{4}-0-1 = 0.75,
+\qquad
+\varepsilon = y_{A0}\delta = 0.75 \quad(\text{pure }A).
+\]
+\textbf{Step 3 --- PFR design equation, first order} with $C_A = C_{A0}(1-X)/(1+\varepsilon X)$:
+\[
+V = \frac{F_{A0}}{k C_{A0}}\int_0^{X}\frac{1+\varepsilon X}{1-X}\,dX
+= \frac{F_{A0}}{k C_{A0}}\left[(1+\varepsilon)\ln\frac{1}{1-X} - \varepsilon X\right].
+\]
+\textbf{Step 4 --- numbers:} $\dfrac{F_{A0}}{kC_{A0}} = \dfrac{40}{10\times60} = 0.0667$~m$^3$; the bracket at $X=0.8$: $1.75\ln 5 - 0.75(0.8) = 2.817 - 0.6 = 2.217$:
+\[
+\boxed{\;V = 0.0667\times2.217 = 0.148\ \mathrm{m^3}\ (\approx 148\ \mathrm{L})\;}
+\]
+\end{mthbox}
+\notetext{Watch the mole count: $\mathrm{P_4}$ is \emph{one} mole of molecules (four atoms), so the products are $1+6 = 7$ moles and $\varepsilon = 0.75$. Counting atoms instead (``$4\to10$'') inflates $\varepsilon$ to $1.5$ and the volume to $0.188$~m$^3$ --- the slip corrected here. The other classic slip is forgetting $\varepsilon$ entirely ($V = 0.107$~m$^3$, far too small) or evaluating $C_{A0}$ at STP instead of at $649\,^{\circ}$C$/$~kPa. Worked step by step as Q14 in the companion document.}
 
 %================================================================== Ch4
 \spsection{4 \enspace Isothermal Reactor Design}
@@ -1470,6 +2053,6 @@ Real vessel, or an ideal limit? & neither & \S9.8 ($0.679$ vs $0.720$ / $0.560$)
 \vspace{3mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}
-\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Five places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4) --- and the temperature--time pairing on Ch3 slide~61 (\S3.5). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
+\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Four places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, and two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
 
 \end{document}

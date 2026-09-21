@@ -22,71 +22,96 @@
 \documentclass[10pt,a4paper]{article}
 
 \usepackage[a4paper,left=19mm,right=19mm,top=15mm,bottom=17mm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{xcolor}
-\usepackage{booktabs,tabularx,array}
-\usepackage{enumitem}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{color}
+\usepackage{array,tabularx,longtable,calc}
 \usepackage{fancyhdr}
-\usepackage{tcolorbox}
-\tcbuselibrary{breakable,skins}
-\usepackage{siunitx}
-\usepackage[colorlinks=true,linkcolor=accent,urlcolor=accent2]{hyperref}
+\usepackage{hyperref}
 
-\definecolor{accent}{HTML}{3B2A6B}
-\definecolor{accent2}{HTML}{6B5BA6}
-\definecolor{qframe}{HTML}{1B5E20}
-\definecolor{qbg}{HTML}{EAF5EC}
-\definecolor{mframe}{HTML}{1D6FA5}
-\definecolor{mbg}{HTML}{EAF1F8}
-\definecolor{boxbg}{HTML}{F4F1F7}
-\definecolor{rule}{HTML}{A99FC4}
-\definecolor{inbox}{HTML}{1A1430}
-\definecolor{notecol}{HTML}{4E5260}
-\definecolor{warncol}{HTML}{8E2B0F}
-\definecolor{warnbg}{HTML}{FDF2EC}
+%--------------------------------------------------------------- palette
+% The base `color` package (no xcolor here) understands only rgb triples,
+% so the original HTML values are expanded to rgb at source (same colours).
+\definecolor{accent}{rgb}{0.2314,0.1647,0.4196}%   3B2A6B
+\definecolor{accent2}{rgb}{0.4196,0.3569,0.6510}%  6B5BA6
+\definecolor{qframe}{rgb}{0.1059,0.3686,0.1255}%   1B5E20
+\definecolor{qbg}{rgb}{0.9176,0.9608,0.9255}%      EAF5EC
+\definecolor{mframe}{rgb}{0.1137,0.4353,0.6471}%   1D6FA5
+\definecolor{mbg}{rgb}{0.9176,0.9451,0.9725}%      EAF1F8
+\definecolor{boxbg}{rgb}{0.9569,0.9451,0.9686}%    F4F1F7
+\definecolor{rule}{rgb}{0.6627,0.6235,0.7686}%     A99FC4
+\definecolor{inbox}{rgb}{0.1020,0.0784,0.1882}%    1A1430
+\definecolor{notecol}{rgb}{0.3059,0.3216,0.3765}%  4E5260
+\definecolor{warncol}{rgb}{0.5569,0.1686,0.0588}%  8E2B0F
+\definecolor{warnbg}{rgb}{0.9922,0.9490,0.9255}%   FDF2EC
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent2,citecolor=accent}
 
-\sisetup{detect-all,per-mode=symbol}
-\emergencystretch=2em
+\emergencystretch=4em
+\sloppy
 
-\newtcolorbox{qbox}{breakable,enhanced,colback=qbg,colframe=qframe!65,
-  boxrule=0.6pt,arc=1.5pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
-  before skip=5pt,after skip=4pt,fontupper=\small}
-\newtcolorbox{mthbox}{breakable,enhanced,colback=mbg,colframe=mframe!65,
-  boxrule=0.6pt,arc=1.5pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
-  before skip=5pt,after skip=4pt,fontupper=\small}
-\newtcolorbox{ansbox}{enhanced,colback=boxbg,colframe=accent,boxrule=0.9pt,
-  arc=1.5pt,left=6pt,right=6pt,top=5pt,bottom=5pt,before skip=5pt,after skip=6pt,
-  fontupper=\small\color{inbox}}
-\newtcolorbox{warnbox}{breakable,enhanced,colback=warnbg,colframe=warncol!60,
-  boxrule=0.6pt,arc=1.5pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
-  before skip=5pt,after skip=4pt,fontupper=\small}
+%--------------------------------------------------------------- boxes
+% tcolorbox is unavailable in the trimmed texlive tree (and needs pgf),
+% so every box is an lrbox'd minipage inside an \fcolorbox -- the same
+% pattern as KRD-Short-Notes-and-Formula-Sheet.tex.  \bgroup/\egroup
+% CANNOT be used here: they silently discard the box body.
+\newsavebox{\spboxa}
+\newenvironment{qbox}{%
+  \par\addvspace{5pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{qframe}{qbg}{\usebox{\spboxa}}\par\addvspace{4pt}}
+
+\newenvironment{mthbox}{%
+  \par\addvspace{5pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{mframe}{mbg}{\usebox{\spboxa}}\par\addvspace{4pt}}
+
+\newenvironment{ansbox}{%
+  \par\addvspace{5pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small\color{inbox}
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{accent}{boxbg}{\usebox{\spboxa}}\par\addvspace{6pt}}
+
+\newenvironment{warnbox}{%
+  \par\addvspace{5pt}\noindent\begin{lrbox}{\spboxa}%
+  \begin{minipage}{\dimexpr\linewidth-12pt\relax}\small
+}{\end{minipage}\end{lrbox}%
+  \fcolorbox{warncol}{warnbg}{\usebox{\spboxa}}\par\addvspace{4pt}}
 
 \newcommand{\spsection}[1]{%
-  \par\addvspace{10pt}%
-  \noindent\begin{tcolorbox}[colback=accent,colframe=accent,boxrule=0pt,arc=1.2pt,
-      left=7pt,right=7pt,top=5pt,bottom=5pt,width=\linewidth,before skip=0pt,after skip=7pt]
-    \color{white}\bfseries\large #1
-  \end{tcolorbox}\par\vspace{-2pt}\nopagebreak}
+  \par\addvspace{10pt}\noindent
+  \colorbox{accent}{%
+    \begin{minipage}{\dimexpr\linewidth-14pt\relax}%
+      \color{white}\bfseries\large\strut #1\strut
+    \end{minipage}}\par\vspace{4pt}\nopagebreak}
+
 \newcommand{\qtitle}[2]{%
   \par\addvspace{9pt}\noindent
-  \begin{tcolorbox}[colback=accent2!12,colframe=accent2,boxrule=0.8pt,arc=1.5pt,
-      left=7pt,right=7pt,top=4pt,bottom=4pt,before skip=0pt,after skip=4pt,width=\linewidth]
-    {\large\bfseries\color{accent}#1}\hfill{\small\color{accent2}#2}
-  \end{tcolorbox}\par\vspace{1pt}}
+  \fcolorbox{accent2}{boxbg}{%
+    \begin{minipage}{\dimexpr\linewidth-14pt\relax}%
+      {\large\bfseries\color{accent}#1}\hfill{\small\color{accent2}#2}%
+    \end{minipage}}\par\vspace{3pt}}
+
 \newcommand{\src}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}\textbf{Source:} #1}\par\vspace{3pt}}
 \newcommand{\note}[1]{\par\vspace{1pt}\noindent{\small\color{notecol}#1}\par\vspace{2pt}}
 
+%--------------------------------------------------------------- tables
+% booktabs is unavailable; map its rules onto \hline so both source styles work.
+\providecommand{\toprule}{\hline}
+\providecommand{\midrule}{\hline}
+\providecommand{\bottomrule}{\hline}
+
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small CHE F311 · Problems \& Solutions}
-\fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\small CHE F311 $\cdot$ Problems \& Solutions}
+\fancyhead[R]{\small\thepage}
 
 \begin{document}
 
 \noindent{\Large\bfseries\color{accent} KINETICS \& REACTOR DESIGN}\\
-{\normalsize\color{accent2} CHE F311 · Problems and Solutions · I-Semester 2026-27}\\[4pt]
+{\normalsize\color{accent2} CHE F311 $\cdot$ Problems and Solutions $\cdot$ I-Semester 2026-27}\\[4pt]
 {\small Every numerical question in the uploaded decks, with its solution.}\\[6pt]
 
 \noindent{\small Every question below is quoted from one of the uploaded files, and every
@@ -96,8 +121,8 @@ where a slide leaves something undefined, the Notes box says what was assumed.  
 are re-computed by \texttt{krd-answers-check.py} kept beside this file.}
 
 \spsection{Question inventory}
-\begin{footnotesize}\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}l l X r@{}}
+\begin{footnotesize}\setlength{\tabcolsep}{2pt}
+\noindent\begin{tabularx}{\linewidth}{@{}l l X r@{}}
 \toprule
 ID & Source & Topic & Solved at\\
 \midrule
@@ -128,7 +153,7 @@ Q24 & Ch5, slide 72 & First-order reversible $A\rightleftharpoons R$ & p.~\pager
 Q25 & Ch5, slide 73 & Half-order batch; $2A\to B$ volume change & p.~\pageref{q:25}\\
 Q26 & Ch5, slide 74 & $A\to3R$ in MFR: rate equation & p.~\pageref{q:26}\\
 Q27 & Ch5, slide 76 & $A\to2.5R$ batch, partial-pressure data & p.~\pageref{q:27}\\
-Q28 & Ch5, slides 78--79 & Reaction bomb $2A\to B$ at 100\,°C & p.~\pageref{q:28}\\
+Q28 & Ch5, slides 78--79 & Reaction bomb $2A\to B$ at 100\,$^\circ$C & p.~\pageref{q:28}\\
 Q29 & Ch5, slide 80 & Gambling tables (first-order analogue) & p.~\pageref{q:29}\\
 Q30 & Ch5, slide 81 & $-r_A=kC_A^2$: 6$\times$ MFR and same-size PFR & p.~\pageref{q:30}\\
 Q31 & Ch5, slide 82 & $A+3B\to6R$: $X_A,X_B,C_B$ & p.~\pageref{q:31}\\
@@ -144,7 +169,7 @@ Q40 & Ch7, slides 57--59 & Propylene-oxide CSTR operated adiabatically & p.~\pag
 Q41 & Ch7, slides 60--74 & The same CSTR with a cooling coil & p.~\pageref{q:41}\\
 Q42 & Ch7, slide 95 & Parallel reactions in a PFR with heat effects & p.~\pageref{q:42}\\
 Q43 & Catalysis, slide 48 & Pellet concentration profile; diameter for $\eta=0.8$ & p.~\pageref{q:43}\\
-Q44 & Catalysis, slide 57 & Internal diffusion: rates at 100/150\,°C, apparent $E$ & p.~\pageref{q:44}\\
+Q44 & Catalysis, slide 57 & Internal diffusion: rates at 100/150\,$^\circ$C, apparent $E$ & p.~\pageref{q:44}\\
 Q45 & Non-ideal, s.17--19 & Tracer pulse: $E(t)$ and fraction between 3 and 6 min & p.~\pageref{q:45}\\
 Q46 & Non-ideal, s.52--59 & Dispersion model: conversion four ways & p.~\pageref{q:46}\\
 \bottomrule
@@ -737,27 +762,32 @@ $80$\% conversion of a feed of $40$~mol/h of pure phosphine?
 C_{A0}=\frac{P_0}{RT}=\frac{460\,000}{8.314\times922.15}=60.0\ \mathrm{mol/m^3}.
 \]
 
-\textbf{Step 2 --- the expansion factor.}  $4\to10$ moles:
-$\varepsilon_A=\frac{10-4}{4}=1.5$, so
-$C_A=C_{A0}\frac{1-X}{1+1.5X}$ --- the gas \emph{expands} as it cracks and the
-concentration falls faster than $(1-X)$.
+\textbf{Step 2 --- the expansion factor.}  As the equation is written the
+products are $1+6=7$ moles per $4$ moles of $\mathrm{PH_3}$ reacted
+($\mathrm{P_4}$ counts as \emph{one} mole of molecules), so
+$\delta=\frac{1+6-4}{4}=0.75$, $\varepsilon_A=y_{A0}\delta=0.75$ (pure
+$A$) and $C_A=C_{A0}\frac{1-X}{1+0.75X}$ --- the gas \emph{expands} as it
+cracks and the concentration falls faster than $(1-X)$.
 
 \textbf{Step 3 --- PFR design equation, first order.}
 \[
-V=F_{A0}\int_0^{0.8}\frac{dX}{kC_{A0}}\cdot\frac{1+1.5X}{1-X}
+V=F_{A0}\int_0^{0.8}\frac{dX}{kC_{A0}}\cdot\frac{1+0.75X}{1-X}
 =\frac{F_{A0}}{kC_{A0}}\Big[(1+\varepsilon)\ln\frac{1}{1-X}-\varepsilon X\Big].
 \]
 
 \textbf{Step 4 --- substitute.}  $\frac{F_{A0}}{kC_{A0}}=\frac{40}{10\times60}=0.0667$~m$^3$;
-the bracket at $X=0.8$: $2.5\ln5-1.5(0.8)=4.024-1.2=2.824$:
+the bracket at $X=0.8$: $1.75\ln5-0.75(0.8)=2.817-0.6=2.217$:
 \[
-V=0.0667\times2.824=0.188\ \mathrm{m^3}\ (\approx188\ \mathrm{L}).
+V=0.0667\times2.217=0.148\ \mathrm{m^3}\ (\approx148\ \mathrm{L}).
 \]
 \end{qbox}
-\note{Two classic slips the deck warns about implicitly: forgetting $\varepsilon$
-(which would give $0.0667\times\ln5=0.107$~m$^3$, far too small) and using
-$C_{A0}$ at STP instead of at $649\,^\circ$C/$460$~kPa.}
-\begin{ansbox}$V\approx0.19$ m$^3$ (about 190 L).\end{ansbox}
+\note{Three classic slips to avoid: counting $\mathrm{P_4}$ as four moles
+gives a phantom ``$4\to10$'' and $\varepsilon=1.5$ (then
+$V=0.188$~m$^3$) --- the mole balance is $4\to7$; forgetting
+$\varepsilon$ altogether gives $0.0667\times\ln5=0.107$~m$^3$, far too
+small; and using $C_{A0}$ at STP instead of at $649\,^\circ$C and
+$460$~kPa also misses badly.}
+\begin{ansbox}$V\approx0.15$ m$^3$ (about 148 L).\end{ansbox}
 
 %============================= PART D =====================================
 \spsection{Part D -- Isothermal design (Ch4-\_Krd.pdf)}
@@ -765,7 +795,7 @@ $C_{A0}$ at STP instead of at $649\,^\circ$C/$460$~kPa.}
 \qtitle{Q15 -- Ethylene-oxide batch data}{\label{q:15}Ch4, slides 17--20}
 \src{Ch4-\_Krd.pdf, slides 17--20.}
 500~mL of 2~M ethylene oxide mixed with 500~mL of water (0.9~wt\% H$_2$SO$_4$
-catalyst) at 55\,°C; after mixing $C_{A0}=1.0$~kmol/m$^3$.  Glycol concentration
+catalyst) at 55\,$^\circ$C; after mixing $C_{A0}=1.0$~kmol/m$^3$.  Glycol concentration
 is recorded against time.  Determine $k$, and the batch time for 90\% conversion.
 
 \begin{qbox}
@@ -1138,7 +1168,7 @@ change \emph{is} the conversion datum via $\varepsilon$.}
 
 \qtitle{Q26 -- $A\to3R$ in a MFR (L 5.19)}{\label{q:26}Ch5, slide 74}
 \src{Ch5\_-\\,krd.pdf, slide 74.}
-Pure A at 3 atm and 30\,°C ($C_{A0}=120$~mmol/L) enters a 1-L mixed flow
+Pure A at 3 atm and 30\,$^\circ$C ($C_{A0}=120$~mmol/L) enters a 1-L mixed flow
 reactor; four runs with $v_0=0.06,0.48,1.5,8.1$~L/min give exit
 $C_A=30,60,80,105$~mmol/L.  Find the rate equation.
 
@@ -1177,7 +1207,7 @@ $\varepsilon=2$ inversion in Step~1.}
 
 \qtitle{Q27 -- $A\to2.5R$ batch, partial-pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
 \src{Ch5\_-\\,krd.pdf, slide 76.}
-At 0\,°C in a constant-volume batch reactor, pure gaseous A gives $p_A$ (mm)
+At 0\,$^\circ$C in a constant-volume batch reactor, pure gaseous A gives $p_A$ (mm)
 $=760,600,475,380,320,275,240,215$ at $t=0,2,\dots,14$~min and $150$ at
 $t=\infty$.  The stoichiometry is $A\to2.5R$.  Find a rate equation that
 satisfactorily represents the decomposition.
@@ -1211,9 +1241,9 @@ rate equation.
 reversible; test $\ln[(p_0-p_e)/(p-p_e)]$ vs $t$ before anything else.''}
 \begin{ansbox}First-order approach to $p_{Ae}=150$ mm with $k\\approx0.16$ min$^{-1}$.\end{ansbox}
 
-\qtitle{Q28 -- Reaction bomb $2A\to B$ at 100\,°C}{\label{q:28}Ch5, slides 78--79}
+\qtitle{Q28 -- Reaction bomb $2A\to B$ at 100\,$^\circ$C}{\label{q:28}Ch5, slides 78--79}
 \src{Ch5\_-\\,krd.pdf, slides 78--79.}
-Pure A at 1~atm and 25\,°C is jumped to 100\,°C; the total pressure is recorded
+Pure A at 1~atm and 25\,$^\circ$C is jumped to 100\,$^\circ$C; the total pressure is recorded
 (slide 79):
 \begin{center}\small
 \begin{tabular}{lllllll}
@@ -1241,7 +1271,7 @@ reaction is second order in A with
 $k_p=0.074$~atm$^{-1}$min$^{-1}$ from the $1/p_A$ slope.
 
 \textbf{Step 3 --- convert to concentration units.}  With $p_A=C_ART$ and
-$RT=0.082\times373=30.6$~L$\cdot$atm/mol at 100\,°C, a second-order $k$ scales as
+$RT=0.082\times373=30.6$~L$\cdot$atm/mol at 100\,$^\circ$C, a second-order $k$ scales as
 \[
 k_C=k_p\,RT=0.074\times30.6\approx2.3\ \mathrm{L/(mol\cdot min)}.
 \]
@@ -1249,7 +1279,7 @@ k_C=k_p\,RT=0.074\times30.6\approx2.3\ \mathrm{L/(mol\cdot min)}.
 \note{Exam sentence: ``the order is decided by which linearisation is linear; the
 units conversion $k_C=k_p(RT)^{1-n}$ then moves between pressure and concentration
 forms'' ($1-n=-1$ here).}
-\begin{ansbox}Second order in A; $k\approx0.074$ atm$^{-1}$min$^{-1}\approx2.3$ L/(mol$\cdot$min) at 100\,°C.\end{ansbox}
+\begin{ansbox}Second order in A; $k\approx0.074$ atm$^{-1}$min$^{-1}\approx2.3$ L/(mol$\cdot$min) at 100\,$^\circ$C.\end{ansbox}
 
 \qtitle{Q29 -- The gambling tables}{\label{q:29}Ch5, slide 80}
 \src{Ch5\_-\\,krd.pdf, slide 80.}
@@ -1556,7 +1586,7 @@ $C_{A0}+C_{S0}=1.3$ (R and S each come from A): $0.075+0.23+1.00=1.30$.)}
 \src{Ch7-\_Krd.pdf, slides 14--17.}
 $n$-butane $\rightleftharpoons$ isobutane, adiabatic liquid-phase PFR;
 $k=31.1$~h$^{-1}$ at 360~K, $E=65.7$~kJ/mol, $\Delta H_{Rx}=-6900$~J/mol,
-$K_C=3.03$ at 60\,°C, $C_{A0}=9.3$~kmol/m$^3$,
+$K_C=3.03$ at 60\,$^\circ$C, $C_{A0}=9.3$~kmol/m$^3$,
 $C_p=141/141/161$~J/(mol$\\cdot$K) (butane/isobutane/pentane inert).  Process
 163~kmol/h (90~mol\% butane) to $X=0.70$ with the feed at 330~K.
 
@@ -1619,8 +1649,8 @@ $\dot Q/(18\,\Delta T_{water})$ as sized by the deck.
 A 300-gal glass-lined CSTR; $F_{A0}=43.04$~lbmol/h propylene oxide; streams
 46.62~ft$^3$/h PO, 46.62~ft$^3$/h methanol, 233.1~ft$^3$/h water
 (0.1~wt\% H$_2$SO$_4$); methanol 71.87 and water 802.8~lbmol/h;
-$T_0=75$\,°F $=535$~R after the 17\,°F heat-of-mixing rise; first order in PO
-with $k=16.96\times10^{12}e^{-32\,400/RT}$~h$^{-1}$; temperature limit 125\,°F.
+$T_0=75$\,$^\circ$F $=535$~R after the 17\,$^\circ$F heat-of-mixing rise; first order in PO
+with $k=16.96\times10^{12}e^{-32\,400/RT}$~h$^{-1}$; temperature limit 125\,$^\circ$F.
 Can the reactor be used adiabatically?
 
 \begin{qbox}
@@ -1637,18 +1667,18 @@ T=535+\frac{36\,400}{404}X=535+90.1X.
 
 \textbf{Step 3 --- intersect with the mole balance.}
 $X=\frac{k(T)\tau}{1+k(T)\tau}$ together with the line solves at
-$X=0.84$, $T=611$~R $=151$\,°F (deck intersection $\approx613$~R, $X\approx0.85$).
+$X=0.84$, $T=611$~R $=151$\,$^\circ$F (deck intersection $\approx613$~R, $X\approx0.85$).
 
-\textbf{Step 4 --- the constraint.}  $151>125$\,°F: the reactor \emph{cannot} be
+\textbf{Step 4 --- the constraint.}  $151>125$\,$^\circ$F: the reactor \emph{cannot} be
 used adiabatically --- the exotherm outruns the limit.
 \end{qbox}
-\begin{ansbox}$X\approx0.84$--$0.85$ at $T\approx611$--$613$ R ($\approx151$\,°F) $>125$\,°F --- not acceptable.\end{ansbox}
+\begin{ansbox}$X\approx0.84$--$0.85$ at $T\approx611$--$613$ R ($\approx151$\,$^\circ$F) $>125$\,$^\circ$F --- not acceptable.\end{ansbox}
 
 \qtitle{Q41 -- The same CSTR with a cooling coil}{\label{q:41}Ch7, slides 60--74}
 \src{Ch7-\_Krd.pdf, slides 60--74.}
 The 300-gal CSTR of Q40 now gets a 40~ft$^2$ cooling coil,
-$U=100$~Btu/(h$\\cdot$ft$^2\\cdot$°F), coolant at 85\,°F (545~R).  Does the
-125\,°F constraint now hold?
+$U=100$~Btu/(h$\\cdot$ft$^2\\cdot$$^\circ$F), coolant at 85\,$^\circ$F (545~R).  Does the
+125\,$^\circ$F constraint now hold?
 
 \begin{qbox}
 \textbf{Step 1 --- the coil enters the energy balance.}  The heat removed is
@@ -1661,21 +1691,21 @@ where $17\,379=\sum F_iC_{p,i}$ on the feed basis.
 
 \textbf{Step 2 --- intersect with the mole balance again.}
 Solving together with $X=k(T)\tau/(1+k(T)\tau)$:
-$X\approx0.35$--$0.36$ at $T\approx562$--$564$~R $=102$--$104$\,°F --- the deck's
+$X\approx0.35$--$0.36$ at $T\approx562$--$564$~R $=102$--$104$\,$^\circ$F --- the deck's
 fsolve gives $X=0.364$, $T=563.7$~R.
 
-\textbf{Step 3 --- the constraint.}  $104<125$\,°F: satisfied --- but notice the
+\textbf{Step 3 --- the constraint.}  $104<125$\,$^\circ$F: satisfied --- but notice the
 price: conversion collapses from 0.84 to 0.36, because the coil holds the
 reactor below the temperature where $k$ is large (the deck's multiple-steady-
 state discussion, slides 69--74, is exactly this trade-off).
 \end{qbox}
-\begin{ansbox}Yes: $X\approx0.36$ at $T\approx564$ R ($\approx104$\,°F) $<125$\,°F.\end{ansbox}
+\begin{ansbox}Yes: $X\approx0.36$ at $T\approx564$ R ($\approx104$\,$^\circ$F) $<125$\,$^\circ$F.\end{ansbox}
 
 \qtitle{Q42 -- Parallel reactions in a PFR with heat effects}{\label{q:42}Ch7, slide 95}
 \src{Ch7-\_Krd.pdf, slide 95.}
 $A\to B$ ($r_1=k_1C_A$) and $2A\to C$ ($r_2=k_2C_A^2$); pure A at 100~mol/s,
-150\,°C, $C_{A0}=0.1$~mol/dm$^3$; $\Delta H_1=-20\,000$, $\Delta H_2=-60\,000$
-J/mol~A; $C_{pA}=C_{pB}=90$, $C_{pC}=180$~J/(mol$\\cdot$°C); $E_1/R=4000$~K,
+150\,$^\circ$C, $C_{A0}=0.1$~mol/dm$^3$; $\Delta H_1=-20\,000$, $\Delta H_2=-60\,000$
+J/mol~A; $C_{pA}=C_{pB}=90$, $C_{pC}=180$~J/(mol$\\cdot$$^\circ$C); $E_1/R=4000$~K,
 $E_2/R=9000$~K; $k_1=10$, $k_2=0.09$ (as printed, per min).  Determine the
 temperature and molar-flow profiles down the reactor.
 
@@ -1743,20 +1773,20 @@ lever the deck keeps returning to.
 \end{qbox}
 \begin{ansbox}(a) $C_A\approx2.4\times10^{-4}$ gmol/m$^3$; (b) $d_p\approx6.8\times10^{-4}$ cm.\end{ansbox}
 
-\qtitle{Q44 -- Internal diffusion: 100 vs 150\,°C}{\label{q:44}Catalysis, slide 57}
+\qtitle{Q44 -- Internal diffusion: 100 vs 150\,$^\circ$C}{\label{q:44}Catalysis, slide 57}
 \src{Catalysis\_Krd.pdf, slide 57.}
-First order, $R=0.2$~cm, $D_e=0.015$~cm$^2$/s; $k(100\,°\mathrm{C})=0.93$~s$^{-1}$,
-$E=20$~kcal/mol; $C_{Ab}=3.25\times10^{-5}$~mol/L.  (a) The rate at 100\,°C;
-(b) at 150\,°C; (c) the apparent activation energy between them.
+First order, $R=0.2$~cm, $D_e=0.015$~cm$^2$/s; $k(100\,^\circ\mathrm{C})=0.93$~s$^{-1}$,
+$E=20$~kcal/mol; $C_{Ab}=3.25\times10^{-5}$~mol/L.  (a) The rate at 100\,$^\circ$C;
+(b) at 150\,$^\circ$C; (c) the apparent activation energy between them.
 
 \begin{qbox}
-\textbf{(a) 100\,°C.}  Thiele modulus
+\textbf{(a) 100\,$^\circ$C.}  Thiele modulus
 $\phi_1=R\sqrt{k_1/D_e}=0.2\sqrt{0.93/0.015}=1.575$;
 $\eta_1=\frac{3}{\phi_1^2}(\phi_1\coth\phi_1-1)=0.866$; rate
 $-r_A=\eta_1k_1C_{Ab}=0.866\times0.93\times3.25\times10^{-5}=2.6\times10^{-5}$
 mol/(L$\\cdot$s).
 
-\textbf{(b) 150\,°C.}  Arrhenius first:
+\textbf{(b) 150\,$^\circ$C.}  Arrhenius first:
 $k_2=0.93\,e^{\frac{20\,000}{1.987}(1/373-1/423)}=22.5$~s$^{-1}$; then
 $\phi_2=0.2\sqrt{22.5/0.015}=7.75$, $\eta_2=0.337$; rate
 $-r_A=0.337\times22.5\times3.25\times10^{-5}=2.5\times10^{-4}$ mol/(L$\\cdot$s).
@@ -1765,7 +1795,7 @@ $-r_A=0.337\times22.5\times3.25\times10^{-5}=2.5\times10^{-4}$ mol/(L$\\cdot$s).
 \[
 E_{app}=R\,\frac{\ln(r_2/r_1)}{1/T_1-1/T_2}\approx14.1\ \mathrm{kcal/mol}.
 \]
-Between $E$ and $E/2$: at 150\,°C the pellet is deep in the diffusion-limited
+Between $E$ and $E/2$: at 150\,$^\circ$C the pellet is deep in the diffusion-limited
 regime ($\phi_2\gg1$), where the observed slope tends to $E/2=10$~kcal/mol.
 \end{qbox}
 \note{The exam moral: as $\phi$ grows, $\eta\sim3/\phi$ and the apparent

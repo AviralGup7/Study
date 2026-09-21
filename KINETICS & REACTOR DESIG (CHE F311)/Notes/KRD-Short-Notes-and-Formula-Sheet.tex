@@ -87,7 +87,7 @@
 %--------------------------------------------------------------- glyphs
 % No EC/TS1 metrics in this tree, so build the few needed text glyphs from math.
 \providecommand{\textperiodcentered}{\ensuremath{\cdot}}
-\providecommand{\textdegree}{\ensuremath{^\circ}}
+\renewcommand{\textdegree}{\ensuremath{^\circ}}
 \newcommand{\microm}{\ensuremath{\,\mu\mathrm{m}}}
 \newcommand{\degreec}{\ensuremath{^\circ\mathrm{C}}}
 \newcommand{\degreef}{\ensuremath{^\circ\mathrm{F}}}
@@ -153,16 +153,18 @@
 Mole balances, rate of reaction, conversion, the four design equations & Ch1\\
 Reactor sizing from conversion; the Levenspiel plot; numerical integration;
  reactors in series and in parallel; optimum size ratio & Ch2\\
-Rate laws and stoichiometry; relative rates; Arrhenius; stoichiometric tables
+Rate laws and stoichiometry; relative rates; units of $k$; elementary vs
+ non-elementary and reversible laws; Arrhenius; stoichiometric tables
  for batch and flow, liquid and gas phase & Ch3\\
 Isothermal reactor design; the algorithm; closed-form conversions;
  Damk\"ohler number; pressure drop in packed beds & Ch4\\
 Collection and analysis of rate data; differential and integral methods;
  half-life; differential reactor; nonlinear regression & Ch5\\
-Multiple reactions; selectivity and yield; parallel and series schemes;
- product distribution & Ch6\\
-Non-isothermal design; energy balance; adiabatic operation; heat exchange;
- multiple steady states and runaway; interstage cooling & Ch7\\
+Multiple reactions; selectivity and yield; contacting schemes for the
+ four sign cases; series intermediates; product distribution; net rates & Ch6\\
+Non-isothermal design; energy balance; adiabatic operation; equilibrium
+ thermodynamics; heat exchange; multiple steady states and runaway;
+ interstage cooling and optimum feed temperature & Ch7\\
 Catalysis and catalytic reactors; adsorption and site balance;
  Langmuir--Hinshelwood; internal and external diffusion & Catalysis\\
 Non-ideal reactors; residence-time distribution; segregation;
@@ -184,6 +186,7 @@ $\Theta_i$ & $C_{i0}/C_{A0}$, feed ratio & $U a,\,T_a$ & heat-transfer coefficie
 $p$ & $P/P_0$, reduced pressure & $\phi,\,\eta$ & Thiele modulus, effectiveness factor\\
 $\alpha$ & pressure-drop parameter & $E(t),\,F(t)$ & RTD function, cumulative RTD\\
 $t_m,\,\sigma^2$ & mean residence time, variance & $Pe,\,n$ & P\'eclet number, tanks-in-series number\\
+$S_{D/U},\,\tilde S_{D/U}$ & selectivity, instantaneous / overall & $\tilde Y_D$ & yield, rate basis / mole basis\\
 \bottomrule
 \end{tabularx}}
 
@@ -405,9 +408,21 @@ K_C &= \frac{k_f}{k_r}
 \end{formulabox}
 \begin{itemize}
 \item \textbf{$\alpha$ and $\beta$ are empirical} --- they are \emph{not} the stoichiometric coefficients unless the reaction is elementary. Determining them is the whole subject of section~5.
+\item \textbf{Units of $k$ (slide~9):} $k = (\text{concentration})^{1-n}/\text{time}$, so $\mathrm{mol\,dm^{-3}s^{-1}}$ (zero), $\mathrm{s^{-1}}$ (first), $\mathrm{dm^{3}\,mol^{-1}s^{-1}}$ (second), $\mathrm{dm^{6}\,mol^{-2}s^{-1}}$ (third) --- the units alone betray the order.
+\item \textbf{Arrhenius plot (slides 27--28):} $\ln k = \ln A - (E/R)(1/T)$ is a straight line in $1/T$; a larger $E$ means a steeper slope, i.e.\ a reaction that is far more temperature-sensitive --- high-$E$ reactions surge with a small temperature rise yet crawl at low temperature.
 \end{itemize}
 
-\spsub{3.3 \enspace Stoichiometric tables}
+\spsub{3.3 \enspace Elementary, non-elementary and reversible rate laws}
+\begin{itemize}
+\item \textbf{Elementary (slide~14):} the orders \emph{are} the stoichiometric coefficients, as in $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$ with $-r_{\mathrm{NO}} = kC_{\mathrm{NO}}^2C_{\mathrm{O_2}}$; the deck notes there is no known reaction with molecularity~4. Some non-elementary reactions nonetheless \emph{follow} an elementary rate law (the orders happen to match the coefficients).
+\item \textbf{Non-elementary (slides 15--17):} homogeneous $\mathrm{CO}+\mathrm{Cl_2}\to\mathrm{COCl_2}$ with $r_{\mathrm{CO}} = kC_{\mathrm{CO}}C_{\mathrm{Cl_2}}^{3/2}$ (orders $1$, $\tfrac32$, overall $\tfrac52$); heterogeneous toluene hydrogenation $-r_T' = kP_TP_H/(1+K_BP_B+K_TP_T)^2$ and cumene hydrogenolysis $-r_C' = kP_CP_H/(1+K_BP_B+K_CP_C)$, with $K_B,K_T$ adsorption constants; enzymatic sucrose $\to$ glucose $+$ fructose (Michaelis--Menten form).
+\item \textbf{Reversible (slides 18--21):} the rate law must reduce to the thermodynamic relation $K_C = C_C^cC_D^d/(C_A^aC_B^b)$ at equilibrium. The deck's benzene dimerisation, $2\mathrm{C_6H_6} \rightleftharpoons \mathrm{C_{12}H_{10}} + \mathrm{H_2}$: forward $k_BC_B^2$, reverse $k_{-B}C_DC_H$, net
+\[
+-r_B = k_B\!\left(C_B^2 - \frac{C_DC_H}{K_C}\right),\qquad \frac{k_B}{k_{-B}} = K_C .
+\]
+\end{itemize}
+
+\spsub{3.4 \enspace Stoichiometric tables}
 \notetext{For $aA + bB \to cC + dD$, with $\Theta_i = C_{i0}/C_{A0}$.}
 \begin{tabularx}{\linewidth}{@{}l X@{}}
 \toprule
@@ -433,7 +448,7 @@ C_i &= C_{A0}\,\frac{\Theta_i + \nu_i X/a}{1 + \varepsilon X}\cdot\frac{T_0}{T}\
 \item \textbf{$\varepsilon > 0$} (moles increase) means the gas expands as conversion proceeds, concentrations fall faster than stoichiometry alone implies, and the reactor needs more volume than the constant-density calculation suggests.
 \end{itemize}
 
-\spsub{3.4 \enspace Worked from the deck}
+\spsub{3.5 \enspace Worked from the deck}
 \begin{itemize}
 \item \textbf{Relative rates} (slides~5--7).
 \end{itemize}
@@ -444,7 +459,7 @@ r_A = -10 &\;\Longrightarrow\; r_B = -15,\quad r_C = +25\ \mathrm{mol\,dm^{-3}s^
 \end{align*}
 \end{mthbox}
 \begin{itemize}
-\item \textbf{Dimerisation in an MFR} (slide~61). Four runs give
+\item \textbf{Dimerisation in an MFR} (slide~62). Four runs give
 \[
 X = 0.2502,\ 0.4996,\ 0.6667,\ 0.7995;\qquad
 -r_A = 2502.2,\ 1498.9,\ 800.0,\ 399.8\ \mathrm{mol\,L^{-1}h^{-1}}
@@ -460,6 +475,13 @@ C_{A0} = 60.00\ \mathrm{mol\,m^{-3}}
 \qquad\Longrightarrow\qquad \boxed{\;V = 0.1882\ \mathrm{m^3} \approx 188\ \mathrm{L}\;}
 \]
 \notetext{$C_{A0}$ comes from $P/RT$ at the stated temperature and pressure --- the deck supplies the state, not the concentration.}
+\item \textbf{Milk sterilisation} (slide~61). The same result in $30$~min at one temperature and $15$~s at the other means the same $k\,t$; with first-order kinetics,
+\[
+E = \frac{R\,\ln(t_1/t_2)}{1/T_1 - 1/T_2}
+ = \frac{8.314\,\ln(1800/15)}{1/347.15 - 1/353.15}
+ \;\Longrightarrow\; \boxed{\;E \approx 813\ \mathrm{kJ/mol}\;}
+\]
+\notetext{The deck prints ``$80\,^{\circ}\mathrm{C}$ for 30~min'' beside ``$74\,^{\circ}\mathrm{C}$ \dots\ 15~s''; a hotter treatment needs the \emph{shorter} time, so the printed pairing is reversed and is reported as such --- the calculation pairs $353.15$~K with $15$~s and $347.15$~K with $1800$~s. The enormous $E$ is exactly why pasteurisation is so sensitive to temperature.}
 \end{itemize}
 
 %================================================================== Ch4
@@ -472,7 +494,7 @@ C_{A0} = 60.00\ \mathrm{mol\,m^{-3}}
 \begin{enumerate}
 \item \textbf{Mole balance} --- pick the reactor, write its design equation (section~1).
 \item \textbf{Rate law} --- from the data or the mechanism (section~3).
-\item \textbf{Stoichiometry} --- express every $C_i$ in terms of $X$ (the tables of \S3.3).
+\item \textbf{Stoichiometry} --- express every $C_i$ in terms of $X$ (the tables of \S3.4).
 \item \textbf{Combine} --- substitute 2 and 3 into 1 to get one equation in $X$.
 \item \textbf{Evaluate} --- integrate, or solve, and size the reactor.
 \end{enumerate}
@@ -714,68 +736,155 @@ X_e = 0.80,\qquad \tau = 20.0\ \mathrm{min},\qquad C_{Af} = 0.0494
 \spsection{6 \enspace Multiple Reactions}
 \notetext{Source: \texttt{Ch6\_krd.pdf}.}
 
-\spsub{6.1 \enspace Selectivity and yield}
+\spsub{6.1 \enspace The four classes of multiple reaction}
+\begin{itemize}
+\item \textbf{Parallel (competing):} $A \xrightarrow{k_1} B$ and $A \xrightarrow{k_2} C$ consume the same feedstock at once; the reactor's job is to steer consumption toward one branch.
+\item \textbf{Series (consecutive):} $A \xrightarrow{k_1} B \xrightarrow{k_2} C$ --- the product of the first reaction is the feed of the second, so the intermediate $B$ passes through a maximum.
+\item \textbf{Complex (parallel $+$ series):} e.g.\ $A+B \xrightarrow{k_1} C+D$ together with $A+C \xrightarrow{k_2} E$; the deck also prints the \textbf{Denbigh network} $A \xrightarrow{1} R \xrightarrow{3} S$ with the side arrows $A \xrightarrow{2} T$ and $R \xrightarrow{4} U$ --- the standard bookkeeping test for net rates.
+\item \textbf{Independent:} $A \to B+C$ and $D \to E+F$ run side by side without sharing species.
+\end{itemize}
+\notetext{The deck's own chemistry: parallel --- ethylene $+$ oxygen burning to $2\mathrm{CO_2}+2\mathrm{H_2O}$ ($k_1$) versus epoxidation to ethylene oxide ($k_2$); series --- ethylene oxide $+$ NH$_3$ to mono-, then di-, then tri-ethanolamine; complex --- ethanol to ethylene and to acetaldehyde, then ethylene $+$ acetaldehyde to butadiene $+$ water; independent --- cracking of crude, $\mathrm{C_{15}H_{32}} \to \mathrm{C_{12}H_{26}} + \mathrm{C_3H_6}$ and $\mathrm{C_8H_{18}} \to \mathrm{C_6H_{14}} + \mathrm{C_2H_4}$.}
+With two reactants the deck's first lever is the \emph{contacting pattern} (slide~5):
+\begin{itemize}
+\item $C_A,\,C_B$ both high --- charge $A$ and $B$ all at once (batch);
+\item $C_A,\,C_B$ both low --- add both slowly to a well-mixed vessel (semibatch / fed CSTR);
+\item $C_B$ high, $C_A$ low --- start with $B$ and feed $A$ slowly.
+\end{itemize}
+\notetext{The economic incentive (slide~8): with $D$ desired and $U$ undesired, maximise $D$ and minimise $U$; the deck's cost sketch shows the reaction cost falling and the separation cost rising as the system is pushed harder, so the \emph{total} cost has a minimum in between --- selectivity, not conversion alone, sets the optimum.}
+
+\spsub{6.2 \enspace Selectivity and yield --- the four definitions}
 \begin{formulabox}
 \begin{align*}
 S_{D/U} &= \frac{r_D}{r_U}
- &&\text{instantaneous selectivity}\\[3pt]
-\tilde{S}_{D/U} &= \frac{F_D}{F_U}
- &&\text{overall (batch: } N_D/N_U\text{)}\\[4pt]
-\tilde{Y}_D &= \frac{r_D}{-r_A}
+ &&\text{instantaneous (rate) selectivity}\\[3pt]
+\tilde{S}_{D/U} &= \frac{F_D}{F_U},\ \ \frac{N_D}{N_U}\ \text{(batch)}
+ &&\text{overall selectivity}\\[4pt]
+Y_D &= \frac{r_D}{-r_A}
  &&\text{instantaneous yield}\\[3pt]
-\tilde{Y}_D &= \frac{F_D}{F_{A0}-F_A}
- &&\text{overall yield}\\[4pt]
-r_j &= \sum_i \nu_{ji}\,r_i
- &&\text{net rate of } j \text{ over all reactions}
+\tilde{Y}_D &= \frac{F_D}{F_{A0}-F_A},\ \ \frac{N_D}{N_{A0}-N_A}\ \text{(batch)}
+ &&\text{overall yield}
 \end{align*}
 \end{formulabox}
-
-\spsub{6.2 \enspace Parallel reactions --- the operating rules}
-\notetext{For $A \xrightarrow{k_1} D$ and $A \xrightarrow{k_2} U$ with $-r_{1A} = k_1C_A^{\alpha_1}$ and $-r_{2A} = k_2C_A^{\alpha_2}$, let $a = \alpha_1 - \alpha_2$.}
-\begin{tabularx}{\linewidth}{@{}l X@{}}
-\toprule
-$a > 0$ & keep $C_A$ \textbf{high} --- PFR or batch, high pressure, no inerts\\
-$a < 0$ & keep $C_A$ \textbf{low} --- CSTR, add inerts, dilute the feed\\
-$E_D > E_U$ & run \textbf{hot}\\
-$E_U > E_D$ & run \textbf{cool}, but still fast enough to be practical\\
-\bottomrule
-\end{tabularx}
 \begin{itemize}
-\item \textbf{Two reactants:} the signs of $(\alpha_1-\alpha_2)$ and $(\beta_1-\beta_2)$ together choose the contacting pattern --- semibatch, side streams, or a train of small CSTRs.
+\item \textbf{In a CSTR the two selectivities coincide} (slide~11): $F_D = r_D V$ and $F_U = r_U V$, so $\tilde S_{D/U} = r_D V / r_U V = S_{D/U}$.
+\item \textbf{Definitions differ between authors} --- slide~14 says to check which one a question intends. The \emph{overall} quantities set the profit of the reaction--separation system; the \emph{instantaneous} ones are the design tool, because they say which reactor and contacting scheme to choose.
 \end{itemize}
 
-\spsub{6.3 \enspace Series reactions}
+\spsub{6.3 \enspace The rate selectivity parameter, one reactant}
+\notetext{For $A \xrightarrow{k_D} D$ (desired) and $A \xrightarrow{k_U} U$ (undesired) with $-r_A = k_D C_A^{\alpha_1} + k_U C_A^{\alpha_2}$:}
+\begin{formulabox}
+\begin{align*}
+S_{D/U} &= \frac{r_D}{r_U} = \frac{k_D}{k_U}\,C_A^{\,\alpha_1-\alpha_2}
+ &&\text{maximise this}\\[4pt]
+\frac{k_D}{k_U} &= \frac{A_D}{A_U}\,e^{-(E_D-E_U)/RT}
+ &&\text{the temperature lever}
+\end{align*}
+\end{formulabox}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Case 1} $\alpha_1 > \alpha_2$ & keep $C_A$ \textbf{high}: batch or plug flow, no inerts and high pressure (gas), minimum diluent (liquid)\\\\
+\textbf{Case 2} $\alpha_2 > \alpha_1$ & keep $C_A$ \textbf{low}: CSTR or recycle reactor (the product stream acts as diluent), inerts and low pressure (gas), maximum diluent (liquid)\\\\
+\textbf{Case 3} $E_D > E_U$ & run \textbf{hot}: $k_D$ grows faster with $T$ than $k_U$\\\\
+\textbf{Case 4} $E_U > E_D$ & run \textbf{cool} --- but not so cool that the desired reaction stops proceeding\\\\
+\bottomrule
+\end{tabularx}
+\notetext{The deck's rules of thumb (slide~4) are the same table in words: a \emph{high} reactant concentration favours the reaction of \emph{higher} order, a \emph{low} concentration the reaction of \emph{lower} order, and for reactions of the \emph{same} order concentration has no effect on the distribution.}
+\begin{itemize}
+\item \textbf{Worked selectivity argument} (slides~18--19). Three parallel paths from $A$:
+\end{itemize}
+\begin{align*}
+r_D &= 0.0002\,e^{36\,000\left(\frac{1}{300}-\frac{1}{T}\right)} C_A &
+r_U &= 0.0018\,e^{25\,000\left(\frac{1}{300}-\frac{1}{T}\right)} C_A^{1.5} &
+r_Q &= 0.00452\,e^{5\,000\left(\frac{1}{300}-\frac{1}{T}\right)} C_A^{0.5}
+\end{align*}
+\begin{mthbox}
+\begin{align*}
+S_{D/Q} &= \frac{r_D}{r_Q} \approx \text{very large at high } T
+ &&(E_D = 36\,000 \gg E_Q = 5\,000)\\[3pt]
+S_{D/U} &= \frac{r_D}{r_U}
+ = \frac{0.11\,e^{11\,000\left(\frac{1}{300}-\frac{1}{T}\right)}}{C_A^{\,0.5}}
+ &&\left(\tfrac{0.0002}{0.0018} = 0.11,\ \ 36\,000-25\,000 = 11\,000,\ \ 1-1.5 = -\tfrac12\right)
+\end{align*}
+\end{mthbox}
+\notetext{Two levers survive the algebra: \textbf{high temperature} (to bury $Q$) and \textbf{low concentration of $A$} (to bury $U$) --- the latter by inerts, low pressure, or a CSTR / recycle reactor. One printed sentence runs against the algebra: slide~18's ``$S_{DU}$ is minimized at low concentration of $A$'' states the reverse of the $C_A^{-0.5}$ dependence of the slide's own equation~(5); slide~19's operating conclusions agree with the algebra, and the sentence is reported as printed.}
+
+\spsub{6.4 \enspace Two reactants: signs, schemes and the four cases}
+\notetext{For $A+B \xrightarrow{k_1} D$ and $A+B \xrightarrow{k_2} U$ with $r_D = k_1 C_A^{\alpha_1}C_B^{\beta_1}$, $r_U = k_2 C_A^{\alpha_2}C_B^{\beta_2}$:}
+\begin{formulabox}
+\begin{align*}
+S_{D/U} &= \frac{k_1}{k_2}\,C_A^{\,\alpha_1-\alpha_2}\,C_B^{\,\beta_1-\beta_2}
+\end{align*}
+\end{formulabox}
+\notetext{The deck's menu of contacting schemes (slide~21): (a)~CSTR; (b)~tubular reactor; (c)~batch; (d)~semibatch, B fed slowly into A; (e)~semibatch, A fed slowly into B; (f)~tubular reactor with side streams of B; (g)~tubular reactor with side streams of A; (h)~series of small CSTRs; (i)~tubular reactor with recycle.}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Case I} $\alpha_1>\alpha_2,\ \beta_1>\beta_2$ & keep $C_A,C_B$ \textbf{both high} --- (b) tubular, (c) batch, high pressure, reduce inert\\\\
+\textbf{Case II} $\alpha_1>\alpha_2,\ \beta_1<\beta_2$ & $C_A$ high, $C_B$ low --- (d) semibatch B into A, (f) side streams of B, (h) small CSTRs with A fed only to the first\\\\
+\textbf{Case III} $\alpha_1<\alpha_2,\ \beta_1<\beta_2$ & keep $C_A,C_B$ \textbf{both low} --- (a) CSTR, (i) large recycle ratio, feed diluted with inert, low pressure\\\\
+\textbf{Case IV} $\alpha_1<\alpha_2,\ \beta_1>\beta_2$ & $C_A$ low, $C_B$ high --- (e) semibatch A into B, (g) side streams of A, (h) small CSTRs with fresh B to each\\\\
+\bottomrule
+\end{tabularx}
+\begin{warnbox}
+\textbf{A slip in the source, reported rather than corrected.} Slide~25 (Case~IV) opens with the sentence ``maintain the concentration of both A and B as high as possible,'' which contradicts its own $S_{D/U} = k_1 C_B^{\,b}/(k_2 C_A^{\,a})$ with $a,b>0$; the schemes it then lists --- (e), (g), (h) with fresh B --- are exactly the low-$C_A$/high-$C_B$ set quoted in the table above.
+\end{warnbox}
+
+\spsub{6.5 \enspace Series reactions --- maximising the intermediate}
 \begin{formulabox}
 \begin{align*}
 A \;\xrightarrow{\;k_1\;}\; B \;\xrightarrow{\;k_2\;}\; C
 \qquad\Longrightarrow\qquad
-t_{\text{opt}} = \frac{\ln(k_2/k_1)}{k_2-k_1}
+C_B &= C_{A0}\,\frac{k_1}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)\\[3pt]
+t_{\text{opt}} &= \frac{\ln(k_2/k_1)}{k_2-k_1}
  &&\text{maximises } C_B
 \end{align*}
 \end{formulabox}
-\notetext{Verified numerically in \S4.6: $t_{\max} = 0.693$~h gives $C_{B,\max} = 1.250$.}
+\begin{itemize}
+\item In \textbf{parallel} networks the product is maximised by adjusting the reaction \emph{conditions} and choosing the proper reactor; in \textbf{series} networks the lever is \emph{time} --- the space time of a flow reactor or the real time of a batch. The $C_B(t)$ form above is the one behind the Ch4 series numerical reproduced in \S4.6 (Q20).
+\item The deck's triangular diagram (slide~27): $k_1/k_2 \gg 1$ gives a large quantity of $B$; $k_1/k_2 \sim 1$ a moderate one; $k_1/k_2 \ll 1$ (first reaction slow, second fast) very little. In every case a \emph{long} reaction time in batch or a \emph{long} tubular reactor converts $B$ onward to $C$ --- which is why the optimum is interior.
+\item Verified numerically in \S4.6: $t_{\max} = 0.693$~h gives $C_{B,\max} = 1.250$.
+\end{itemize}
 
-\spsub{6.4 \enspace Product distribution}
+\spsub{6.6 \enspace Product distribution --- the quantitative treatment}
 \begin{formulabox}
 \begin{align*}
-\varphi\!\left(\frac{R}{A}\right) = \frac{dC_R}{-dC_A}
- &&\text{instantaneous fractional yield}\\[5pt]
-C_R = \int \varphi\; d(-C_A)
- &&\text{PFR: area under } \varphi;\quad
-   \text{MFR: rectangle};\quad \text{staged: steps}
+\varphi &= \frac{dC_R}{-dC_A}
+ &&\text{instantaneous fractional yield of } R\\[4pt]
+\Phi &= \frac{C_{Rf}}{C_{A0}-C_{Af}}
+ &&\text{overall yield} = \bar\varphi \text{ in the reactor}\\[4pt]
+\text{PFR:}\quad \Phi_p &= \frac{1}{\Delta C_A}\int_{C_{A0}}^{C_{Af}} \varphi\,dC_A
+ &&\text{area under } \varphi(C_A)\\[4pt]
+\text{MFR:}\quad \Phi_m &= \varphi \text{ evaluated at } C_{Af}
+ &&\text{one rectangle}\\[4pt]
+\text{$N$ staged MFRs:}\quad
+\Phi_{N} &= \frac{\sum_i \varphi_i\left(C_{A,i-1}-C_{A,i}\right)}{C_{A0}-C_{AN}}
+ &&\text{steps between the two}\\[4pt]
+C_{Rf} &= \Phi\left(C_{A0}-C_{Af}\right)
+ &&\text{product out of any reactor}
 \end{align*}
 \end{formulabox}
+\notetext{Slide~31 draws the three constructions on one $\varphi$ curve: plug flow shades the area under the curve from $C_{Af}$ to $C_{A0}$, mixed flow draws the single rectangle of height $\varphi(C_{Af})$ over $(-\Delta C_A)$, and staged reactors climb the curve in steps --- the rectangle construction converging to the area as $N \to \infty$.}
 
-\spsub{6.5 \enspace Worked from the deck}
+\spsub{6.7 \enspace Net rates and the bookkeeping for $q$ reactions}
+\begin{formulabox}
+\begin{align*}
+r_j &= \sum_{i=1}^{q} r_{ij}
+ &&\text{net rate of species } j = \text{sum over reactions } i
+\end{align*}
+\end{formulabox}
 \begin{itemize}
-\item \textbf{Product distribution} (slide~32). The same feed through three contacting patterns:
+\item The deck's example set (slide~34): reaction~1, $A+B \to 3C+D$; reaction~2, $A+2C \to 3E$; reaction~3, $2B+3E \to 4F$; reaction~$q$, $A+\tfrac12 C \to G$. Then $r_A = r_{1A}+r_{2A}+r_{3A}+\cdots+r_{qA}$ while $r_B$ picks up only reactions 1 and~3 --- species absent from a reaction contribute zero to its sum.
+\end{itemize}
+
+\spsub{6.8 \enspace Worked from the deck}
+\begin{itemize}
+\item \textbf{Product distribution} (slide~32). $dC_R/dt = 1.0\,C_A^{1.5}C_B^{0.3}$, $dC_S/dt = 1.0\,C_A^{0.5}C_B^{1.8}$; equal volumetric feeds each at $20$~mol/L, $90\,\%$ conversion of A. The same chemistry through three contacting patterns:
 \[
-\text{(a) } C_R = 2.859 \qquad
-\text{(b) } C_R = 4.50 \qquad
-\text{(c) } C_R = 7.295
+\text{(a) plug flow } C_R = 2.859 \qquad
+\text{(b) mixed flow } C_R = 4.50 \qquad
+\text{(c) plug flow, B in side streams } C_R = 7.295
 \]
-\notetext{A factor of $2.6$ in product concentration from contacting alone, with no change to chemistry, temperature or throughput. This is why the rules of \S6.2 are worth memorising.}
-\item \textbf{Two MFRs in series} (slide~33), $k_1 = 0.5$, $k_2 = 0.4$, $\tau = 2.5$ and $10$~min:
+\notetext{With equal feeds $C_A = C_B$ everywhere, so $r_R/r_S = C^{-0.5}$: \emph{low} concentration favours R. Mixed flow then runs entirely at the lowest concentration, plug flow must pass through the high-concentration region making S, and side entrances of B depress $C_B$ relative to $C_A$ further still --- hence $2.86 < 4.50 < 7.30$. A factor of $2.6$ in product from contacting alone, with no change to chemistry, temperature or throughput.}
+\item \textbf{Two MFRs in series} (slide~33), $r_R = k_1 C_A^{2}$, $r_S = k_2 C_A$, feed $C_{A0}=1.0$, $C_{S0}=0.3$, $\tau_1 = 2.5$, $\tau_2 = 10$~min, first-reactor exit $C_{A1}=0.4$, $C_{R1}=0.2$, $C_{S1}=0.7$:
 \[
 C_{A2} = 0.0745,\qquad C_{R2} = 0.2277,\qquad C_{S2} = 0.9978
 \]
@@ -785,100 +894,233 @@ C_{A2} = 0.0745,\qquad C_{R2} = 0.2277,\qquad C_{S2} = 0.9978
 \spsection{7 \enspace Non-Isothermal Reactor Design}
 \notetext{Source: \texttt{Ch7-\_krd.pdf}.}
 
-\spsub{7.1 \enspace The energy balance}
+\spsub{7.1 \enspace Performance equations and the energy balance}
+\begin{itemize}
+\item The isothermal algorithm of section~4 survives unchanged; temperature only adds one unknown, coupled in through Arrhenius. Slide~5 writes the set for a first-order $A\to B$ PFR:
+\end{itemize}
 \begin{formulabox}
 \begin{align*}
-\dot{Q} - \dot{W}_s + \sum F_{i0}H_{i0} - \sum F_i H_i &= 0
- &&\text{steady state, no shaft work beyond } \dot W_s\\[4pt]
-H_i(T) &= H_i^{\circ}(T_R) + C_{p,i}\left(T - T_R\right)
- &&\text{enthalpy referenced to } T_R
-\end{align*}
-\end{formulabox}
-
-\spsub{7.2 \enspace Adiabatic operation and the equilibrium ceiling}
-\begin{formulabox}
-\begin{align*}
-X &= \frac{\sum \Theta_i C_{p,i}\left(T-T_0\right)}
-        {-\left[\Delta H_{Rx}^{\circ}(T_R) + \Delta C_p\left(T-T_R\right)\right]}
- &&\text{adiabatic energy balance}\\[5pt]
-T &= T_0 + (\text{slope})\,X
- &&\text{a straight line on the } T\text{--}X \text{ plane}\\[5pt]
-K_C(T) &= K_C(T_1)\exp\!\left[\frac{\Delta H_{Rx}}{R}\left(\frac{1}{T_1}-\frac{1}{T}\right)\right]
- &&\text{van 't Hoff}\\[5pt]
-X_e &= \frac{K_C}{1+K_C}
- &&\text{for } A \rightleftharpoons B
+\frac{dX}{dV} &= \frac{-r_A}{F_{A0}}, &
+-r_A &= k_1 \exp\!\left[\frac{E}{R}\left(\frac{1}{T_1}-\frac{1}{T}\right)\right] C_{A0}(1-X)
 \end{align*}
 \end{formulabox}
 \begin{itemize}
-\item For an \textbf{exothermic reversible} reaction these two lines move in opposite directions: temperature raises the rate but \emph{lowers} $X_e$. The achievable conversion is where the energy-balance line meets the equilibrium curve, and no amount of catalyst moves that point.
+\item The open-system energy balance (slides~6--8) reads \emph{accumulation $=$ heat added $-$ work done $+$ energy in by flow $-$ energy out by flow}. With $E_i \approx U_i$ (potential and kinetic energies dropped) and flow work absorbed into the enthalpy, steady state gives
 \end{itemize}
-
-\spsub{7.3 \enspace Heat exchange in a tubular reactor}
 \begin{formulabox}
 \begin{align*}
-\frac{dT}{dV} &= \frac{Ua\left(T_a - T\right) + (-r_A)(-\Delta H_{Rx})}{\sum F_i C_{p,i}}\\[5pt]
+\dot{Q} - \dot{W}_s + \sum F_{i0}H_{i0} - \sum F_i H_i &= 0\\[4pt]
+H_i(T) &= H_i^{\circ}(T_R) + C_{p,i}\left(T - T_R\right)
+ &&\text{no phase change, constant } C_p
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item Substituting the stoichiometry $F_i = F_{A0}(\Theta_i + \nu_i X/a)$ collapses everything to the deck's master equation (slides~9--11):
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\dot{Q} - \dot{W}_s - F_{A0}X\left[\Delta H_{Rx}^{\circ}(T_R) + \Delta\hat{C}_p\left(T-T_R\right)\right]
+ - F_{A0}\sum_i \Theta_i \tilde{C}_{p,i}\left(T - T_{i0}\right) &= 0\\[4pt]
+\Delta\hat{C}_p &= \tfrac{d}{a}C_{pD} + \tfrac{c}{a}C_{pC} - \tfrac{b}{a}C_{pB} - C_{pA}
+\end{align*}
+\end{formulabox}
+
+\spsub{7.2 \enspace Adiabatic operation}
+\begin{formulabox}
+\begin{align*}
+X &= \frac{\sum \Theta_i \tilde{C}_{p,i}\left(T-T_0\right)}
+        {-\left[\Delta H_{Rx}^{\circ}(T_R) + \Delta\hat{C}_p\left(T-T_R\right)\right]}
+ &&\text{the energy-balance line } X_{EB}\\[5pt]
+T &= \frac{X\left[-\Delta H_{Rx}^{\circ}(T_R)\right] + \sum\Theta_i C_{p,i}T_{i0} + X\Delta C_p T_R}
+        {\sum\Theta_i C_{p,i} + X\Delta C_p}
+ &&\text{solved for } T
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item The same straight line $X_{EB}$ on the $T$--$X$ plane holds for \textbf{batch, CSTR, PFR and PBR} --- the deck brackets all four beside the plot. For an exothermic reaction $X_{EB}$ rises with $T$; the reactor can only operate where this line meets what the kinetics and equilibrium allow.
+\end{itemize}
+
+\spsub{7.3 \enspace The equilibrium ceiling, from thermodynamics}
+\notetext{Slides~35--45 develop the ceiling rather than asserting it:}
+\begin{formulabox}
+\begin{align*}
+dG &= Vdp - SdT + \textstyle\sum_j \mu_j\,dn_j, &
+\mu_j &= \left(\frac{\partial G}{\partial n_j}\right)_{T,P,n_i}\\[4pt]
+\Delta G &= \Delta G^{\circ} + RT\ln\!\left(\textstyle\prod_j a_j^{\nu_j}\right), &
+K_a &= \left(\textstyle\prod_j a_j^{\nu_j}\right)_{eq} = \exp\!\left(\frac{-\Delta G^{\circ}}{RT}\right)\\[4pt]
+K_p &= \left(\textstyle\prod_j P_j^{\nu_j}\right),\quad
+K_f = \left(\textstyle\prod_j f_j^{\nu_j}\right),\quad
+K_C = \left(\textstyle\prod_j C_j^{\nu_j}\right)
+ &&\text{activity specialised}\\[4pt]
+\frac{d\ln K_a(T)}{dT} &= \frac{\Delta H}{RT^{2}}
+ &&\text{van 't Hoff}\\[4pt]
+K_p &= \left(\textstyle\prod_j \left[P\,\dfrac{N_{j0}+\nu_j\alpha}{N_{T0}+\alpha\sum_j\nu_j}\right]^{\nu_j}\right) = F(\alpha)
+ &&\text{extent form}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Reversible exothermic:} $X_e$ falls with $T$ (the equilibrium curve descends); \textbf{reversible endothermic:} $X_e$ rises with $T$. The adiabatic energy-balance line crosses the equilibrium curve; that intersection is the \emph{adiabatic equilibrium conversion}, and no catalyst moves it (slide~46).
+\item \textbf{Worked intersection} (slides~47--48): $A \rightleftharpoons B$, pure A at $300$~K, $H_{A0} = -40\,000$, $H_{B0} = -60\,000$~cal/mol, $C_{pA} = C_{pB} = 50$~cal/mol\,K, $K_C(298) = 10^{5}$:
+\end{itemize}
+\begin{mthbox}
+\begin{align*}
+X_{EB} &= \frac{C_p(T-T_0)}{-\Delta H_{Rx}} = 2.5\times10^{-3}(T-300)
+ &&\left(\tfrac{50}{20\,000}\right)\\[3pt]
+K_C(T) &= 100\,000\,\exp\!\left[-33.78\,\frac{T-298}{T}\right]
+ &&\left(\tfrac{|\Delta H|}{R\cdot 298} = \tfrac{10\,065}{298} = 33.78\right)\\[3pt]
+X_e &= \frac{K_C(T)}{1+K_C(T)}
+ &&\text{intersection: deck graphic } 0.42 \text{ at } 465\ \mathrm{K}
+\end{align*}
+\end{mthbox}
+\notetext{Solving the two printed equations exactly gives $X = 0.401$ at $460.4$~K --- the deck's $0.42/465$~K is a graphical read-off of the same pair, reproduced by \texttt{krd-answers-check.py}. The deck's $K_C$ table (slide~47: $661.6$ at $350$~K down to $0.12$ at $500$~K) is the same formula evaluated.}
+
+\spsub{7.4 \enspace Heat exchange in a tubular reactor}
+\begin{formulabox}
+\begin{align*}
+\frac{dT}{dV} &= \frac{Ua\left(T_a - T\right) + (-r_A)(-\Delta H_{Rx})}{\sum F_i C_{p,i}}
+ &&\text{no radial gradients}\\[5pt]
 \text{co-current coolant:}\quad \frac{dT_a}{dV} &= \frac{Ua\left(T - T_a\right)}{\dot{m}_c C_{p,c}}
 \end{align*}
 \end{formulabox}
+\begin{itemize}
+\item If the coolant flow is large compared with the heat released, $T_a$ is effectively \textbf{constant} along the reactor (slide~26); heat added for endothermic, removed for exothermic.
+\item \textbf{Acetic anhydride} (slides~27--30): acetone cracking $\mathrm{CH_3COCH_3} \to \mathrm{CH_2CO} + \mathrm{CH_4}$, first order with $\ln k = 34.34 - 34\,222/T$, $7850$~kg/h through a bank of $1000$ 1-inch schedule-40 tubes, inlet $1035$~K, $162$~kPa. Three cases: adiabatic --- the endothermic reaction cools itself and \emph{dies after $\approx 3.5$~m$^3$}; constant $T_a = 1150$~K with $U = 110$~J/m$^2$s\,K --- $T$ dips then recovers and $X$ climbs; variable heating medium --- $T_a$ slides down with $T$.
+\item \textbf{Ethane cracking at equilibrium} (slide~31): ethane $+$ steam, $2.99$~atm, $880\,^{\circ}$C, $95$~m tubes, $60\,\%$ conversion --- the deck's specification sheet for the equilibrium-limited endothermic case.
+\end{itemize}
 
-\spsub{7.4 \enspace CSTR with cooling, and multiple steady states}
+\spsub{7.5 \enspace The CSTR with heat exchange --- two solution routes}
+\notetext{With $\kappa = UA/(F_{A0}C_{p0})$ and $T_c = (\kappa T_a + T_0)/(1+\kappa)$:}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+\textbf{Specify $X$} & $T = T_c + \dfrac{(-\Delta H_{Rx}^{\circ})(X)}{C_{p0}(1+\kappa)}$, then $k = Ae^{-E/RT}$, $-r_A = kC_{A0}(1-X)$, $V = F_{A0}X/(-r_A)$\\\\
+\textbf{Specify $T$} & $X = \dfrac{C_{p0}(1+\kappa)(T-T_c)}{-\Delta H_{Rx}^{\circ}}$, then the same rate-law chain to $V$\\\\
+\textbf{Specify $V$} & generate $T$ vs $X_{EB}$ from the energy balance and $T$ vs $X_{MB}$ from $X_{MB} = \tau k/(1+\tau k)$; the intersection is the operating point\\\\
+\bottomrule
+\end{tabularx}
 \begin{formulabox}
 \begin{align*}
-G(T) &= \frac{-\Delta H_{Rx}}{1 + 1/(k\tau)}
- &&\text{heat generated}\\[4pt]
+G(T) &= X(-\Delta H_{Rx}) = \frac{\tau A e^{-E/RT}}{1 + \tau A e^{-E/RT}}\,(-\Delta H_{Rx})
+ &&\text{heat generated, first order}\\[4pt]
 R(T) &= C_{p0}\left(1+\kappa\right)\left(T - T_c\right)
- &&\text{heat removed; } \kappa \propto UA/F_{A0}\\[4pt]
-S' &= \frac{E}{RT_s^{2}}\,G(T_s) - C_{p0}\left(1+\kappa\right)
- &&\text{stability at the steady state } T_s
+ &&\text{heat removed}
 \end{align*}
 \end{formulabox}
 \begin{itemize}
-\item Intersections of $G(T)$ and $R(T)$ are the steady states. Where $S' < 0$ the state is stable; where $S' > 0$ it is not.
-\item \textbf{Runaway} occurs when the two curves become tangent and the intersection disappears --- raising $T_c$ or lowering the feed temperature moves the system back to a single stable state. This is the \textbf{ignition/extinction} behaviour the deck plots on its stability diagram.
+\item Raising $T_0$ slides the straight $R(T)$ line to the right; raising $\kappa$ steepens it and moves $T_c$ from $T_0$ ($\kappa=0$) toward $T_a$ ($\kappa\to\infty$) (slides~77--78). Raising $\tau$ or $E$ sharpens the S-shape of $G(T)$ (slide~81) --- which is what creates multiple intersections.
 \end{itemize}
 
-\spsub{7.5 \enspace Interstage cooling}
+\spsub{7.6 \enspace Multiple steady states, ignition--extinction, runaway}
 \begin{itemize}
-\item Instead of one adiabatic bed taken to its equilibrium limit, use \textbf{several adiabatic stages with cooling between them}. Each stage starts cooler, so each one starts further from equilibrium and gains more conversion. The optimum feed temperature for a fixed total volume maximises exit $X$.
-\end{itemize}
-
-\spsub{7.6 \enspace Worked from the deck}
-\begin{itemize}
-\item \textbf{Butane isomerisation, adiabatic PFR} (slides~14--16). The energy balance gives $T = 330 + 43.3X$, i.e.\ $6900/158.9$, with $E/R \approx 7906$ and $-\Delta H/R \approx 830.3$; $k$ rises from $4.22$ at $330$~K to $31.67$ at $360.3$~K.
+\item Intersections of $G(T)$ and $R(T)$ are the steady states; sweeping $T_0$ traces the \textbf{ignition--extinction curve}: upper and lower branches are attainable, the middle branch is not (slides~82--84).
+\item \textbf{Stability} (slides~85--89): a state is stable where a temperature bump removes more heat than it generates. The deck's criterion: with
 \[
-\boxed{\;V_{X=0.70} = 1.974\ \mathrm{m^3}\;}
-\qquad \text{deck table: } T(X{=}0.2) = 338.7\ \mathrm{K},\quad (-r_A)_{X=0} = 39.3
+\Delta T_{bc} = T' - T_c = \frac{RT_c^{\,2}}{E},\qquad
+T' = \frac{E}{2R}\left[1 - \sqrt{1 - 4\tfrac{RT_c}{E}}\,\right],\qquad
+T_c = \frac{\kappa T_a + T_0}{1+\kappa},
 \]
-\item \textbf{Interstage cooling} (slides~48--51), $40$~mol/s cooled to $350$~K between stages, target $95\,\%$ of $X_e$:
+exceeding $\Delta T_{bc}$ tips the reactor to the upper state. For industrial reactions $E/RT \approx 16$--$24$, so $\Delta T_{bc} \approx 15$--$30\,^{\circ}$C.
+\item With $S' = dG/dT$ at the steady state, \textbf{runaway} when $C_{p0}(1+\kappa) < S'$ (slides~88, 90--91): decreasing $UA$ flattens $R(T)$ until tangency disappears and the CSTR runs away to the upper state. The deck demonstrates it on $2\mathrm{Na_2S_2O_3} + 4\mathrm{H_2O_2} \to \mathrm{Na_2S_3O_6} + \mathrm{Na_2SO_4} + 4\mathrm{H_2O}$ (slides~85--86).
+\item \textbf{Zero vs first order} (slides~92--93): with $\tau = 0.1$~min, $E = 10\,000$~cal/mol, $\Delta H_{Rx} = -10\,000$~cal/mol and inerts $2{:}1$, the deck's table gives $dE/dT = 80$; the first-order reaction is globally stable for all $T_c$, while the zero-order one runs away above an entering temperature of $460$~K and becomes stable again only past $685$~K.
+\end{itemize}
+
+\spsub{7.7 \enspace Interstage cooling, interstage heating, optimum feed temperature}
+\begin{itemize}
+\item \textbf{Exothermic reversible:} several adiabatic stages with \emph{coolers} between them; each stage starts cooler, further below its equilibrium curve, and the zigzag path on the $X$--$T$ diagram climbs above what one adiabatic bed can reach (slides~49, 52).
+\item \textbf{Endothermic reversible:} mirror image --- \emph{heaters} between stages (slide~50).
+\item \textbf{Optimum feed temperature} (slides~53--54): at low $T_0$ the rate is slow and conversion is low; at high $T_0$ the equilibrium conversion collapses and conversion is again low; between them $X(T_0)$ passes through a \emph{maximum} --- the optimum feed temperature for a fixed size or catalyst weight.
+\end{itemize}
+
+\spsub{7.8 \enspace Multiple reactions with heat effects (PFR/PBR)}
+\begin{formulabox}
+\begin{align*}
+\frac{dT}{dV} &= \frac{Ua\left(T_a - T\right) + \sum_i (-r_{ij})(-\Delta H_{Rx,ij})}{\sum_j F_j C_{p,j}}
+ &&\text{coupled with the mole balances and rate laws}
+\end{align*}
+\end{formulabox}
+\notetext{Slide~95's example: $A \to B$ ($-r_{1A} = k_{1A}C_A$) and $2A \to C$ ($-r_{2A} = k_{2A}C_A^{2}$), pure A at $100$~mol/s, $150\,^{\circ}$C, $0.1$~mol/dm$^3$; $\Delta H_1 = -20\,000$, $\Delta H_2 = -60\,000$~J/mol A; $C_{pA} = C_{pB} = 90$, $C_{pC} = 180$~J/mol\,$^{\circ}$C; $k_{1A} = 10\exp[(E_1/R)(1/300 - 1/T)]$~s$^{-1}$ with $E_1/R = 4000$~K; $k_{2A} = 0.09\exp[(E_2/R)(1/300 - 1/T)]$~dm$^3$/mol\,s with $E_2/R = 9000$~K; $Ua = 4000$~J/m$^3$s\,$^{\circ}$C, $T_a = 100\,^{\circ}$C.}
+
+\spsub{7.9 \enspace Worked from the deck}
+\begin{itemize}
+\item \textbf{Butane isomerisation, adiabatic PFR} (slides~14--24). $163$~kmol/h of $90\,\%$ n-butane/$10\,\%$ i-pentane at $330$~K to $70\,\%$; $\Delta H_{Rx} = -6900$~J/mol, $E/R \approx 7906$~K, $C_{p,\text{butane}} = 141$, $C_{p,\text{pentane}} = 161$~J/mol\,K. The energy balance gives $T = 330 + 43.3X$ (slope $6900/158.9 \approx 43.3$), and the deck's own explicit set is
+\begin{align*}
+K_C &= 3.03\,e^{-830.3\,(T-333)/(T\cdot333)}, &
+k &= 31.1\,e^{7906\,(T-360)/(T\cdot360)}\\[3pt]
+X_e &= \frac{K_C}{1+K_C}, &
+-r_A &= k C_{A0}\left(1 - \left(1 + \tfrac{1}{K_C}\right)X\right)
+\end{align*}
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l*{6}{r}@{}}
+\toprule
+$X$ & 0 & 0.2 & 0.4 & 0.6 & 0.65 & 0.7\\\\
+\midrule
+$T$ (K) & 330 & 338.7 & 347.3 & 356.0 & 358.1 & 360.3\\\\
+$k$ (h$^{-1}$) & 4.22 & 7.76 & 14.02 & 24.27 & 27.74 & 31.67\\\\
+$X_e$ & 0.76 & 0.74 & 0.73 & 0.72 & 0.718 & 0.715\\\\
+$F_{A0}/(-r_A)$ (m$^3$) & 3.74 & 2.78 & 2.50 & 3.88 & 5.99 & 23.29\\\\
+\bottomrule
+\end{tabularx}
+\begin{mthbox}
+\begin{align*}
+\boxed{\;V_{X=0.70} \approx 1.97\ \mathrm{m^3}\;}
+ &&\text{the rate peaks mid-reactor ($-r_A \approx 59$ at $X\approx0.4$) then collapses toward } X_e
+\end{align*}
+\end{mthbox}
+\begin{itemize}
+\item \textbf{PFR with co-current heat exchange} (slides~61--67): same chemistry with $Ua = 5000$~kJ/h\,m$^3$K, inlet $305$~K, coolant $310$~K; the deck integrates $dT_a/dV = 5000(T-T_a)/14\,000$ alongside $dT/dV = (r_A\Delta H - Ua(T-T_a))/(C_{p0}F_{A0})$ --- the rate peak is cut and $T$ never exceeds the $325$~K limit.
+\item \textbf{Interstage cooling} (slides~48--52), $40$~mol/s cooled to $350$~K between stages, each stage to $95\,\%$ of its equilibrium conversion:
 \[
 \text{R1: } X = 0.397 \text{ at } 458.9\ \mathrm{K};\qquad
 \text{R2: } X = 0.621 \text{ at } 439.5\ \mathrm{K}
 \]
 \[
-\boxed{\;\dot{Q}_1 = 217.8\ \mathrm{kcal/s},\qquad \dot{Q}_2 = 179.1\ \mathrm{kcal/s}\;}
+\boxed{\dot{Q}_1 = 217.8\ \mathrm{kcal/s},\quad \dot{Q}_2 = 179.1\ \mathrm{kcal/s}}
 \]
 \notetext{The second stage exits \emph{cooler} than the first ($439.5$ vs $458.9$~K) yet reaches \emph{higher} conversion --- the direct payoff of resetting the distance to equilibrium.}
-\item \textbf{Propylene glycol, CSTR} (slides~57--74):
+\item \textbf{Propylene oxide, CSTR} (slides~57--74). $43.04$~lbmol/h PO into the $300$-gal CSTR, first order with
+\[
+k = 16.96\times10^{12}\,e^{-32\,400/(1.987\,T)}\ \mathrm{h^{-1}},\qquad \tau = 0.1229\ \mathrm{h},
+\]
+plant ceiling $125\,^{\circ}$F:
 \end{itemize}
 \begin{tabularx}{\linewidth}{@{}l r r r@{}}
 \toprule
-Case & $X$ & $T$ & $T$\\
- & & (R) & (F)\\
+Case & $X$ & $T$ (R) & $T$ (F)\\\\
 \midrule
-adiabatic & 0.842 & 610.8 & 151\\
-with cooling coil & 0.3454 & 562.18 & 102.2\\
+adiabatic & 0.842 & 610.8 & 151\\\\
+with cooling coil & 0.364 & 563.7 & 104\\\\
 \bottomrule
 \end{tabularx}
-\notetext{The deck's conclusion, in its own words: \emph{``125 F = 585 F --- we can't use the existing system.''} The adiabatic operating point sits above the temperature the plant can accept, and the coil pulls conversion down to $0.345$ to hold it. Note that this is the same system as \S5.7's Michaelis--Menten-free propylene-glycol example; the cross-over is at $611$~R $=151\,^{\circ}\mathrm{F}$, $X \approx 0.84$.}
+\notetext{The adiabatic point sits above the $125\,^{\circ}$F $= 585$~R ceiling --- ``we can't use the existing system.'' The $40$~ft$^2$ coil at $85\,^{\circ}$F with $U = 100$~Btu/h\,ft$^2$\,F pulls the operating point down to the deck's fsolve values $X = 0.364$, $T = 563.7$~R, inside the constraint. The $X_{MB}$/$X_{EB}$ table of slide~59 crosses at $613$~R, $0.85$ --- the graphical version of the adiabatic row.}
 \begin{itemize}
-\item \textbf{Parallel reactions with heat effects} (slide~95). The ODE set integrated to $V = 10^{4}$~dm$^3$ gives $T = 645$~K.
+\item \textbf{Parallel reactions with heat effects} (slide~95). The coupled ODE set of \S7.8 integrated to $V = 10^{4}$~dm$^3$ gives $T \to 645$~K with the product essentially B.
 \end{itemize}
 
 %================================================================== Catalysis
 \spsection{8 \enspace Catalysis and Catalytic Reactors}
 \notetext{Source: \texttt{Catalysis\_Krd.pdf}.}
 
-\spsub{8.1 \enspace The seven steps and the rate-limiting-step algorithm}
+\spsub{8.1 \enspace What a catalyst does --- and what it cannot do}
+\begin{itemize}
+\item \textbf{Catalyst} (slide~5): a substance that increases the \emph{rate} at which a chemical system approaches equilibrium, \emph{without being substantially consumed}. Selecting one is \emph{not well understood} --- in practice, extensive trial and error.
+\item \textbf{Homogeneous} --- catalyst in the same phase as the reactants: $2\,\mathrm{SO_2(g)}+\mathrm{O_2(g)} \xrightarrow{\mathrm{NO(g)}} 2\,\mathrm{SO_3(g)}$; sucrose $+\,\mathrm{H_2O} \xrightarrow{\mathrm{H^+(aq)}}$ glucose $+$ fructose. \textbf{Heterogeneous} --- different phase: $4\,\mathrm{NH_3}+5\,\mathrm{O_2} \xrightarrow{\mathrm{Pt},\,800\,\degreec} 4\,\mathrm{NO}+6\,\mathrm{H_2O}$.
+\end{itemize}
+\begin{formulabox}
+\textbf{The catalyst changes the PACE, not the thermodynamics} (slide~15): $\Delta G$ and $K_{eq}$ of the reaction are untouched. The deck's example, $\mathrm{CH_4(g)}+\mathrm{CO_2(g)} = 2\,\mathrm{CO(g)}+2\,\mathrm{H_2(g)}$:
+\begin{align*}
+\Delta G_{100\,\degreec} &= +151\ \mathrm{kJ/mol} &&\text{no driving force: no reaction, with or without catalyst}\\
+\Delta G_{700\,\degreec} &= -16\ \mathrm{kJ/mol} &&\text{driving force present, but the mixture still does not react on its own}
+\end{align*}
+At $700\,\degreec$ with $\mathrm{Pt/ZrO_2}$ or $\mathrm{Ni/Al_2O_3}$ in the reactor, equilibrium conversion ($\sim$100\%) is reached at that same temperature.
+\end{formulabox}
+
+\spsub{8.2 \enspace Solid catalysts: active phase, promoters, supports}
+\begin{itemize}
+\item A solid catalyst is built from three roles (slide~16): the \textbf{active phase} where reaction occurs (mostly metal/metal oxide); a \textbf{promoter} --- textual (e.g.\ Al for NH$_3$ production), electric/structural, or poison-resistant; and a \textbf{support/carrier} giving mechanical strength and surface area (98\% of the surface is inside the porous structure; the support may or may not be catalytically active). \textbf{Gauze/foil}: external active sites alone are enough for very fast rates.
+\item \textbf{Support materials} (slide~17): alumina --- inexpensive, $1$--$700$~m$^2$/g, acidic/neutral; silica --- $100$--$800$~m$^2$/g, acidic; \textbf{zeolite} --- mixture of alumina and silica, often exchanged metal ion present, \emph{shape selective}, acidic; others: active carbon (up to $1000$~m$^2$/g), titania ($10$--$50$), zirconia ($10$--$100$), magnesia ($10$), lanthana ($10$).
+\item \textbf{Specificity} (slides~21, 28): the choice of catalyst selects the product. Ethanol over copper dehydrogenates, $\mathrm{C_2H_5OH} \to \mathrm{CH_3CHO}+\mathrm{H_2}$; over alumina it dehydrates, $\mathrm{C_2H_5OH} \to \mathrm{C_2H_4}+\mathrm{H_2O}$. The distance between active sites and their match to bond lengths decides which bonds are weakened.
+\end{itemize}
+
+\spsub{8.3 \enspace The seven steps; the three intrinsic stages}
 \begin{daybox}
 \textbf{External diffusion $\to$ internal diffusion $\to$ adsorption of A $\to$ surface reaction $\to$ desorption of B $\to$ internal diffusion out $\to$ external diffusion out.}
 \vspace{2pt}
@@ -888,8 +1130,40 @@ C_t = C_v + \sum_i C_{i\cdot S}
 \]
 Then test the assumption: if the assumed rate-limiting step does not reproduce the data, move to the next one. The deck works through each assumption in turn.
 \end{daybox}
+\begin{itemize}
+\item Inside the film and the pore the three intrinsic stages are \textbf{adsorption $\to$ reaction $\to$ desorption} (slides~24--25): adsorption lands the species on an active site and weakens its bonds; the surface holds adsorbed gases in the right orientation so favourable collisions become likely; desorption releases the products after an electron rearrangement.
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l X X@{}}
+\toprule
+ & \textbf{Physisorption} & \textbf{Chemisorption}\\\\
+\midrule
+force & van der Waals & chemical bond\\\\
+adsorbed layers & multilayer & only one layer\\\\
+heat of adsorption & low ($10$--$40$~kJ/mol) & high ($>40$~kJ/mol)\\\\
+selectivity & low & high\\\\
+temperature at which it occurs & low & high\\\\
+\bottomrule
+\end{tabularx}
+\notetext{Slide~27. Chemisorption is the catalytically useful one: a real bond to the surface is what activates the molecule.}
 
-\spsub{8.2 \enspace Adsorption isotherms and rate forms}
+\spsub{8.4 \enspace Mechanisms: Langmuir--Hinshelwood and Eley--Rideal}
+\begin{itemize}
+\item \textbf{Langmuir--Hinshelwood} (slides~29--30): adsorption from the gas phase, reactions \emph{between adsorbed molecules}, dissociation at the surface, desorption. For $A_2 + 2B = 2AB$ the deck writes
+\[
+A_2 + * = A_2^*,\quad A_2^* + * = 2A^*,\quad B + * = B^*,\quad A^* + B^* = AB^* + *,\quad AB^* = AB + *
+\]
+\item \textbf{Eley--Rideal} (slides~31--32): the same adsorption steps, but the last step is the direct reaction between the adsorbed molecule $A^*$ and a \emph{gas-phase} molecule $B$: $A^* + B = AB + *$. That fourth step cannot occur in an L--H mechanism.
+\item \textbf{Telling them apart} (slide~33), rate versus coverage $\theta_{A,S}$: for E--R the rate \emph{increases} with coverage until the surface is completely covered by $A^*$; for L--H the rate goes through a \emph{maximum} and ends at zero when $A^*$ blocks every site --- because the step $B + * = B^*$ requires a free site. Whether a real reaction follows one or the other cannot be decided without experimental or computational studies.
+\end{itemize}
+\begin{daybox}
+\textbf{Intrinsic-kinetics algorithm} (slide~34): write a rate equation for every step; assume one step is the RDS --- the intrinsically slowest; set $r_o = r_{\text{RDS}}$; take all other steps at equilibrium ($r \approx 0$); express every surface-adsorbed species concentration in terms of bulk species; write the site balance; substitute the adsorbed-species equations and $C_v$ into $r_{\text{RDS}}$.
+\end{daybox}
+\begin{itemize}
+\item \textbf{Ammonia synthesis mechanism as printed} (slide~36): $\mathrm{H_2}+2S \to 2\,\mathrm{H\!\cdot\!S}$ (rapid); $\mathrm{N_2}+S \rightleftharpoons \mathrm{N_2\!\cdot\!S}$ and $\mathrm{N_2\!\cdot\!S}+S \to 2\,\mathrm{N\!\cdot\!S}$ (\textbf{rate-limiting}); then $\mathrm{N\!\cdot\!S}+\mathrm{H\!\cdot\!S} \rightleftharpoons \mathrm{HN\!\cdot\!S}+S$, $\mathrm{NH\!\cdot\!S}+\mathrm{H\!\cdot\!S} \rightleftharpoons \mathrm{H_2N\!\cdot\!S}+S$, $\mathrm{H_2N\!\cdot\!S}+\mathrm{H\!\cdot\!S} \rightleftharpoons \mathrm{NH_3\!\cdot\!S}+S$, $\mathrm{NH_3\!\cdot\!S} \rightleftharpoons \mathrm{NH_3}+S$ (rapid).
+\item \textbf{Cyclohexane dehydrogenation} (slide~35): $\mathrm{C_6H_{12}} \xrightarrow[\mathrm{Al_2O_3}]{\mathrm{Ni}} \mathrm{C_6H_6} + 3\,\mathrm{H_2}$. The measured rate rises with concentration and saturates --- the signature of an adsorption denominator --- and the task is to (1)~propose the mechanism and (2)~find the RDS consistent with the data.
+\end{itemize}
+
+\spsub{8.5 \enspace Adsorption isotherms and rate forms}
 \begin{formulabox}
 \begin{align*}
 C_{A\cdot S} &= \frac{K_A P_A\, C_t}{1 + K_A P_A + K_B P_B}
@@ -902,9 +1176,30 @@ C_{A\cdot S} &= \frac{K_A P_A\, C_t}{1 + K_A P_A + K_B P_B}
 \item \textbf{Langmuir--Hinshelwood} assumes both reactants are adsorbed before reacting; \textbf{Eley--Rideal} assumes one reacts directly from the gas phase. The denominator is the site balance in both cases --- that is what makes the rate saturate at high pressure.
 \end{itemize}
 
-\spsub{8.3 \enspace Internal diffusion --- Thiele modulus and effectiveness factor}
+\spsub{8.6 \enspace Pore structure and the effective diffusivity}
+\begin{itemize}
+\item \textbf{Pore classes} (slide~38): mesopores $<2$~nm; micropores $2$ to $50$~nm; macro pores $>50$~nm; the active component coats the pore walls. Pores are of random size except in zeolites.
+\end{itemize}
+\notetext{The deck's micro/meso labels are inverted relative to IUPAC (IUPAC: micro $<2$~nm, meso $2$--$50$~nm). Reported as printed, not silently corrected --- the sizes, not the names, are what the calculations use.}
 \begin{formulabox}
 \begin{align*}
+D_e &= \frac{D_{AB}\,\phi_p\,\sigma_c}{\tilde\tau}
+ &&\text{effective diffusivity}\\[4pt]
+\tilde\tau &= \frac{\text{actual distance travelled}}{\text{shortest distance}}
+ &&\text{tortuosity};\quad
+\beta = \frac{\text{area } A_2}{\text{area } A_1},\quad \sigma_c = f(\beta)\\[4pt]
+\text{90\textdegree\ bent pore:}\quad
+\tilde\tau &= \frac{2L}{\sqrt{2L^2}} = \sqrt{2} = 1.414
+ &&\text{worked on slide~40}
+\end{align*}
+\end{formulabox}
+
+\spsub{8.7 \enspace Internal diffusion: Thiele modulus, effectiveness factor, geometries}
+\begin{formulabox}
+\begin{align*}
+\frac{d^2\psi}{d\lambda^2} + \frac{2}{\lambda}\frac{d\psi}{d\lambda} - \phi_1^{2}\,\psi &= 0
+ &&\psi = \frac{C_A}{C_{As}},\ \lambda = \frac{r}{R},\quad
+ \phi_1^{2} = \frac{k_1 R^{2} C_{As}^{\,n-1}}{D_e}\quad\text{(slide~42)}\\[5pt]
 \phi_s &= R\sqrt{\frac{k_1}{D_e}}
  &&\text{Thiele modulus, first order, sphere}\\[5pt]
 \eta &= \frac{3}{\phi^{2}}\left(\phi\coth\phi - 1\right)
@@ -917,24 +1212,76 @@ C_{A\cdot S} &= \frac{K_A P_A\, C_t}{1 + K_A P_A + K_B P_B}
 \end{formulabox}
 \begin{itemize}
 \item \textbf{$\eta \to 1$} for small $\phi$ (reaction-limited: the whole pellet is used); \textbf{$\eta \to 3/\phi$} for large $\phi$ (diffusion-limited: only a shell near the surface reacts).
+\item \textbf{Other geometries} (slide~44), with $\omega = x/x_p$ or $\bar r/R_p$ and $\phi = x_p$ or $R_p$ times $\sqrt{k/D_{TA}^{e}}$:
+\end{itemize}
+\begin{tabularx}{\linewidth}{@{}l X X X@{}}
+\toprule
+ & \textbf{Slab} & \textbf{Cylinder} & \textbf{Sphere}\\\\
+\midrule
+$\psi$ & $\dfrac{\cosh(\phi\omega)}{\cosh\phi}$ & $\dfrac{I_0(\phi\omega)}{I_0(\phi)}$ & $\dfrac{\sinh(\phi\omega)}{\omega\sinh\phi}$\\\\[10pt]
+$\eta$ & $\dfrac{\tanh\phi}{\phi}$ & $\dfrac{2\,I_1(\phi)}{\phi\,I_0(\phi)}$ & $\dfrac{3}{\phi}\left[\dfrac{1}{\tanh\phi}-\dfrac{1}{\phi}\right]$\\\\
+\bottomrule
+\end{tabularx}
+\notetext{$I_i$ is the modified Bessel function of order $i$.}
+\begin{itemize}
+\item \textbf{Non-isothermal pellet} (slide~46): with $\gamma = E/(RT_s)$ (Arrhenius number) and $\beta = \Delta T_{max}/T_s = -\Delta H_{Rx} D_e C_{As}/(k_s T_s)$, an exothermic reaction can run hotter inside the pellet than at its surface, and $\eta$ can \emph{exceed}~1.
 \end{itemize}
 
-\spsub{8.4 \enspace Diagnostic criteria}
+\spsub{8.8 \enspace Falsified kinetics and the diagnostic criteria}
+\begin{itemize}
+\item \textbf{Falsified kinetics} (slide~45): cumene cracking on SiO$_2$--Al$_2$O$_3$, measured rate against $1/T$ for four pellet radii. Small pellets give the steep, true-activation-energy line; as the pellet grows the line drops and its slope falls toward $E/2$ --- the Arrhenius plot itself tells you when internal diffusion has taken over.
+\item \textbf{Weisz--Prater} (slide~49): evaluate limitation from the \emph{observed} rate alone,
+\end{itemize}
 \begin{formulabox}
 \begin{align*}
-C_{WP} &= \eta\,\phi^{2} = \frac{(-r_A')_{\text{obs}}\,R^{2}}{D_e\,C_{As}}
- &&\text{Weisz--Prater}\\[3pt]
-C_{WP} &\ll 1 &&\text{no internal limitation}\\[3pt]
-C_{WP} &\gg 1 &&\text{strongly limited}\\[5pt]
-\Omega &= \frac{\eta}{1 + \eta\,\phi^{2} S_a \rho_b / k_c}
- &&\text{overall effectiveness, with external resistance}\\[5pt]
-\frac{k\,C_{Ab}^{\,n-1} R^{2}\rho_b S_a E}{b\,D_e\,T^{2}} &< 0.15
- &&\text{Mears: external gradients negligible}
+C_{WP} &= \eta\,\phi^{2} = \frac{(-r_A')_{\text{obs}}\,\rho_c\, R^{2}}{D_e\,C_{As}}
+ = \frac{\text{actual reaction rate}}{\text{a diffusion rate}}\\[3pt]
+C_{WP} &\ll 1 &&\text{no concentration gradients in the pellet}\\[3pt]
+C_{WP} &\gg 1 &&\text{internal diffusion controls the reaction}
 \end{align*}
 \end{formulabox}
-\notetext{Weisz--Prater is the practical one: it uses the \emph{observed} rate, so it can be evaluated from experiment without knowing the intrinsic kinetics.}
+\begin{itemize}
+\item \textbf{Mears criteria} (slide~56) for the \emph{external} film:
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\frac{(-r_A')\,\rho_b\, R\, n}{k_c\, C_{Ab}} &< 0.15
+ &&\text{external concentration gradients negligible}\\[5pt]
+\frac{\left|-\Delta H_{Rx}\,(-r_A')\,\rho_b\, R\, E\right|}{h\, T^{2}\, R_g} &< 0.15
+ &&\text{external temperature gradients negligible}
+\end{align*}
+\end{formulabox}
+\notetext{$n$ = order of reaction, $R$ = pellet radius, $\rho_b$ = bulk density, $h$ = heat-transfer coefficient between gas and pellet. Weisz--Prater is the practical internal test because it needs only the observed rate; Mears is its external counterpart.}
 
-\spsub{8.5 \enspace Worked from the deck}
+\spsub{8.9 \enspace External mass transfer and the overall effectiveness factor}
+\begin{itemize}
+\item \textbf{Mass-transfer coefficient} (slide~51): $k_c = 0.6\,\dfrac{D_{AB}^{2/3}}{\nu^{1/6}}\times\dfrac{U^{1/2}}{d_p^{1/2}}$. Plotting $-r_A'$ against $(U/d_p)^{1/2}$: the rate first rises with velocity (\textbf{diffusion limited}, the boundary layer thins) and then plateaus (\textbf{reaction limited}, the surface reaction is the bottleneck).
+\item \textbf{Steady-state matching} (slides~53--54): the molar rate of transfer from the bulk to the external surface equals the net rate of reaction on and within the pellet, $M_{Ar} = -r_A''\,(\text{external area} + \text{internal area})$, with external area $= a_c\,\Delta V$ and internal area $= S_a\,\rho_b\,\Delta V$.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Omega &= \frac{\text{actual overall rate}}{\text{rate if the whole surface saw } C_{Ab}, T_b}
+ = \frac{\eta}{1 + \eta\, k_1''\, S_a\, \rho_b / (k_c\, a_c)}
+\end{align*}
+\end{formulabox}
+
+\spsub{8.10 \enspace Packed beds: design with diffusion and reaction}
+\begin{itemize}
+\item The packed bed is the workhorse (slide~58) --- steam reforming, catalytic reforming, isomerization, polymerization, ammonia and SO$_3$ synthesis --- run adiabatic or non-adiabatic, particle sizes $1/8''$ to $1/4''$.
+\item \textbf{Balance over a bed slice} (slide~60): $A_c W_{Az}\rvert_z - A_c W_{Az}\rvert_{z+\Delta z} + r_A'\,\rho_b\, A_c\,\Delta z = 0$, i.e.\ $-\dfrac{dW_{Az}}{dz} + r_A'\rho_b = 0$. With a dispersion term this becomes
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+D_a\,\frac{d^2 C_{Ab}}{dz^2} - U\,\frac{dC_{Ab}}{dz} - \Omega\,\rho_b\, k'' S_a\, C_{Ab} &= 0\\[5pt]
+X = 1 - \frac{C_{Ab}}{C_{Ab0}} &= 1 - e^{-\left(\rho_b\, k''\, S_a\, \Omega\, L\right)/U}
+ &&\text{dispersion neglected}
+\end{align*}
+\end{formulabox}
+\begin{itemize}
+\item \textbf{Configurations} (slide~59): \textbf{multi-bed} (unit operations between PBRs); \textbf{reverse flow} --- for exothermic reactions the temperature rise along the bed can deactivate catalyst, so the flow direction is switched periodically, which also preheats the feed; \textbf{counter-flow} --- two chambers, a lean stream preheats the fluid and raises the rate; \textbf{radial flow} --- feed enters and flows radially through an annulus of catalyst, for operation under low pressure drop.
+\end{itemize}
+
+\spsub{8.11 \enspace Worked from the deck}
 \begin{itemize}
 \item \textbf{Concentration inside a pellet} (slide~48), sphere $d_p = 2\times10^{-3}$~cm, $D_e = 0.1$~cm$^2$/s:
 \[
@@ -945,29 +1292,34 @@ C_{WP} &\gg 1 &&\text{strongly limited}\\[5pt]
 \qquad\Longrightarrow\qquad \boxed{\;d_{\text{new}} = 6.82\times10^{-4}\ \mathrm{cm}\;}
 \]
 \notetext{At $\phi = 5.99$ only $24\,\%$ of the surface concentration survives at the pellet centre. Shrinking the diameter to about a third of the original is what it takes to make the whole pellet effective.}
-\item \textbf{Apparent activation energy} (slide~57), $R = 0.2$~cm, $D_e = 0.015$~cm$^2$/s, $100 \to 150\,^{\circ}\mathrm{C}$:
+\item \textbf{Apparent activation energy} (slide~57), $R = 0.2$~cm, $D_e = 0.015$~cm$^2$/s, $100 \to 150\,\degreec$:
 \end{itemize}
 \begin{tabularx}{\linewidth}{@{}l r r r@{}}
 \toprule
-$T$ & $\phi$ & $\eta$ & $r$\\
+$T$ & $\phi$ & $\eta$ & $r$\\\\
 \midrule
-100\,\degreec & 1.575 & 0.8660 & $2.617\times10^{-5}$\\
-150\,\degreec & 7.75  & 0.337  & $2.468\times10^{-4}$\\
+100\,\degreec & 1.575 & 0.8660 & $2.617\times10^{-5}$\\\\
+150\,\degreec & 7.75  & 0.337  & $2.468\times10^{-4}$\\\\
 \bottomrule
 \end{tabularx}
 \[
 \boxed{\;E_{\text{app}} = 14\,080\ \mathrm{cal/mol}\;}
 \]
-\notetext{The measured activation energy is roughly \emph{half} the true one because $\eta$ is falling as fast as $k$ is rising --- the classic signature of internal diffusion control. Halving the observed $E$ is the diagnostic, not an error in the Arrhenius plot.}
-\begin{itemize}
-\item \textbf{Reactor choice:} the packed bed is the workhorse; the deck covers adiabatic and non-adiabatic operation, reverse-flow and counter-flow configurations.
-\end{itemize}
+\notetext{The measured activation energy is roughly \emph{half} the true one because $\eta$ is falling as fast as $k$ is rising --- the classic signature of internal diffusion control, the falsified kinetics of slide~45 in numbers. Halving the observed $E$ is the diagnostic, not an error in the Arrhenius plot.}
 
 %================================================================== Non-ideal
 \spsection{9 \enspace Non-Ideal Reactors and Residence-Time Distributions}
 \notetext{Source: \texttt{Non\_ideal\_KRD.pdf} --- headed \emph{Reaction Engineering / CHE~G641}, the graduate treatment of this material.}
 
-\spsub{9.1 \enspace The RTD functions}
+\spsub{9.1 \enspace Where ideality breaks}
+\begin{itemize}
+\item \textbf{Why it matters (slides 3--4):} the ideal design equations assume identical residence times (PFR/PBR, no axial diffusion) or perfect mixing (CSTR/batch); real vessels sit in between --- non-uniform flow, inefficient or absent mixing, bypassing and dead zones change conversion, yield and the temperature development of the process.
+\item \textbf{CSTR (slide 5):} the feed entrance runs at relatively high concentration while stagnant \emph{dead zones} run low; part of the flow can short-circuit the vessel as bypass.
+\item \textbf{PBR (slide 6):} ideal plug flow moves every molecule at the same axial rate; the real bed adds turbulent velocity profiles, back-mixing and molecular diffusion, so molecules travel at different speeds and in different directions (channeling, slide~14).
+\item \textbf{Micro vs macro mixing (slides 8--9):} macromixing is the RTD itself; micromixing asks whether molecules of different ages meet at all --- \emph{complete segregation}, same-age globules leaving together, versus \emph{complete micromixing} --- and whether mixing occurs early or late along the flow path.
+\end{itemize}
+
+\spsub{9.2 \enspace The RTD functions}
 \begin{formulabox}
 \begin{align*}
 E(t) &= \frac{C(t)}{\displaystyle\int_0^{\infty} C\,dt}
@@ -977,12 +1329,15 @@ F(t) &= \int_0^{t} E\,dt
 t_m &= \int_0^{\infty} t\,E\,dt = \frac{V}{v_0}
  &&\text{mean residence time}\\[5pt]
 \sigma^{2} &= \int_0^{\infty} \left(t - t_m\right)^{2} E\,dt
- &&\text{variance, i.e.\ the spread}
+ &&\text{variance, i.e.\ the spread}\\[5pt]
+1-F(t) &= \frac{V}{v}\,I(t)
+ &&\text{internal age distribution } I(t)
 \end{align*}
 \end{formulabox}
 \notetext{Normalising by the area is what makes $E(t)$ a probability density, and it is the step most often missed when a pulse experiment is worked up by hand.}
+\notetext{The profiles are a diagnostic (slides 14, 21): a sharp spike reads as a nearly ideal PFR, a decaying exponential as a nearly ideal CSTR, an early spike with a long tail as a PBR with channeling and dead zones, and a two-humped curve as a CSTR with dead zones.}
 
-\spsub{9.2 \enspace Ideal limits}
+\spsub{9.3 \enspace Ideal limits}
 \begin{formulabox}
 \begin{align*}
 \text{PFR:}\quad & E(t) = \delta\left(t-\tau\right)
@@ -992,7 +1347,7 @@ t_m &= \int_0^{\infty} t\,E\,dt = \frac{V}{v_0}
 \end{align*}
 \end{formulabox}
 
-\spsub{9.3 \enspace Segregation model}
+\spsub{9.4 \enspace Zero-parameter models: segregation and maximum mixedness}
 \begin{formulabox}
 \begin{align*}
 \bar{X} &= \int_0^{\infty} X_{\text{batch}}(t)\,E(t)\,dt
@@ -1002,8 +1357,9 @@ t_m &= \int_0^{\infty} t\,E\,dt = \frac{V}{v_0}
 \begin{itemize}
 \item \textbf{$n>1$:} $\bar{X}$ \emph{exceeds} the ideal-mixed conversion. \textbf{$0<n<1$:} the opposite. Complete segregation is therefore a bound, and it tells you which way a real reactor departs from ideal mixing without any further modelling.
 \end{itemize}
+\notetext{The deck's model menu (slide~22): \emph{zero} adjustable parameters --- the segregation model above and the maximum-mixedness model, its micromixed opposite extreme; \emph{one} parameter --- tanks-in-series and dispersion; \emph{two} parameters --- the real vessel as a combination of ideal reactors (\S9.7).}
 
-\spsub{9.4 \enspace Tanks-in-series model}
+\spsub{9.5 \enspace Tanks-in-series model}
 \begin{formulabox}
 \begin{align*}
 E(t) &= \frac{t^{\,n-1}}{(n-1)!\;\tau_i^{\,n}}\;e^{-t/\tau_i}
@@ -1014,8 +1370,9 @@ X &= 1 - \left(1 + k\tau_i\right)^{-n}
  &&\text{first-order conversion}
 \end{align*}
 \end{formulabox}
+\notetext{Where the gamma form comes from (slides 26--28): a pulse through $N$ equal CSTRs gives $C_1 = C_0e^{-t/\tau_i}$, $C_2 = C_0\,t\,e^{-t/\tau_i}/\tau_i$, $C_3 = C_0\,t^2e^{-t/\tau_i}/2\tau_i^2$, and in general $E(t) = t^{N-1}e^{-t/\tau_i}/[(N-1)!\,\tau_i^{N}]$, or dimensionless $E(\theta) = N(N\theta)^{N-1}e^{-N\theta}/(N-1)!$. As $N\to\infty$ the curve collapses to the plug-flow spike, which is why $n = t_m^2/\sigma^2$ measures the departure from plug flow.}
 
-\spsub{9.5 \enspace Dispersion model}
+\spsub{9.6 \enspace Dispersion model}
 \begin{formulabox}
 \begin{align*}
 X &= 1 - \frac{4q\,e^{Pe/2}}
@@ -1030,18 +1387,31 @@ n &= \frac{Pe}{2} + 1
  &&\text{equivalent number of tanks}
 \end{align*}
 \end{formulabox}
+\notetext{The picture behind it (slides 29--33): molecules diffuse ahead of and lag behind the molar average velocity, i.e.\ a Fickian dispersion $D_a\,dC/dz$ superimposed on the bulk flow, so the tracer pulse broadens as it travels; the mole balance over a slice $\Delta Z$ with $F_A = uAC_A + AD_a\,dC_A/dz$ yields the closed-vessel solution above. The single parameter $D_a/(UL)$ is read from a pulse tracer test; the deck's $E$-curves for $D_a/(UL) = 0.002,\ 0.025,\ 0.2$ show small, intermediate and large deviation from plug flow.}
 
-\spsub{9.6 \enspace Two-parameter models}
+\spsub{9.7 \enspace Two-parameter models}
 \begin{itemize}
-\item A real vessel is represented as an \textbf{ideal region} of volume $V_s = \alpha V$ exchanging with a \textbf{dead zone}, plus a \textbf{bypass} fraction $\beta = v_b/v_0$.
+\item A real CSTR is represented as an \textbf{ideal reacting region} of volume $V_s = \alpha V$ with a \textbf{dead zone} $V_d = (1-\alpha)V$, plus a \textbf{bypass} stream; $\beta = v_s/v_0$ is the fraction of the feed entering the reacting region (slides 40--41). The modelled conversion is
+\[
+1-X = \beta + \frac{(1-\beta)^2}{1-\beta+\alpha\tau k}.
+\]
 \item Tracer response takes the form
 \[
 \frac{C_T}{C_{T0}} = 1 - \left(1-\beta\right)e^{-(1-\beta)t/(\alpha\tau)}
 \]
-and the two parameters $(\alpha,\beta)$ are extracted from the first two moments.
+and linearising it (slide~42),
+\[
+\ln\frac{C_{T0}}{C_{T0}-C_T} = \ln\frac{1}{1-\beta} + \frac{1-\beta}{\alpha}\cdot\frac{t}{\tau},
+\]
+so the intercept and slope of the tracer straight line give $(\alpha,\beta)$.
+\item The deck's second two-parameter variant (slides 43--44) models a real CSTR as \textbf{two ideal CSTRs with interchange} --- a highly agitated region near the impeller exchanging with a quieter one, $V_d = (1-\alpha)V$ --- with
+\[
+X = \frac{(\beta+\alpha\tau k)(\beta+(1-\alpha)\tau k)-\beta^{2}}{(1+\beta+\alpha\tau k)(\beta+(1-\alpha)\tau k)-\beta^{2}},
+\]
+and $(\alpha,\beta)$ again fixed by a tracer test, the response now a sum of two exponentials with exponents $m_{1},m_{2}$.
 \end{itemize}
 
-\spsub{9.7 \enspace Worked from the deck}
+\spsub{9.8 \enspace Worked from the deck}
 \begin{itemize}
 \item \textbf{Pulse tracer} (slide~17):
 \[
@@ -1093,13 +1463,13 @@ C_{WP} &= \frac{(-r_A')_{\text{obs}}R^{2}}{D_eC_{As}} && n = \frac{t_m^{2}}{\sig
 Same conversion, one vessel: PFR or CSTR? & PFR & \S2.6 ($2.165$ vs $6.40$~m$^3$)\\
 Same total volume, two CSTRs in series or parallel? & series & \S4.6 ($0.900$ vs $0.813$)\\
 PBR then CSTR, or CSTR then PBR? & CSTR first & \S4.6 ($0.690$ vs $0.598$)\\
-Real vessel, or an ideal limit? & neither & \S9.7 ($0.679$ vs $0.720$ / $0.560$)\\
+Real vessel, or an ideal limit? & neither & \S9.8 ($0.679$ vs $0.720$ / $0.560$)\\
 \bottomrule
 \end{tabularx}
 
 \vspace{3mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}
-\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Two places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, and the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}. Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
+\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Five places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4) --- and the temperature--time pairing on Ch3 slide~61 (\S3.5). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
 
 \end{document}

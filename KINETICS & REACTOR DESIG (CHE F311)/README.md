@@ -83,7 +83,7 @@ Rules that follow:
 | Q4 | Ch2 s.31–36 | 0.82 + 3.20 = 4.02 m³ |
 | Q5 | Ch2 s.37–38 | 0.551 + 1.614 = 2.165 m³ |
 | Q6 | Ch2 s.41–42 | $-r_A=0.08$, $r_B=0.02$, $r_C=0.04$; stoichiometry $4A\to B+2C$ |
-| Q7 | Ch2 s.45–46 | 5/9 ≈ 0.56 of the feed to branch D |
+| Q7 | Ch2 s.45–46 | 2/3 ≈ 0.67 of the feed to branch D (80 L vs 40 L, equal space time) |
 | Q8 | Ch2 s.59 | (a) 24 / 71.9 dm³; (b) ≈0.69; (c) 0.70; (d) 0.64; (e) 0.90 |
 | Q9 | Ch3 s.5–7 | $r_{NO}=-4$, $r_{O_2}=-2$ |
 | Q10 | Ch3 s.6–7 | $r_B=-15$, $r_C=+25$ |
@@ -107,8 +107,8 @@ Rules that follow:
 | Q28 | Ch5 s.78–79 | 2nd order, $k\approx0.074$ atm⁻¹min⁻¹ ≈ 2.3 L/(mol·min) |
 | Q29 | Ch5 s.80 | ≈8.9 h |
 | Q30 | Ch5 s.81 | 6× MFR $X=0.75$; PFR $X=0.67$ |
-| Q31 | Ch5 s.82 | $X_A=0.6$, $X_B=0.9$, $C_B=20$ |
-| Q32 | Ch5 s.83 | $X_A=0.23$, $X_B=0.12$, $C_B\approx46$ |
+| Q31 | Ch5 s.82 | $X_A=0.5$, $X_B=0.75$, $C_B=40$ (gas, $\varepsilon_A=0.5$) |
+| Q32 | Ch5 s.83 | $X_A\approx0.82$, $X_B\approx0.41$, $C_B\approx130$ (with $T_0/T$, $\pi/\pi_0$) |
 | Q33 | Ch5 s.84 | MM fits: $k_3\approx32$ h⁻¹, $C_M\approx0.5$ mmol/L |
 | Q34 | Ch5 s.61 | $X_e=0.80$; PFR $X\approx0.51$; CSTR 0.40 (rate law quoted from the textbook original) |
 | Q35 | Ch5 s.62 | 1st order, $k\approx0.08$ min⁻¹ |

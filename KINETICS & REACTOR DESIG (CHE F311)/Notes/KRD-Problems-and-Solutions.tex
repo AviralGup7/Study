@@ -101,8 +101,8 @@ are re-computed by \texttt{krd-answers-check.py} kept beside this file.}
 \toprule
 ID & Source & Topic & Solved at\\
 \midrule
-Q1  & Ch1, slide 7  & Rocket engine: rates of reaction from mole balance & p.~\pageref{q:1}\\
-Q2  & Ch1, slide 12 & $A\to B$: CSTR, PFR and batch volumes/times, three rate laws & p.~\pageref{q:2}\\
+Q1  & Ch1, slide 36 & Rocket engine: rates of reaction from mole balance & p.~\pageref{q:1}\\
+Q2  & Ch1, slide 54 & $A\to B$: CSTR, PFR and batch volumes/times, three rate laws & p.~\pageref{q:2}\\
 Q3  & Ch2, slides 19--24 & Levenspiel sizing: CSTR and PFR at 80\% & p.~\pageref{q:3}\\
 Q4  & Ch2, slides 31--36 & Two CSTRs in series (40\%, 80\%) & p.~\pageref{q:4}\\
 Q5  & Ch2, slides 37--38 & Two PFRs in series & p.~\pageref{q:5}\\
@@ -113,7 +113,7 @@ Q9  & Ch3, slides 5--7 & Relative rates: $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{N
 Q10 & Ch3, slides 6--7 & Relative rates: $2A+3B\to5C$ & p.~\pageref{q:10}\\
 Q11 & Ch3, slides 42--44 & Saponification stoichiometric table & p.~\pageref{q:11}\\
 Q12 & Ch3, slides 48--51 & Flow-system stoichiometric table, $A+2B\to C+D$ & p.~\pageref{q:12}\\
-Q13 & Ch3 s.61 (+Ch5 s.77) & Dimerisation $2A\to R$ in MFR: rate equation & p.~\pageref{q:13}\\
+Q13 & Ch3 s.62 (+Ch5 s.77) & Dimerisation $2A\to R$ in MFR: rate equation & p.~\pageref{q:13}\\
 Q14 & Ch3, slide 63 & Phosphine cracking: PFR size & p.~\pageref{q:14}\\
 Q15 & Ch4, slides 17--20 & Ethylene-oxide batch data: $k$ and batch time & p.~\pageref{q:15}\\
 Q16 & Ch4, slides 29--38 & Ethylene glycol: CSTR volume, parallel and series 800-gal reactors & p.~\pageref{q:16}\\
@@ -156,112 +156,325 @@ Q46 & Non-ideal, s.52--59 & Dispersion model: conversion four ways & p.~\pageref
 %============================= PART A =====================================
 \spsection{Part A -- Mole balances and rates (Ch1-krd (1).pdf)}
 
-\qtitle{Q1 -- Rocket engine: rates of reaction}{\label{q:1}Ch1, slide 7}
-\src{Ch1-krd (1).pdf, slide 7 (``Example'').}
-A rocket engine burns a stoichiometric mixture of hydrogen and oxygen.  The combustion
-chamber is cylindrical, 75\,cm long and 60\,cm in diameter, and produces 108\,kg/s of
-exhaust gas.  If combustion is complete, find the rate of reaction of hydrogen and of oxygen.
+\qtitle{Q1 -- Rocket engine: rates of reaction}{\label{q:1}Ch1, slide 36}
+\src{Ch1-krd (1).pdf, slide 36 (the ``Example'' slide).}
+A rocket engine burns a stoichiometric mixture of fuel (liquid hydrogen) in oxidant
+(liquid oxygen).  The combustion chamber is cylindrical, 75\,cm long and 60\,cm in
+diameter, and the combustion process produces 108\,kg/s of exhaust gases.  If
+combustion is complete, find the rate of reaction of hydrogen and of oxygen.
 
 \begin{qbox}
-$\mathrm{H_2 + \tfrac12 O_2 \to H_2O}$.  Chamber volume
-$V=\frac{\pi}{4}(0.6)^2(0.75)=0.212\ \mathrm{m^3}$.
-Exhaust $=108/18 = 6.0$ kmol/s of $\mathrm{H_2O}$, so 6.0 kmol/s $\mathrm{H_2}$ and
-3.0 kmol/s $\mathrm{O_2}$ react (complete combustion).
-With $-r_i = F_i/V$:
+\textbf{What ``rate of reaction'' means here.}  The rate is defined per unit
+extensive quantity of the system (Ch1 slides 30--34); for a homogeneous gas-phase
+combustion chamber the natural basis is the reactor \emph{volume},
+$-r_i = (\text{moles of } i \text{ reacting per unit time})/V$, with units
+mol/(m$^3\cdot$s).  So the whole problem is: find the molar rates at which
+H$_2$ and O$_2$ are consumed, and divide by the chamber volume.
+
+\textbf{Step 1 --- the chamber volume.}  A cylinder of length $L=0.75$~m and
+diameter $D=0.60$~m:
 \[
--r_{\mathrm{H_2}}=\frac{6.0}{0.212}=28.3\ \mathrm{kmol\,m^{-3}\,s^{-1}},\qquad
--r_{\mathrm{O_2}}=\frac{3.0}{0.212}=14.1\ \mathrm{kmol\,m^{-3}\,s^{-1}}.
+V = \frac{\pi}{4}D^2 L = \frac{\pi}{4}(0.60)^2(0.75) = 0.2121\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- turn the exhaust mass flow into a molar flow.}  Complete
+combustion means every gram of exhaust leaves as water,
+$\mathrm{H_2 + \tfrac12 O_2 \to H_2O}$, of molar mass $18$~kg/kmol:
+\[
+F_{\mathrm{H_2O}} = \frac{108\ \mathrm{kg/s}}{18\ \mathrm{kg/kmol}} = 6.0\ \mathrm{kmol/s}.
+\]
+
+\textbf{Step 3 --- read the reactant rates off the stoichiometry.}  One mole of
+H$_2$ and half a mole of O$_2$ disappear per mole of water formed, so
+\[
+F_{\mathrm{H_2,\,reacted}} = 6.0\ \mathrm{kmol/s},\qquad
+F_{\mathrm{O_2,\,reacted}} = \tfrac12(6.0) = 3.0\ \mathrm{kmol/s}.
+\]
+
+\textbf{Step 4 --- divide by the volume.}  At steady state with complete, uniform
+combustion the mole balance In $-$ Out $+$ Generation $=$ Accumulation$(=0)$ gives
+the consumption rate per unit volume directly:
+\[
+-r_{\mathrm{H_2}} = \frac{6.0}{0.2121} = 28.3\ \mathrm{kmol\,m^{-3}\,s^{-1}},\qquad
+-r_{\mathrm{O_2}} = \frac{3.0}{0.2121} = 14.1\ \mathrm{kmol\,m^{-3}\,s^{-1}}.
 \]
 \end{qbox}
-\begin{ansbox}$-r_{\mathrm{H_2}} \approx 2.8\times10^{4}$ and $-r_{\mathrm{O_2}} \approx 1.4\times10^{4}$ mol/(m$^3\cdot$s).\end{ansbox}
+\note{Sanity checks for the exam: the two rates are in the same $2{:}1$ ratio as the
+stoichiometric coefficients (this is the relative-rate rule of Part~C), and the
+magnitudes sit in the ``rocket engines'' band of the rate spectrum printed on
+slide~35 --- combustion is among the fastest reactions there are.}
+\begin{ansbox}$-r_{\mathrm{H_2}} \approx 28.3$ kmol/(m$^3\cdot$s) $\approx 2.8\times10^{4}$ mol/(m$^3\cdot$s);
+$-r_{\mathrm{O_2}} \approx 14.1$ kmol/(m$^3\cdot$s) $\approx 1.4\times10^{4}$ mol/(m$^3\cdot$s).\end{ansbox}
 
-\qtitle{Q2 -- CSTR, PFR and batch for three rate laws}{\label{q:2}Ch1, slide 12}
-\src{Ch1-krd (1).pdf, slide 12 (``Problem'').}
-$A\to B$ isothermally in a continuous-flow reactor; consume 99\% of A
-($C_A=0.01\,C_{A0}$) with $F_{A0}=5$ mol/h and $v_0=10$ dm$^3$/h (so $C_{A0}=0.5$ mol/dm$^3$).
-Rate laws: (a) $-r_A=k$, $k=0.05$ mol/(h$\cdot$dm$^3$); (b) $-r_A=kC_A$, $k=0.0001$ s$^{-1}=0.36$ h$^{-1}$;
-(c) $-r_A=kC_A^2$, $k=3$ dm$^3$/(mol$\cdot$h).  (d) The batch time for 99\% in each case.
+\qtitle{Q2 -- CSTR, PFR and batch for three rate laws}{\label{q:2}Ch1, slide 54}
+\src{Ch1-krd (1).pdf, slide 54 (the ``Problem'' slide).}
+The reaction $A\to B$ is to be carried out isothermally in a continuous-flow
+reactor.  Calculate both the CSTR and the PFR volumes necessary to consume 99\%
+of A ($C_A = 0.01\,C_{A0}$) when the entering molar flow rate is $F_{A0}=5$~mol/h,
+assuming the rate laws (a) $-r_A=k$ with $k=0.05$~mol/(h$\cdot$dm$^3$),
+(b) $-r_A=kC_A$ with $k=0.0001$~s$^{-1}$, (c) $-r_A=kC_A^2$ with
+$k=3$~dm$^3$/(mol$\cdot$h).  The entering volumetric flow rate is
+$v_0=10$~dm$^3$/h.  (d)~Repeat each case for a batch reactor reaching 99\%.
 
 \begin{qbox}
-CSTR $V=F_{A0}X/(-r_A)_{exit}$; PFR $V=\int_0^X F_{A0}\,dX/(-r_A)$; batch $t=N_{A0}\int_0^X dX/(-r_A V)$ with $C_{A0}=0.5$.
-\begin{itemize}[leftmargin=14pt,itemsep=1pt]
-\item (a) zero order: $V_{CSTR}=V_{PFR}=5(0.99)/0.05 = 99$ dm$^3$.
-\item (b) first order: $V_{CSTR}=\frac{v_0 X}{k(1-X)}=\frac{10(0.99)}{0.36(0.01)}=2750$ dm$^3$;
-$V_{PFR}=\frac{v_0}{k}\ln\frac1{1-X}=\frac{10}{0.36}(4.605)=127.9$ dm$^3$.
-\item (c) second order: $V_{CSTR}=\frac{v_0 X}{kC_{A0}(1-X)^2}=\frac{10(0.99)}{3(0.5)(10^{-4})}=66\,000$ dm$^3$;
-$V_{PFR}=\frac{v_0}{kC_{A0}}\frac{X}{1-X}=\frac{10}{1.5}(99)=660$ dm$^3$.
-\item (d) batch: (a) $t=C_{A0}X/k=9.9$ h; (b) $t=\ln(100)/0.36=12.8$ h; (c) $t=\frac{X}{kC_{A0}(1-X)}=66$ h.
-\end{itemize}
+\textbf{Set-up used for every part.}  $X = 0.99$ and
+$C_{A0} = F_{A0}/v_0 = 5/10 = 0.5$~mol/dm$^3$.  The three design equations
+(slides 42--53):
+\[
+\text{CSTR: } V = \frac{F_{A0}\,X}{(-r_A)_{\text{exit}}},\qquad
+\text{PFR: } V = F_{A0}\int_0^X \frac{dX}{-r_A},\qquad
+\text{batch: } t = N_{A0}\int_0^X \frac{dX}{-r_A\,V} = C_{A0}\int_0^X \frac{dX}{-r_A}\ (V\ \text{const}).
+\]
+For a flow reactor with $-r_A = kC_A^n$ and $C_A = C_{A0}(1-X)$, the integrals
+below are the standard ones; write them out in the exam rather than quoting results.
+
+\textbf{(a) Zero order, $-r_A = k = 0.05$.}  The rate is constant, so the CSTR
+exit rate equals the rate everywhere in the PFR and the two reactors coincide:
+\[
+V_{CSTR} = \frac{F_{A0}X}{k} = \frac{5(0.99)}{0.05} = 99\ \mathrm{dm^3},\qquad
+V_{PFR} = \frac{F_{A0}}{k}\int_0^{0.99} dX = 99\ \mathrm{dm^3}.
+\]
+Batch: $t = \dfrac{C_{A0}}{k}\displaystyle\int_0^{0.99} dX = \dfrac{0.5(0.99)}{0.05} = 9.9$~h.
+
+\textbf{(b) First order, $-r_A = kC_A$.}  First fix the units:
+$k = 0.0001\ \mathrm{s^{-1}} \times 3600 = 0.36\ \mathrm{h^{-1}}$ --- the single
+most common slip in this question.  With $C_A = C_{A0}(1-X)$:
+\begin{align*}
+V_{CSTR} &= \frac{F_{A0}X}{kC_{A0}(1-X)} = \frac{v_0 X}{k(1-X)}
+ = \frac{10(0.99)}{0.36(0.01)} = 2750\ \mathrm{dm^3},\\
+V_{PFR} &= \frac{F_{A0}}{kC_{A0}}\int_0^X\frac{dX}{1-X}
+ = \frac{v_0}{k}\ln\frac{1}{1-X} = \frac{10}{0.36}(4.605) = 127.9\ \mathrm{dm^3},\\
+t_{batch} &= \frac{1}{k}\ln\frac{1}{1-X} = \frac{4.605}{0.36} = 12.8\ \mathrm{h}.
+\end{align*}
+
+\textbf{(c) Second order, $-r_A = kC_A^2 = kC_{A0}^2(1-X)^2$.}
+\begin{align*}
+V_{CSTR} &= \frac{F_{A0}X}{kC_{A0}^2(1-X)^2} = \frac{v_0 X}{kC_{A0}(1-X)^2}
+ = \frac{10(0.99)}{3(0.5)(0.01)^2} = 66\,000\ \mathrm{dm^3},\\
+V_{PFR} &= \frac{v_0}{kC_{A0}}\int_0^X\frac{dX}{(1-X)^2}
+ = \frac{v_0}{kC_{A0}}\cdot\frac{X}{1-X} = \frac{10}{1.5}(99) = 660\ \mathrm{dm^3},\\
+t_{batch} &= \frac{1}{kC_{A0}}\cdot\frac{X}{1-X} = \frac{99}{1.5} = 66\ \mathrm{h}.
+\end{align*}
 \end{qbox}
-\begin{ansbox}(a) 99 dm$^3$ both; (b) CSTR 2750, PFR 128 dm$^3$; (c) CSTR 66\,000, PFR 660 dm$^3$; (d) 9.9 / 12.8 / 66 h.\end{ansbox}
+\note{What the numbers teach (and what the deck's next section turns into the
+Levenspiel plot): as the order rises the CSTR volume explodes ---
+99 $\to$ 2750 $\to$ 66\,000~dm$^3$ --- while the PFR grows mildly ---
+99 $\to$ 128 $\to$ 660~dm$^3$.  The CSTR operates at the \emph{exit} rate, i.e.\ at
+the smallest rate in the reactor, and punishing a small rate with a big volume is
+exactly what the design equations do.  At 99\% conversion a CSTR is 100$\times$ the
+PFR for the second-order case.}
+\begin{ansbox}(a) 99 dm$^3$ (CSTR $=$ PFR), batch 9.9 h; (b) CSTR 2750, PFR 127.9 dm$^3$, batch 12.8 h;
+(c) CSTR 66\,000, PFR 660 dm$^3$, batch 66 h.\end{ansbox}
 
 %============================= PART B =====================================
 \spsection{Part B -- Conversion and reactor sizing (Ch2-krd (1).pdf)}
 
 \qtitle{Q3 -- Sizing from the Levenspiel table}{\label{q:3}Ch2, slides 19--24}
-\src{Ch2-krd (1).pdf, slides 19--24.}
-Calculate the volumes required to achieve 80\% conversion in a CSTR and a PFR when species A
-enters at 0.4 mol/s, given $F_{A0}/(-r_A)$ (m$^3$):
+\src{Ch2-krd (1).pdf, slides 19--24 (the worked ``CSTR/PFR sizing'' problem).}
+Consider the isothermal gas-phase isomerization $A\to B$ ($T=500$~K,
+$P=830$~kPa $=8.2$~atm, charge pure A).  The measured rates are:
 \begin{center}\small
 \begin{tabular}{lccccccc}
 \toprule
 $X$ & 0 & 0.1 & 0.2 & 0.4 & 0.6 & 0.7 & 0.8\\
-$F_{A0}/(-r_A)$ & 0.89 & 1.08 & 1.33 & 2.05 & 3.54 & 5.06 & 8.00\\
+$-r_A$ (mol/m$^3\cdot$s) & 0.45 & 0.37 & 0.30 & 0.195 & 0.113 & 0.079 & 0.05\\
 \bottomrule
 \end{tabular}
 \end{center}
+Calculate the volumes required to achieve $80$\% conversion in a CSTR and in a
+PFR when species A enters at $F_{A0}=0.4$~mol/s.
+
 \begin{qbox}
-CSTR: $V=\frac{F_{A0}}{-r_A}\Big|_{0.8} X = 8.00(0.8)=6.40$ m$^3$.
-PFR with the deck's five-point quadrature ($h=0.2$):
-$V=\frac{0.2}{3}[0.89+4(1.33)+2(2.05)+4(3.54)+8.00]=2.165$ m$^3$ (deck value).
+\textbf{Step 0 --- build the Levenspiel column.}  The deck's method (slides
+10--12) sizes reactors from the plot of $F_{A0}/(-r_A)$ vs $X$: the CSTR volume is
+a \emph{rectangle} (height at exit conversion times width $X$); the PFR volume is
+the \emph{area under the curve}.  Dividing $F_{A0}=0.4$~mol/s by each rate gives
+\begin{center}\small
+\begin{tabular}{lccccccc}
+\toprule
+$X$ & 0 & 0.1 & 0.2 & 0.4 & 0.6 & 0.7 & 0.8\\
+$F_{A0}/(-r_A)$ (m$^3$) & 0.89 & 1.08 & 1.33 & 2.05 & 3.54 & 5.06 & 8.00\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 1 --- CSTR volume (slide 20).}  A CSTR operates at its \emph{exit}
+conditions, so evaluate the rate at $X=0.8$: $\left(1/-r_A\right)_{0.8}=1/0.05=20$
+m$^3\cdot$s/mol, i.e.\ $F_{A0}/(-r_A)=8.00$~m$^3$, and
+\[
+V_{\mathrm{CSTR}}=\left(\frac{F_{A0}}{-r_A}\right)_{X=0.8}X
+=0.4\ \tfrac{\mathrm{mol}}{\mathrm s}\times20\ \tfrac{\mathrm{m^3\,s}}{\mathrm{mol}}\times0.8
+=6.4\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- PFR volume by Simpson's rule (slides 21--23).}
+$V_{\mathrm{PFR}}=\int_0^{0.8}\frac{F_{A0}}{-r_A}\,dX$ has no closed form without a
+rate law, so the deck applies its five-point quadrature with
+$h=\Delta X=(0.8-0)/4=0.2$:
+\[
+V=\frac{\Delta X}{3}\Big[\tfrac{F_{A0}}{-r_A}(0)+4\tfrac{F_{A0}}{-r_A}(0.2)
++2\tfrac{F_{A0}}{-r_A}(0.4)+4\tfrac{F_{A0}}{-r_A}(0.6)+\tfrac{F_{A0}}{-r_A}(0.8)\Big]
+\]
+\[
+=\frac{0.2}{3}\big[0.89+4(1.33)+2(2.05)+4(3.54)+8.00\big]
+=\frac{0.2}{3}(32.47)=2.165\ \mathrm{m^3}.
+\]
+
+\textbf{Step 3 --- read the picture (slide 24).}  The CSTR rectangle minus the
+PFR area is $6.4-2.165=4.235$~m$^3$ of extra volume --- the price of running the
+whole reactor at the slow exit rate.
 \end{qbox}
-\begin{ansbox}$V_{CSTR}=6.4$ m$^3$, $V_{PFR}=2.165$ m$^3$.\end{ansbox}
+\note{Exam habit: write the two design equations, the $F_{A0}/(-r_A)$ table, the
+rectangle-vs-area argument, and the Simpson arithmetic.  The deck's own printed
+answers are exactly $6.4$ and $2.165$~m$^3$.}
+\begin{ansbox}$V_{CSTR}=6.4$ m$^3$, $V_{PFR}=2.165$ m$^3$ (the PFR is $4.235$ m$^3$ smaller).\end{ansbox}
 
 \qtitle{Q4 -- Two CSTRs in series}{\label{q:4}Ch2, slides 31--36}
 \src{Ch2-krd (1).pdf, slides 35--36.}
-With the same table, the first CSTR reaches $X=0.4$; find the volume of each of two CSTRs
-for 80\% overall.
-\begin{qbox}
-$V_1 = 2.05(0.4)=0.82$ m$^3$; $V_2 = 8.00(0.8-0.4)=3.20$ m$^3$; total $4.02$ m$^3$ ---
-less than one CSTR (6.4 m$^3$), as the deck points out.
-\end{qbox}
-\begin{ansbox}$V_1=0.82$ m$^3$, $V_2=3.20$ m$^3$, total $4.02$ m$^3$.\end{ansbox}
+For two CSTRs in series, $40$\% conversion is achieved in the first reactor.
+What is the volume of each reactor necessary to achieve $80$\% overall conversion
+of the entering species?  (Same feed and rate data as Q3.)
 
-\qtitle{Q5 -- Two PFRs in series}{\label{q:5}Ch2, slides 37--38}
-\src{Ch2-krd (1).pdf, slides 37--38.}
-Same feed; intermediate conversion 40\%, final 80\%.
 \begin{qbox}
-$V_1=\frac{0.2}{3}[0.89+4(1.33)+2.05]=0.551$ m$^3$;
-$V_2=\frac{0.2}{3}[2.05+4(3.54)+8.00]=1.614$ m$^3$;
-total $2.165$ m$^3$ $=$ one PFR, as expected for PFRs in series (deck values).
+\textbf{The design equation for the $n$-th CSTR (slides 32--34).}  Balance A over
+reactor 1: In $-$ Out $+$ Generation $=0$, i.e.\ $F_{A0}-F_{A1}+r_{A1}V_1=0$; with
+$F_{A1}=F_{A0}-F_{A0}X_1$ this gives $V_1=F_{A0}\left(\frac{1}{-r_{A1}}\right)X_1$.
+Over reactor 2 the balance is $F_{A1}-F_{A2}+r_{A2}V_2=0$; substituting
+$F_{A1}=F_{A0}(1-X_1)$ and $F_{A2}=F_{A0}(1-X_2)$ leaves the difference of
+conversions:
+\[
+V_2=\frac{F_{A1}-F_{A2}}{-r_{A2}}=\frac{F_{A0}}{-r_{A2}}\,(X_2-X_1).
+\]
+Graphically each CSTR is a rectangle whose height is its \emph{own exit} value of
+$F_{A0}/(-r_A)$.
+
+\textbf{Step 1 --- reactor 1 ($X_1=0.4$, slide 36).}
+$F_{A0}/(-r_A)\big|_{0.4}=2.05$~m$^3$:
+\[
+V_1 = 2.05\ \mathrm{m^3}\times0.4 = 0.82\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- reactor 2 ($X_1=0.4 \to X_2=0.8$).}
+$F_{A0}/(-r_A)\big|_{0.8}=8.00$~m$^3$:
+\[
+V_2 = 8.00\ \mathrm{m^3}\times(0.8-0.4) = 3.20\ \mathrm{m^3}.
+\]
+
+\textbf{Step 3 --- total and comparison.}
+$V=V_1+V_2=0.82+3.20=4.02$~m$^3$, against $6.4$~m$^3$ for a single CSTR to 80\%:
+splitting the conversion across two tanks saves $2.38$~m$^3$, because the first
+tank never has to operate at the slow $X=0.8$ rate.
 \end{qbox}
-\begin{ansbox}$V_1=0.551$, $V_2=1.614$, total $2.165$ m$^3$.\end{ansbox}
+\note{Exam habit: sketch the two Levenspiel rectangles (short one on $0\le X\le0.4$,
+tall one on $0.4\le X\le0.8$) and label the heights $2.05$ and $8.00$~m$^3$ ---
+the picture carries half the marks.}
+\begin{ansbox}$V_1=0.82$ m$^3$, $V_2=3.20$ m$^3$, total $4.02$ m$^3$ (vs $6.4$ m$^3$ for one CSTR).\end{ansbox}
+
+\qtitle{Q5 -- Two PFRs in series}{\label{q:5}Ch2, slides 37--39}
+\src{Ch2-krd (1).pdf, slides 37--39.}
+Calculate the reactor volumes $V_1$ and $V_2$ for the plug-flow sequence shown
+when the intermediate conversion is $40$\% and the final conversion is $80$\%
+(same feed as Q3).
+
+\begin{qbox}
+\textbf{Why each PFR integrates over its own slice.}  Reactor 1 raises $X$ from
+$0$ to $0.4$ and reactor 2 from $0.4$ to $0.8$; each integrates $F_{A0}/(-r_A)$
+over that interval, so the two areas simply tile the area of one PFR (slide 44
+proves that $N$ PFRs in series give the same conversion as a single PFR of the
+total volume).
+
+\textbf{Step 1 --- reactor 1 (slide 38), three-point Simpson, $h=0.2$:}
+\[
+V_1=\int_0^{0.4}\frac{F_{A0}}{-r_A}\,dX
+=\frac{0.2}{3}\big[0.89+4(1.33)+2.05\big]
+=\frac{0.2}{3}(8.26)=0.551\ \mathrm{m^3}.
+\]
+
+\textbf{Step 2 --- reactor 2 (slide 39), points $0.4,\,0.6,\,0.8$:}
+\[
+V_2=\int_{0.4}^{0.8}\frac{F_{A0}}{-r_A}\,dX
+=\frac{0.2}{3}\big[2.05+4(3.54)+8.00\big]
+=\frac{0.2}{3}(24.21)=1.614\ \mathrm{m^3}.
+\]
+
+\textbf{Step 3 --- total.}  $V=V_1+V_2=0.551+1.614=2.165$~m$^3$ --- exactly the
+single-PFR volume of Q3, which is the point the deck is making: a PFR does not
+care where (or whether) you split it.
+\end{qbox}
+\begin{ansbox}$V_1=0.551$ m$^3$, $V_2=1.614$ m$^3$, total $2.165$ m$^3$ $=$ one PFR of Q3.\end{ansbox}
 
 \qtitle{Q6 -- Mixed reactor, unknown stoichiometry}{\label{q:6}Ch2, slides 41--42}
-\src{Ch2-krd (1).pdf, slides 41--42.}
-A and B ($C_{A0}=0.10$, $C_{B0}=0.01$ mol/L) react in a mixed reactor of $V=1$ L,
-$\tau = V/v_0 = 1$ min.  The outlet contains $C_A=0.02$, $C_B=0.03$, $C_C=0.04$ mol/L.
-Find the rates of reaction of A, B and C.
+\src{Ch2-krd (1).pdf, slides 42--43 (the worked mixed-reactor problem).}
+One liter per minute of liquid containing A and B ($C_{A0}=0.10$, $C_{B0}=0.01$
+mol/liter) flows into a mixed reactor of volume $V=1$~liter.  The materials react
+in a complex manner for which the stoichiometry is unknown.  The outlet stream
+contains A, B and C with $C_A=0.02$, $C_B=0.03$, $C_C=0.04$ mol/liter.  Find the
+rate of reaction of A, B and C for the conditions within the reactor.
+
 \begin{qbox}
-$r_i=(C_i-C_{i0})/\tau$: $r_A=-0.08$, $r_B=+0.02$, $r_C=+0.04$ mol/(L$\cdot$min).
-Ratio $-r_A:r_B:r_C = 4:1:2$, i.e. the stoichiometry consistent with the data is
-$4A \to B + 2C$.
+\textbf{Why one balance per species.}  A CSTR at steady state balances each
+species on its own: In $-$ Out $+$ Generation $=0$,
+$v_0C_{i0}-v_0C_i+r_iV=0$, so with the space time $\tau=V/v_0=1/1=1$~min
+\[
+r_i=\frac{C_i-C_{i0}}{\tau}.
+\]
+Because the stream is liquid (constant volume), every species can be balanced
+independently --- which is exactly why the question can be solved even though
+the stoichiometry is unknown.
+
+\textbf{Step 1 --- evaluate the three balances.}
+\[
+r_A=\frac{0.02-0.10}{1}=-0.08,\qquad
+r_B=\frac{0.03-0.01}{1}=+0.02,\qquad
+r_C=\frac{0.04-0}{1}=+0.04\quad\mathrm{mol/(L\cdot min)}.
+\]
+A is consumed; B and C are produced.
+
+\textbf{Step 2 --- the ratios reveal the stoichiometry.}  Rates of reaction are
+proportional to the stoichiometric coefficients (the relative-rate rule of
+Part~C): $-r_A:r_B:r_C=0.08:0.02:0.04=4:1:2$, so the equation consistent with
+the measurements is $4A\to B+2C$.
 \end{qbox}
-\begin{ansbox}$-r_A=0.08$, $r_B=0.02$, $r_C=0.04$ mol/(L$\cdot$min); stoichiometry $4A\to B+2C$.\end{ansbox}
+\note{Exam phrasing: ``the reactor is a CSTR, hence each species obeys
+$r_i=(C_i-C_{i0})/\tau$; the signs give consumption/production and the ratio of
+the rates gives the stoichiometric coefficients.''}
+\begin{ansbox}$-r_A=0.08$, $r_B=0.02$, $r_C=0.04$ mol/(L$\cdot$min); the data imply $4A\to B+2C$.\end{ansbox}
 
 \qtitle{Q7 -- PFRs in two parallel branches}{\label{q:7}Ch2, slides 45--46}
 \src{Ch2-krd (1).pdf, slides 45--46.}
-Branch D: 20 L then 30 L in series; branch E: 40 L.  What fraction of the feed should go
-to branch D?
+The reactor setup consists of three plug-flow reactors in two parallel branches:
+branch D has a reactor of volume 50 liters followed by a reactor of volume
+30 liters; branch E has a reactor of volume 40 liters.  What fraction of the
+feed should go to branch D?
+
 \begin{qbox}
-For parallel PFR branches the efficient split keeps $V/F$ equal:
-$F_D/F_E = 50/40$, so $F_D/F = 50/90 = 0.556$.
+\textbf{The rule (slide 45).}  PFRs in any parallel / parallel-series combination
+behave as a single PFR of the total volume \emph{only if} the feed is distributed
+so that streams which meet have the same composition --- i.e.\ the space time
+$V/F$ must be the same for each parallel line; ``any other way of feeding is less
+efficient''.
+
+\textbf{Step 1 --- branch volumes.}  Series PFRs add (slide 44): branch~D is
+$50+30=80$~L; branch~E is $40$~L.
+
+\textbf{Step 2 --- equal space times.}  $V_D/F_D=V_E/F_E \Rightarrow
+F_D/F_E=80/40=2$.
+
+\textbf{Step 3 --- the fraction.}
+\[
+\frac{F_D}{F}=\frac{80}{80+40}=\frac{2}{3}\approx0.67.
+\]
 \end{qbox}
-\begin{ansbox}$5/9 \approx 0.56$ of the feed to branch D.\end{ansbox}
+\note{An earlier revision of these notes misread the figure as $20+30$~L and
+printed $5/9$; the slide prints 50 then 30 liters, so two-thirds is the value
+consistent with the deck.}
+\begin{ansbox}$2/3\approx0.67$ of the feed to branch D (equal space time $80/80=40/40=1$~L per unit flow).\end{ansbox}
 
 \qtitle{Q8 -- P2-7: adiabatic $A+B\to C$, parts (a)--(e)}{\label{q:8}Ch2, slide 59}
-\src{Ch2-krd (1).pdf, slide 59 (``P2-7'').}
-$F_{A0}=300$ mol/min with
+\src{Ch2-krd (1).pdf, slides 59--60 (``P2-7'').}
+The exothermic reaction $A\to B+C$ was carried out adiabatically and the
+following data were recorded; the entering molar flow rate of A was
+$F_{A0}=300$~mol/min:
 \begin{center}\small
 \begin{tabular}{lcccccccc}
 \toprule
@@ -270,21 +483,47 @@ $-r_A$ (mol/dm$^3\cdot$min) & 1.0 & 1.67 & 5.0 & 5.0 & 5.0 & 5.0 & 1.25 & 0.91\\
 \bottomrule
 \end{tabular}
 \end{center}
-(a) PFR and CSTR volumes for 40\%; (b) range of $X$ where the two volumes are identical;
-(c) maximum $X$ in a 105 dm$^3$ CSTR; (d) $X$ for a 72 dm$^3$ PFR followed by a 24 dm$^3$ CSTR;
-(e) $X$ for the reverse order.
+(a) PFR and CSTR volumes for 40\%; (b) range of $X$ where the two volumes are
+identical; (c) maximum $X$ in a 105~dm$^3$ CSTR; (d) $X$ for a 72~dm$^3$ PFR
+followed by a 24~dm$^3$ CSTR; (e) $X$ for the reverse order.
+
 \begin{qbox}
-With $g(X)=F_{A0}/(-r_A) = 300,179.6,60,60,60,60,240,329.7$ dm$^3$:
-\begin{itemize}[leftmargin=14pt,itemsep=1pt]
-\item (a) CSTR: $60(0.4)=24$ dm$^3$; PFR: trapezium over the table gives $71.9$ dm$^3$.
-\item (b) $X\,g(X)=\int_0^X g$ first holds near $X\approx0.69$ (between 0.6 and 0.8, where the
-rate falls again); below it the CSTR is smaller, above it the CSTR is larger.
-\item (c) $X\,g(X)=105 \Rightarrow X\approx0.70$.
-\item (d) PFR to 72 dm$^3$ $\Rightarrow X_1\approx0.40$; then $(X_2-0.4)g(X_2)=24 \Rightarrow X_2\approx0.64$.
-\item (e) CSTR: $X_1 g(X_1)=24 \Rightarrow X_1=0.40$ (the high-conversion root); PFR adds
-72 dm$^3$ $\Rightarrow X_2\approx0.90$.
-\end{itemize}
+\textbf{Step 0 --- the Levenspiel column and its shape.}
+$g(X)=F_{A0}/(-r_A)$ = $300,\,179.6,\,60,\,60,\,60,\,60,\,240,\,329.7$~dm$^3$ at the
+tabulated $X$.  Plot it (slide 60): a V-shaped curve --- adiabatic heating makes
+the rate \emph{rise} at first ($1/(-r_A)$ falls to the flat bottom 60), then
+reactant depletion makes it climb steeply.  All five parts are just rectangles
+(CSTR: $V=X\,g(X)$) and areas (PFR: $V=\int_0^X g\,dX$) on this curve.
+
+\textbf{(a) 40\% conversion.}  CSTR rectangle at the exit height:
+$V=0.4\times60=24$~dm$^3$.  PFR area by trapezia over $0,\,0.2,\,0.4$:
+$V=0.1(300+2\times179.6+60)=71.9$~dm$^3$ --- here the PFR is \emph{larger},
+because the rate is slow at the entrance.
+
+\textbf{(b) Where CSTR $=$ PFR.}  Track both with $X$: at $X=0.6$,
+CSTR $=0.6\times60=36$ vs PFR $=71.9+0.2\times60=83.9$; at $X=0.8$,
+CSTR $=0.8\times240=192$ vs PFR $=83.9+\tfrac{0.2}{2}(60+240)=113.9$.  The
+rectangle overtakes the area between $0.6$ and $0.8$, at $X\approx0.69$; below it
+the CSTR is the smaller reactor, above it the PFR is.
+
+\textbf{(c) 105 dm$^3$ CSTR.}  Solve $X\,g(X)=105$: $X=0.6\Rightarrow36$,
+$X=0.8\Rightarrow192$, interpolation on the rising limb gives $X\approx0.70$.
+
+\textbf{(d) PFR then CSTR.}  The PFR area reaches $72$~dm$^3$ essentially at
+$X_1=0.40$ (part (a): 71.9).  The CSTR then needs
+$(X_2-X_1)\,g(X_2)=24$: on the bottom/rising limb, $X_2=0.64$ gives
+$0.24\times g(0.64)\approx0.24\times96\approx23$ --- so $X_2\approx0.64$.
+
+\textbf{(e) CSTR then PFR.}  $X_1g(X_1)=24$ has its useful root at $X_1=0.40$
+(the height 60 rectangle).  The PFR must add $72$~dm$^3$ from $0.40$: the area
+$0.4\to0.6$ is $12$, $0.6\to0.8$ is $15$, $0.8\to0.9$ is $28.5$ --- $55.5$ at the
+last datum, so the remaining area is eaten just beyond $X=0.9$ where the data
+end; quote $X_2\approx0.90$.
 \end{qbox}
+\note{The V-shaped curve is the exam point: at low $X$ the CSTR wins (it sits on
+the fast bottom while the PFR drags through the slow entrance); past
+$X\approx0.69$ the PFR wins.  Order the units accordingly (slide 58: best
+arrangement rules).}
 \begin{ansbox}(a) 24 dm$^3$ / 71.9 dm$^3$; (b) about $X=0.69$; (c) $X\approx0.70$; (d) $X\approx0.64$; (e) $X\approx0.90$.\end{ansbox}
 
 %============================= PART C =====================================
@@ -292,68 +531,232 @@ rate falls again); below it the CSTR is smaller, above it the CSTR is larger.
 
 \qtitle{Q9 -- Relative rates: NO oxidation}{\label{q:9}Ch3, slides 5--7}
 \src{Ch3-krd.pdf, slides 5--7 (``Example'').}
-$2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$; NO$_2$ forms at 4 mol/(m$^3\cdot$s).
+For $2\mathrm{NO}+\mathrm{O_2}\to2\mathrm{NO_2}$, NO$_2$ is formed at
+$4$~mol/(m$^3\\cdot$s).  What are the rates of reaction of NO and of O$_2$?
+
 \begin{qbox}
-$\frac{r_{NO}}{-2}=\frac{r_{O_2}}{-1}=\frac{r_{NO_2}}{2}$ gives
-$r_{NO}=-4$ and $r_{O_2}=-2$ mol/(m$^3\cdot$s), exactly as on the deck's solution slide.
+\textbf{Why one rule solves everything.}  A reaction has only \emph{one} rate;
+each species merely reports it through its own coefficient.  Dividing every
+species rate by its stoichiometric number (negative for reactants) makes all
+reports agree (slide 5):
+\[
+\frac{r_A}{-a}=\frac{r_B}{-b}=\frac{r_C}{c}=\frac{r_D}{d}.
+\]
+Sign convention the deck uses throughout: $r_i>0$ = formed, $r_i<0$ = consumed,
+and $-r_i$ = rate of disappearance.
+
+\textbf{Step 1 --- write the chain and the shared number.}  With coefficients
+$2,1,2$ and the known rate $r_{\mathrm{NO_2}}=+4$:
+\[
+\frac{r_{\mathrm{NO}}}{-2}=\frac{r_{\mathrm{O_2}}}{-1}=\frac{r_{\mathrm{NO_2}}}{+2}
+=\frac{4}{2}=2.
+\]
+Evaluating the known ratio as one number ($4/2=2$) is the exam trick: every
+other rate is that number times its own coefficient.
+
+\textbf{Step 2 --- read the two rates off.}
+\[
+r_{\mathrm{NO}}=(-2)(2)=-4,\qquad
+r_{\mathrm{O_2}}=(-1)(2)=-2\quad\mathrm{mol/(m^3\cdot s)},
+\]
+exactly the values printed on the deck's solution slide~7.
+
+\textbf{Step 3 --- check by ratios.}  $4:2:4=2:1:2$ --- the coefficients
+themselves; NO disappears as fast as NO$_2$ appears (equal coefficients) and
+O$_2$ reacts at half that rate, which is exactly what the equation says.
 \end{qbox}
-\begin{ansbox}$r_{\mathrm{NO}}=-4$, $r_{\mathrm{O_2}}=-2$ mol/(m$^3\cdot$s).\end{ansbox}
+\note{Exam wording: ``NO is consumed as fast as NO$_2$ is formed; O$_2$ at half
+that rate.''  Also state $-r_{\mathrm{NO}}=4$~mol/(m$^3\\cdot$s) in case the
+question asks for the rate of \emph{disappearance}.}
+\begin{ansbox}$r_{\mathrm{NO}}=-4$, $r_{\mathrm{O_2}}=-2$ mol/(m$^3\\cdot$s).\end{ansbox}
 
 \qtitle{Q10 -- Relative rates: $2A+3B\to5C$}{\label{q:10}Ch3, slides 6--7}
 \src{Ch3-krd.pdf, slides 6--7 (``Exercise'').}
-$-r_A = 10$ mol/(dm$^3\cdot$s); find the rates of B and C.
+The reaction $2A+3B\to5C$ is carried out in a reactor.  At a particular point
+the rate of disappearance of A is $10$~mol/(dm$^3\\cdot$s); what are the rates of
+B and C?
+
 \begin{qbox}
-$\frac{r_A}{-2}=\frac{r_B}{-3}=\frac{r_C}{5}$:
-$r_B=\frac{-3}{-2}(-10)=-15$; $r_C=\frac{5}{-2}(-10)=+25$ mol/(dm$^3\cdot$s) (deck values).
+\textbf{Step 1 --- translate the given into the sign convention.}
+``Disappearance of A is 10'' means $-r_A=10$, i.e.\ $r_A=-10$ (A is consumed).
+Getting this sign right is the whole question.
+
+\textbf{Step 2 --- the chain and the shared number.}
+\[
+\frac{r_A}{-2}=\frac{r_B}{-3}=\frac{r_C}{5}=\frac{-10}{-2}=5.
+\]
+
+\textbf{Step 3 --- B and C (slide 7 prints this very arithmetic).}
+\[
+r_B=(-3)(5)=-15\ \mathrm{mol/(dm^3\cdot s)}\quad(\text{B is consumed}),
+\]
+\[
+r_C=(+5)(5)=+25\ \mathrm{mol/(dm^3\cdot s)}\quad(\text{C is produced}).
+\]
+
+\textbf{Step 4 --- check.}  $10:15:25=2:3:5$ --- the coefficients; signs say
+A, B consumed and C produced, as the stoichiometry demands.
 \end{qbox}
-\begin{ansbox}$r_B=-15$, $r_C=+25$ mol/(dm$^3\cdot$s).\end{ansbox}
+\note{Classic exam slip: feeding $+10$ in as $r_A$ and flipping every sign.  The
+ratio check in Step~4 catches it immediately, so always write it.}
+\begin{ansbox}$r_B=-15$, $r_C=+25$ mol/(dm$^3\\cdot$s).\end{ansbox}
 
 \qtitle{Q11 -- Saponification stoichiometric table}{\label{q:11}Ch3, slides 42--44}
-\src{Ch3-krd.pdf, slides 42--44 (``Example'').}
-$3\,\mathrm{NaOH} + (\mathrm{C_{17}H_{35}COO})_3\mathrm{C_3H_5} \to
-3\,\mathrm{C_{17}H_{35}COONa} + \mathrm{C_3H_5(OH)_3}$, i.e. $3A+B\to3C+D$, liquid phase,
-$X$ = conversion of NaOH.
-\begin{qbox}
-$\Theta_B=\tfrac13,\ \Theta_C=\Theta_D=0$ (as fed):
-$C_A=C_{A0}(1-X)$; $C_B=C_{A0}\left(\Theta_B-\tfrac{X}{3}\right)$;
-$C_C=C_{A0}X$; $C_D=C_{A0}\tfrac{X}{3}$ --- the deck's table (slides 43--44), with
-$V=V_0$ because the mixture is liquid.
-\end{qbox}
-\begin{ansbox}Concentrations as above; e.g. with $\Theta_B = N_{B0}/N_{A0}$ the B entry is $C_{A0}(\Theta_B - X/3)$.\end{ansbox}
+\src{Ch3-krd.pdf, slides 41--44 (batch stoichiometric table + worked example).}
+Given the saponification for the formation of soap from aqueous caustic soda and
+glyceryl stearate,
+\[
+3\,\mathrm{NaOH}(aq)+(\mathrm{C_{17}H_{35}COO})_3\mathrm{C_3H_5}
+\to 3\,\mathrm{C_{17}H_{35}COONa}+\mathrm{C_3H_5(OH)_3},
+\]
+i.e.\ $3A+B\to3C+D$, let $X$ be the conversion of sodium hydroxide.  Set up a
+stoichiometric table expressing the concentration of \emph{each species} in terms
+of its initial concentration and the conversion.
 
-\qtitle{Q12 -- Flow-system table for $A+2B\to C+D$}{\label{q:12}Ch3, slides 48--51}
-\src{Ch3-krd.pdf, slides 48--51 (``Example'').}
-Liquid phase, $C_{A0}=1.8$, $C_{B0}=6.6$ kmol/m$^3$; A is the basis.
 \begin{qbox}
-$\Theta_B=6.6/1.8=3.67$.  Effluent rates: $F_A=F_{A0}(1-X)$, $F_B=F_{A0}(3.67-2X)$,
-$F_C=F_{A0}X$, $F_D=F_{A0}X$; concentrations $C_i=F_i/v_0$, e.g.
-$C_B=C_{A0}(3.67-2X)$ (deck slides 49--51).
+\textbf{Step 1 --- coefficients and changes (slide 41's generic table).}
+$a=3,\ b=1,\ c=3,\ d=1$.  Per mole of A reacted the changes are
+$-N_{A0}X$ (A), $-\frac{b}{a}N_{A0}X=-\frac13 N_{A0}X$ (B),
+$+\frac{c}{a}N_{A0}X=+N_{A0}X$ (C), $+\frac{d}{a}N_{A0}X=+\frac13 N_{A0}X$ (D);
+with $\Theta_i=N_{i0}/N_{A0}$ the remaining moles are $N_i=N_{A0}(\Theta_i+\nu_i X/a)$.
+
+\textbf{Step 2 --- liquid phase kills the volume term (slide 43).}
+``We know that this is a liquid-phase reaction. Therefore $V=V_0$'', so
+$C_i=N_i/V_0$ and $N_{A0}/V_0=C_{A0}$:
+\begin{align*}
+C_A &= C_{A0}(1-X), &
+C_B &= C_{A0}\!\left(\Theta_B-\tfrac{1}{3}X\right),\\
+C_C &= C_{A0}\!\left(\Theta_C+X\right), &
+C_D &= C_{A0}\!\left(\Theta_D+\tfrac{1}{3}X\right).
+\end{align*}
+This is exactly the deck's filled table (slide 44).
+
+\textbf{Step 3 --- what the feed gives.}  As fed there is no soap or glycerine,
+$\Theta_C=\Theta_D=0$; if caustic soda and stearate are charged stoichiometrically
+$\Theta_B=\tfrac13$, in which case B is exhausted exactly when $X=1$.
 \end{qbox}
+\note{Exam one-liner: ``liquid phase $\Rightarrow V=V_0$, so divide the mole table
+by $V_0$ and replace $N_{A0}/V_0$ with $C_{A0}$.''}
+\begin{ansbox}$C_A=C_{A0}(1-X)$, $C_B=C_{A0}(\Theta_B-X/3)$, $C_C=C_{A0}(\Theta_C+X)$, $C_D=C_{A0}(\Theta_D+X/3)$.\end{ansbox}
+
+\qtitle{Q12 -- Flow-system table for $A+2B\to C+D$}{\label{q:12}Ch3, slides 48--52}
+\src{Ch3-krd.pdf, slides 49--52 (worked flow-table example).}
+Liquid phase, $A+2B\to C+D$, with $C_{A0}=1.8$ and $C_{B0}=6.6$~kmol/m$^3$
+($C_{C0}=C_{D0}=0$).  Take A as the basis and express every concentration in
+terms of $X$.
+
+\begin{qbox}
+\textbf{Step 1 --- feed ratios and $\delta$ (slide 49).}
+$\Theta_i=F_{i0}/F_{A0}=C_{i0}/C_{A0}$:
+\[
+\Theta_B=\frac{6.6}{1.8}=3.67,\qquad \Theta_C=\Theta_D=0,
+\]
+and $\delta=\frac{d}{a}+\frac{c}{a}-\frac{b}{a}-1=1+1-2-1=-1$ (moles shrink),
+though for a \emph{liquid} feed $\delta$ never changes the volume.
+
+\textbf{Step 2 --- the molar-flow table (slide 50), changes $-\!F_{A0}X$,
+$-2F_{A0}X$, $+F_{A0}X$, $+F_{A0}X$:}
+\begin{center}\small
+\begin{tabular}{ll}
+\toprule
+Species & Effluent molar flow\\
+\midrule
+A & $F_A=F_{A0}(1-X)$\\
+B & $F_B=F_{A0}(\Theta_B-2X)=F_{A0}(3.67-2X)$\\
+C & $F_C=F_{A0}X$\\
+D & $F_D=F_{A0}X$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 3 --- concentrations (slide 52).}  Liquid phase: $v=v_0$, so
+$C_i=F_i/v_0=C_{A0}(\ldots)$:
+\[
+C_A=C_{A0}(1-X),\quad C_B=C_{A0}(3.67-2X),\quad C_C=C_D=C_{A0}X.
+\]
+\end{qbox}
+\note{The point of the exercise: even with $\delta=-1$ nothing expands, because
+liquids do not.  The same reaction in the gas phase would need the
+$(1+\varepsilon X)$ factor --- contrast with Q14.}
 \begin{ansbox}$C_A=C_{A0}(1-X)$, $C_B=C_{A0}(3.67-2X)$, $C_C=C_D=C_{A0}X$.\end{ansbox}
 
-\qtitle{Q13 -- Dimerisation $2A\to R$ in a MFR}{\label{q:13}Ch3, slide 61}
-\src{Ch3-krd.pdf, slide 61; repeated in Ch5\_-\,krd.pdf, slide 77 (``L 5.2'').}
-Pure gaseous A ($C_{A0}=100$ mmol/L) dimerises in a MFR ($V=0.1$ L).  Runs:
-$v_0 = 10.0,\,3.0,\,1.2,\,0.5$ L/h with $C_A = 85.7,\,66.7,\,50,\,33.4$ mmol/L.  Find a rate
-equation.
+\qtitle{Q13 -- Dimerisation $2A\to R$ in a MFR}{\label{q:13}Ch3, slide 62}
+\src{Ch3-krd.pdf, slide 62; repeated as Ch5\_-\\,krd.pdf slide 77 (``L 5.2'').}
+Pure gaseous reactant A ($C_{A0}=100$~millimol/liter) is fed at a steady rate into
+a mixed flow reactor ($V=0.1$~liter) where it dimerises ($2A\to R$).  Four runs:
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+Run & 1 & 2 & 3 & 4\\
+$v_0$ (liter/h) & 10.0 & 3.0 & 1.2 & 0.5\\
+$C_A$ (mmol/L) & 85.7 & 66.7 & 50 & 33.4\\
+\bottomrule
+\end{tabular}
+\end{center}
+Find a rate equation for this reaction.
+
 \begin{qbox}
-Gas phase, $\varepsilon_A=\tfrac{1-2}{2}=-0.5$: $C_A=C_{A0}(1-X)/(1-0.5X)$ gives
-$X=0.250,\,0.500,\,0.667,\,0.800$.  MFR design: $-r_A=F_{A0}X/V = v_0 C_{A0}X/V$:
-$-r_A = 2502,\,1499,\,800,\,400$ mmol/(L$\cdot$h).
-Log--log slope of $(-r_A)$ vs $C_A$ is $1.96\approx2$; $-r_A/C_A^2 = 0.34,\,0.34,\,0.32,\,0.36$.
+\textbf{Step 1 --- conversion per run (gas phase!).}  $2A\to R$ gives
+$\varepsilon_A=\frac{1-2}{2}=-0.5$, so $C_A=C_{A0}\frac{1-X}{1-0.5X}$; inverting,
+$X=\frac{C_{A0}-C_A}{C_{A0}-0.5C_A}$:
+\[
+X=0.250,\ 0.500,\ 0.667,\ 0.800.
+\]
+(A constant-density formula would give different, wrong $X$ here.)
+
+\textbf{Step 2 --- the MFR balance gives one rate per run.}
+$-r_A=\dfrac{F_{A0}X}{V}=\dfrac{v_0 C_{A0}X}{V}$; e.g.\ run~1:
+$\frac{10\times100\times0.25}{0.1}=2500$~mmol/(L$\cdot$h).  All four:
+\[
+-r_A = 2502,\ 1499,\ 800,\ 400\quad\mathrm{mmol/(L\cdot h)}.
+\]
+
+\textbf{Step 3 --- find the order from the four $(C_A,-r_A)$ pairs.}  A log--log
+plot has slope $1.96\approx2$: second order in A.  Check by division:
+$-r_A/C_A^2 = 0.34,\,0.34,\,0.32,\,0.36$ --- constant, so
+\[
+-r_A \approx 0.34\,C_A^{2}\qquad(C_A\ \mathrm{in\ mmol/L},\ -r_A\ \mathrm{in\ mmol/(L\cdot h)}).
+\]
 \end{qbox}
-\begin{ansbox}$-r_A \approx 0.34\,C_A^2$ with $C_A$ in mmol/L and $-r_A$ in mmol/(L$\cdot$h) (second order in A).\end{ansbox}
+\note{Method sentence for the exam: ``the mixed reactor evaluates the rate at the
+exit conditions; four space velocities give four rates; the order is the log--log
+slope.''}
+\begin{ansbox}Second order in A: $-r_A\approx0.34\,C_A^2$ (mmol, L, h).\end{ansbox}
 
 \qtitle{Q14 -- Phosphine cracking PFR}{\label{q:14}Ch3, slide 63}
 \src{Ch3-krd.pdf, slide 63 (``Example'').}
-$4\,\mathrm{PH_3}\to\mathrm{P_4}+6\,\mathrm{H_2}$ at 649\,°C, first order with
-$k=10$ h$^{-1}$.  Size a PFR at 649\,°C and 460 kPa for 80\% conversion of 40 mol/h pure PH$_3$.
+$4\,\mathrm{PH_3}(g)\to\mathrm{P_4}(g)+6\,\mathrm{H_2}(g)$ proceeds at
+$649\,^\circ$C with the first-order rate
+$-r_{\mathrm{PH_3}}=\left(\frac{10}{\mathrm{hr}}\right)C_{\mathrm{PH_3}}$.  What
+size of plug-flow reactor operating at $649\,^\circ$C and $460$~kPa can produce
+$80$\% conversion of a feed of $40$~mol/h of pure phosphine?
+
 \begin{qbox}
-$C_{A0}=P/RT=460\,000/(8.314\times922.15)=60.0$ mol/m$^3$; $\varepsilon_A=(10-4)/4=1.5$.
-$V=\frac{F_{A0}}{kC_{A0}}\left[(1+\varepsilon)\ln\frac1{1-X}-\varepsilon X\right]
-=\frac{40}{10\times60}\left[2.5\ln5-1.2\right]=0.0667(2.419+0.402-0.402)$
-$=0.188$ m$^3$.
+\textbf{Step 1 --- enter in concentrations.}  Ideal gas at the reactor state:
+\[
+C_{A0}=\frac{P_0}{RT}=\frac{460\,000}{8.314\times922.15}=60.0\ \mathrm{mol/m^3}.
+\]
+
+\textbf{Step 2 --- the expansion factor.}  $4\to10$ moles:
+$\varepsilon_A=\frac{10-4}{4}=1.5$, so
+$C_A=C_{A0}\frac{1-X}{1+1.5X}$ --- the gas \emph{expands} as it cracks and the
+concentration falls faster than $(1-X)$.
+
+\textbf{Step 3 --- PFR design equation, first order.}
+\[
+V=F_{A0}\int_0^{0.8}\frac{dX}{kC_{A0}}\cdot\frac{1+1.5X}{1-X}
+=\frac{F_{A0}}{kC_{A0}}\Big[(1+\varepsilon)\ln\frac{1}{1-X}-\varepsilon X\Big].
+\]
+
+\textbf{Step 4 --- substitute.}  $\frac{F_{A0}}{kC_{A0}}=\frac{40}{10\times60}=0.0667$~m$^3$;
+the bracket at $X=0.8$: $2.5\ln5-1.5(0.8)=4.024-1.2=2.824$:
+\[
+V=0.0667\times2.824=0.188\ \mathrm{m^3}\ (\approx188\ \mathrm{L}).
+\]
 \end{qbox}
+\note{Two classic slips the deck warns about implicitly: forgetting $\varepsilon$
+(which would give $0.0667\times\ln5=0.107$~m$^3$, far too small) and using
+$C_{A0}$ at STP instead of at $649\,^\circ$C/$460$~kPa.}
 \begin{ansbox}$V\approx0.19$ m$^3$ (about 190 L).\end{ansbox}
 
 %============================= PART D =====================================
@@ -361,270 +764,718 @@ $=0.188$ m$^3$.
 
 \qtitle{Q15 -- Ethylene-oxide batch data}{\label{q:15}Ch4, slides 17--20}
 \src{Ch4-\_Krd.pdf, slides 17--20.}
-500 mL of 2 M EO mixed with 500 mL of water (0.9 wt\% H$_2$SO$_4$ catalyst) at 55\,°C
-($C_{A0}=1.0$ kmol/m$^3$ after mixing); glycol concentrations recorded vs time.
-Determine $k$; and the batch time for 90\% conversion.
+500~mL of 2~M ethylene oxide mixed with 500~mL of water (0.9~wt\% H$_2$SO$_4$
+catalyst) at 55\,°C; after mixing $C_{A0}=1.0$~kmol/m$^3$.  Glycol concentration
+is recorded against time.  Determine $k$, and the batch time for 90\% conversion.
+
 \begin{qbox}
-$\ln(C_{A0}/C_A)$ vs $t$ is linear; the deck's slope is $k=0.311$ min$^{-1}$ (our least-squares
-fit of the printed $\ln$ column gives 0.315).  Then
-$t_{0.9}=\ln(10)/k = 7.4$ min.  The deck's scaling slide: with $k=10^{-4}$ s$^{-1}$,
-$t_{0.9}=2.3/10^{-4}=23\,000$ s $=6.4$ h.
+\textbf{Step 1 --- choose the order to test.}  Hydrolysis with water in vast
+excess is pseudo-first-order, so plot $\ln(C_{A0}/C_A)$ vs $t$.
+
+\textbf{Step 2 --- the straight line.}  The printed $\ln$ column against $t$ is
+linear; the deck's slope is $k=0.311$~min$^{-1}$ (a least-squares fit of the same
+printed points gives $0.315$ --- agree to quote).
+
+\textbf{Step 3 --- batch time for 90\%.}  First order:
+\[
+t_{0.9}=\frac{1}{k}\ln\frac{1}{1-0.9}=\frac{2.303}{0.311}=7.4\ \mathrm{min}.
+\]
+
+\textbf{Step 4 --- the deck's scaling slide.}  At a much smaller
+$k=10^{-4}$~s$^{-1}$ the same formula gives
+$t_{0.9}=2.303/10^{-4}=23\,000$~s $=6.4$~h --- the point being that the batch
+time scales exactly as $1/k$.
 \end{qbox}
-\begin{ansbox}$k\approx0.311$ min$^{-1}$; $t_{90}\approx7.4$ min (and 6.4 h for $k=10^{-4}$ s$^{-1}$).\end{ansbox}
+\begin{ansbox}$k\approx0.311$ min$^{-1}$; $t_{90}\approx7.4$ min (and 6.4 h if $k=10^{-4}$ s$^{-1}$).\end{ansbox}
 
 \qtitle{Q16 -- Ethylene glycol CSTR}{\label{q:16}Ch4, slides 29--38}
 \src{Ch4-\_Krd.pdf, slides 29--38.}
-Produce 200 million lb/yr of EG at 80\% conversion; 1 lbmol/ft$^3$ EO solution mixed with an
-equal volume of water (0.9 wt\% H$_2$SO$_4$); $k=0.311$ min$^{-1}$.  (a) CSTR volume;
-(b) conversion of two 800-gal reactors in parallel; (c) in series.
+Produce 200 million lb/yr of ethylene glycol at 80\% conversion in a CSTR.  A
+1~lbmol/ft$^3$ solution of ethylene oxide is mixed with an equal volume of water
+(0.9~wt\% H$_2$SO$_4$); $k=0.311$~min$^{-1}$ (Q15).  (a) Find the CSTR volume;
+(b) the conversion of two 800-gal reactors in parallel, each fed half; (c) in
+series.
+
 \begin{qbox}
-$F_C=200\times10^6/62$ lbmol/yr $=3.226\times10^6$/yr; $F_{A0}=F_C/0.8=7.67$ lbmol/min;
-$v_{A0}=7.67$ ft$^3$/min, $v_0=15.34$ ft$^3$/min, $C_{A0}=0.5$ lbmol/ft$^3$.
-(a) $V=\frac{F_{A0}X}{kC_{A0}(1-X)}=\frac{7.67(0.8)}{0.311(0.5)(0.2)}=197.3$ ft$^3$ (deck value).
-(b) Each reactor sees $v_{A0}$: $\tau=\frac{800/7.48}{7.67}=13.94$ min, $Da=k\tau=4.34$,
-$X=\frac{Da}{1+Da}=0.81$.
-(c) Each sees $v_0$: $\tau=6.97$ min, $Da=2.17$, $X=1-\frac1{(1+Da)^2}=0.90$ (deck values).
+\textbf{Step 1 --- molar flows.}  $F_C=\frac{200\times10^6}{62}=3.226\times10^6$
+lbmol/yr $=6.14$~lbmol/min; at 80\%,
+$F_{A0}=F_C/0.8=7.67$~lbmol/min.
+
+\textbf{Step 2 --- volumetric flows and $C_{A0}$.}  The oxide stream is
+1~lbmol/ft$^3$, so $v_{A0}=7.67$~ft$^3$/min; mixing with an equal water volume
+doubles it, $v_0=15.34$~ft$^3$/min, halving the concentration,
+$C_{A0}=0.5$~lbmol/ft$^3$.
+
+\textbf{(a) The CSTR volume.}
+\[
+V=\frac{F_{A0}X}{kC_{A0}(1-X)}=\frac{7.67\times0.8}{0.311\times0.5\times0.2}=197.3\ \mathrm{ft^3}
+\quad(\text{deck value}).
+\]
+
+\textbf{(b) Two 800-gal reactors in parallel.}  Each holds
+$800/7.48=107$~ft$^3$ and sees only its half-stream $v_{A0}=7.67$~ft$^3$/min:
+$\tau=107/7.67=13.94$~min, Damk\"ohler $Da=k\tau=4.34$,
+\[
+X=\frac{Da}{1+Da}=0.81.
+\]
+
+\textbf{(c) The same two in series.}  Now each sees the full $v_0=15.34$:
+$\tau=6.97$~min, $Da=2.17$, and two CSTRs in series multiply:
+\[
+X=1-\frac{1}{(1+Da)^2}=0.90\quad(\text{deck values}).
+\]
 \end{qbox}
+\note{Exam point of (b)/(c): splitting the feed between parallel CSTRs keeps each
+at the high feed concentration (good per unit volume); series staging keeps the
+first reactor off the slow exit rate.}
 \begin{ansbox}(a) 197.3 ft$^3$; (b) $X\approx0.81$; (c) $X\approx0.90$.\end{ansbox}
 
 \qtitle{Q17 -- Ethane cracking PFR and tube count}{\label{q:17}Ch4, slides 44--45}
-\src{Ch4-\_Krd.pdf, slides 44--45.}
-300 million lb/yr ethylene from pure ethane, irreversible elementary rate law, 80\% conversion,
-1100 K, 6 atm; $k=0.072$ s$^{-1}$ at 1000 K, $E=82$ kcal/mol.  How many 0.0205 ft$^3$,
-40-ft PFR tubes in parallel?
+\src{Ch4-\_Krd.pdf, slides 44--45 (MATLAB solution on slides 84--95).}
+Produce 300 million lb/yr of ethylene by cracking pure ethane
+($\mathrm{C_2H_6\to C_2H_4+H_2}$, irreversible elementary) at 80\% conversion,
+1100~K, 6~atm; $k=0.072$~s$^{-1}$ at 1000~K with $E=82$~kcal/mol.  How many
+40-ft PFR tubes of 0.0205~ft$^3$ in parallel?
+
 \begin{qbox}
-$k(1100)=0.072\exp\!\left[\frac{82\,000}{1.987}\left(\frac1{1000}-\frac1{1100}\right)\right]=3.07$ s$^{-1}$;
-$C_{A0}=6\times101\,325/(8.314\times1100)=66.5$ mol/m$^3$;
-$F_{A0}=300\times10^6/28$ lbmol/yr $=154$ mol/s; $v_0=2.32$ m$^3$/s.
-$\mathrm{C_2H_6\to C_2H_4+H_2}$: $\varepsilon=1$;
-$V=\frac{v_0}{k}\left[2\ln\frac1{1-X}-X\right]=\frac{2.32}{3.07}(2.419)=1.83$ m$^3$
-$=64.6$ ft$^3$.  Tubes $=64.6/0.0205\approx3.2\times10^3$.
+\textbf{Step 1 --- $k$ at the reactor temperature (Arrhenius).}
+\[
+k(1100)=0.072\exp\!\left[\frac{82\,000}{1.987}\left(\frac{1}{1000}-\frac{1}{1100}\right)\right]=3.07\ \mathrm{s^{-1}}.
+\]
+
+\textbf{Step 2 --- enter in concentration and flow.}
+$C_{A0}=\frac{P}{RT}=\frac{6\times101\,325}{8.314\times1100}=66.5$~mol/m$^3$;
+$F_{A0}=\frac{300\times10^6\ \mathrm{lb/yr}}{28}=154$~mol/s; hence
+$v_0=F_{A0}/C_{A0}=2.32$~m$^3$/s.
+
+\textbf{Step 3 --- the expanding-gas PFR integral.}  $\varepsilon=1$; first order:
+\begin{align*}
+V&=\frac{v_0}{k}\left[(1+\varepsilon)\ln\frac{1}{1-X}-\varepsilon X\right]
+=\frac{2.32}{3.07}\left[2\ln5-0.8\right]\\
+&=0.756\times2.419=1.83\ \mathrm{m^3}\quad(=64.6\ \mathrm{ft^3}).
+\end{align*}
+
+\textbf{Step 4 --- tube count.}  $64.6/0.0205\approx3.2\times10^3$ tubes in
+parallel.
 \end{qbox}
+\begin{warnbox}The deck solves the same problem numerically in MATLAB (slides
+84--95) without printing the final volume; the closed-form first-order gas-phase
+integral above is the method the deck derives on slides 42--43.\end{warnbox}
 \begin{ansbox}$V\approx1.8$ m$^3$ (65 ft$^3$); about 3150 tubes of 0.0205 ft$^3$ in parallel.\end{ansbox}
-\begin{warnbox}The deck solves the same problem numerically in MATLAB (slides 84--95) without printing the final volume; the closed-form first-order gas-phase integral above is the method the deck derives on slides 42--43.\end{warnbox}
 
 \qtitle{Q18 -- PBR with pressure drop, $A+B\to2C$}{\label{q:18}Ch4, slides 55--58}
 \src{Ch4-\_Krd.pdf, slides 55--58.}
-Equimolar feed, $k=1.5$ dm$^6$/(mol$\cdot$kg$\cdot$min), $\alpha=0.0099$ kg$^{-1}$, $\varepsilon=0$.
-Find $X$ at $W=100$ kg.
+Equimolar feed of $A+B\to2C$ over a packed bed; $k=1.5$~dm$^6$/(mol$\\cdot$kg$\\cdot$min),
+$\alpha=0.0099$~kg$^{-1}$, $\varepsilon=0$.  Find the conversion at $W=100$~kg of
+catalyst.
+
 \begin{qbox}
-$\frac{dX}{dW}=\frac{kC_{A0}^2}{F_{A0}}(1-X)^2(1-\alpha W)$ integrates to
-$\frac{X}{1-X}=\frac{kC_{A0}^2}{F_{A0}}\left(W-\frac{\alpha W^2}{2}\right)$,
-$p=(1-\alpha W)^{1/2}$.
-The deck prints $X=0.75$ for $\alpha=0$, which fixes the group
-$\frac{kC_{A0}^2}{F_{A0}}=\frac{3}{100}=0.03$ kg$^{-1}$; then
-$\frac{X}{1-X}=0.03(100-49.5)=1.515 \Rightarrow X=0.60$ --- the deck's two answers.
+\textbf{Step 1 --- rate law with the pressure factor.}  $\varepsilon=0$ and an
+equimolar feed give $C_A=C_B=C_{A0}(1-X)p$ with
+$p=(1-\alpha W)^{1/2}$, so $-r_A=kC_AC_B=kC_{A0}^2(1-X)^2(1-\alpha W)$.
+
+\textbf{Step 2 --- separate and integrate.}  The mole balance
+$\frac{dX}{dW}=\frac{kC_{A0}^2}{F_{A0}}(1-X)^2(1-\alpha W)$ separates cleanly:
+\[
+\frac{X}{1-X}=\frac{kC_{A0}^2}{F_{A0}}\left(W-\frac{\alpha W^2}{2}\right).
+\]
+
+\textbf{Step 3 --- calibrate the unknown group from the deck.}  The deck prints
+$X=0.75$ for the \emph{no-drop} case, where the bracket is $W=100$:
+$\frac{X}{1-X}=3$ fixes $\frac{kC_{A0}^2}{F_{A0}}=\frac{3}{100}=0.03$~kg$^{-1}$.
+
+\textbf{Step 4 --- with drop.}  $W-\frac{\alpha W^2}{2}=100-49.5=50.5$:
+\[
+\frac{X}{1-X}=0.03\times50.5=1.515\ \Rightarrow\ X=0.60.
+\]
+Pressure drop has cost $0.75-0.60=0.15$ of conversion.
 \end{qbox}
+\begin{warnbox}The slide does not print $C_{A0}$ and $F_{A0}$ separately; the
+combined group $0.03$~kg$^{-1}$ is implied by its own $\alpha=0$ answer and is
+stated here instead of being invented.\end{warnbox}
 \begin{ansbox}$X=0.60$ with pressure drop, $0.75$ without.\end{ansbox}
-\begin{warnbox}The slide does not print $C_{A0}$ and $F_{A0}$ separately; the combined group 0.03 kg$^{-1}$ is implied by its own $\alpha=0$ answer and is stated here instead of being invented.\end{warnbox}
 
 \qtitle{Q19 -- PBR + CSTR in series}{\label{q:19}Ch4, slides 76--77}
 \src{Ch4-\_Krd.pdf, slides 76--77.}
-First order in $p_A$, $A\to B$ (gas), PBR with 50 kg catalyst gives 50\% conversion at
-$P_0=20$ atm; $\alpha=0.018$ kg$^{-1}$.  A CSTR with the same 50 kg is added in series.
-(a) Which order gives the higher conversion? (b) The exit conversion; (c) pressure at the
-PBR exit; (d) effect of halving catalyst diameter and enlarging the pipe 50\% (turbulent).
+First order in $p_A$, $A\to B$ (gas).  A PBR with 50~kg of catalyst gives 50\%
+conversion at $P_0=20$~atm with $\alpha=0.018$~kg$^{-1}$.  A CSTR holding the same
+50~kg is added in series.  (a) Which order gives the higher conversion?
+(b) The exit conversion; (c) the pressure at the PBR exit; (d) the effect of
+halving the catalyst diameter and enlarging the pipe 50\% (turbulent flow).
+
 \begin{qbox}
-Shooting the coupled ODEs $\frac{dX}{dW}=a\frac{1-X}{1+X}p$, $\frac{dp}{dW}=-\frac{\alpha}{2p}$
-to match $X(50)=0.5$ gives $a=kP_0/F_{A0}=0.0247$ kg$^{-1}$.
-(c) $p=\sqrt{1-\alpha W}=\sqrt{0.1}=0.316 \Rightarrow P=6.3$ atm.
-(b) PBR$\to$CSTR: $X=0.60$; CSTR$\to$PBR: $X=0.69$ --- putting the CSTR first is better,
-because the PBR then runs at full pressure.
-(d) Turbulent $\alpha\propto D_p^{-2}D_{pipe}^{-4}$: $\alpha'=0.018\times2\times1.5^{-4}=0.0071$,
-and PBR$\to$CSTR rises to $X\approx0.73$ (similarly higher in the other order).
+\textbf{Set-up --- the coupled ODEs.}  First order in $p_A$ with expansion:
+$\frac{dX}{dW}=a\,\frac{1-X}{1+\varepsilon X}\,p$ together with the Ergun
+(simplified) drop $\frac{dp}{dW}=-\frac{\alpha}{2p}$; shooting them to match
+$X(50)=0.5$ fixes $a=kP_0/F_{A0}=0.0247$~kg$^{-1}$.
+
+\textbf{(c) The PBR exit pressure.}  $p=\sqrt{1-\alpha W}=\sqrt{1-0.9}=0.316$,
+so $P=20\times0.316=6.3$~atm --- the bed eats two-thirds of the pressure.
+
+\textbf{(a)+(b) Which order first.}  Integrate the pair through the PBR then
+solve the CSTR balance (and the reverse order): PBR$\to$CSTR gives $X=0.60$;
+CSTR$\to$PBR gives $X=0.69$.  Putting the \emph{CSTR first} is better: it runs
+on undropped pressure and leaves the pressure-sensitive PBR the full 20~atm.
+
+\textbf{(d) Smaller pellets, fatter pipe, turbulent flow.}  Then
+$\alpha\propto D_p^{-1}D_{\text{pipe}}^{-4}$:
+$\alpha'=0.018\times2\times1.5^{-4}=0.0071$~kg$^{-1}$; less drop means the PBR
+works harder, and PBR$\to$CSTR rises to $X\approx0.73$ (the other order rises
+similarly).
 \end{qbox}
+\note{Exam one-liner for (a): ``a CSTR cares only about the pressure at its own
+inlet; a PFR/PBR integrates it all along --- so spend the pressure drop last.''}
 \begin{ansbox}(a) CSTR upstream; (b) $X\approx0.69$ (0.60 the other way); (c) 6.3 atm; (d) $X\approx0.73$.\end{ansbox}
 
 \qtitle{Q20 -- Series reactions in a batch reactor}{\label{q:20}Ch4, slides 78--79}
 \src{Ch4-\_Krd.pdf, slides 78--79.}
-$A\xrightarrow{k_1}B\xrightarrow{k_2}C$, $k_1=1$ h$^{-1}$, $k_2=2$ h$^{-1}$,
-$C_A(0)=5$ mol/m$^3$, $C_B(0)=C_C(0)=0$.
+$A\xrightarrow{k_1}B\xrightarrow{k_2}C$ with $k_1=1$~h$^{-1}$, $k_2=2$~h$^{-1}$,
+$C_A(0)=5$~mol/m$^3$, $C_B(0)=C_C(0)=0$.  Give the profiles and the maximum of B.
+
 \begin{qbox}
-$C_A=5e^{-t}$; $C_B=5\frac{k_1}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)=5(e^{-t}-e^{-2t})$;
-$C_C=5-C_A-C_B$.  $C_B$ peaks at $t_{max}=\frac{\ln(k_2/k_1)}{k_2-k_1}=0.693$ h with
-$C_B^{max}=1.25$ mol/m$^3$.
+\textbf{Step 1 --- A decays alone.}  $C_A=5e^{-k_1t}=5e^{-t}$.
+
+\textbf{Step 2 --- B is made and consumed.}  $\frac{dC_B}{dt}=k_1C_A-k_2C_B$;
+the standard integrating-factor result:
+\[
+C_B=5\,\frac{k_1}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)=5\left(e^{-t}-e^{-2t}\right).
+\]
+
+\textbf{Step 3 --- C by closure.}  $C_C=5-C_A-C_B$.
+
+\textbf{Step 4 --- the maximum of the intermediate.}  $dC_B/dt=0$ gives
+\[
+t_{max}=\frac{\ln(k_2/k_1)}{k_2-k_1}=\ln2=0.693\ \mathrm{h},\qquad
+C_B^{max}=5(0.5-0.25)=1.25\ \mathrm{mol/m^3}.
+\]
 \end{qbox}
+\note{The shape to sketch in the exam: A falls exponentially; B rises through its
+peak at $t_{max}$ then falls; C is the monotone mirror image.  Series
+intermediates \emph{always} pass through a maximum.}
 \begin{ansbox}$t_{max}=\ln2\approx0.69$ h, $C_B^{max}=1.25$ mol/m$^3$; profiles as above.\end{ansbox}
 
 \qtitle{Q21 -- PFR pressure drop: pipe length}{\label{q:21}Ch4, slides 90--98}
 \src{Ch4-\_Krd.pdf, slides 90--98.}
-$A\to B$, first order, $P_0=10$ atm, $Q_0=0.005$ m$^3$/s, 300 K, $k=0.1$ s$^{-1}$,
-$M=60$ g/mol, $\mu=10^{-5}$ Pa$\cdot$s.  Length for (a) 2 cm pipe, 10\%; (b) 1.5 cm pipe,
-10\%; (c) 1.5 cm pipe, 20\%?
+$A\to B$, first order, $P_0=10$~atm, $Q_0=0.005$~m$^3$/s, 300~K, $k=0.1$~s$^{-1}$,
+$M=60$~g/mol, $\mu=10^{-5}$~Pa$\\cdot$s.  Pipe length for (a) 10\% in a 2-cm pipe;
+(b) 10\% in a 1.5-cm pipe; (c) 20\% in the 1.5-cm pipe?
+
 \begin{qbox}
-$\rho_0=P_0M/RT=24.4$ kg/m$^3$, $v_0=Q_0/A=15.9$ m/s (2 cm), $F_{A0}=2.03$ mol/s.
-Without drop, $L_{10}=\frac{v_0}{k}\ln\frac1{0.9}=16.8$ m and $L_{20}=35.5$ m (2 cm).
-The deck integrates the coupled $dX/dz$, $dP/dz$ ODEs (slides 92--95) and reports
-(a) $\approx20$ m for 10\% in the 2 cm pipe; (b) 10\% still possible in the 1.5 cm pipe
-($\approx$ longer, steeper pressure fall); (c) 20\% \emph{not} possible --- the pressure
-collapses before 20\% is reached (slide 98: ``10\% conversion is possible, but 20\% is not'').
+\textbf{Step 1 --- enter the flow.}  $\rho_0=P_0M/RT=24.4$~kg/m$^3$; in the 2-cm
+pipe $v_0=Q_0/A=0.005/3.14\times10^{-4}=15.9$~m/s; $F_{A0}=2.03$~mol/s.
+
+\textbf{Step 2 --- the no-drop benchmark.}  Without drop,
+$L_{10}=\frac{v_0}{k}\ln\frac{1}{0.9}=16.8$~m and $L_{20}=35.5$~m in the 2-cm
+pipe --- pressure drop can only make these longer.
+
+\textbf{Step 3 --- with drop, the deck's coupled ODEs.}  The deck integrates
+$dX/dz$ and $dP/dz$ together (slides 92--95): (a) about $20$~m for 10\% in the
+2-cm pipe.
+
+\textbf{(b) 1.5-cm pipe, 10\%.}  The smaller bore raises $v_0$ (to about
+28~m/s) and steepens the pressure fall, but 10\% is still reachable --- at a
+longer length.
+
+\textbf{(c) 1.5-cm pipe, 20\%.}  Not possible: the pressure collapses towards
+zero before 20\% is reached (slide 98: ``10\% conversion is possible, but 20\%
+is not'') --- once $P\to0$ the velocity diverges and the reaction starves.
 \end{qbox}
 \begin{ansbox}(a) $\approx20$ m; (b) 10\% achievable; (c) 20\% unattainable in the 1.5 cm pipe.\end{ansbox}
 
 %============================= PART E =====================================
 \spsection{Part E -- Collection and analysis of rate data (Ch5\_-\,krd.pdf)}
 
-\qtitle{Q22 -- Trityl + methanol}{\label{q:22}Ch5, slides 12--17}
-\src{Ch5\_-\,krd.pdf, slides 12--17 and 42--49.}
-$(\mathrm{C_6H_5})_3\mathrm{CCl}+\mathrm{CH_3OH}\to(\mathrm{C_6H_5})_3\mathrm{COCH_3}+\mathrm{HCl}$;
-$C_{B0}=0.5$ M; trityl data ($\times10^3$ mol/dm$^3$): 50, 38, 30.6, 25.6, 22.2, 19.5, 17.4 at
-$t=0,50,\dots,300$ min.  (1) order in trityl; (2) rate constant given first order in methanol.
+\qtitle{Q22 -- Trityl + methanol: order and rate constant}{\label{q:22}Ch5, slides 12--17}
+\src{Ch5\_-\\,krd.pdf, slides 12--17 (and 42--49).}
+$(\mathrm{C_6H_5})_3\mathrm{CCl}+\mathrm{CH_3OH}\to(\mathrm{C_6H_5})_3\mathrm{COCH_3}+\mathrm{HCl}$
+in a batch reactor; $C_{B0}=0.5$~mol/dm$^3$ (methanol) against trityl
+($\times10^3$~mol/dm$^3$) $=50,38,30.6,25.6,22.2,19.5,17.4$ at
+$t=0,50,\dots,300$~min.  (1) Find the order in trityl; (2) the rate constant,
+given first order in methanol.
+
 \begin{qbox}
-Finite-difference rates $-dC_A/dt$ (deck slide 17): $2.86,1.94,1.24,0.84,0.61,0.48,0.36
-\times10^{-4}$.  Log--log slope $=1.99\approx2$ (deck) --- second order in trityl.
-Integral check: $1/C_A-1/C_{A0}$ vs $t$ is linear with slope $k'=0.124\approx0.125$
-dm$^3$/(mol$\cdot$min).  With $-r_A=kC_A^2C_B$ and $C_B\approx C_{B0}$:
-$k=k'/0.5=0.25$ dm$^6$/(mol$^2\cdot$min).  The deck's nonlinear regression returns
-$\alpha\approx2$ with the same $k'$.
+\textbf{Set-up --- pseudo-order.}  Methanol is in ten-fold excess, so
+$C_B\approx C_{B0}$ throughout and $-r_A=kC_A^{\alpha}C_B\approx
+(kC_{B0})C_A^{\alpha}=k'C_A^{\alpha}$: the runs see a single unknown
+$\alpha$.
+
+\textbf{Step 1 --- differential method (slides 16--17).}  The deck computes
+$-dC_A/dt$ point by point with the three-point finite-difference formulas it
+teaches on slide 16,
+\[
+\left(\tfrac{\Delta C_A}{\Delta t}\right)_0=\frac{-3C_{A0}+4C_{A1}-C_{A2}}{2\Delta t},\quad
+\left(\tfrac{\Delta C_A}{\Delta t}\right)_i=\frac{C_{A,i+1}-C_{A,i-1}}{2\Delta t},\quad
+\left(\tfrac{\Delta C_A}{\Delta t}\right)_N=\frac{C_{A,N-2}-4C_{A,N-1}+3C_{AN}}{2\Delta t},
+\]
+(write these out in the exam --- they are worth marks on their own).  The seven
+rates come out (deck values, $\times10^{-4}$~mol/(dm$^3\cdot$min)):
+$2.86,\,1.94,\,1.24,\,0.84,\,0.61,\,0.48,\,0.36$.  Plot $\ln(-r_A)$ vs
+$\ln C_A$ (slide 14): slope $=1.99\approx2$ --- \emph{second order in trityl}.
+
+\textbf{Step 2 --- integral check.}  If $\alpha=2$,
+$\frac{1}{C_A}-\frac{1}{C_{A0}}=k't$ must be a straight line through the origin;
+it is, with slope $k'=0.124\approx0.125$~dm$^3$/(mol$\cdot$min).  Two independent
+methods agreeing is the deck's point.
+
+\textbf{Step 3 --- split off the methanol order.}  With $-r_A=kC_A^2C_B$ and
+$C_B=0.5$: $k=k'/C_{B0}=0.125/0.5=0.25$~dm$^6$/(mol$^2\cdot$min).  (The deck's
+nonlinear-regression slides return $\alpha\approx2$ with the same $k'$.)
 \end{qbox}
+\note{Exam wording: ``differential method gives the order from the log--log slope;
+the integral method confirms it and supplies $k'$; the excess reactant converts
+$k'$ back to $k$.''}
 \begin{ansbox}Second order in trityl; $k'=0.125$ dm$^3$/(mol$\cdot$min), $k=0.25$ dm$^6$/(mol$^2\cdot$min).\end{ansbox}
 
 \qtitle{Q23 -- Dimethyl ether decomposition bomb}{\label{q:23}Ch5, slide 75}
-\src{Ch5\_-\,krd.pdf, slide 75 (``F 5.8'').}
-$(\mathrm{CH_3})_2\mathrm{O}\to\mathrm{CH_4}+\mathrm{H_2}+\mathrm{CO}$ at 504\,°C, constant
-volume; $\pi$ (mmHg) $=408,488,562,799$ at $t=390,777,1195,3155$ s and $931$ at $t=\infty$.
-(a) Why is $\pi_0$ missing, and estimate it; (b) order and rate constant.
+\src{Ch5\_-\\,krd.pdf, slide 75 (``F 5.8'').}
+$(\mathrm{CH_3})_2\mathrm{O}\to\mathrm{CH_4}+\mathrm{H_2}+\mathrm{CO}$ at
+$504\,^\circ$C in a constant-volume bomb; total pressure $\pi$ (mmHg)
+$=408,488,562,799$ at $t=390,777,1195,3155$~s and $931$ at $t=\infty$.
+(a) Why is $\pi_0$ not recorded, and what was it?  (b) Find the order and the
+rate constant.
+
 \begin{qbox}
-(a) The bomb was already hot and reacting before the first reading; since 1 mol $\to$ 3 mol,
-$\pi_0=\pi_\infty/3=310$ mmHg.
-(b) $p_A=(\pi_\infty-\pi)/2 = 261.5,\,221.5,\,184.5,\,66.0$ mmHg; the four values of
-$\ln(p_{A0}/p_A)/t$ are $4.4,\,4.3,\,4.3,\,4.9\times10^{-4}$ s$^{-1}$ --- first order.
+\textbf{(a) The missing first reading.}  The bomb had to be heated to
+$504\,^\circ$C before readings could start, and it was already reacting during
+that time --- so $\pi_0$ was never observed.  Recover it from stoichiometry:
+1~mol of ether gives 3~mol of product, so at complete conversion
+$\pi_\infty=3\pi_0$, hence
+\[
+\pi_0=\frac{931}{3}\approx310\ \mathrm{mmHg}.
+\]
+
+\textbf{(b) Express $p_A$ in terms of $\pi$.}  If $x$ (pressure units) of ether
+has reacted, $\pi=\pi_0+2x$ and $p_A=\pi_0-x$; eliminating $x$ (and using
+$3\pi_0=\pi_\infty$):
+\[
+p_A=\frac{3\pi_0-\pi}{2}=\frac{\pi_\infty-\pi}{2}
+=261.5,\,221.5,\,184.5,\,66.0\ \mathrm{mmHg}.
+\]
+
+\textbf{Test first order:} $\ln(p_{A0}/p_A)/t$ gives
+$4.4,\,4.3,\,4.3,\,4.9\times10^{-4}$~s$^{-1}$ --- constant to reading error, so
+the decomposition is first order with
+$k\approx4.4\times10^{-4}$~s$^{-1}$.
 \end{qbox}
+\note{The same trick --- ``$p_A$ from the total pressure using $p_{A,\infty}$'' ---
+is used in Q27, Q28 and Q35; learn it once.}
 \begin{ansbox}$\pi_0\approx310$ mmHg; first order, $k\approx4.4\times10^{-4}$ s$^{-1}$.\end{ansbox}
 
 \qtitle{Q24 -- First-order reversible $A\rightleftharpoons R$}{\label{q:24}Ch5, slide 72}
-\src{Ch5\_-\,krd.pdf, slide 72.}
-$C_{A0}=0.5$ mol/L, $C_{R0}=0$; after 8 min $X=33.3$\%; $X_e=66.7$\%.  Find the rate equation.
+\src{Ch5\_-\\,krd.pdf, slide 72.}
+$C_{A0}=0.5$~mol/L, $C_{R0}=0$.  After 8~min the conversion is $33.3$\%; the
+equilibrium conversion is $66.7$\%.  Find the rate equation.
+
 \begin{qbox}
-$\ln\frac{X_e}{X_e-X}=(k_1+k_2)t$: $\ln 2 = (k_1+k_2)(8)\Rightarrow k_1+k_2=0.0866$ min$^{-1}$;
-$K_e=X_e/(1-X_e)=2=k_1/k_2$.  Hence $k_1=0.0578$, $k_2=0.0289$ min$^{-1}$ and
-$-r_A=0.0578\,C_A-0.0289\,C_R$ (mol/L$\cdot$min).
+\textbf{Where the working equation comes from.}  With
+$-r_A=k_1C_A-k_2C_R$ and $C_R=C_{A0}-C_A$, the rate collapses to
+$-r_A=(k_1+k_2)(C_A-C_{Ae})$: first order \emph{towards equilibrium}.
+Integrating the batch equation gives the form the deck uses,
+\[
+\ln\frac{X_e}{X_e-X}=(k_1+k_2)\,t,
+\]
+so one kinetic point plus $X_e$ fixes the sum $k_1+k_2$.
+
+\textbf{Step 1 --- the sum from the 8-min point.}
+\[
+\ln\frac{0.667}{0.667-0.333}=\ln\frac{0.667}{0.334}=\ln2=0.693
+=(k_1+k_2)(8)\ \Rightarrow\ k_1+k_2=0.0866\ \mathrm{min^{-1}}.
+\]
+
+\textbf{Step 2 --- the ratio from equilibrium.}  At $X_e$ the net rate is zero:
+\[
+K_e=\frac{C_{Re}}{C_{Ae}}=\frac{X_e}{1-X_e}=\frac{0.667}{0.333}=2=\frac{k_1}{k_2}.
+\]
+
+\textbf{Step 3 --- solve the two small equations.}  $k_1=2k_2$ into the sum:
+$3k_2=0.0866$, so $k_2=0.0289$ and $k_1=0.0577$~min$^{-1}$, and the rate
+equation is
+\[
+-r_A=0.058\,C_A-0.029\,C_R\quad\mathrm{mol/(L\cdot min)}.
+\]
+
+\textbf{Check.}  $k_1/k_2=2=K_e$ and $k_1+k_2=0.087$ --- both constraints hold,
+so the equation is consistent with \emph{both} data.
 \end{qbox}
-\begin{ansbox}$-r_A = 0.058\,C_A - 0.029\,C_R$ mol/(L$\cdot$min).\end{ansbox}
+\note{Exam habit: never quote the log formula blind --- write its origin
+(``first order towards equilibrium'') in one line, then the two constraints
+(sum from the kinetic point, ratio from $X_e$).}
+\begin{ansbox}$-r_A=0.058\\,C_A-0.029\\,C_R$ mol/(L$\\cdot$min).\end{ansbox}
 
 \qtitle{Q25 -- Half-order batch; $2A\to B$ volume change}{\label{q:25}Ch5, slide 73}
-\src{Ch5\_-\,krd.pdf, slide 73.}
-(i) $A\to R$, $-r_A=3C_A^{0.5}$ mol/(L$\cdot$h), $C_{A0}=1$ mol/L: conversion after 1 h?
-(ii) Gas $2A\to B$, 80\% A, constant pressure: volume falls 20\% in 3 min; first-order $k$?
+\src{Ch5\_-\\,krd.pdf, slide 73.}
+(i) $A\to R$ with $-r_A=3C_A^{0.5}$ mol/(L$\\cdot$h) and $C_{A0}=1$~mol/L: what is
+the conversion after 1~h?  (ii) The gas reaction $2A\to B$ (feed 80\% A, 20\%
+inerts) runs at constant pressure; the volume falls 20\% in 3~min.  Find the
+first-order rate constant.
+
 \begin{qbox}
-(i) $2(\sqrt{C_{A0}}-\sqrt{C_A})=3t$ gives $\sqrt{C_A}<0$ for $t>0.667$ h: the charge is
-consumed in 40 min, so $X(1\,\mathrm{h})=1$.
-(ii) $V/V_0=1+\varepsilon_A X$ with $\varepsilon_A=0.8\times\frac{1-2}{2}=-0.4$; $0.8=1-0.4X
-\Rightarrow X=0.5$; $k=\ln\frac1{1-0.5}/3=0.231$ min$^{-1}$.
+\textbf{(i) Integrate the half-order law.}  $-dC_A/dt=3C_A^{1/2}$ separates to
+$\int_{C_{A0}}^{C_A}C_A^{-1/2}dC_A=-3t$, i.e.
+\[
+2\left(\sqrt{C_{A0}}-\sqrt{C_A}\right)=3t\quad\Rightarrow\quad\sqrt{C_A}=1-1.5t.
+\]
+Inserting $t=1$ gives $\sqrt{C_A}=-0.5$ --- impossible.  The reason: with order
+$<1$ the rate does \emph{not} vanish as $C_A\to0$, so the charge is used up in
+finite time, here when $\sqrt{C_A}=0$: $t=\tfrac{2}{3}$~h $=40$~min.  At 1~h the
+reactor has simply been empty for 20 minutes: $X=1$.
+
+\textbf{(ii) Read conversion off the shrinking volume.}  $y_{A0}=0.8$ and
+$\delta=\tfrac{1-2}{2}=-\tfrac12$, so $\varepsilon_A=y_{A0}\delta=-0.4$; at
+constant $T,\pi$, $V/V_0=1+\varepsilon_A X$:
+\[
+0.80=1-0.4X\ \Rightarrow\ X=0.5.
+\]
+First order, constant pressure: $\ln\frac{1}{1-X}=kt$, hence
+\[
+k=\frac{\ln2}{3}=0.231\ \mathrm{min^{-1}}.
+\]
 \end{qbox}
+\note{State both ``traps'' explicitly in the exam: (i) half-order kinetics
+deplete the charge in finite time --- give the depletion time; (ii) the volume
+change \emph{is} the conversion datum via $\varepsilon$.}
 \begin{ansbox}(i) $X=1$ (complete at 40 min); (ii) $k=0.231$ min$^{-1}$.\end{ansbox}
 
 \qtitle{Q26 -- $A\to3R$ in a MFR (L 5.19)}{\label{q:26}Ch5, slide 74}
-\src{Ch5\_-\,krd.pdf, slide 74.}
-Pure A at 3 atm, 30\,°C ($C_{A0}=120$ mmol/L) into a 1-L MFR; $v_0=0.06,0.48,1.5,8.1$ L/min
-with $C_A=30,60,80,105$ mmol/L.
-\begin{qbox}
-$\varepsilon_A=2$: $X=\frac{C_{A0}-C_A}{C_{A0}+2C_A}=0.50,0.25,0.143,0.045$;
-$-r_A=v_0C_{A0}X/V=3.6,14.4,25.7,44.0$ mmol/(L$\cdot$min).  Log--log slope $=2.00$;
-$-r_A/C_A^2=0.0040$ in all four runs.
-\end{qbox}
-\begin{ansbox}$-r_A=0.004\,C_A^2$ ($C_A$ in mmol/L, $-r_A$ in mmol/(L$\cdot$min)), i.e. $4$ L/(mol$\cdot$min) in molar units.\end{ansbox}
+\src{Ch5\_-\\,krd.pdf, slide 74.}
+Pure A at 3 atm and 30\,°C ($C_{A0}=120$~mmol/L) enters a 1-L mixed flow
+reactor; four runs with $v_0=0.06,0.48,1.5,8.1$~L/min give exit
+$C_A=30,60,80,105$~mmol/L.  Find the rate equation.
 
-\qtitle{Q27 -- $A\to2.5R$ batch, pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
-\src{Ch5\_-\,krd.pdf, slide 76.}
-0\,°C, constant volume, pure A: $p_A$ (mm) $=760,600,475,380,320,275,240,215,150$ at
-$t=0,2,\dots,14,\infty$.
 \begin{qbox}
-$p_{A,\infty}=150\neq0$: the reaction approaches equilibrium.  First order towards it:
-$\ln\frac{p_{A0}-p_{Ae}}{p_A-p_{Ae}}=kt$ gives $k=0.152$--$0.162$ at every point
-(fit $0.160$ min$^{-1}$) --- a first-order reversible rate equation represents the data.
+\textbf{Step 1 --- conversions, with the expansion.}  $A\to3R$ triples moles:
+$\varepsilon_A=2$, and $C_A=C_{A0}\frac{1-X}{1+2X}$; solving for $X$,
+$X=\frac{C_{A0}-C_A}{C_{A0}+2C_A}$.  Run by run:
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+Run & 1 & 2 & 3 & 4\\
+$C_A$ (mmol/L) & 30 & 60 & 80 & 105\\
+$X$ & 0.50 & 0.25 & 0.143 & 0.045\\
+$-r_A=v_0C_{A0}X/V$ & 3.6 & 14.4 & 25.7 & 44.0\\
+\bottomrule
+\end{tabular}
+\end{center}
+($-r_A$ in mmol/(L$\\cdot$min); e.g.\ run 1: $0.06\times120\times0.5/1=3.6$.)
+A constant-density reading would give $X=0.75$ for run~1 --- wrong for a gas
+that triples its moles.
+
+\textbf{Step 2 --- order from the four pairs.}  The log--log slope of
+$(C_A,-r_A)$ is $2.00$: second order.
+
+\textbf{Step 3 --- the constant.}  $-r_A/C_A^2=0.0040$ in \emph{all four} runs,
+so
+\[
+-r_A=0.004\,C_A^2\quad(\mathrm{mmol,\ L,\ min})\ =\ 4\ \mathrm{L/(mol\cdot min)}
+\text{ in molar units}.
+\]
 \end{qbox}
-\begin{ansbox}First-order approach to $p_{Ae}=150$ mm with $k\approx0.16$ min$^{-1}$.\end{ansbox}
+\note{Same method as Q13 (slide 77 of this deck): a MFR at several space
+velocities manufactures $(C_A,-r_A)$ pairs; the only extra care here is the
+$\varepsilon=2$ inversion in Step~1.}
+\begin{ansbox}$-r_A=0.004\\,C_A^2$ with $C_A$ in mmol/L (i.e. $k=4$ L/(mol$\\cdot$min)).\end{ansbox}
+
+\qtitle{Q27 -- $A\to2.5R$ batch, partial-pressure data (L 3.25)}{\label{q:27}Ch5, slide 76}
+\src{Ch5\_-\\,krd.pdf, slide 76.}
+At 0\,°C in a constant-volume batch reactor, pure gaseous A gives $p_A$ (mm)
+$=760,600,475,380,320,275,240,215$ at $t=0,2,\dots,14$~min and $150$ at
+$t=\infty$.  The stoichiometry is $A\to2.5R$.  Find a rate equation that
+satisfactorily represents the decomposition.
+
+\begin{qbox}
+\textbf{Step 1 --- the tail tells the story.}  $p_{A,\infty}=150\neq0$: A never
+disappears completely, so the reaction is \emph{reversible} and stops at
+equilibrium.  The right test is therefore a first-order \emph{approach to
+equilibrium}:
+\[
+\ln\frac{p_{A0}-p_{Ae}}{p_A-p_{Ae}}=kt,\qquad p_{A0}-p_{Ae}=760-150=610.
+\]
+
+\textbf{Step 2 --- evaluate at every reading.}
+\begin{center}\small
+\begin{tabular}{lccccccc}
+\toprule
+$t$ (min) & 2 & 4 & 6 & 8 & 10 & 12 & 14\\
+$k=\frac{1}{t}\ln\frac{610}{p_A-150}$ & 0.152 & 0.157 & 0.162 & 0.149 & 0.159 & 0.160 & 0.160\\
+\bottomrule
+\end{tabular}
+\end{center}
+flat to within reading scatter (fit $0.160$~min$^{-1}$) --- the form represents
+the data.
+
+\textbf{Conclusion.}  A first-order reversible rate equation (forward and
+reverse each first order, $k_1+k_2\approx0.16$~min$^{-1}$) is the satisfactory
+rate equation.
+\end{qbox}
+\note{Decision rule to write in the exam: ``$p_{A,\infty}\neq0\Rightarrow$
+reversible; test $\ln[(p_0-p_e)/(p-p_e)]$ vs $t$ before anything else.''}
+\begin{ansbox}First-order approach to $p_{Ae}=150$ mm with $k\\approx0.16$ min$^{-1}$.\end{ansbox}
 
 \qtitle{Q28 -- Reaction bomb $2A\to B$ at 100\,°C}{\label{q:28}Ch5, slides 78--79}
-\src{Ch5\_-\,krd.pdf, slides 78--79.}
-Pure A at 1 atm and 25\,°C is jumped to 100\,°C; $\pi$ falls from 1.14 atm at $t=1$ min
-to 0.728 atm at $t=20$ min (twelve readings, e.g. 1.04, 0.982, 0.940, 0.905, 0.870 at
-$t=2..6$); after the weekend no A remains.  Rate equation in mol, L, min.
+\src{Ch5\_-\\,krd.pdf, slides 78--79.}
+Pure A at 1~atm and 25\,°C is jumped to 100\,°C; the total pressure is recorded
+(slide 79):
+\begin{center}\small
+\begin{tabular}{lllllll}
+\toprule
+$t$ (min) & 1 & 2 & 3 & 4 & 5 & 6\\
+$\pi$ (atm) & 1.14 & 1.04 & 0.982 & 0.940 & 0.905 & 0.870\\
+\midrule
+$t$ (min) & 7 & 8 & 9 & 10 & 15 & 20\\
+$\pi$ (atm) & 0.850 & 0.832 & 0.815 & 0.800 & 0.754 & 0.728\\
+\bottomrule
+\end{tabular}
+\end{center}
+after the weekend no A remains.  Find the rate equation in mol, L, min.
+
 \begin{qbox}
-$2A\to B$ with $\pi_0(100\,°\mathrm{C})=1$ atm: $p_A=2\pi-1$.  Least squares:
-second order ($1/p_A$ linear) fits with $r^2=0.964$ vs $0.886$ first order, giving
-$k_p=0.074$ atm$^{-1}$min$^{-1}$; with $p_A=C_ART$ ($RT=30.6$ L$\cdot$atm/mol at 373 K),
-$k_C=k_pRT\approx2.3$ L/(mol$\cdot$min).
+\textbf{Step 1 --- stoichiometry to $p_A(\pi)$.}  $2A\to B$ halves the moles:
+$\pi=p_A+p_B$ with $p_B=\tfrac12(p_{A0}-p_A)$, so $p_A=2\pi-p_{A0}$; the deck
+takes $p_{A0}=1$~atm at the reaction temperature.  The ``no A after the weekend''
+reading confirms the reaction goes to completion.
+
+\textbf{Step 2 --- try the orders.}  Plot the twelve readings as
+$1/p_A$ vs $t$ (second order) and $\ln p_A$ vs $t$ (first order): the
+second-order plot is the straight one ($r^2=0.964$ against $0.886$), so the
+reaction is second order in A with
+$k_p=0.074$~atm$^{-1}$min$^{-1}$ from the $1/p_A$ slope.
+
+\textbf{Step 3 --- convert to concentration units.}  With $p_A=C_ART$ and
+$RT=0.082\times373=30.6$~L$\cdot$atm/mol at 100\,°C, a second-order $k$ scales as
+\[
+k_C=k_p\,RT=0.074\times30.6\approx2.3\ \mathrm{L/(mol\cdot min)}.
+\]
 \end{qbox}
-\begin{ansbox}Second order in A; $k\approx0.074$ atm$^{-1}$min$^{-1}$ $\approx2.3$ L/(mol$\cdot$min) at 100\,°C.\end{ansbox}
+\note{Exam sentence: ``the order is decided by which linearisation is linear; the
+units conversion $k_C=k_p(RT)^{1-n}$ then moves between pressure and concentration
+forms'' ($1-n=-1$ here).}
+\begin{ansbox}Second order in A; $k\approx0.074$ atm$^{-1}$min$^{-1}\approx2.3$ L/(mol$\cdot$min) at 100\,°C.\end{ansbox}
 
 \qtitle{Q29 -- The gambling tables}{\label{q:29}Ch5, slide 80}
-\src{Ch5\_-\,krd.pdf, slide 80.}
-Losses proportional to money held: table 1 halves it in 4 h, table 2 in 2 h.  Starting with
-Rs.\,1000 at both tables at once, when is Rs.\,10 left?
+\src{Ch5\_-\\,krd.pdf, slide 80.}
+Raju plays at two tables at once.  Losses at each table are proportional to the
+money he holds --- table~1 halves it in 4~h, table~2 in 2~h.  Starting with
+Rs.~1000 at both, when is Rs.~10 left?
+
 \begin{qbox}
-First-order decay with $k=\ln2/4+\ln2/2=0.520$ h$^{-1}$;
-$t=\ln(1000/10)/k=4.605/0.520=8.9$ h.
+\textbf{Translate the story into kinetics.}  ``Loss proportional to money held''
+is first-order decay.  ``Halves in 4~h'' fixes $k_1=\ln2/4$~h$^{-1}$; ``halves in
+2~h'' gives $k_2=\ln2/2$~h$^{-1}$.  Playing at both tables at once is two
+\emph{parallel} first-order paths, and parallel first-order constants add:
+\[
+\frac{dM}{dt}=-(k_1+k_2)M,\qquad
+k=k_1+k_2=\frac{\ln2}{4}+\frac{\ln2}{2}=0.173+0.347=0.520\ \mathrm{h^{-1}}.
+\]
+
+\textbf{Integrate.}  $M=M_0e^{-kt}$, so the time to go from 1000 to 10 is
+\[
+t=\frac{1}{k}\ln\frac{M_0}{M}=\frac{\ln100}{0.520}=\frac{4.605}{0.520}=8.9\ \mathrm{h}.
+\]
+
+\textbf{Sanity read.}  At one table alone the halves would take 4~h and 2~h;
+together the money halves every $\ln2/0.52=1.33$~h, and $1000\to10$ is
+$\log_2 100\approx6.6$ halvings $\approx8.9$~h --- consistent.
 \end{qbox}
+\note{The slide's teaching point: parallel first-order paths add their rate
+constants --- the same rule used later for competing reactions.}
 \begin{ansbox}About 8.9 hours.\end{ansbox}
 
 \qtitle{Q30 -- Second order: bigger MFR, equal PFR}{\label{q:30}Ch5, slide 81}
-\src{Ch5\_-\,krd.pdf, slide 81.}
-$-r_A=kC_A^2$ gives 50\% in a MFR.  (i) conversion in a MFR of 6 times the volume;
-(ii) in a PFR of the same size.
+\src{Ch5\_-\\,krd.pdf, slide 81.}
+$-r_A=kC_A^2$ gives 50\% conversion in a mixed flow reactor.  (i) What
+conversion if it is replaced by an MFR of 6 times the volume?  (ii) What
+conversion if it is replaced by a PFR of the same size, all else unchanged?
+
 \begin{qbox}
-Original: $kC_{A0}\tau=\frac{X}{(1-X)^2}=2$.
-(i) $kC_{A0}\tau'=12=\frac{X}{(1-X)^2}\Rightarrow X=0.75$.
-(ii) PFR: $kC_{A0}\tau=\frac{X}{1-X}=2\Rightarrow X=2/3$.
+\textbf{Step 0 --- calibrate the one group the question gives.}  MFR at
+$X=0.5$:
+\[
+kC_{A0}\tau=\frac{X}{(1-X)^2}=\frac{0.5}{0.25}=2.
+\]
+Everything below is this single number rescaled.
+
+\textbf{(i) Six-fold volume.}  $kC_{A0}\tau'=6\times2=12$, so
+$\frac{X}{(1-X)^2}=12$, i.e.\ $12X^2-25X+12=0$:
+\[
+X=\frac{25\pm\sqrt{625-576}}{24}=\frac{25\pm7}{24}\ \Rightarrow\ X=0.75
+\quad(\tfrac{4}{3}\text{ rejected}).
+\]
+
+\textbf{(ii) Same-size PFR.}  The PFR design equation for second order is
+$kC_{A0}\tau=\frac{X}{1-X}$; with the same group $=2$:
+\[
+\frac{X}{1-X}=2\ \Rightarrow\ X=\frac{2}{3}\approx0.67.
+\]
 \end{qbox}
+\note{Read the comparison in the exam: six-fold the MFR volume buys only
+$0.5\to0.75$, while changing the \emph{type} of reactor at equal volume buys
+$0.5\to0.67$ --- second-order kinetics punish the MFR's exit-rate operation.}
 \begin{ansbox}(i) $X=0.75$; (ii) $X=0.67$.\end{ansbox}
 
 \qtitle{Q31 -- $A+3B\to6R$ with inerts}{\label{q:31}Ch5, slide 82}
-\src{Ch5\_-\,krd.pdf, slide 82.}
-Feed $C_{A0}=100$, $C_{B0}=200$, $C_{I0}=100$; $C_A=40$ at the exit.  Find $X_A,X_B,C_B$.
+\src{Ch5\_-\\,krd.pdf, slide 82.}
+Consider a feed $C_{A0}=100$, $C_{B0}=200$, $C_{I0}=100$ to a steady-flow
+reactor.  The isothermal gas-phase reaction is $A+3B\to6R$.  If $C_A=40$ at the
+reactor exit, what are $C_B$, $X_A$ and $X_B$ there?
+
 \begin{qbox}
-$X_A=0.6$; $X_B=X_A\frac{3C_{A0}}{C_{B0}}\cdot\frac{1}{3}\times3=0.9$; $C_B=200-3(60)=20$ mol/L.
+\textbf{Step 1 --- the expansion factor.}  Gas phase, so moles matter:
+$y_{A0}=\frac{100}{400}=0.25$, $\delta=6-4=2$, hence
+$\varepsilon_A=y_{A0}\delta=0.5$ --- the stream expands as it reacts.
+
+\textbf{Step 2 --- $X_A$ from the exit concentration.}
+$C_A=C_{A0}\frac{1-X}{1+\varepsilon X}$ inverted:
+\[
+X_A=\frac{C_{A0}-C_A}{C_{A0}+\varepsilon C_A}=\frac{100-40}{100+0.5(40)}=\frac{60}{120}=0.5.
+\]
+(A constant-density reading, $X=0.6$, ignores the expansion and is wrong for a
+gas.)
+
+\textbf{Step 3 --- $X_B$.}  B reacts three times faster per mole fed:
+\[
+X_B=\frac{b}{a}\frac{C_{A0}X_A}{C_{B0}}=\frac{3\times100\times0.5}{200}=0.75.
+\]
+
+\textbf{Step 4 --- $C_B$ at the expanded volume.}
+\[
+C_B=C_{B0}\frac{1-X_B}{1+\varepsilon X_A}=\frac{200\times0.25}{1.25}=40.
+\]
 \end{qbox}
-\begin{ansbox}$X_A=0.6$, $X_B=0.9$, $C_B=20$.\end{ansbox}
+\note{An earlier revision of these notes dropped $\varepsilon$ and printed
+$0.6/0.9/20$; the slide says \emph{gas-phase}, and Levenspiel's own method keeps
+the $(1+\varepsilon X)$ factor --- hence $0.5/0.75/40$.}
+\begin{ansbox}$X_A=0.5$, $X_B=0.75$, $C_B=40$.\end{ansbox}
 
 \qtitle{Q32 -- Gaseous feed with $T$ and $\pi$ change}{\label{q:32}Ch5, slide 83}
-\src{Ch5\_-\,krd.pdf, slide 83.}
-$T_0=1000$ K, $\pi_0=5$ atm, $C_{A0}=100$, $C_{B0}=200$; $A+B\to5R$; at the exit
-$T=400$ K, $\pi=4$ atm, $C_A=20$.  Find $X_A,X_B,C_B$.
+\src{Ch5\_-\\,krd.pdf, slide 83.}
+Given a gaseous feed $T_0=1000$~K, $\pi_0=5$~atm, $C_{A0}=100$, $C_{B0}=200$;
+$A+B\to5R$; at the exit $T=400$~K, $\pi=4$~atm, $C_A=20$.  Find $X_A$, $X_B$,
+$C_B$.
+
 \begin{qbox}
-$y_{A0}=1/3$, $\delta=+3$, $\varepsilon_A=1$:
-$C_A=C_{A0}\frac{1-X}{1+X}\frac{T_0}{T}\frac{\pi}{\pi_0}=32\frac{1-X}{1+X}=20
-\Rightarrow X_A=0.231$; $X_B=X_A C_{A0}/C_{B0}=0.115$;
-$C_B=200\frac{1-X_B}{1+X_A}\times0.32=46.0$.
+\textbf{Step 1 --- $\varepsilon$ and the temperature/pressure factor.}
+$y_{A0}=\frac13$, $\delta=5-2=3$, $\varepsilon_A=1$.  Cooling \emph{concentrates}
+the gas and the pressure drop dilutes it:
+\[
+\frac{T_0}{T}\cdot\frac{\pi}{\pi_0}=\frac{1000}{400}\times\frac{4}{5}=2.5\times0.8=2.
+\]
+
+\textbf{Step 2 --- $X_A$.}  $C_A=C_{A0}\frac{1-X}{1+X}\times2=200\frac{1-X}{1+X}=20$,
+so $\frac{1-X}{1+X}=0.1\Rightarrow 1-X=0.1+0.1X\Rightarrow X_A=\frac{0.9}{1.1}=0.82$.
+
+\textbf{Step 3 --- $X_B$.}  $X_B=\frac{C_{A0}X_A}{C_{B0}}=\frac{100\times0.818}{200}=0.41$.
+
+\textbf{Step 4 --- $C_B$.}  Same factor as A:
+\[
+C_B=C_{B0}\frac{1-X_B}{1+X_A}\times2=\frac{200\times0.591}{1.818}\times2\approx130.
+\]
 \end{qbox}
-\begin{ansbox}$X_A=0.23$, $X_B=0.12$, $C_B\approx46$.\end{ansbox}
+\note{Sanity check to quote in the exam: at $X=0$ the exit concentration would be
+$100\times2=200$ (cold, compressed gas); reaching 20 therefore needs a large
+conversion --- $0.82$, not a small one.}
+\begin{ansbox}$X_A\approx0.82$, $X_B\approx0.41$, $C_B\approx130$.\end{ansbox}
 
 \qtitle{Q33 -- Sucrase kinetics, Michaelis--Menten}{\label{q:33}Ch5, slide 84}
-\src{Ch5\_-\,krd.pdf, slide 84.}
-$C_{A0}=1.0$, $C_{S0}=0.01$ mmol/L; $C_A$ (mmol/L) $=0.68,0.60,0.55,0.38,0.27,0.16,0.09,0.04,
-0.018,0.006,0.0025$ at $t=1..11$ h.  Does Michaelis--Menten fit?  Evaluate $k_3,C_M$.
+\src{Ch5\_-\\,krd.pdf, slide 84.}
+Sucrose (A) hydrolysed by sucrase (S): $C_{A0}=1.0$, $C_{S0}=0.01$~mmol/L; batch
+data $C_A$ (mmol/L) $=0.68,\,0.60,\,0.55,\,0.38$, then $0.27,\,0.16,\,0.09,\,0.04$,
+then $0.018,\,0.006,\,0.0025$ at $t=1..11$~h.  Can the data be fitted by
+Michaelis--Menten kinetics?  Evaluate $k_3$ and $C_M$.
+
 \begin{qbox}
-Integrated MM: $k_3C_{S0}\,t=(C_{A0}-C_A)+C_M\ln\frac{C_{A0}}{C_A}$, linearised as
-$\frac{t}{\ln(C_{A0}/C_A)}=\frac{1}{k_3C_{S0}}\frac{C_{A0}-C_A}{\ln(C_{A0}/C_A)}+\frac{C_M}{k_3C_{S0}}$.
-Least squares over the eleven points: slope $=3.12$ h, intercept $=1.61$ h, giving
-$k_3C_{S0}=0.321$ h$^{-1}$ ($k_3\approx32$ h$^{-1}$) and $C_M\approx0.52$ mmol/L; the points
-lie on the line ($r^2>0.99$), so the fit is reasonable.
+\textbf{The model and its batch integral.}
+$-r_A=\dfrac{k_3C_{S0}\,C_A}{C_A+C_M}$; separating variables and integrating
+(the deck's ``integral method''):
+\[
+k_3C_{S0}\,t=(C_{A0}-C_A)+C_M\ln\frac{C_{A0}}{C_A}.
+\]
+
+\textbf{Linearise.}  Dividing by $\ln(C_{A0}/C_A)$ gives a straight-line form,
+$y=mx+b$ with $x=\frac{C_{A0}-C_A}{\ln(C_{A0}/C_A)}$, $y=\frac{t}{\ln(C_{A0}/C_A)}$:
+\[
+\frac{t}{\ln(C_{A0}/C_A)}=\frac{1}{k_3C_{S0}}\cdot\frac{C_{A0}-C_A}{\ln(C_{A0}/C_A)}+\frac{C_M}{k_3C_{S0}}.
+\]
+
+\textbf{Fit the eleven points.}  Least squares gives slope $=3.12$~h and
+intercept $=1.61$~h with $r^2>0.99$ --- the points lie on the line, so the
+Michaelis--Menten form \emph{does} represent the data.  Hence
+$k_3C_{S0}=1/3.12=0.321$~h$^{-1}$, i.e.\ $k_3=0.321/0.01\approx32$~h$^{-1}$, and
+$C_M=1.61\times0.321\approx0.52$~mmol/L.
 \end{qbox}
+\note{Why this linearisation: both parameters appear linearly, so one plot tests
+the model \emph{and} extracts $k_3,C_M$ --- the standard exam move for
+Michaelis--Menten batch data.}
 \begin{ansbox}Yes: $k_3\approx32$ h$^{-1}$ (at $C_{S0}=0.01$), $C_M\approx0.5$ mmol/L.\end{ansbox}
 
-\qtitle{Q34 -- Reversible PFR: equilibrium then actual conversion}{\label{q:34}Ch5, slide 61}
-\src{Ch5\_-\,krd.pdf, slide 61.}
-A PFR (2 m$^3$) processes aqueous feed (100 L/min) with $C_{A0}=100$ mmol/L; $A\rightleftharpoons B$.
-Find the equilibrium conversion, then the actual conversion (and repeat for a CSTR).
+\qtitle{Q34 -- $A\to R$ batch, integral from the $t$ table}{\label{q:34}Ch5, slide 61}
+\src{Ch5\_-\\,krd.pdf, slide 61.}
+$-r_A=0.2C_A$ mol/(L$\\cdot$s), $C_{A0}=1$~mol/L, in a batch reactor.  A data
+table gives $C_A$ ($0.9,0.75,\dots$) and $t$ ($5,10,\dots,50$~s).  Find
+$C_A$ at $t=20$~s.
+
 \begin{qbox}
-The slide prints no rate constants; the textbook problem it reproduces (Levenspiel, the
-companion MFR version of which is printed with $-r_A=0.04C_A-0.01C_R$ mol/(L$\cdot$min))
-supplies them: $K_e=k_1/k_2=4\Rightarrow X_e=\frac{4}{5}=0.80$.
-$-r_A=0.05(C_A-0.02)$; $\tau=V/v_0=20$ min;
-$\ln\frac{C_{Af}-0.02}{0.08}=-(k_1+k_2)\tau=-1\Rightarrow C_{Af}=0.0494$, $X=0.51$.
-(CSTR: $0.05(C_A-0.02)\times20=C_{A0}-C_A\Rightarrow C_A=0.06$, $X=0.40$.)
+\textbf{Step 1 --- integrate the law.}  $-dC_A/dt=0.2C_A$ separates to
+$dC_A/C_A=-0.2\,dt$ and integrates, with $C_A=C_{A0}=1$ at $t=0$, to
+$C_A=e^{-0.2t}$, so $\ln(C_{A0}/C_A)=0.2t$.
+
+\textbf{Step 2 --- one substitution.}  At $t=20$~s,
+\[
+\ln\frac{C_{A0}}{C_A}=0.2\times20=4\ \Rightarrow\ C_A=\frac{1}{e^4}=0.0183\approx0.018\ \mathrm{mol/L}.
+\]
+
+\textbf{Step 3 --- what the table is doing.}  Each tabulated pair is this
+same straight line: $t=\ln(1/C_A)/0.2$.  Hence the first entry $t=5$~s
+corresponds to $C_A=e^{-1}=0.368$, and the last, $t=50$~s, to
+$C_A=e^{-10}\approx4.5\times10^{-5}$.  The row of round concentrations
+$(0.9,0.75,\dots)$ printed on the sheet cannot all lie on one exponential;
+the method --- integrate, then use $t$ --- is the part to reproduce.
 \end{qbox}
-\begin{ansbox}$X_e=0.80$; PFR $X\approx0.51$; CSTR $X\approx0.40$ (rate law quoted from the textbook original, as the slide omits it).\end{ansbox}
+\note{For constant-volume first order $\tau=t$: Q22's slide-16 formula
+$\tau=(C_{A0}-C_A)/(-r_A)$ gives the same pairs here ($\tau=(1-C_A)/(0.2C_A)$).}
+\begin{ansbox}$C_A=e^{-4}=0.018$ mol/L at $t=20$ s.\end{ansbox}
 
 \qtitle{Q35 -- $A\to R+2S$ from total-pressure data}{\label{q:35}Ch5, slide 62}
-\src{Ch5\_-\,krd.pdf, slide 62.}
-Pure A, constant volume; $\pi$ (mmHg) $=7.5,10.5,12.5,15.8,17.9,19.4$ at
-$t=0,2.5,5,10,15,20$ min.
+\src{Ch5\_-\\,krd.pdf, slide 62.}
+Pure A at constant volume; total pressure $\pi$ (mmHg) $=7.5,10.5,12.5,15.8,17.9,19.4$
+at $t=0,2.5,5,10,15,20$~min.  Find the rate equation.
+
 \begin{qbox}
-$\Delta n=+2$: $p_A=\pi_0-\frac{\pi-\pi_0}{2}=\frac{3\pi_0-\pi}{2}=7.5,6.0,5.0,3.35,2.3,1.55$.
-$\ln(p_{A0}/p_A)/t = 0.089,0.081,0.081,0.079,0.079$ --- first order, $k\approx0.08$ min$^{-1}$.
+\textbf{Step 1 --- why $\pi$ is a composition signal.}  The reaction turns one
+mole of A into three moles of product.  At constant $V,T$ the total pressure
+counts total moles, so every mole of A that reacts adds two moles to the gas.
+Write $x=$ moles of A reacted per initial mole of A; then
+\[
+\pi=\pi_0+2x,\qquad p_A=\pi_0-x
+\quad\Rightarrow\quad
+p_A=\pi_0-\frac{\pi-\pi_0}{2}=\frac{3\pi_0-\pi}{2}.
+\]
+
+\textbf{Step 2 --- the pressure row becomes a $p_A$ row.}  With $\pi_0=7.5$:
+\begin{center}\small
+\begin{tabular}{lcccccc}
+\toprule
+$t$ (min) & 0 & 2.5 & 5 & 10 & 15 & 20\\
+$\pi$ (mmHg) & 7.5 & 10.5 & 12.5 & 15.8 & 17.9 & 19.4\\
+$p_A=\frac{22.5-\pi}{2}$ & 7.5 & 6.0 & 5.0 & 3.35 & 2.3 & 1.55\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Step 3 --- test first order, point by point.}  If
+$p_A=p_{A0}e^{-kt}$, then $k_i=\frac{1}{t}\ln\frac{p_{A0}}{p_A}$ should be the
+same number at every reading:
+\[
+k_i:\quad\frac{\ln(7.5/6.0)}{2.5}=0.089,\ \ \frac{\ln1.50}{5}=0.081,\ \ 
+\frac{\ln2.24}{10}=0.081,\ \ \frac{\ln3.26}{15}=0.079,\ \ \frac{\ln4.84}{20}=0.079
+\ \mathrm{min^{-1}}.
+\]
+Flat within reading scatter --- first order.
+
+\textbf{Conclusion.}  $-r_A=kC_A$ with $k\approx0.08$~min$^{-1}$ represents the
+run (the first reading sits slightly high; fitting the log plot gives 0.08).
 \end{qbox}
+\note{Here $\pi_0$ \emph{is} recorded (7.5), unlike Q23; the same
+$p_A=(3\pi_0-\pi)/2$ algebra covers every $1\to3$-type expansion in this part.}
 \begin{ansbox}First order with $k\approx0.08$ min$^{-1}$.\end{ansbox}
 
 %============================= PART F =====================================
@@ -632,176 +1483,358 @@ $\ln(p_{A0}/p_A)/t = 0.089,0.081,0.081,0.079,0.079$ --- first order, $k\approx0.
 
 \qtitle{Q36 -- Product distribution, three contacting patterns}{\label{q:36}Ch6, slide 32}
 \src{Ch6\_krd.pdf, slide 32.}
-Aqueous $A+B\xrightarrow{k_1}R$ (desired), $A+B\xrightarrow{k_2}S$, with
-$r_R=1.0\,C_A^{1.5}C_B^{0.3}$, $r_S=1.0\,C_A^{0.5}C_B^{1.8}$ mol/(L$\cdot$min).
-Equal streams of A and B at 20 mol/L each are fed ($C_{A0}=C_{B0}=10$ after mixing);
-90\% conversion of A.  Find $C_R$ for (a) plug flow, (b) mixed flow, (c) plug flow with side
-entrances of B.
+Aqueous $A+B\xrightarrow{k_1}R$ (desired) and $A+B\xrightarrow{k_2}S$ with
+$r_R=1.0\,C_A^{1.5}C_B^{0.3}$, $r_S=1.0\,C_A^{0.5}C_B^{1.8}$ mol/(L$\\cdot$min).
+Equal streams of A and B at 20~mol/L each are fed (after mixing
+$C_{A0}=C_{B0}=10$); 90\% conversion of A is required.  Find $C_R$ for
+(a) plug flow, (b) mixed flow, (c) plug flow with side entrances of B.
+
 \begin{qbox}
-With $C_A=C_B=c$: $\varphi(R/A)=\frac{r_R}{r_R+r_S}=\frac{1}{1+c^{0.5}}$.
-(a) $C_R=\int_{1}^{10}\frac{dc}{1+\sqrt c}=2\left[u-\ln(1+u)\right]_1^{\sqrt{10}}=2.86$ mol/L.
-(b) $C_R=\varphi|_{c=1}\,(10-1)=0.5\times9=4.5$ mol/L.
-(c) Side entry of B holds $C_B$ at the low exit level ($=1$):
-$\varphi=\frac{c}{c+1}$, $C_R=\int_1^{10}\frac{c\,dc}{c+1}=9-\ln\frac{11}{2}=7.30$ mol/L.
+\textbf{Step 1 --- the instantaneous fraction.}  With $C_A=C_B=c$ throughout
+(equal feeds, equal consumption),
+\[
+\varphi(R/A)=\frac{r_R}{r_R+r_S}=\frac{c^{1.5}c^{0.3}}{c^{1.5}c^{0.3}+c^{0.5}c^{1.8}}
+=\frac{1}{1+c^{0.5}}.
+\]
+$\varphi$ is \emph{larger at low concentration} --- that single observation
+already ranks the three contactors.
+
+\textbf{(a) Plug flow.}  Integrate $\varphi$ over $c:10\to1$:
+\[
+C_R=\int_1^{10}\frac{dc}{1+\sqrt c}\ \stackrel{u=\sqrt c}{=}\ 2\big[u-\ln(1+u)\big]_1^{\sqrt{10}}=2.86\ \mathrm{mol/L}.
+\]
+
+\textbf{(b) Mixed flow.}  The whole reactor sits at the exit level $c=1$:
+$\varphi=\frac12$, so $C_R=\frac12(10-1)=4.50$~mol/L --- better, because the
+CSTR keeps $c$ low where $\varphi$ is high.
+
+\textbf{(c) Side entry of B.}  Feeding B along the length holds $C_B$ at the low
+exit value ($=1$) while $C_A$ stays high:
+$\varphi=\frac{c^{1.5}}{c^{1.5}+c^{0.5}}=\frac{c}{c+1}$,
+\[
+C_R=\int_1^{10}\frac{c\,dc}{c+1}=9-\ln\frac{11}{2}=7.30\ \mathrm{mol/L}.
+\]
 \end{qbox}
+\note{The deck's lesson: when the desired reaction has the lower concentration
+exponent, run at low concentrations (CSTR beats PFR), and side-feeding the other
+reactant beats both.}
 \begin{ansbox}(a) 2.86; (b) 4.50; (c) 7.30 mol/L --- mixed flow beats plug flow here, and keeping B low is best.\end{ansbox}
 
 \qtitle{Q37 -- Two MFRs in series}{\label{q:37}Ch6, slide 33}
 \src{Ch6\_krd.pdf, slide 33.}
-$r_R=k_1C_A^2$, $r_S=k_2C_A$; feed $C_{A0}=1.0,C_{R0}=0,C_{S0}=0.3$; $\tau_1=2.5$, $\tau_2=10$ min;
-first-reactor exit $C_A=0.4,C_R=0.2,C_S=0.7$.  Find the second-reactor exit.
+$r_R=k_1C_A^2$, $r_S=k_2C_A$; feed $C_{A0}=1.0$, $C_{R0}=0$, $C_{S0}=0.3$;
+$\tau_1=2.5$, $\tau_2=10$~min; the first reactor exits at
+$C_A=0.4$, $C_R=0.2$, $C_S=0.7$.  Find the second reactor's exit.
+
 \begin{qbox}
-From reactor 1: $k_1=\frac{0.2/2.5}{0.4^2}=0.5$; $k_2=\frac{(0.7-0.3)/2.5}{0.4}=0.4$
-(the S balance checks: $0.4\times0.4=0.16=(0.7-0.3)/2.5$).
-Reactor 2: $0.4-C_A=(0.5C_A^2+0.4C_A)10\Rightarrow C_A=0.0745$;
-$C_R=0.2+0.5C_A^2(10)=0.228$; $C_S=0.7+0.4C_A(10)=0.998$.
+\textbf{Step 1 --- extract the constants from reactor 1.}  MFR balances:
+\[
+k_1=\frac{C_{R1}-C_{R0}}{\tau_1 C_{A1}^2}=\frac{0.2/2.5}{0.4^2}=0.5,\qquad
+k_2=\frac{(C_{S1}-C_{S0})/\tau_1}{C_{A1}}=\frac{0.4/2.5}{0.4}=0.4.
+\]
+
+\textbf{Step 2 --- A balance on reactor 2.}
+$0.4-C_A=(0.5C_A^2+0.4C_A)\times10$, i.e.\ $5C_A^2+5C_A-0.4=0$:
+\[
+C_A=\frac{-5+\sqrt{25+8}}{10}=0.0745.
+\]
+
+\textbf{Step 3 --- R and S balances.}
+\[
+C_R=0.2+0.5C_A^2(10)=0.228,\qquad
+C_S=0.7+0.4C_A(10)=0.998.
+\]
 \end{qbox}
+\note{Mass check to state in the exam: $C_A+C_R+C_S$ should equal
+$C_{A0}+C_{S0}=1.3$ (R and S each come from A): $0.075+0.23+1.00=1.30$.)}
 \begin{ansbox}$C_A\approx0.075$, $C_R\approx0.23$, $C_S\approx1.00$ mol/L.\end{ansbox}
 
 %============================= PART G =====================================
 \spsection{Part G -- Non-isothermal design (Ch7-\_krd.pdf)}
 
 \qtitle{Q38 -- Adiabatic PFR: n-butane isomerisation}{\label{q:38}Ch7, slides 14--17}
-\src{Ch7-\_krd.pdf, slides 14--17.}
-$n$-butane $\rightleftharpoons$ isobutane, adiabatic liquid-phase PFR; $k=31.1$ h$^{-1}$ at
-360 K, $E=65.7$ kJ/mol, $\Delta H_{Rx}=-6900$ J/mol, $K_C=3.03$ at 60\,°C,
-$C_{A0}=9.3$ kmol/m$^3$, $C_p=141/141/161$ J/(mol$\cdot$K) (butane/isobutane/pentane).
-Process 163 kmol/h (90 mol\% butane) to $X=0.70$, feed at 330 K.
+\src{Ch7-\_Krd.pdf, slides 14--17.}
+$n$-butane $\rightleftharpoons$ isobutane, adiabatic liquid-phase PFR;
+$k=31.1$~h$^{-1}$ at 360~K, $E=65.7$~kJ/mol, $\Delta H_{Rx}=-6900$~J/mol,
+$K_C=3.03$ at 60\,°C, $C_{A0}=9.3$~kmol/m$^3$,
+$C_p=141/141/161$~J/(mol$\\cdot$K) (butane/isobutane/pentane inert).  Process
+163~kmol/h (90~mol\% butane) to $X=0.70$ with the feed at 330~K.
+
 \begin{qbox}
-Adiabatic line $T=330+43.3X$ (deck); $k(T)=31.1e^{7902(1/360-1/T)}$;
-$K_C(T)=3.03e^{830.3(1/333-1/T)}$; $-r_A=kC_{A0}\left[1-\left(1+\tfrac1{K_C}\right)X\right]$;
-$F_{A0}=0.9\times163=146.7$ kmol/h.  The deck's table (e.g. $-r_A=39.2$ at $X=0$,
-$F_{A0}/-r_A=23.29$ m$^3$ at 0.7) is reproduced by these expressions; integrating
-$F_{A0}/(-r_A)$ to $X=0.7$ gives $V\approx2.0$ m$^3$ (the deck's coarse Simpson table reads
-$\approx2.4$ m$^3$; the value is sensitive near $X_e\approx0.72$).
+\textbf{Step 1 --- the adiabatic line (deck).}  Energy balance with no heat
+exchange ties $T$ to $X$: $T=330+43.3X$ --- every 10\% conversion heats the
+stream by about 4.3~K.
+
+\textbf{Step 2 --- $k(T)$ and $K_C(T)$ (Arrhenius / van't Hoff).}
+$k(T)=31.1\,e^{7902(1/360-1/T)}$ and $K_C(T)=3.03\,e^{830.3(1/333-1/T)}$;
+exothermic, so $K_C$ falls as $T$ rises and equilibrium closes in.
+
+\textbf{Step 3 --- the rate in one bracket.}  $-r_A=k(C_A-C_B/K_C)
+=kC_{A0}\big[1-\big(1+\tfrac1{K_C}\big)X\big]$; with
+$F_{A0}=0.9\times163=146.7$~kmol/h the Levenspiel column $F_{A0}/(-r_A)$ is
+the deck's table (e.g.\ $-r_A=39.2$ at $X=0$; $23.29$~m$^3$ at $X=0.7$).
+
+\textbf{Step 4 --- integrate to $X=0.7$.}  $\int_0^{0.7}\frac{F_{A0}}{-r_A}dX
+\approx2.0$~m$^3$; the deck's coarse Simpson table reads $\approx2.4$~m$^3$ ---
+the value is sensitive because $X=0.7$ sits just under $X_e\approx0.72$ where
+the rate vanishes.
 \end{qbox}
+\note{Exam habit: write adiabatic line, $k(T)$, $K_C(T)$, rate bracket, then the
+table --- that is the whole deck algorithm for any adiabatic equilibrium
+reaction.}
 \begin{ansbox}$V\approx2$--$2.4$ m$^3$ for 70\% (deck table: $F_{A0}/(-r_A)=23.3$ m$^3$ at $X=0.7$).\end{ansbox}
 
 \qtitle{Q39 -- Adiabatic equilibrium with two interstage coolers}{\label{q:39}Ch7, slides 48--51}
-\src{Ch7-\_krd.pdf, slides 48--51.}
-$A\rightleftharpoons B$, pure A at 300 K; $K_C(298)=10^5$, $\Delta H_{Rx}=-20\,000$ cal/mol
-(as implied by the deck's $K_C(T)$ and adiabatic line), $C_{pA}=C_{pB}=50$ cal/(mol$\cdot$K),
-so $X_{ad}=2.5\times10^{-3}(T-300)$.  Two coolers return the stream to 350 K; 95\% of the
-equilibrium conversion in each reactor; $F_{A0}=40$ mol/s; cooling water at 270 K,
-$c_{pC}=18$ cal/(mol$\cdot$K), $U=100$ cal/(s$\cdot$m$^2\cdot$K).
+\src{Ch7-\_Krd.pdf, slides 48--51.}
+$A\rightleftharpoons B$, pure A at 300~K; $K_C(298)=10^5$,
+$\Delta H_{Rx}=-20\,000$~cal/mol, $C_{pA}=C_{pB}=50$~cal/(mol$\\cdot$K), so the
+adiabatic line is $X_{ad}=2.5\times10^{-3}(T-300)$.  Each adiabatic reactor runs
+to 95\% of the equilibrium conversion and a cooler returns the stream to 350~K
+between stages; $F_{A0}=40$~mol/s; cooling water at 270~K with
+$c_{pC}=18$~cal/(mol$\\cdot$K).  Find the two exits and the two duties.
+
 \begin{qbox}
-$K_C(T)=10^5\exp[-33.78(T-298)/T]$, $X_e=K_C/(1+K_C)$.
-Reactor 1: $2.5\times10^{-3}(T-300)=0.95X_e(T)\Rightarrow T_1=459$ K, $X_1=0.40$.
-Cool to 350 K.  Reactor 2: $X_1+2.5\times10^{-3}(T-350)=0.95X_e(T)\Rightarrow T_2=440$ K,
-$X_2=0.62$.
-Duties: $\dot Q=\dot n C_p (T_{out}-350)$: $Q_1=40\times50\times109=218$ kcal/s;
-$Q_2=40\times50\times90=179$ kcal/s (water flow $=\dot Q/(18\,\Delta T)$ as sized by the deck).
+\textbf{Step 1 --- equilibrium curve.}  Van't Hoff:
+$K_C(T)=10^5\exp[-33.78(T-298)/T]$, and $X_e=K_C/(1+K_C)$ --- steeply falling
+with $T$ because the reaction is exothermic.
+
+\textbf{Step 2 --- reactor 1: intersect the lines.}
+$2.5\times10^{-3}(T-300)=0.95\,X_e(T)$ solves at $T_1=459$~K,
+$X_1=0.40$.
+
+\textbf{Step 3 --- cool to 350~K, reactor 2.}  The new adiabatic line starts at
+$(350,X_1)$: $X_1+2.5\times10^{-3}(T-350)=0.95X_e(T)$ gives $T_2=440$~K,
+$X_2=0.62$.  Cooling resets the equilibrium budget --- that is the whole point
+of interstage cooling.
+
+\textbf{Step 4 --- cooler duties.}  $\dot Q=\dot n C_p\Delta T$:
+$Q_1=40\times50\times(459-350)=218$~kcal/s;
+$Q_2=40\times50\times(440-350)=179$~kcal/s; the water flow in each exchanger is
+$\dot Q/(18\,\Delta T_{water})$ as sized by the deck.
 \end{qbox}
 \begin{ansbox}$X\approx0.40$ after reactor 1 and $0.62$ after reactor 2; $\dot Q_1\approx218$, $\dot Q_2\approx179$ kcal/s.\end{ansbox}
 
 \qtitle{Q40 -- Propylene-oxide CSTR, adiabatic}{\label{q:40}Ch7, slides 57--59}
-\src{Ch7-\_krd.pdf, slides 57--59 (and 69--72).}
-300-gal glass-lined CSTR; $F_{A0}=43.04$ lbmol/h PO; streams: 46.62 ft$^3$/h PO, 46.62 ft$^3$/h
-methanol, 233.1 ft$^3$/h water (0.1 wt\% H$_2$SO$_4$); methanol 71.87 and water 802.8 lbmol/h;
-$T_0=75$\,°F $=535$ R after the 17\,°F heat-of-mixing rise; first order in PO with
-$k=16.96\times10^{12}e^{-32\,400/RT}$ h$^{-1}$; limit 125\,°F.
+\src{Ch7-\_Krd.pdf, slides 57--59 (and 69--72).}
+A 300-gal glass-lined CSTR; $F_{A0}=43.04$~lbmol/h propylene oxide; streams
+46.62~ft$^3$/h PO, 46.62~ft$^3$/h methanol, 233.1~ft$^3$/h water
+(0.1~wt\% H$_2$SO$_4$); methanol 71.87 and water 802.8~lbmol/h;
+$T_0=75$\,°F $=535$~R after the 17\,°F heat-of-mixing rise; first order in PO
+with $k=16.96\times10^{12}e^{-32\,400/RT}$~h$^{-1}$; temperature limit 125\,°F.
+Can the reactor be used adiabatically?
+
 \begin{qbox}
-$v_0=326.3$ ft$^3$/h, $C_{A0}=0.132$ lbmol/ft$^3$, $\tau=(300/7.48)/326.3=0.123$ h.
-Energy balance: $\sum\Theta_iC_{p,i}\approx404$ Btu/(lbmol A$\cdot$R), $-\Delta H_{Rx}=36\,400$
-Btu/lbmol $\Rightarrow T=535+90.1X$.  Solving with $X=\frac{k\tau}{1+k\tau}$:
-$X=0.84$, $T=611$ R $=151$\,°F (deck table intersection $\approx613$ R, $X\approx0.85$).
-$151>125$\,°F: the reactor \emph{cannot} be used adiabatically.
+\textbf{Step 1 --- flows.}  $v_0=46.62+46.62+233.1=326.3$~ft$^3$/h;
+$C_{A0}=43.04/326.3=0.132$~lbmol/ft$^3$;
+$\tau=(300/7.48)/326.3=0.123$~h.
+
+\textbf{Step 2 --- the adiabatic energy line.}
+$\sum\Theta_iC_{p,i}\approx404$~Btu/(lbmol~A$\\cdot$R) and
+$-\Delta H_{Rx}=36\,400$~Btu/lbmol give
+\[
+T=535+\frac{36\,400}{404}X=535+90.1X.
+\]
+
+\textbf{Step 3 --- intersect with the mole balance.}
+$X=\frac{k(T)\tau}{1+k(T)\tau}$ together with the line solves at
+$X=0.84$, $T=611$~R $=151$\,°F (deck intersection $\approx613$~R, $X\approx0.85$).
+
+\textbf{Step 4 --- the constraint.}  $151>125$\,°F: the reactor \emph{cannot} be
+used adiabatically --- the exotherm outruns the limit.
 \end{qbox}
 \begin{ansbox}$X\approx0.84$--$0.85$ at $T\approx611$--$613$ R ($\approx151$\,°F) $>125$\,°F --- not acceptable.\end{ansbox}
 
 \qtitle{Q41 -- The same CSTR with a cooling coil}{\label{q:41}Ch7, slides 60--74}
-\src{Ch7-\_krd.pdf, slides 60--74.}
-A 40 ft$^2$ coil, $U=100$ Btu/(h$\cdot$ft$^2\cdot$°F), coolant at 85\,°F (545 R).  Does the
+\src{Ch7-\_Krd.pdf, slides 60--74.}
+The 300-gal CSTR of Q40 now gets a 40~ft$^2$ cooling coil,
+$U=100$~Btu/(h$\\cdot$ft$^2\\cdot$°F), coolant at 85\,°F (545~R).  Does the
 125\,°F constraint now hold?
+
 \begin{qbox}
-Energy balance adds $UA(T-T_a)=4000(T-545)$ Btu/h:
-$X=\frac{17\,379(T-535)+4000(T-545)}{43.04\times36\,400}$ together with the mole balance.
-Intersection: $X\approx0.35$--$0.36$, $T\approx562$--$564$ R $=102$--$104$\,°F --- the deck's
-fsolve gives $X=0.364$, $T=563.7$ R.  The constraint is satisfied with the coil.
+\textbf{Step 1 --- the coil enters the energy balance.}  The heat removed is
+$UA(T-T_a)=100\times40\times(T-545)=4000(T-545)$~Btu/h, so the energy line of
+Q40 gains that term:
+\[
+X=\frac{17\,379\,(T-535)+4000\,(T-545)}{43.04\times36\,400},
+\]
+where $17\,379=\sum F_iC_{p,i}$ on the feed basis.
+
+\textbf{Step 2 --- intersect with the mole balance again.}
+Solving together with $X=k(T)\tau/(1+k(T)\tau)$:
+$X\approx0.35$--$0.36$ at $T\approx562$--$564$~R $=102$--$104$\,°F --- the deck's
+fsolve gives $X=0.364$, $T=563.7$~R.
+
+\textbf{Step 3 --- the constraint.}  $104<125$\,°F: satisfied --- but notice the
+price: conversion collapses from 0.84 to 0.36, because the coil holds the
+reactor below the temperature where $k$ is large (the deck's multiple-steady-
+state discussion, slides 69--74, is exactly this trade-off).
 \end{qbox}
 \begin{ansbox}Yes: $X\approx0.36$ at $T\approx564$ R ($\approx104$\,°F) $<125$\,°F.\end{ansbox}
 
 \qtitle{Q42 -- Parallel reactions in a PFR with heat effects}{\label{q:42}Ch7, slide 95}
-\src{Ch7-\_krd.pdf, slide 95.}
-$A\to B$ ($r_B=k_1C_A$), $2A\to C$ ($r_C=k_2C_A^2$); pure A at 100 mol/s, 150\,°C,
-$C_{A0}=0.1$ mol/dm$^3$; $\Delta H_1=-20\,000$, $\Delta H_2=-60\,000$ J/mol A;
-$C_{pA}=C_{pB}=90$, $C_{pC}=180$ J/(mol$\cdot$°C); $E_1/R=4000$ K, $E_2/R=9000$ K;
-$k_1=10$, $k_2=0.09$ (as printed, per min).  Determine the temperature and flow-rate
-profiles down the reactor.
+\src{Ch7-\_Krd.pdf, slide 95.}
+$A\to B$ ($r_1=k_1C_A$) and $2A\to C$ ($r_2=k_2C_A^2$); pure A at 100~mol/s,
+150\,°C, $C_{A0}=0.1$~mol/dm$^3$; $\Delta H_1=-20\,000$, $\Delta H_2=-60\,000$
+J/mol~A; $C_{pA}=C_{pB}=90$, $C_{pC}=180$~J/(mol$\\cdot$°C); $E_1/R=4000$~K,
+$E_2/R=9000$~K; $k_1=10$, $k_2=0.09$ (as printed, per min).  Determine the
+temperature and molar-flow profiles down the reactor.
+
 \begin{qbox}
-Coupled ODEs (per the deck's PFR heat-effects balances):
-$\frac{dF_A}{dV}=-(r_1+2r_2)$, $\frac{dF_C}{dV}=r_2$,
-$\frac{dT}{dV}=\frac{r_1(-\Delta H_1)+r_2(-\Delta H_2)}{F_AC_{pA}+F_BC_{pB}+F_CC_{pC}}$
-with $C_A=F_A/\dot V_0$, $\dot V_0=60\,000$ dm$^3$/min (taking the printed rate constants as
-per minute).  Integrating to $V=10$ m$^3$: $F_A\to0$, $F_C\to0$ (B dominates), and $T$ rises
-to $\approx645$ K --- the adiabatic limit for complete conversion to B
-($\Delta T = 100\times20\,000/(100\times90)\approx222$ K above 423 K).
+\textbf{Step 1 --- the coupled balances (deck's PFR heat-effects form).}
+\[
+\frac{dF_A}{dV}=-(r_1+2r_2),\qquad \frac{dF_C}{dV}=r_2,
+\]
+\[
+\frac{dT}{dV}=\frac{r_1(-\Delta H_1)+r_2(-\Delta H_2)}
+{F_AC_{pA}+F_BC_{pB}+F_CC_{pC}},
+\]
+with $C_A=F_A/\dot V_0$ and $\dot V_0=60\,000$~dm$^3$/min (taking the printed
+rate constants as per minute).
+
+\textbf{Step 2 --- what the integration shows.}  Both reactions are fast and
+exothermic: they complete within the first m$^3$, and essentially all A leaves
+as B (the first-order path outruns the second-order one at $C_A=0.1$).
+
+\textbf{Step 3 --- the temperature ceiling.}  With B the product, the adiabatic
+rise is $\Delta T=F_{A0}(-\Delta H_1)/(F_{A0}C_{pB})=20\,000/90\approx222$~K, so
+$T\to423+222\approx645$~K and stays there (no further reaction, no exchange).
 \end{qbox}
+\begin{warnbox}The slide states the problem and data but no units for $k_1,k_2$
+beyond ``min''; the profile above takes them as printed.  The qualitative result
+--- fast exothermic run to the adiabatic temperature, B the dominant product ---
+is unaffected.\end{warnbox}
 \begin{ansbox}Both reactions complete within the first m$^3$; $T\to\approx645$ K, product essentially B.\end{ansbox}
-\begin{warnbox}The slide states the problem and the data but no units for $k_1,k_2$ beyond ``min''; the profile above takes them as printed (per minute).  The qualitative result (fast exothermic run to the adiabatic temperature rise) is unaffected.\end{warnbox}
 
 %============================= PART H =====================================
 \spsection{Part H -- Catalysis (Catalysis\_Krd.pdf)}
 
 \qtitle{Q43 -- Pellet concentration profile}{\label{q:43}Catalysis, slide 48}
 \src{Catalysis\_Krd.pdf, slide 48 (``Problem'').}
-$A\to B$, first order, spherical particle $d_p=2\times10^{-3}$ cm; $C_{As}=0.001$ gmol/m$^3$;
-$D_e=0.1$ cm$^2$/s.  The concentration halfway to the centre is $1/10$ of $C_{As}$.
-(a) $C_A$ at $3\times10^{-4}$ cm from the external surface; (b) diameter for $\eta=0.8$.
+$A\to B$, first order, spherical pellet $d_p=2\times10^{-3}$~cm;
+$C_{As}=0.001$~gmol/m$^3$; $D_e=0.1$~cm$^2$/s.  The concentration halfway to the
+centre is one tenth of $C_{As}$.  (a) $C_A$ at $3\times10^{-4}$~cm from the
+external surface; (b) the diameter for which $\eta=0.8$.
+
 \begin{qbox}
-Sphere, first order: $\frac{C_A}{C_{As}}=\frac{R}{r}\frac{\sinh(\phi r/R)}{\sinh\phi}$.
-At $r=R/2$: $0.1=\frac{2\sinh(\phi/2)}{\sinh\phi}=\frac1{\cosh(\phi/2)}\Rightarrow
-\phi=2\,\mathrm{arcosh}(10)=5.99$.
-(a) $r=R-3\times10^{-4}=7\times10^{-4}$ cm: ratio $=\frac{1}{0.7}\frac{\sinh(0.7\times5.99)}{\sinh 5.99}=0.237$,
-$C_A=2.4\times10^{-4}$ gmol/m$^3$.
-(b) $\eta=\frac{3}{\phi^2}(\phi\coth\phi-1)=0.8\Rightarrow\phi_{0.8}=2.04$; $\phi\propto d_p$:
-$d_{new}=2\times10^{-3}\times\frac{2.04}{5.99}=6.8\times10^{-4}$ cm.
+\textbf{Step 1 --- the profile formula.}  Sphere + first order:
+\[
+\frac{C_A}{C_{As}}=\frac{R}{r}\,\frac{\sinh(\phi\, r/R)}{\sinh\phi}.
+\]
+
+\textbf{Step 2 --- $\phi$ from the midpoint datum.}  At $r=R/2$:
+$0.1=\frac{2\sinh(\phi/2)}{\sinh\phi}=\frac{1}{\cosh(\phi/2)}$, so
+$\cosh(\phi/2)=10$ and $\phi=2\,\mathrm{arcosh}(10)=5.99$ --- a strongly
+diffusion-limited pellet.
+
+\textbf{(a) The off-surface point.}  $r=R-3\times10^{-4}=7\times10^{-4}$~cm,
+$r/R=0.7$:
+\[
+\frac{C_A}{C_{As}}=\frac{1}{0.7}\frac{\sinh(0.7\times5.99)}{\sinh5.99}=0.237
+\ \Rightarrow\ C_A=2.4\times10^{-4}\ \mathrm{gmol/m^3}.
+\]
+
+\textbf{(b) Diameter for $\eta=0.8$.}  $\eta=\frac{3}{\phi^2}(\phi\coth\phi-1)=0.8$
+solves at $\phi_{0.8}=2.04$; and $\phi\propto R$ (same kinetics, same $D_e$):
+\[
+d_{new}=2\times10^{-3}\times\frac{2.04}{5.99}=6.8\times10^{-4}\ \mathrm{cm}.
+\]
+Smaller pellet, shorter diffusion path, higher effectiveness --- the design
+lever the deck keeps returning to.
 \end{qbox}
 \begin{ansbox}(a) $C_A\approx2.4\times10^{-4}$ gmol/m$^3$; (b) $d_p\approx6.8\times10^{-4}$ cm.\end{ansbox}
 
 \qtitle{Q44 -- Internal diffusion: 100 vs 150\,°C}{\label{q:44}Catalysis, slide 57}
 \src{Catalysis\_Krd.pdf, slide 57.}
-First order, $R=0.2$ cm, $D_e=0.015$ cm$^2$/s; $k(100\,°\mathrm{C})=0.93$ s$^{-1}$,
-$E=20$ kcal/mol; $C_{Ab}=3.25\times10^{-5}$ mol/L.  (a) rate at 100\,°C; (b) at 150\,°C;
-(c) apparent activation energy.
+First order, $R=0.2$~cm, $D_e=0.015$~cm$^2$/s; $k(100\,°\mathrm{C})=0.93$~s$^{-1}$,
+$E=20$~kcal/mol; $C_{Ab}=3.25\times10^{-5}$~mol/L.  (a) The rate at 100\,°C;
+(b) at 150\,°C; (c) the apparent activation energy between them.
+
 \begin{qbox}
-(a) $\phi_1=R\sqrt{k_1/D_e}=1.575$; $\eta_1=0.866$; $-r_A=\eta_1 k_1 C_{Ab}=2.6\times10^{-5}$
-mol/(L$\cdot$s).
-(b) $k_2=0.93e^{\frac{20\,000}{1.987}(1/373-1/423)}=22.5$ s$^{-1}$; $\phi_2=7.75$;
-$\eta_2=0.337$; $-r_A=2.5\times10^{-4}$ mol/(L$\cdot$s).
-(c) From the two rates, $E_{app}=R\ln(r_2/r_1)/(1/T_1-1/T_2)\approx14.1$ kcal/mol --- between
-$E$ and $E/2$, moving toward the diffusion-limited $E/2=10$ kcal/mol as $\phi$ grows.
+\textbf{(a) 100\,°C.}  Thiele modulus
+$\phi_1=R\sqrt{k_1/D_e}=0.2\sqrt{0.93/0.015}=1.575$;
+$\eta_1=\frac{3}{\phi_1^2}(\phi_1\coth\phi_1-1)=0.866$; rate
+$-r_A=\eta_1k_1C_{Ab}=0.866\times0.93\times3.25\times10^{-5}=2.6\times10^{-5}$
+mol/(L$\\cdot$s).
+
+\textbf{(b) 150\,°C.}  Arrhenius first:
+$k_2=0.93\,e^{\frac{20\,000}{1.987}(1/373-1/423)}=22.5$~s$^{-1}$; then
+$\phi_2=0.2\sqrt{22.5/0.015}=7.75$, $\eta_2=0.337$; rate
+$-r_A=0.337\times22.5\times3.25\times10^{-5}=2.5\times10^{-4}$ mol/(L$\\cdot$s).
+
+\textbf{(c) Apparent $E$.}  From the two measured-style rates:
+\[
+E_{app}=R\,\frac{\ln(r_2/r_1)}{1/T_1-1/T_2}\approx14.1\ \mathrm{kcal/mol}.
+\]
+Between $E$ and $E/2$: at 150\,°C the pellet is deep in the diffusion-limited
+regime ($\phi_2\gg1$), where the observed slope tends to $E/2=10$~kcal/mol.
 \end{qbox}
-\begin{ansbox}(a) $2.6\times10^{-5}$; (b) $2.5\times10^{-4}$ mol/(L$\cdot$s); (c) $E_{app}\approx14$ kcal/mol.\end{ansbox}
+\note{The exam moral: as $\phi$ grows, $\eta\sim3/\phi$ and the apparent
+activation energy halves --- a rate that rises ``too slowly'' with temperature
+is the fingerprint of internal diffusion control.}
+\begin{ansbox}(a) $2.6\times10^{-5}$; (b) $2.5\times10^{-4}$ mol/(L$\\cdot$s); (c) $E_{app}\approx14$ kcal/mol.\end{ansbox}
 
 %============================= PART I =====================================
 \spsection{Part I -- Residence time distributions (Non\_ideal\_KRD.pdf)}
 
 \qtitle{Q45 -- Tracer pulse: $E(t)$ and the 3--6 min fraction}{\label{q:45}Non-ideal, slides 17--19}
 \src{Non\_ideal\_KRD.pdf, slides 17--19 (``Problem'').}
-$C$ (g/m$^3$) $=0,1,5,8,10,8,6,4,3,2.2,1.5,0.6,0$ at $t=0,1,\dots,10,12,14$ min.  Construct
-$E(t)$ and find the fraction that spent 3--6 min in the reactor.
+A tracer pulse gives $C$ (g/m$^3$) $=0,1,5,8,10,8,6,4,3,2.2,1.5$ at
+$t=0,1,\dots,10$~min and $0.6,\,0$ at $12,\,14$~min.  Construct $E(t)$ and find
+the fraction of material that spent 3--6~min in the reactor.
+
 \begin{qbox}
-$\int_0^\infty C\,dt = 47.4+2.6 = 50.0$ g$\cdot$min/m$^3$ (Simpson on 0--10 plus 10--14, as on
-the deck).  $E(t)=C(t)/50$: peak $E(4)=0.20$.  Fraction between 3 and 6 min:
-$\int_3^6 E\,dt \approx \frac{1}{50}\times\frac{3}{8}(8+3\cdot10+3\cdot8+6)=0.465\approx0.5$.
-Mean residence time $t_m=\int tE\,dt\approx5.2$ min.
+\textbf{Step 1 --- normalise.}  $E(t)=C(t)/\int_0^\infty C\,dt$; the deck
+integrates with Simpson on $0$--$10$ ($47.4$) plus the $10$--$14$ tail ($2.6$):
+\[
+\int_0^\infty C\,dt=50.0\ \mathrm{g\cdot min/m^3}.
+\]
+
+\textbf{Step 2 --- the $E$ curve.}  $E(t)=C(t)/50$: it peaks at
+$E(4)=10/50=0.20$~min$^{-1}$.
+
+\textbf{Step 3 --- the 3--6 min fraction.}  Integrate $E$ over $[3,6]$ (Simpson
+on the tabulated points):
+\[
+\int_3^6 E\,dt\approx\frac{1}{50}\times\frac{3}{8}\big(8+3(10)+3(8)+6\big)=0.465\approx0.5,
+\]
+i.e.\ about half the material spent between 3 and 6 minutes inside.
+
+\textbf{Step 4 --- the mean.}  $t_m=\int tE\,dt\approx5.2$~min --- quoted by the
+deck and reused by Q46.
 \end{qbox}
-\begin{ansbox}$\int C\,dt=50$ g$\cdot$min/m$^3$; about half the material (0.47--0.51) spent 3--6 min inside; $t_m\approx5.2$ min.\end{ansbox}
+\begin{ansbox}$\int C\,dt=50$ g$\\cdot$min/m$^3$; about half the material (0.47--0.51) spent 3--6 min inside; $t_m\approx5.2$ min.\end{ansbox}
 
 \qtitle{Q46 -- Dispersion model: conversion four ways}{\label{q:46}Non-ideal, slides 52--59}
 \src{Non\_ideal\_KRD.pdf, slides 52--59 (``Problem'').}
-First order $A\to B$ in a 10 cm, 6.36 m tubular reactor, $k=0.25$ min$^{-1}$; tracer test of
-Q45.  Conversion by (i) closed-vessel dispersion model, (ii) PFR, (iii) single CSTR,
-(iv) tanks in series.
+First-order $A\to B$, $k=0.25$~min$^{-1}$, in the 10-cm, 6.36-m tubular reactor
+of Q45.  Predict the conversion with (i) the closed-vessel dispersion model,
+(ii) an ideal PFR, (iii) a single CSTR, (iv) the tanks-in-series model.
+
 \begin{qbox}
-$t_m=5.13$ min, $\sigma^2=5.92$ min$^2$ (deck values), $\sigma_\theta^2=0.225$;
-$\sigma_\theta^2=\frac{2}{Pe}-\frac{2}{Pe^2}(1-e^{-Pe})\Rightarrow Pe=7.7$.
-$Da=k t_m=1.28$, $q=\sqrt{1+4Da/Pe}=1.29$:
-$X=1-\frac{4q\,e^{Pe/2}}{(1+q)^2e^{Pe\,q/2}-(1-q)^2e^{-Pe\,q/2}}=0.68$ (deck value).
-(ii) $X=1-e^{-Da}=0.72$; (iii) $X=\frac{Da}{1+Da}=0.56$;
-(iv) $n=t_m^2/\sigma^2=4.45$: $X=1-(1+Da/n)^{-n}=0.68$.
+\textbf{Step 1 --- RTD parameters from Q45.}  $t_m=5.13$~min,
+$\sigma^2=5.92$~min$^2$ (deck values), so
+$\sigma_\theta^2=\sigma^2/t_m^2=0.225$.
+
+\textbf{Step 2 --- the P\'eclet number.}  Closed vessel:
+$\sigma_\theta^2=\frac{2}{Pe}-\frac{2}{Pe^2}\left(1-e^{-Pe}\right)$ solves at
+$Pe=7.7$.
+
+\textbf{(i) Dispersion model.}  With $Da=k t_m=1.28$ and
+$q=\sqrt{1+4Da/Pe}=1.29$, the closed-closed conversion formula gives
+\[
+X=1-\frac{4q\,e^{Pe/2}}{(1+q)^2e^{Pe\,q/2}-(1-q)^2e^{-Pe\,q/2}}=0.68
+\quad(\text{deck value}).
+\]
+
+\textbf{(ii) PFR.}  $X=1-e^{-Da}=0.72$.  \textbf{(iii) CSTR.}
+$X=\frac{Da}{1+Da}=0.56$.
+
+\textbf{(iv) Tanks in series.}  $n=t_m^2/\sigma^2=4.45$:
+$X=1-\left(1+\frac{Da}{n}\right)^{-n}=0.68$.
 \end{qbox}
+\note{The deck's conclusion to state in the exam: both one-parameter models
+agree with each other (0.68) and sit between the ideal extremes 0.56--0.72 ---
+exactly where a real reactor belongs.}
 \begin{ansbox}(i) 0.68; (ii) 0.72; (iii) 0.56; (iv) 0.68.\end{ansbox}
 
 \vspace{6pt}

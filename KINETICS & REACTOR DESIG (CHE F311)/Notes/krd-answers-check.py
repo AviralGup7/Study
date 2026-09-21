@@ -67,7 +67,9 @@ rA, rB, rC = (0.02-0.10)/tau, (0.03-0.01)/tau, (0.04-0.0)/tau
 print(f"rA={rA}, rB={+rB}, rC={+rC}  -> 4A -> B + 2C")
 
 print("=== Q7 parallel PFR branches (Ch2 slide 46) ===")
-print(f"fraction to D = 50/90 = {50/90:.3f}")
+# slide 46 prints branch D = 50 L + 30 L = 80 L, branch E = 40 L; equal space
+# time per branch => F_D/F = 80/120 (an early draft misread D as 20+30 L)
+print(f"fraction to D = 80/120 = {80/120:.3f}")
 
 print("=== Q8 P2-7 (Ch2 slide 59) ===")
 Xq = np.array([0, .2, .4, .45, .5, .6, .8, .9]); rA = np.array([1.0, 1.67, 5.0, 5.0, 5.0, 5.0, 1.25, 0.91])
@@ -95,7 +97,7 @@ print("=== Q9/Q10 relative rates (Ch3 slides 5-7) ===")
 print("Q9: rNO2=+4 -> rNO = -4, rO2 = -2 mol/m3.s")
 print("Q10: rA=-10 -> rB = -15, rC = +25 mol/dm3.s")
 
-print("=== Q13 dimerization MFR (Ch3 slide 61 / Ch5 slide 77) ===")
+print("=== Q13 dimerization MFR (Ch3 slide 62 / Ch5 slide 77) ===")
 v0s = np.array([10.0, 3.0, 1.2, 0.5]); CAs = np.array([85.7, 66.7, 50, 33.4]); CA0 = 100.0
 Xs = (CA0-CAs)/(CA0-0.5*CAs); r = v0s*CA0*Xs/0.1
 n, lk = linreg(np.log(CAs), np.log(r))
@@ -107,6 +109,13 @@ T = 649+273.15; P = 460e3; R = 8.314
 CA0 = P/(R*T); k = 10.0; FA0 = 40.0; eps = 1.5; X = 0.8
 V = FA0/(k*CA0)*((1+eps)*np.log(1/(1-X)) - eps*X)
 print(f"CA0 = {CA0:.2f} mol/m3; V = {V:.4f} m3")
+
+print("=== Ch3 milk sterilisation activation energy (Ch3 slide 61, notes 3.5) ===")
+# same sterilisation result => same k*t; first order. Deck prints 80C/30min vs
+# 74C/15s; hotter must be shorter, so pair 353.15K with 15s, 347.15K with 1800s.
+t1, t2 = 1800.0, 15.0; T1, T2 = 347.15, 353.15
+E = 8.314*np.log(t1/t2)/(1/T1 - 1/T2)
+print(f"E = {E/1000:.0f} kJ/mol")
 
 print("=== Q15 EO batch (Ch4 slides 17-20) ===")
 t = np.array([.5, 1, 1.5, 2, 3, 4, 6, 10]); lnCA = np.array([-.157, -.315, -.472, -.629, -.942, -1.255, -1.884, -3.147])
@@ -214,9 +223,15 @@ print("=== Q30/Q31 (Ch5 slides 80-81) ===")
 k = np.log(2)/4+np.log(2)/2; print(f"gamble t = {np.log(100)/k:.2f} h")
 X6 = bisect(lambda x: x/(1-x)**2-12, 0.5, 0.999); print(f"6x MFR X = {X6:.3f}; PFR X = {2/3:.3f}")
 
-print("=== Q33 (Ch5 slide 83) ===")
-X = bisect(lambda x: 100*(1-x)/(1+x)*(400/1000)*(4/5)-20, 0, 1)
-XB = X*100/200; CB = 200*(1-XB)/(1+X)*(400/1000)*(4/5)
+print("=== Q31 A+3B->6R, gas, eps=0.5 (Ch5 slide 82) ===")
+# variable volume: CA = CA0(1-X)/(1+eps X), eps = yA0*delta = 0.25*2 = 0.5
+XA = (100-40)/(100+0.5*40); XB = 3*100*XA/200; CB = 200*(1-XB)/(1+0.5*XA)
+print(f"XA = {XA:.3f}; XB = {XB:.3f}; CB = {CB:.2f}")
+
+print("=== Q32 A+B->5R with T,pi change, eps=1 (Ch5 slide 83) ===")
+# CA = CA0(1-X)/(1+eps X) * (T0/T)*(pi/pi0); (1000/400)*(4/5) = 2
+X = bisect(lambda x: 100*(1-x)/(1+x)*2.0-20, 0, 1)
+XB = X*100/200; CB = 200*(1-XB)/(1+X)*2.0
 print(f"XA = {X:.4f}; XB = {XB:.4f}; CB = {CB:.2f}")
 
 print("=== Q34 sucrose MM (Ch5 slide 84) ===")
@@ -332,3 +347,26 @@ def rhs(y):
     return [dFa, dFc, dT]
 y = rk4(rhs, [100.0, 0.0, 423.15], 10000, h=10)
 print(f"at V = 1e4 dm3: FA = {y[0]:.1f}, FC = {y[1]:.1f}, T = {y[2]:.0f} K")
+
+print("=== Ch6 three-reaction selectivity reduction (Ch6 slides 18-19) ===")
+# r_D = 0.0002 e^{36000(1/300-1/T)} C_A ; r_U = 0.0018 e^{25000(1/300-1/T)} C_A^1.5 ;
+# r_Q = 0.00452 e^{5000(1/300-1/T)} C_A^0.5  ->  S_DU = r_D/r_U, S_DQ = r_D/r_Q
+coef = 0.0002/0.0018; dE = 36000-25000; a = 1-1.5
+print(f"S_DU = {coef:.2f} e^({dE}(1/300-1/T)) C_A^({a})   (deck prints 0.11 e^(11,000(1/300-1/T))/C_A^0.5)")
+print(f"S_DQ: prefactor {0.0002/0.00452:.4f}, E-gap {36000-5000} -> very large at high T; order gap {1-0.5}")
+
+print("=== Ch7 A<->B adiabatic equilibrium intersection (Ch7 slides 47-48) ===")
+# X_EB = 50(T-300)/20000 = 2.5e-3(T-300); Kc = 1e5 exp(-33.78 (T-298)/T); Xe = Kc/(1+Kc)
+slope = 50/20000; coef = 20000/1.987/298
+print(f"X_EB slope = {slope:.1e} (deck 2.5e-3); van't Hoff coef = {coef:.2f} (deck 33.78)")
+for Tt in [350, 400, 425, 450, 475, 500]:
+    K = 1e5*np.exp(-coef*(Tt-298)/Tt)
+    print(f"  Kc({Tt}) = {K:.2f}, Xe = {K/(1+K):.2f}")
+f = lambda T: 1e5*np.exp(-coef*(T-298)/T)/(1+1e5*np.exp(-coef*(T-298)/T)) - slope*(T-300)
+lo, hi = 300.0, 600.0
+for _ in range(100):
+    m = 0.5*(lo+hi)
+    if f(lo)*f(m) <= 0: hi = m
+    else: lo = m
+T = 0.5*(lo+hi)
+print(f"exact intersection X = {slope*(T-300):.3f} at T = {T:.1f} K (deck graphic: 0.42 at 465 K)")

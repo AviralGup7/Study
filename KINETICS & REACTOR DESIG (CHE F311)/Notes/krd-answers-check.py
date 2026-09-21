@@ -127,14 +127,17 @@ m, c = linreg(t, lnCA)
 print(f"slope k = {-m:.3f} min-1 ; t90 = {np.log(10)/-m:.2f} min ; k=1e-4/s -> {np.log(10)/1e-4/3600:.2f} h")
 
 print("=== Q16 EG CSTR (Ch4 slides 29-38) ===")
-FA0 = 200e6/62/525600/0.8   # lbmol/min EO
+FC = 200e6/62/525600        # lbmol/min EG produced (the 200e6 lb/yr spec)
+FA0 = FC/0.8                # lbmol/min EO entering; the deck's "80% of capacity" is X = 0.8
 vA0 = FA0/1.0; v0 = 2*vA0; CA0 = 0.5; k = 0.311
 V = FA0*X/(k*CA0*(1-X))
-print(f"FA0 = {FA0:.3f} lbmol/min; v0 = {v0:.2f} ft3/min; V(80%) = {V:.1f} ft3")
-tau_p = 800/7.48/vA0; Da = k*tau_p
+print(f"F_C = {FC:.3f} lbmol/min; FA0 = {FA0:.3f} lbmol/min; v0 = {v0:.2f} ft3/min; V(80%) = {V:.1f} ft3")
+Vt = 800*231/1728           # one 800-gal tank = 106.944 ft3
+tau_p = Vt/vA0; Da = k*tau_p
+print(f"tank = {Vt:.1f} ft3")
 print(f"parallel: tau = {tau_p:.2f} min, Da = {Da:.2f}, X = {Da/(1+Da):.3f}")
 tau_s = 800/7.48/v0; Das = k*tau_s
-print(f"series: tau = {tau_s:.2f} min, Da = {Das:.3f}, X = {1-1/(1+Das)**2:.2f}")
+print(f"series: tau = {tau_s:.2f} min, Da = {Das:.3f}, X = {1-1/(1+Das)**2:.3f}")
 
 print("=== Q17 ethylene PFR (Ch4 slide 44) ===")
 k1000, E, Rcal = 0.072, 82000, 1.987
@@ -145,7 +148,10 @@ CA0 = 6*101325/(8.314*1100)
 v0 = FA0/CA0
 V = v0/k*((1+1)*np.log(1/0.2) - 0.8)
 print(f"k(1100K) = {k:.3f} 1/s; FA0 = {FA0:.1f} mol/s; CA0 = {CA0:.3f} mol/m3; v0 = {v0:.3f} m3/s; V = {V:.2f} m3 = {V*35.315:.1f} ft3")
-print(f"tubes of 0.0205 ft3: {V*35.315/0.0205:.0f}")
+tube = np.pi/4*(1/12)**2*40   # ID 1 in, L 40 ft = 0.2182 ft3 each
+print(f"k ratio = {k/k1000:.0f}; tube = {tube:.3f} ft3; tubes = {V*35.315/tube:.0f}")
+mixed = np.pi/4*0.0254**2*40  # m2 x ft artifact (the "3150 tubes" slip)
+print(f"(mixed m2.ft artifact {mixed:.4f} would give {V*35.315/mixed:.0f} tubes; older solutions round the artifact to 0.0205 ft3 and quote 3150 tubes)")
 
 print("=== Q18 PBR A+B->2C (Ch4 slides 55-58) ===")
 G = 3/100  # back-calculated group kCA0^2/FA0 from X=0.75 (no drop)
@@ -154,10 +160,10 @@ Xd = G*(W - a*W*W/2)
 print(f"group = {G}; X(drop) = {Xd/(1+Xd):.4f} (deck 0.6); X(no drop) = {G*W/(1+G*W):.2f}")
 
 print("=== Q19 PBR+CSTR order (Ch4 slide 76) ===")
-# first order in pA, pure A, eps=1; current: PBR 50 kg gives X=0.5, P0=20 atm, alpha=0.018/kg
-
-
-print("=== Q19 PBR+CSTR order (Ch4 slide 76) ===")
+# Deck-literal model: A->B (delta = 0, eps = 0), 1st order in p_A, so
+#   dX/dW = a (1-X) p,  dp/dW = -alpha/(2p),  a = k' P0 / FA0.
+# Calibration: the FLUIDIZED reactor (= the CSTR, no drop, p = 1) realizes X = 0.5
+# at W = 50 kg, P0 = 20 atm  ->  a = X/(W(1-X)) = 0.02 /kg exactly.
 def rk4(f, y0, W, h=0.05):
     y = np.array(y0, float)
     n = int(round(W/h))
@@ -166,19 +172,22 @@ def rk4(f, y0, W, h=0.05):
         y = y + h/6*(k1+2*k2+2*k3+k4)
     return y
 def pbr(X0, p0, a, alpha, W):
-    f = lambda y: [a*(1-y[0])/(1+y[0])*y[1], -alpha/(2*y[1]) if y[1] > 1e-9 else 0.0]
+    f = lambda y: [a*(1-y[0])*y[1], -alpha/(2*y[1]) if y[1] > 1e-9 else 0.0]
     return rk4(f, [X0, p0], W)
-a = bisect(lambda a: pbr(0, 1, a, 0.018, 50)[0] - 0.5, 0.001, 0.1)
+a = 0.5/(50*0.5)   # 0.0200 kg-1
 Xp, pp = pbr(0, 1, a, 0.018, 50)
-print(f"group a = {a:.5f}; X = {Xp:.3f}; p exit = {pp:.4f}; P exit = {20*pp:.2f} atm")
-X2 = bisect(lambda x: x - Xp - a*(1-x)/(1+x)*pp*50, Xp, 0.999)
-Y1 = bisect(lambda x: x - a*(1-x)/(1+x)*50, 0, 0.999)
+print(f"a = {a:.4f} kg-1; PBR alone X = {Xp:.3f}; p exit = {pp:.4f} (= sqrt(1-0.018*50) = {np.sqrt(1-0.018*50):.4f}); P = {20*pp:.2f} atm")
+X2 = bisect(lambda x: x - Xp - a*(1-x)*pp*50, Xp, 0.999)   # trailing CSTR at p = pp
+Y1 = 0.5                                                     # leading CSTR at p = 1 (calibration)
 YX, Yp = pbr(Y1, 1, a, 0.018, 50)
 print(f"PBR->CSTR X = {X2:.3f}; CSTR->PBR X = {YX:.3f}")
-ad = 0.018*2*(1/1.5**4)
+# (d) turbulent: beta0 ~ G^2/Dp; alpha = 2 beta0/(Ac (1-phi) rho_c P0) ~ 1/(Ac^3 Dp):
+# Dp/2 -> x2 ; Dtube x1.5 -> Ac x2.25 -> x2.25^-3
+ad = 0.018*2/(2.25**3)
 Xd, pd = pbr(0, 1, a, ad, 50)
-X2d = bisect(lambda x: x - Xd - a*(1-x)/(1+x)*pd*50, Xd, 0.999)
-print(f"(d) alpha' = {ad:.5f}: PBR->CSTR X = {X2d:.3f}")
+X2d = bisect(lambda x: x - Xd - a*(1-x)*pd*50, Xd, 0.999)
+YXd, Ypd = pbr(0.5, 1, a, ad, 50)
+print(f"(d) alpha' = {ad:.5f} kg-1 (G^2-only factor would give {0.018*2/2.25**2:.5f}): PBR->CSTR X = {X2d:.3f}; CSTR->PBR X = {YXd:.3f}; p exit = {pd:.4f} = {20*pd:.1f} atm")
 
 print("=== Q20 series batch (Ch4 slide 78) ===")
 k1, k2, CA0 = 1.0, 2.0, 5.0
@@ -333,9 +342,31 @@ tau = 2000/100
 CAf = 0.02 + (CA0-0.02)*np.exp(-(k1+k2)*tau)
 print(f"Xe = {Xe:.2f}; tau = {tau} min; CAf = {CAf:.4f}; X = {1-CAf/CA0:.3f}")
 
-print("=== Q21 PFR pressure drop lengths (Ch4 slides 90-98) ===")
-kv = 0.1/15.9155
-print(f"no-drop L(10%) = {np.log(1/0.9)/kv:.1f} m; L(20%) = {np.log(1/0.8)/kv:.1f} m (deck: ~20 m with drop; 20% impossible in 1.5 cm)")
+print("=== Q21 PFR pressure drop lengths (Ch4 slides 88-99) ===")
+# Isomerisation (eps = 0) in a D = 2 cm tube.  Slides 90-91 print
+# rho_in = P_in M/(RT) = 24.0558 kg/m3 (their arithmetic treats "10 atm" as 1e6 Pa),
+# u_in = Q/(pi/4 D^2) = 15.9155 m/s, F_Ain = 2.0047 mol/s, Re = 7.65e5, f = 0.003,
+# alpha = 1.847e9 Pa2/m, beta = k A/(P_in Q_in) = 6.2832e-9 1/(Pa m).
+P_in, M, Temp, D, Q_in, mu, kk = 1e6, 0.060, 300.0, 0.02, 0.005, 1e-5, 0.1
+rho = P_in*M/(8.314*Temp); u = Q_in/(np.pi/4*D**2); FAi = rho*Q_in/M
+Re = rho*u*D/mu
+alpha_pipe = 2*0.003*rho*u**2*P_in/D
+beta = kk*(np.pi/4*D**2)/(P_in*Q_in)
+kv = kk/u
+print(f"rho_in = {rho:.4f} kg/m3 (deck 24.0558); u_in = {u:.4f} m/s (deck 15.9155); F_Ain = {FAi:.4f} mol/s (deck 2.0047)")
+print(f"Re = {Re:.2e} (deck 7.65e5); alpha formula = {alpha_pipe:.3e} Pa2/m (deck 1.847e9); beta = {beta:.4e} 1/(Pa.m) (deck 6.2832e-9)")
+print(f"kv = beta*P_in = {beta*P_in:.4e} 1/m = k/u")
+print(f"no-drop L(10%) = {np.log(1/0.9)/kv:.1f} m; L(20%) = {np.log(1/0.8)/kv:.1f} m")
+zc = P_in**2/(2*1.847e9)                      # P^2 = P_in^2 - 2 alpha z
+xz = lambda z: 1-np.exp(-(2/3)*kv*zc*(1-(1-z/zc)**1.5))
+z20 = zc*(1-(1-np.log(1/0.8)/((2/3)*kv*zc))**(2/3))
+print(f"with drop (2 cm): z_c = {zc:.1f} m; x(16.9 m) = {xz(16.9):.3f}; x(36.8 m) = {xz(36.8):.3f}; x(100 m) = {xz(100):.3f}; P(100 m) = {1e6*np.sqrt(1-100/zc):.2e} Pa (deck 7.8e5)")
+print(f"  x = 0.20 at z = {z20:.1f} m (2 cm, with drop)")
+fac = (2/1.5)**5
+ad21 = 1.847e9*fac
+zcd = P_in**2/(2*ad21)
+z20d = zcd*(1-(1-np.log(1/0.8)/((2/3)*kv*zcd))**(2/3))
+print(f"1.5 cm variant: alpha x {fac:.2f} = {ad21:.2e} Pa2/m; x_sat = {1-np.exp(-(2/3)*kv*zcd):.3f} at z_c = {zcd:.1f} m; x = 0.20 at {z20d:.1f} m (deck plot: saturation ~0.15, 20% not reached)")
 
 print("=== Q42 parallel rxns PFR heat effects (Ch7 slide 95): ODE setup ===")
 def rhs(y):

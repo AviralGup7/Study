@@ -1071,9 +1071,32 @@ V = \frac{F_{A0}}{k C_{A0}}\int_0^{X}\frac{1+\varepsilon X}{1-X}\,dX
 \spsection{4 \enspace Isothermal Reactor Design}
 \notetext{Source: \texttt{Ch4-\_Krd.pdf}.}
 
-\spsub{4.1 \enspace The algorithm}
+\spsub{4.1 \enspace Conversion and the rate written in $X$ (slides~5--6)}
+\begin{formulabox}
+\[
+X = \frac{F_{A0}-F_A}{F_{A0}}\ \ (\text{flow}),\qquad
+X = \frac{N_{A0}-N_A}{N_{A0}}\ \ (\text{batch})
+\qquad\Longrightarrow\qquad F_A = F_{A0}(1-X)\ \text{or}\ N_A = N_{A0}(1-X)
+\]
+\[
+-r_A = k\,C_{A0}^{\,n}\,\frac{(1-X)^{n}}{(1+\varepsilon X)^{n}}
+\qquad\text{(power law combined with $C_A = C_{A0}(1-X)/(1+\varepsilon X)$, constant $T$, $P$)}
+\]
+\end{formulabox}
+\begin{mthbox}
+\textbf{Where the $X$-form of the rate comes from.} The rate is always evaluated at the \emph{local}
+conditions. For an ideal-gas single reaction the flow table (\S3.13--3.15) gives
+$F_A = F_{A0}(1-X)$ and $v = v_0(1+\varepsilon X)$ at constant $T,P$, so
+\[
+C_A = \frac{F_A}{v} = \frac{F_{A0}(1-X)}{v_0(1+\varepsilon X)} = C_{A0}\,\frac{1-X}{1+\varepsilon X}.
+\]
+Substituting into the power law $-r_A = kC_A^{\,n}$ gives the boxed form. If $T$ or $P$ vary, append the
+master ratios of \S3.15: $C_A = C_{A0}\dfrac{1-X}{1+\varepsilon X}\cdot\dfrac{T_0}{T}\cdot\dfrac{P}{P_0}$.
+\end{mthbox}
 \begin{daybox}
-\textbf{Five steps, in this order, every time.}
+\textbf{Express the rate in terms of $X$ first; only then substitute $C_A(X)$.} Slides~9--11 draw this as a
+loop (rate law $\to$ $C_i$ in $X$ $\to$ design equation $\to$ solve) and slide~12 packages it as the
+\textbf{five steps, in this order, every time:}
 \begin{enumerate}
 \item \textbf{Mole balance} --- pick the reactor, write its design equation (section~1).
 \item \textbf{Rate law} --- from the data or the mechanism (section~3).
@@ -1081,19 +1104,33 @@ V = \frac{F_{A0}}{k C_{A0}}\int_0^{X}\frac{1+\varepsilon X}{1-X}\,dX
 \item \textbf{Combine} --- substitute 2 and 3 into 1 to get one equation in $X$.
 \item \textbf{Evaluate} --- integrate, or solve, and size the reactor.
 \end{enumerate}
-\vspace{2pt}
-Every worked example in this section follows those five steps; the deck labels them explicitly on the slides.
 \end{daybox}
+\notetext{Slide~6 is a hand-drawn \textbf{Levenspiel plot}: $1/(-r_A)$ against $X$ with a rectangle sketched to
+some target $X$. Its \emph{area} (times $F_{A0}$) is the PFR volume $V = F_{A0}\int dX/(-r_A)$; its \emph{height}
+at the exit is the CSTR integrand $V = F_{A0}X/(-r_A)\big|_{\text{exit}}$. Rectangle versus area is the entire
+PFR-versus-CSTR comparison in one picture (chapter~2). A final deck caution (slide~7): ``elementary'' is what
+licenses writing the rate law from the stoichiometry (mass-action); if a reaction is not elementary, the
+exponents come from data only --- and the Arrhenius plot $\ln k$ versus $1/T$ is a straight line of slope $-E/R$
+(section~3.8).}
 
-\spsub{4.2 \enspace Closed-form conversions}
+\spsub{4.2 \enspace Closed-form conversions and the Damk\"ohler number (slides~13--16, 25--28)}
 \begin{tabularx}{\linewidth}{@{}l X@{}}
 \toprule
-\textbf{Batch, 1st order} & $t = \dfrac{1}{k}\ln\dfrac{1}{1-X}$\\
-\textbf{Batch, 2nd order} & $t = \dfrac{1}{kC_{A0}}\cdot\dfrac{X}{1-X}$\\
-\textbf{CSTR, 1st order} & $X = \dfrac{k\tau}{1+k\tau}$\\
+\textbf{Batch, 1st order} & $t = \dfrac{1}{k}\ln\dfrac{1}{1-X}$\qquad ($X = 1-e^{-kt}$)\\[6pt]
+\textbf{Batch, 2nd order} & $t = \dfrac{1}{kC_{A0}}\cdot\dfrac{X}{1-X}$\qquad ($X = \dfrac{kC_{A0}t}{1+kC_{A0}t}$)\\[6pt]
+\textbf{CSTR, 1st order} & $X = \dfrac{k\tau}{1+k\tau}$\\[6pt]
 \textbf{CSTR, 2nd order} & $X = \dfrac{(1+2Da)-\sqrt{1+4Da}}{2Da}$,\quad $Da = k\tau C_{A0}$\\
 \bottomrule
 \end{tabularx}
+\begin{mthbox}
+\textbf{Derivations (two lines each).} Batch, constant volume: $t = C_{A0}\int_0^X dX/(-r_A)$ with
+$-r_A = kC_{A0}^{\,n}(1-X)^n$ gives $\int_0^X (1-X)^{-n}dX$: the logarithm for $n=1$ and
+$\frac{1}{n-1}\big[(1-X)^{1-n}-1\big]$ otherwise --- the two boxed rows (slide~15's table also lists the
+$n$th-order result and the times for \emph{half} life). CSTR: the balance $C_{A0}X = \tau k C_{A0}^{\,n}(1-X)^n$
+is \emph{algebraic}: for $n=1$, $X(1+k\tau)=k\tau$; for $n=2$, $Da\,X^2-(1+2Da)X+Da=0$, whose physical root
+(the one with $X\to0$ as $Da\to0$) is the minus branch of the quadratic formula (slide~28, ``in terms of Da''---
+the deck's own typo).
+\end{mthbox}
 \begin{formulabox}
 \begin{align*}
 Da_1 &= k\tau
@@ -1106,62 +1143,253 @@ Da \ge 10 &\;\Longrightarrow\; X > 0.9
 \end{formulabox}
 \notetext{$Da$ is the ratio of the reaction rate to the convective transport rate. It is the quickest way to see, before any integration, whether a proposed reactor is remotely big enough.}
 
-\spsub{4.3 \enspace Reactors in series and in parallel}
+\spsub{4.3 \enspace Reactors in series and in parallel (slides~25--28)}
 \begin{formulabox}
 \begin{align*}
-\text{$N$ equal CSTRs, 1st order:}\quad & X = 1 - \frac{1}{(1+k\tau_i)^{N}}\\[4pt]
+\text{$N$ equal CSTRs in series, 1st order:}\quad & X = 1 - \frac{1}{(1+k\tau_i)^{N}}\\[4pt]
 \text{Parallel CSTRs:}\quad & \text{behave as one large CSTR of the same total volume}
 \end{align*}
 \end{formulabox}
+\begin{mthbox}
+\textbf{Series derivation (slide~25).} One CSTR at steady state:
+$C_{\text{in}} - C_{\text{out}} = \tau k\,C_{\text{out}} \Rightarrow C_{\text{out}} = C_{\text{in}}/(1+\tau k)$.
+Each tank multiplies the same factor, so after $N$ tanks $C_N = C_0/(1+\tau k)^N$ and $X = 1-C_N/C_0$.
+Slide~26 plots $X$ versus $N$ at $Da = 0.1,\,0.5,\,1$: the gains are strongly diminishing, and the step from
+one tank to two is the biggest single improvement at fixed total volume. \textbf{Parallel:} $m$ identical CSTRs
+sharing the feed have $\tau_i = V_i/v_0 = V_{\text{tot}}/(m v_0)$ each, and each solves
+$C_{\text{out}} = C_{\text{in}}/(1+k\tau_i)$ with the \emph{same} inlet --- identical to one CSTR of volume
+$V_{\text{tot}}$ (slide~27). Splitting changes the hydraulics, not the conversion.
+\end{mthbox}
 \notetext{Compare with \S2.6: there, splitting the duty into two CSTRs saved $37\,\%$ of the volume. This is the same result in closed form, and it is why industrial trains are staged rather than single-vessel.}
 
-\spsub{4.4 \enspace Variable volume, gas phase}
+\spsub{4.4 \enspace Variable volume, gas phase (slides~38--46)}
 \begin{formulabox}
+\[
+V = \int_0^X \frac{F_{A0}\,dX}{-r_A}\ \ (\text{PFR}),\qquad
+W = \int_0^X \frac{F_{A0}\,dX}{-r_A'}\ \ (\text{PBR, per catalyst mass})
+\]
 \begin{align*}
+\text{Liquid ($\varepsilon = 0$):}\quad
+V &= \frac{v_0}{k\,C_{A0}^{\,n-1}}\int_0^X\frac{dX}{(1-X)^{n}}
+&&\text{1st order: } \frac{v_0}{k}\ln\frac{1}{1-X};\quad
+\text{2nd order: } \frac{v_0}{kC_{A0}}\frac{X}{1-X}\\[6pt]
 V_{\text{PFR}} &= \frac{v_0}{kC_{A0}}\left[
  2\varepsilon(1+\varepsilon)\ln(1-X) + \varepsilon^{2}X
  + \frac{(1+\varepsilon)^{2}X}{1-X}\right]
- &&\text{2nd order, gas phase}
+ &&\text{2nd order, gas phase (slide~42, red box)}
 \end{align*}
 \end{formulabox}
+\begin{mthbox}
+\textbf{Derivation of the gas 2nd-order result.} With $C_A = C_{A0}(1-X)/(1+\varepsilon X)$ and
+$F_{A0} = v_0C_{A0}$,
+\[
+V = \frac{v_0}{kC_{A0}}\int_0^X \left(\frac{1+\varepsilon X}{1-X}\right)^{2} dX ,
+\]
+and the decomposition $\left(\frac{1+\varepsilon X}{1-X}\right)^2 =
+\frac{(1+\varepsilon)^2}{(1-X)^2} - \frac{2\varepsilon(1+\varepsilon)}{1-X} + \varepsilon^2$ integrates term
+by term to the red box ($\int -\,\frac{2\varepsilon(1+\varepsilon)}{1-X}\,dX = 2\varepsilon(1+\varepsilon)\ln(1-X)$). Check the limit $\varepsilon\to0$: the bracket collapses to $X/(1-X)$, the liquid form.
+Slide~43 graphs the $\varepsilon$-dependence for $\varepsilon = -0.5,\ 0,\ 1,\ 2$: expansion ($\varepsilon>0$)
+always inflates the required volume; contraction helps.
+\end{mthbox}
+\notetext{The first-order gas integral used in \S4.10 below is the same procedure one order down:
+$\int_0^X\frac{1+\varepsilon X}{1-X}dX = (1+\varepsilon)\ln\frac{1}{1-X} - \varepsilon X$, which for
+$\varepsilon = 1$ is $2\ln\frac{1}{1-X} - X$ (the form in the ethane-cracking solution, slide~44).
+Slides~45--46 restate the master relations $C_A = C_{A0}\frac{1-X}{1+\varepsilon X}\frac{T_0}{T}\frac{P}{P_0}$
+and $v = v_0(1+\varepsilon X)\frac{T}{T_0}\frac{P_0}{P}$ --- nothing new, but they are what makes the
+pressure-drop problem of \S4.5--4.7 a \emph{coupled} system.}
 
-\spsub{4.5 \enspace Pressure drop in packed beds}
+\spsub{4.5 \enspace Pressure drop in packed beds: Ergun, $\beta_0$, and $\alpha$ (slides~47--51)}
 \begin{formulabox}
 \begin{align*}
-\frac{dp}{dW} &= -\frac{\alpha}{2p},
- &\qquad p &= \frac{P}{P_0}
- &&\text{reduced-pressure form}\\[5pt]
-\varepsilon = 0:\quad p &= \left(1-\alpha W\right)^{1/2}
- &&\text{closed form}\\[5pt]
-C_A &= C_{A0}\,\frac{1-X}{1+\varepsilon X}\;p
- &&\text{gas, constant } T\\[5pt]
-\frac{dP}{dz} &= -\frac{\beta_0 P_0}{P}\left(1+\varepsilon X\right),
- &\qquad
+\frac{dX}{dW} &= \frac{k\,C_{A0}^{2}}{F_{A0}}
+ \left(\frac{1-X}{1+\varepsilon X}\right)^{2}\left(\frac{P}{P_0}\right)^{2}
+ &&\text{PBR, 2nd order with drop (slide~47)}\\[6pt]
+\frac{dP}{dz} &= -\frac{G(1-\phi)}{\rho_g g_c D_p \phi^{3}}
+ \left[\frac{150(1-\phi)\mu}{D_p} + 1.75\,G\right]\cdot(\text{property corrections})
+ &&\text{Ergun (slide~48)}\\[6pt]
 \beta_0 &= \frac{G(1-\phi)}{\rho_0 D_p \phi^{3}}
  \left[\frac{150(1-\phi)\mu}{D_p} + 1.75\,G\right]
+ &&\text{(slide~49; $g_c = 32.174\ \mathrm{lb_m\,ft/(lb_f\,s^2)}$ in English units)}\\[6pt]
+W &= z\,A_c\,\rho_b = z\,A_c\,(1-\phi)\rho_c
+ &&\text{catalyst mass (slide~50)}\\[6pt]
+\frac{dP}{dW} &= -\frac{\beta_0}{A_c(1-\phi)\rho_c}\cdot\frac{P_0}{P}\cdot\frac{T}{T_0}\cdot\frac{F_T}{F_{T0}},
+ &\qquad
+\alpha &\equiv \frac{2\beta_0}{A_c(1-\phi)\rho_c}\cdot\frac{1}{P_0}
 \end{align*}
 \end{formulabox}
+\begin{mthbox}
+\textbf{From $dP/dW$ to the reduced-pressure law.} With $p = P/P_0$ and the slide's $\alpha$,
+\[
+\frac{dp}{dW} = \frac{1}{P_0}\frac{dP}{dW}
+ = -\frac{\alpha}{2p}\cdot\frac{T}{T_0}\cdot\frac{F_T}{F_{T0}}
+ \qquad\xrightarrow{\ \text{single reaction: } F_T/F_{T0} = 1+\varepsilon X\ }\qquad
+\frac{dp}{dW} = -\frac{\alpha}{2p}\,(1+\varepsilon X)\quad(\text{constant }T).
+\]
+For $\delta = 0$ (hence $\varepsilon = 0$) this \emph{decouples} and integrates in closed form:
+$2p\,dp = -\alpha\,dW \Rightarrow p = (1-\alpha W)^{1/2}$ --- the formula of \S4.6.
+\end{mthbox}
 \begin{itemize}
-\item \textbf{$\phi$} is the bed porosity, $G$ the superficial mass flux, $D_p$ the particle diameter. $\beta_0$ is the \textbf{Ergun equation} in the form the deck uses.
-\item Because $C_A$ carries a factor $p$, pressure drop \emph{slows the reaction}, so the conversion achieved in a given catalyst mass is lower than the no-drop calculation predicts. The two must be solved \textbf{coupled}, not sequentially.
+\item \textbf{$\phi$} is the bed porosity (void fraction), $(1-\phi)$ the solid fraction, $G = \dot m/A_c$ the
+superficial mass flux, $D_p$ the particle diameter, $\rho_c$ the \emph{solid} catalyst density and
+$\rho_b = (1-\phi)\rho_c$ the \emph{bulk} density. $\beta_0$ is the \textbf{Ergun equation} in the form the deck
+uses (viscous $+$ inertial terms).
+\item The grouping $A_c(1-\phi)\rho_c$ in $\alpha$ is purely the conversion from bed \emph{length} to catalyst
+\emph{mass}: $zA_c$ is the bed volume, $(1-\phi)$ the solid volume fraction, $\rho_c$ the solid density.
+Everything packing- and flow-specific sits in $\beta_0$; everything geometric or material sits outside.
+\item Because $C_A$ carries a factor $p$ (and for order $n$, $p^{\,n}$), pressure drop \emph{slows the reaction},
+so the conversion achieved in a given catalyst mass is lower than the no-drop calculation predicts. The two
+equations ($X$ and $p$) must be solved \textbf{coupled}, not sequentially --- except at $\delta = 0$, where the
+$p$-equation runs ahead on its own (\S4.6).
 \end{itemize}
 
-\spsub{4.6 \enspace Worked from the deck}
-\begin{itemize}
-\item \textbf{Ethylene oxide, batch} (slides~17--20). Regression of the concentration--time data gives
+\spsub{4.6 \enspace PBR with $\delta = 0$: closed forms for $X$ and $p$ (slides~52--58)}
+\begin{formulabox}
 \[
-k = 0.315\ \mathrm{min^{-1}},\qquad t_{90\%} = 7.32\ \mathrm{min}
+p = \left(1-\alpha W\right)^{1/2},\qquad
+\frac{X}{1-X} = G^*\left(W - \frac{\alpha W^2}{2}\right),\qquad
+G^* \equiv \frac{k\,C_{A0}^{2}}{F_{A0}}\quad(\text{2nd order})
 \]
-and, at the much slower $k = 10^{-4}\ \mathrm{s^{-1}}$,
+\[
+\text{no drop at all}:\qquad \frac{X}{1-X} = G^*\,W .
+\]
+\end{formulabox}
+\begin{mthbox}
+\textbf{Derivation (the slide~53--57 sequence).} At $\varepsilon = 0$ the rate is
+$-r_A = kC_{A0}^2(1-X)^2\,p^2$, so $\dfrac{dX}{dW} = G^*(1-X)^2 p^2$ while $\dfrac{dp}{dW} = -\dfrac{\alpha}{2p}$
+contains no $X$ at all. Integrate the $p$-equation first ($p^2 = 1-\alpha W$), substitute, separate:
+\[
+\frac{dX}{(1-X)^{2}} = G^*(1-\alpha W)\,dW
+\qquad\Longrightarrow\qquad
+\frac{X}{1-X} = G^*\Big(W - \frac{\alpha}{2}W^{2}\Big).
+\]
+The maximum useful catalyst mass is $W_{\max} = 1/\alpha$ (where $p\to0$ and the rate dies) --- the drag
+penalty grows quadratically in $W$ while the benefit grows linearly.
+\end{mthbox}
+\notetext{Q18, the deck's board problem (slides~55--58): PBR for $A+B\to2C$, isothermal, $W = 100$~kg,
+$\alpha = 0.0099\ \mathrm{kg^{-1}}$. The slides quote $k_A = 1.5\ \mathrm{dm^6\,mol^{-1}\,kg^{-1}\,min^{-1}}$ and
+the results $X = 0.6$ (with drop) and $X = 0.75$ ($\alpha = 0$). The single lumped group that reproduces both is
+$G^* = k C_{A0}^2/F_{A0} = 0.03\ \mathrm{kg^{-1}}$ (the value the deck's own numbers back-solve to; the individual
+$k_A$, $C_{A0}$, $F_{A0}$ are not separately printed):
+\[
+G^*\Big(W-\frac{\alpha W^2}{2}\Big) = 0.03\,(100-49.5) = 1.515
+\ \Rightarrow\ X = \frac{1.515}{2.515} = 0.602\ (\text{deck: } 0.6),
+\qquad
+G^*W = 3\ \Rightarrow\ X = \frac{3}{4} = 0.75\ \text{exactly}.
+\]
+Ignoring pressure drop overstates conversion by $0.15$, a quarter of the achieved value. This is the number to
+quote when justifying a coupled solution.}
+
+\spsub{4.7 \enspace The two-parameter $(\alpha,\beta)$ system and pipe friction (slides~59--63, 88--91)}
+\begin{formulabox}
+\[
+\frac{dx}{dz} = \beta\,\frac{(1-x)^{n}P^{n}}{(1+\varepsilon x)^{n}}\,,
+\qquad
+\frac{dP}{dz} = -\frac{\alpha}{P}\,,
+\qquad\text{i.e.}\qquad
+P^{2} = P_{\text{in}}^{2} - 2\alpha z
+\]
+\[
+\beta = \frac{k\,A\,F_{A,\text{in}}^{\,n-1}}{P_{\text{in}}^{\,n}\,Q_{\text{in}}^{\,n}}\,,
+\qquad
+\alpha_{\text{pipe}} = \frac{2 f_F\,\rho_{\text{in}} u_{\text{in}}^{2}\,P_{\text{in}}}{D}
+ = \frac{32\,f_F\,\rho_{\text{in}} Q_{\text{in}}^{2}\,P_{\text{in}}}{\pi^{2}D^{5}}
+\qquad\text{(isothermal Fanning form, slides~89--91)}
+\]
+\end{formulabox}
+\begin{mthbox}
+\textbf{Derivation of $\beta$ (slide~91's box).} Isothermal ideal gas in terms of the volumetric inlet
+$Q$: $C_A = \dfrac{F_A}{Q} = \dfrac{F_{A,\text{in}}}{Q_{\text{in}}}\cdot\dfrac{P}{P_{\text{in}}}
+\cdot\dfrac{1-x}{1+\varepsilon x}$. With $-r_A = kC_A^{\,n}$ and $F_{A,\text{in}}\,dx/dz = A(-r_A)$,
+\[
+\frac{dx}{dz} = \frac{kA\,F_{A,\text{in}}^{\,n-1}}{Q_{\text{in}}^{\,n}}
+ \cdot\frac{(1-x)^{n}P^{n}}{P_{\text{in}}^{\,n}(1+\varepsilon x)^{n}},
+\]
+which is the slide's $\beta$ form (for $n = 1$: $\beta = kA/(P_{\text{in}}Q_{\text{in}})$).\\[4pt]
+\textbf{Derivation of $\alpha_{\text{pipe}}$.} Fanning friction: $\dfrac{dP}{dz} = -\dfrac{2f_F\rho u^{2}}{D}$.
+At constant mass flux $\rho u^{2} = \rho_{\text{in}}u_{\text{in}}^{2}\,P/P_{\text{in}}$, so
+$P\,dP = -\big[2f_F\rho_{\text{in}}u_{\text{in}}^{2}P_{\text{in}}/D\big]dz$ --- exactly the $P^{2}$-law above
+with $\alpha$ as boxed. (The deck's slide~90 collects the same objects in the Winterton pipe form and the Ergun
+$\beta_0$ form of \S4.5; use whichever matches the data given.)
+\end{mthbox}
+\begin{itemize}
+\item \textbf{Series} beds share the same mass flow: their $\alpha$'s add in the $P^{2}$-law and the exit
+condition of one bed is the inlet of the next. \textbf{Parallel} channels split $Q$, so each sees smaller $G$
+and much less drop --- but the deck's slides~74--75 conclude that shuffling beds between series and parallel
+under $\Delta P$ does not buy conversion: only total catalyst and total drop matter. Pumps and blowers
+(slides~61--63) are then sized from the integrated $\Delta P$.
+\item \textbf{When does $\Delta P$ matter?} The deck's rule of thumb (slides~68--73): once the minor losses
+(fittings, valves, entrance/exit) are already a noticeable fraction (the slide uses $\sim35\,\%$) of the pressure
+budget. Physically: an $n$th-order gas rate carries $(P/P_0)^{n}$ --- halve the pressure and an $n=2$ rate drops
+by four. If $\alpha W \ll 1$ (exit $p\approx1$) pretend $\Delta P = 0$; otherwise integrate --- analytically at
+$\delta = 0$ (\S4.6), numerically otherwise (Q19, \S4.13).
+\end{itemize}
+
+\spsub{4.8 \enspace Worked from the deck: ethylene oxide in batch (Q15, slides~13--20)}
+\begin{mthbox}
+\textbf{The experiment (slide~18).} Ethylene oxide hydrolysis (EO $+$ water $\to$ ethylene glycol, acid
+catalysed): \textbf{500~mL of 2~M EO mixed with 500~mL of 0.9~wt\% aqueous H$_2$SO$_4$ at 55~$^{\circ}$C} ---
+the equal-volume dilution is already inside the table's $C_{A0}$ --- and the \emph{product} (EG) concentration
+sampled over time. Slide~17 converts the data to $(t,X)$ at
+$t = (0.5,\ 1,\ 1.5,\ 2,\ 3,\ 4,\ 6,\ 10)$~min; the deck's $\ln(1-X)$ column reads
+\[
+(-0.157,\ -0.315,\ -0.472,\ -0.629,\ -0.942,\ -1.255,\ -1.884,\ -3.147).
+\]
+\textbf{First-order test:} $\ln(1-X) = -k t$, so the least-squares slope of $\ell$ against $t$ (its intercept fits at $\approx 0$) is
+\[
+k_{\text{fit}} = 0.315\ \mathrm{min^{-1}}\qquad(\ell_i = \ln(1-X)_i,\ t_i\ \text{in min}),
+\]
+and the batch time to 90~\% is
+\[
+t_{90} = \frac{\ln 10}{k} = 7.32\ \mathrm{min}.
+\]
+At the much slower $k = 10^{-4}\ \mathrm{s^{-1}}$ the same formula gives
 \[
 t_{90\%} = \boxed{\;6.40\ \mathrm{h}\;}
 \]
-\item \textbf{Ethylene glycol, CSTR} (slides~29--38):
-\[
-F_{A0} = 7.672\ \mathrm{lbmol/min},\qquad v_0 = 15.34\ \mathrm{ft^3/min},
-\qquad \boxed{\;V_{80\%} = 197.3\ \mathrm{ft^3}\;}
-\]
+\end{mthbox}
+\notetext{Slide~13--16 give the general batch algorithm these data are reduced with: Steps~1--5 of
+slide~12 plus the constant-volume integrals of \S4.2 --- $t_R = \frac{1}{kC_{A0}}\frac{X}{1-X}$ for 2nd order
+(so $t_R = 1/(kC_{A0})$, the time the \emph{linear} extrapolation of the initial rate would need; see Q13 of
+the problem sheet) and $t = \frac{1}{k}\ln\frac{1}{1-X}$ for 1st order. Rate constant and units decide whether
+a batch is minutes or a working day: the factor $52$ in $t$ between $k = 0.315\ \mathrm{min^{-1}}$ and
+$10^{-4}\ \mathrm{s^{-1}}$.}
+\begin{warnbox}
+\textbf{Two small discrepancies in the source, reported rather than smoothed over.}
+(1) Slide~18's conversions at $t = 10$~min, $X = 0.995$, versus slide~19's $X = 0.957$ (the regression column is
+built from the latter). (2) The hand annotation on the fit, $k = 0.311\ \mathrm{min^{-1}}$, versus the
+least-squares slope $k_{\text{fit}} = 0.315\ \mathrm{min^{-1}}$. Any exam answer in
+$[0.31,\,0.32]\ \mathrm{min^{-1}}$ is consistent with the slides.
+\end{warnbox}
+
+\spsub{4.9 \enspace Worked from the deck: ethylene glycol in CSTR networks (Q16, slides~29--38)}
+\begin{qbox}
+\textbf{Problem data (slides~29--32).} Aqueous EO hydrolysis, pseudo-first-order in EO with
+$k = 0.311\ \mathrm{min^{-1}}$ at 55~$^{\circ}$C (the value used throughout the worked solution). The plant must
+make \textbf{200~million lb of ethylene glycol per year}. The EO feed is a $1\ \mathrm{lbmol/ft^3}$ solution mixed
+with an \emph{equal volume} of 0.9~wt\% aqueous H$_2$SO$_4$; $MW_{\text{EG}} = 62$~lb/lbmol. \textbf{800-gal}
+CSTRs are available; the year is $525\,600$~min and the plant runs at 80~\% of theoretical capacity.
+\end{qbox}
+\begin{mthbox}
+\textbf{The five steps, with numbers (slides~30--38).}
+\begin{itemize}
+\item[\textbf{Step 1}] Product spec $\to$ molar production:
+$F_C = 200\times10^{6}\ \mathrm{\tfrac{lb}{yr}}\times\dfrac{1\ \mathrm{lbmol}}{62\ \mathrm{lb}}
+\times\dfrac{1\ \mathrm{yr}}{525\,600\ \mathrm{min}} = 6.137\ \mathrm{lbmol/min}$
+(the deck's ``80~\% of theoretical capacity'' \emph{is} the design conversion $X = 0.8$ of Step~2 ---
+theoretical capacity is $X=1$).
+\item[\textbf{Step 2}] Stoichiometry (EO $\to$ EG is 1:1) with $X = 0.8$:
+$F_{A0} = F_C/0.8 = 7.672\ \mathrm{lbmol/min}$ entering the reactor.
+\item[\textbf{Step 3}] After 1:1 mixing, $C_{A0} = 0.5\ \mathrm{lbmol/ft^3}$ and
+$v_0 = F_{A0}/C_{A0} = 15.34\ \mathrm{ft^3/min}$.
+\item[\textbf{Step 4}] One CSTR at $X = 0.8$:
+$V = \dfrac{F_{A0}X}{kC_{A0}(1-X)} = \dfrac{7.672\times0.8}{0.311\times0.5\times0.2}
+= \boxed{\;197.3\ \mathrm{ft^3}\;}$.
+\item[\textbf{Step 5}] Use the 800-gal tanks ($800\ \mathrm{gal} = 106.9\ \mathrm{ft^3}$ each). Two in
+\emph{parallel}: $\tau = 2\times106.9/15.34 = 13.94$~min, $Da = 4.34$, $X = 1-\frac{1}{1+Da} = 0.813$
+(deck: 0.81). Two in \emph{series}: each $\tau = 6.97$~min, $Da = 2.168$,
+$X = 1-\frac{1}{(1+Da)^2} = 0.900$ (deck: 0.90).
 \end{itemize}
+\end{mthbox}
 \begin{tabularx}{\linewidth}{@{}l r r r@{}}
 \toprule
 Arrangement & $\tau$ (min) & $Da$ & $X$\\
@@ -1170,47 +1398,228 @@ two CSTRs in parallel & 13.94 & 4.34  & 0.813\\
 two CSTRs in series   & 6.97  & 2.168 & 0.900\\
 \bottomrule
 \end{tabularx}
-\notetext{Same total volume, and the series arrangement reaches $0.900$ against $0.813$ --- the staging argument of \S4.3 with the deck's own numbers.}
-\begin{itemize}
-\item \textbf{Ethylene cracking, PFR} (slide~44). $300$~M~lb/yr, $1100$~K, $6$~atm, $k = 0.072\ \mathrm{s^{-1}}$ at $1000$~K, $E = 82$~kcal/mol:
-\[
-k(1100\,\mathrm{K}) = 3.067\ \mathrm{s^{-1}},\quad
-F_{A0} = 154.1\ \mathrm{mol/s},\quad C_{A0} = 66.476\ \mathrm{mol/m^3}
-\]
-\[
-v_0 = 2.318\ \mathrm{m^3/s}
-\qquad\Longrightarrow\qquad
-\boxed{\;V = 1.83\ \mathrm{m^3} = 64.6\ \mathrm{ft^3}\;}
-\]
-\notetext{$3150$ tubes of $0.0205$~ft$^3$ each. The Arrhenius step is what moves $k$ from $0.072$ to $3.067\ \mathrm{s^{-1}}$ --- a factor of $43$ for $100$~K.}
-\item \textbf{Packed bed, $A+B\to2C$} (slides~55--58), $\alpha = 0.0099$, $W = 100$:
+\notetext{Same total volume, and the series arrangement reaches $0.900$ against $0.813$ --- the staging argument of \S4.3 with the deck's own numbers. Two bookkeeping cautions from the slides: the ``80~\%'' is one number used twice --- the same design conversion $X = 0.8$ in $F_{A0} = F_C/X$ (Step~2) and in the CSTR balance (Step~4) --- not an extra capacity factor to apply again; and the pseudo-first-order $k$ lumps the acid catalysis (the same chemistry as Q15 at $k\approx0.31\ \mathrm{min^{-1}}$).}
+
+\spsub{4.10 \enspace Worked from the deck: ethane cracking in a PFR (Q17, slides~44, 85--88)}
+\begin{qbox}
+\textbf{Problem (slide~44).} Thermal cracking C$_2$H$_6 \to$ C$_2$H$_4 +$ H$_2$, first order,
+$k = 0.072\ \mathrm{s^{-1}}$ at $1000$~K, $E = 82\,000$~cal/mol ($82$~kcal/mol --- the deck's MATLAB uses
+$R = 1.987\ \mathrm{cal\,mol^{-1}K^{-1}}$, slide~88). Feed 300~M~lb/yr of pure ethane at $6$~atm;
+reactor at $1100$~K; $X = 0.8$. Tubes of $L = 40$~ft, ID $= 1$~in.\ \textbf{How many tubes?}
+\end{qbox}
+\begin{mthbox}
+\textbf{Step 1 --- kinetics:}
+$k_{1100} = 0.072\exp\!\Big(\dfrac{82\,000}{1.987}\Big(\dfrac{1}{1000}-\dfrac{1}{1100}\Big)\Big)
+= 3.067\ \mathrm{s^{-1}}$ --- the Arrhenius step moves $k$ by a factor of $43$ for $100$~K.\\[3pt]
+\textbf{Step 2 --- feed:} $F_{A0} = \dfrac{300\times10^{6}\ \mathrm{lb/yr}}{28\ \mathrm{lb/lbmol}}
+\times\dfrac{1}{3.1536\times10^{7}\ \mathrm{s/yr}}\times453.6\ \mathrm{mol/lbmol} = 154.1\ \mathrm{mol/s}$;
+$C_{A0} = \dfrac{P}{RT} = \dfrac{6\times101\,325}{8.314\times1100} = 66.476\ \mathrm{mol/m^3}$;
+$v_0 = F_{A0}/C_{A0} = 2.318\ \mathrm{m^3/s}$.\\[3pt]
+\textbf{Step 3 --- expansion factor:} A $\to$ B $+$ C is $\delta = +1$ with $y_{A0} = 1$
+(the slide~88 code writes it as \texttt{epsilon = yao*(1+1-1)}), so $\varepsilon = 1$ and
+$V = \dfrac{v_0}{k}\Big[2\ln\dfrac{1}{1-X} - X\Big]$ (\S4.4).\\[3pt]
+\textbf{Step 4 --- size:} at $X = 0.8$:
+$V = \dfrac{2.318}{3.067}\big[2\ln 5 - 0.8\big] = 0.7558\times2.4183
+= \boxed{\;1.83\ \mathrm{m^3} = 64.6\ \mathrm{ft^3}\;}$.\\[3pt]
+\textbf{Step 5 --- tube count:} one tube is $\frac{\pi}{4}\big(\tfrac{1}{12}\ \mathrm{ft}\big)^{2}\times40\ \mathrm{ft}
+= 0.218\ \mathrm{ft^3}$, so $N = 64.6/0.218 = \mathbf{296}$ tubes (about 300 with design margin).
+\end{mthbox}
+\begin{warnbox}
+\textbf{A units trap worth knowing (the ``3150 tubes'' figure).} Some worked solutions give $3150$ tubes of
+$0.0205\ \mathrm{ft^3}$ each. That $0.0205$ is $\frac{\pi}{4}(0.0254)^2\times40$ --- a metric area
+($\mathrm{m^2}$) multiplied by a feet length ($\mathrm{ft}$) --- divided into $64.6\ \mathrm{ft^3}$. With
+consistent units the tube is $0.218\ \mathrm{ft^3}$ and the count is \textbf{296}. Sanity check:
+$N\times V_{\text{tube}}$ must return the total $V$ \emph{in the same units}.
+\end{warnbox}
+\notetext{Slide~88 gives the companion MATLAB for the rate profile along the same reactor
+(\texttt{Vspan = [0 2310]; y0 = [0];} \texttt{ode45(@ODEfun,Vspan,y0);} with
+\texttt{Ca(i) = Cao*(1-y(i,1))/(1+epsilon*y(i,1)); ra(i) = -k*Ca(i);}, plotted as
+\texttt{plot(v,ra)}, \texttt{xlabel('Volume')}, \texttt{ylabel('-ra')}). Note the code's
+\texttt{Cao = 0.066} is $C_{A0}$ in $\mathrm{kmol/m^3}$ --- the same $66.476\ \mathrm{mol/m^3}$ rounded.}
+
+\spsub{4.11 \enspace Worked from the deck: packed bed, $A+B\to2C$ (Q18, slides~55--58)}
+\begin{mthbox}
+The board solution is \S4.6's closed form with the deck's numbers: $W = 100$~kg, $\alpha = 0.0099\ \mathrm{kg^{-1}}$,
+$G^* = 0.03\ \mathrm{kg^{-1}}$ (back-solved; the slide quotes $k_A = 1.5\ \mathrm{dm^6\,mol^{-1}\,kg^{-1}\,min^{-1}}$
+without the individual $C_{A0}$, $F_{A0}$):
 \[
 \boxed{\;X = 0.602 \text{ with pressure drop}\;}\qquad\text{vs.}\qquad
 \boxed{\;X = 0.75 \text{ without}\;}
 \]
+Note also the slide's $\delta = 0$ pressure profile $p = (1-\alpha W)^{1/2}$ and the rate carried in the form
+$-r_A = k C_{A0}^{2}(1-X)^{2}(1-\alpha W)$ (slide~57) --- the drop enters the \emph{rate}, not just the size.
+\end{mthbox}
 \notetext{Ignoring pressure drop overstates conversion by $0.15$, a quarter of the achieved value. This is the number to quote when justifying a coupled solution.}
-\item \textbf{PBR and CSTR in either order} (slide~76):
+
+\spsub{4.12 \enspace Worked from the deck: batch series $A\to B\to C$ (Q20, slides~77--79)}
+\begin{qbox}
+\textbf{Problem (slide~78).} The isothermal series reaction $A\to B\to C$ runs in a batch reactor with
+$k_1 = 1\ \mathrm{h^{-1}}$, $k_2 = 2\ \mathrm{h^{-1}}$, and at $t = 0$: $C_A = 5$, $C_B = C_C = 0$ (the slide prints
+$\mathrm{mol/m^3}$). Solve for the three concentrations and plot them versus time.
+\end{qbox}
+\begin{mthbox}
+\textbf{The ODE system the deck codes} (MATLAB \texttt{ode45}, slides~78--79):
+\[
+\frac{dC_A}{dt} = -k_1 C_A,\qquad
+\frac{dC_B}{dt} = k_1 C_A - k_2 C_B,\qquad
+\frac{dC_C}{dt} = k_2 C_B .
+\]
+Exact solution: $C_A = C_{A0}e^{-k_1 t}$, $C_B = C_{A0}\dfrac{k_1}{k_2-k_1}\big(e^{-k_1 t}-e^{-k_2 t}\big)$,
+$C_C = C_{A0}-C_A-C_B$. \textbf{The intermediate maximum:} set $dC_B/dt = 0$:
+\[
+\frac{k_1}{k_2-k_1}\big(-k_1 e^{-k_1 t}+k_2 e^{-k_2 t}\big) = 0
+\ \Longrightarrow\ e^{(k_2-k_1)t} = \frac{k_2}{k_1}
+\ \Longrightarrow\
+t_{\max} = \frac{\ln(k_2/k_1)}{k_2-k_1} = \boxed{\;0.693\ \mathrm{h}\;},
+\]
+and back-substituting,
+\[
+C_{B,\max} = C_{A0}\left(\frac{k_1}{k_2}\right)^{k_2/(k_2-k_1)}
+= 5\times(0.5)^{2} = \boxed{\;1.250\;}
+\]
+(B reaches only a quarter of the initial A --- with $k_2 > k_1$ the intermediate is destroyed about as fast as
+the first step can make it; for a \emph{selective} series route one wants $k_2 \ll k_1$).
+\end{mthbox}
+\notetext{The deck's plotting block (slide~79): \texttt{plot(t,c(:,1),'+',t,c(:,2),'*',t,c(:,3))},
+\texttt{legend('ca','cb','cc')}, \texttt{xlabel('time(hr)')}, \texttt{ylabel('concs, mol/m3')},
+\texttt{title('Batch reactor')}. The printed $C_{A0} = 5\ \mathrm{mol/m^3}$ is dimensionally odd for a liquid
+batch but is the scale the code and plot use; every \emph{shape} and both boxed results scale linearly or not at
+all with it ($C_{B,\max}$ is linear in $C_{A0}$, $t_{\max}$ independent). The \texttt{ode45('batch',...)} call on
+slide~79 is old MATLAB string syntax; modern versions want the handle \texttt{@batch}.}
+
+\spsub{4.13 \enspace Worked from the deck: CSTR and PBR in either order (Q19, slides~74--77)}
+\begin{qbox}
+\textbf{Problem (slide~76).} The irreversible gas-phase reaction $A\to B$, \textbf{first order in the partial
+pressure of A}, runs isothermally in a \textbf{fluidized} catalytic reactor holding 50~kg of catalyst. At present
+$X = 0.50$ is realized with pure A entering at $20$~atm --- \emph{there is virtually no pressure drop in the CSTR}.
+It is proposed to put a PBR of the same catalyst weight in series with the CSTR. For the PBR,
+$\alpha = 0.018\ \mathrm{kg^{-1}}$ (particle size 0.2~mm, bed porosity 40~\%, viscosity as air at
+$200\,^{\circ}$C). (a) PBR upstream or downstream of the CSTR for the highest exit conversion?
+(b) The exit conversion of the last reactor? (c) The pressure at the exit of the packed bed? (d) How do the
+answers change if the catalyst diameter is halved and the PBR diameter increased by 50~\%, assuming turbulent flow?
+\end{qbox}
+\begin{mthbox}
+\textbf{Model (read the slide literally).} $A\to B$ has $\delta = 0$, so $\varepsilon = 0$ and
+$p_A = P(1-X)$: the rate $-r_A' = k'p_A = k'P_0(1-X)p$ gives the coupled pair
+\[
+\frac{dX}{dW} = a\,(1-X)\,p\,,\qquad \frac{dp}{dW} = -\frac{\alpha}{2p}\,,\qquad
+a \equiv \frac{k'P_0}{F_{A0}}\ \ [\mathrm{kg^{-1}}].
+\]
+\textbf{Calibration from the existing plant:} the fluidized reactor \emph{is} the CSTR (no drop, $p = 1$), so
+$W = F_{A0}X/(k'P_0(1-X))$ at $X = 0.50$, $W = 50$~kg fixes
+\[
+a = \frac{X}{W(1-X)} = \frac{0.5}{50\times0.5} = 0.0200\ \mathrm{kg^{-1}}\quad(\text{exact}).
+\]
+\textbf{(c)} At $\delta = 0$ the exit pressure is model-independent:
+$p_{\text{exit}} = (1-\alpha W)^{1/2} = (1-0.9)^{1/2} = 0.3162$, i.e.\ $P = 20\times0.3162
+= \boxed{\;6.32\ \mathrm{atm}\;}$.\\[3pt]
+\textbf{(a, b)} RK-4 integration of the pair ($h = 0.05$~kg):
+\begin{itemize}
+\item \textbf{CSTR then PBR} (PBR downstream): the CSTR delivers $X = 0.5$ at $p = 1$; the PBR continues to
+$X = \mathbf{0.756}$ (its own exit $p = 0.3162$).
+\item \textbf{PBR then CSTR}: the PBR alone reaches $X = 0.512$ at $p = 0.3162$; the trailing CSTR must then work
+at 32~\% of full pressure and finishes at $X = \mathbf{0.629}$.
 \end{itemize}
+\textbf{Answer (a): the PBR goes downstream (CSTR first).} \textbf{(b): $X_{\text{exit}} = 0.756$.}\\[3pt]
+\textbf{(d)} From the deck's own $\alpha = 2\beta_0/[A_c(1-\phi)\rho_c P_0]$ with turbulent Ergun
+$\beta_0 \propto G^{2}/D_p$ and $G = \dot m/A_c$:
+\[
+\alpha \;\propto\; \frac{1}{A_c^{3}\,D_p}\,.
+\]
+$D_p \to D_p/2$ gives $\times 2$; tube diameter $\times1.5 \Rightarrow A_c\times2.25$ gives $\times 2.25^{-3}$:
+\[
+\alpha' = 0.018\times\frac{2}{2.25^{3}} = 0.00316\ \mathrm{kg^{-1}} .
+\]
+Re-integrating: CSTR then PBR $X = 0.808$ (from 0.756); PBR then CSTR $X = 0.800$ (from 0.629); the two
+arrangements nearly converge and the packed-bed exit pressure rises to $p = 0.918$ ($18.4$~atm).
+\end{mthbox}
+\begin{daybox}
+\textbf{The $\alpha$-scaling of part (d) is easy to half-miss.} The friction group $\beta_0$ itself sees only
+$G^2/D_p$ ($\times 2$ and $\times 2.25^{-2}$ would give $\alpha' = 0.00711\ \mathrm{kg^{-1}}$), but converting
+the pressure gradient to a drop \emph{per mass of catalyst} contributes the extra $1/A_c$ of the wider, shorter
+bed --- the full $2.25^{-3}$ and $\alpha' = 0.00316\ \mathrm{kg^{-1}}$. And note (c) is purely geometric:
+$p = \sqrt{1-\alpha W}$ carries no kinetics at all.
+\end{daybox}
 \begin{tabularx}{\linewidth}{@{}l r r@{}}
 \toprule
-Arrangement & group & $X$\\
+Arrangement & \multicolumn{1}{c}{$a$ ($\mathrm{kg^{-1}}$)} & \multicolumn{1}{c}{$X_{\text{exit}}$}\\
 \midrule
-PBR then CSTR & 0.02471 & 0.598\\
-CSTR then PBR & 0.02471 & 0.690\\
-PBR then CSTR, $\alpha' = 0.00711$ & 0.02471 & 0.727\\
+PBR then CSTR & 0.0200 & 0.629\\
+CSTR then PBR & 0.0200 & 0.756\\
+PBR then CSTR, $\alpha' = 0.00316$ & 0.0200 & 0.800\\
+CSTR then PBR, $\alpha' = 0.00316$ & 0.0200 & 0.808\\
 \bottomrule
 \end{tabularx}
-\notetext{Exit $p = 0.3162$, i.e.\ $P = 6.32$~atm. Putting the CSTR \emph{first} gains $0.09$ in conversion, because the CSTR then operates at full pressure and the PBR only sees the already-reduced rate. Reducing $\alpha'$ recovers most of the loss --- pressure drop, not ordering, is the dominant effect.}
-\begin{itemize}
-\item \textbf{Series reactions in batch, $A\to B\to C$} (slide~78):
+\notetext{Why CSTR-first wins: the CSTR converts at the \emph{inlet} pressure and its rate is first order in $p$;
+the PBR then scavenges the remainder in plug flow with gradually falling $p$. In the reverse order the PBR burns
+its volume near $X \approx 0$ (fast) but exits at $p = 0.32$, and the CSTR is stuck at that low pressure for its
+whole volume. The ordering is worth $0.13$ of conversion at $\alpha = 0.018\ \mathrm{kg^{-1}}$ --- and washes out
+once the drop is nearly removed (part~d: difference $0.008$). All numbers reproduced by
+\texttt{krd-answers-check.py}.}
+
+\spsub{4.14 \enspace Worked from the deck: pressure-drop length check (Q21, slides~88--99)}
+\begin{qbox}
+\textbf{Problem data (slides~89--91).} An isothermal gas-phase isomerization (so $\varepsilon = 0$) in a tube of
+$D = 2$~cm with $Q_{\text{in}} = 0.005\ \mathrm{m^3/s}$ at $P_{\text{in}} = 10$~atm, $\mu = 10^{-5}$~kg/(m$\cdot$s),
+$T = 300$~K, $M = 60$~g/mol, $R = 0.08206\ \mathrm{atm\,L\,(gmol\,K)^{-1}}$; first order in $C_A$ with
+$k = 0.1\ \mathrm{(m^3/s)/m^3}$. The deck's questions: \textbf{(a)} the pressure drop through the reactor;
+\textbf{(b, c)} the lengths for $X = 0.10$ and $X = 0.20$ at $\Delta P = 0$; \textbf{(d)} the length to reach
+$X = 0.20$ \emph{accounting for the drop} --- and the later slides ask in particular what is reachable in a
+$1.5$~cm variant.
+\end{qbox}
+\begin{mthbox}
+\textbf{Slide~90--91's printed working:}
 \[
-t_{\max} = 0.693\ \mathrm{h},\qquad \boxed{\;C_{B,\max} = 1.250\;}
+\rho_{\text{in}} = \frac{P_{\text{in}}M}{RT} = 24.0558\ \mathrm{kg/m^3},\quad
+u_{\text{in}} = \frac{Q_{\text{in}}}{\pi D^{2}/4} = 15.9155\ \mathrm{m/s},\quad
+F_{A,\text{in}} = 2.0047\ \mathrm{mol/s},
 \]
-\item \textbf{Pressure-drop length check} (slides~90--98). Without pressure drop, $16.8$~m reaches $X=0.10$ and $35.5$~m reaches $X=0.20$.
-\end{itemize}
+\[
+Re = \frac{\rho_{\text{in}} u_{\text{in}} D}{\mu} = 7.65\times10^{5}\ \ (\text{turbulent}),\qquad
+f = 0.003\ \ (\text{Fanning}),
+\]
+\[
+\alpha = 1.847\times10^{9}\ \mathrm{Pa^2/m}\ \ (\text{deck's value; the \S4.7 formula gives }
+ 2f_F\rho_{\text{in}}u_{\text{in}}^{2}P_{\text{in}}/D = 1.83\times10^{9}\ \mathrm{Pa^2/m},\ \text{within about }1\%),
+\]
+\[
+\beta = \frac{kA}{P_{\text{in}}Q_{\text{in}}} = 6.2832\times10^{-9}\ \mathrm{1/(Pa\,m)}
+\qquad(n = 1\ \text{case of slide~91's box}).
+\]
+\textbf{(b, c) At $\Delta P = 0$:} $p = 1$ and $dx/dz = \beta(1-x)P_{\text{in}} \equiv k_v(1-x)$ with
+$k_v = \beta P_{\text{in}} = 6.283\times10^{-3}\ \mathrm{m^{-1}} = k/u_{\text{in}}$, so $x = 1-e^{-k_v z}$:
+\[
+L(10\,\%) = \frac{\ln(1/0.9)}{k_v} = \boxed{\;16.8\ \mathrm{m}\;},\qquad
+L(20\,\%) = \frac{\ln(1/0.8)}{k_v} = \boxed{\;35.5\ \mathrm{m}\;}.
+\]
+\textbf{(a, d) With the drop:} $p = (1-z/z_c)^{1/2}$ with $z_c = P_{\text{in}}^{2}/(2\alpha) = 270.7$~m and
+$dx/dz = k_v(1-x)p$ integrate in closed form:
+\[
+x(z) = 1 - \exp\!\left(-\tfrac{2}{3}k_v z_c\big[1-(1-z/z_c)^{3/2}\big]\right).
+\]
+It gives $x = 0.10$ at $z = 16.9$~m (the deck's ``expanded'' plot reads $\approx17$~m) and $x = 0.43$ at
+$z = 100$~m with $P = 7.9\times10^{5}$~Pa (the deck's plots print $0.43$ and $7.8\times10^{5}$) --- mild drop for
+the 2~cm tube. Slides~98--99 rerun the case at $1.5$~cm and annotate in red: \textbf{``10\% conversion is
+possible, but 20\% is not''} --- $x$ saturates near $0.15$ (a narrower tube raises the turbulent
+$\alpha \propto 1/D^{5}$ by $(2/1.5)^{5} = 4.2\times$).
+\end{mthbox}
 \begin{warnbox}
-\textbf{A discrepancy in the source, reported rather than smoothed over.} The deck states that about $20$~m achieves the target \emph{with} pressure drop, and asks for $X=0.20$ in a $1.5$~cm bed. The no-drop calculation already needs $35.5$~m for $X=0.20$, and adding pressure drop can only make the bed longer --- so $X=0.20$ is not reachable in $1.5$~cm. The deck's own figures are reproduced above and the conflict is flagged here rather than resolved by adjusting a number.
+\textbf{A discrepancy in the source, reported rather than smoothed over.} The deck states that about $20$~m
+achieves the target \emph{with} pressure drop (the closed form says $16.9$~m), and asks for $X = 0.20$ in a
+$1.5$~cm bed; its own plots answer ``10\% conversion is possible, but 20\% is not'' with $x$ saturating near
+$0.15$. Two tensions inside those figures are kept visible rather than smoothed: (1) in the \emph{2~cm} run the
+closed form reaches $X = 0.20$ at $z = 36.8$~m (and $0.43$ at $100$~m), so the ``20\% is not possible'' is a
+statement about the \emph{1.5~cm} case only; (2) a pure $\alpha \propto 1/D^{5}$ rescaling would let the
+1.5~cm tube reach $0.20$ near $45$~m and saturate near $0.24$ --- against the deck's own run (saturation
+$\approx0.15$, ``20\% is not possible''). The deck's run is the figure to quote; the gap is flagged here rather
+than resolved by adjusting a number.
 \end{warnbox}
+\notetext{Two readings notes. The printed $R = 0.08206\ \mathrm{atm\,L\,(gmol\,K)^{-1}}$ with exactly 10~atm
+would give $\rho_{\text{in}} = 24.37\ \mathrm{kg/m^3}$, but the printed $24.0558$ matches $P_{\text{in}} = 10^{6}$~Pa
+exactly --- the deck treats ``10~atm'' as $10$~bar throughout (same in $\alpha$). Quote the printed
+$\alpha = 1.847\times10^{9}\ \mathrm{Pa^2/m}$ and $\beta = 6.2832\times10^{-9}\ \mathrm{1/(Pa\,m)}$ in an exam;
+the \S4.7 formulas reproduce them to $\sim1\,\%$ and exactly, respectively. All numbers above are reproduced by
+\texttt{krd-answers-check.py}.}
 
 %================================================================== Ch5
 \spsection{5 \enspace Collection and Analysis of Rate Data}
@@ -1422,9 +1831,9 @@ t_{\text{opt}} &= \frac{\ln(k_2/k_1)}{k_2-k_1}
 \end{align*}
 \end{formulabox}
 \begin{itemize}
-\item In \textbf{parallel} networks the product is maximised by adjusting the reaction \emph{conditions} and choosing the proper reactor; in \textbf{series} networks the lever is \emph{time} --- the space time of a flow reactor or the real time of a batch. The $C_B(t)$ form above is the one behind the Ch4 series numerical reproduced in \S4.6 (Q20).
+\item In \textbf{parallel} networks the product is maximised by adjusting the reaction \emph{conditions} and choosing the proper reactor; in \textbf{series} networks the lever is \emph{time} --- the space time of a flow reactor or the real time of a batch. The $C_B(t)$ form above is the one behind the Ch4 series numerical reproduced in \S4.12 (Q20).
 \item The deck's triangular diagram (slide~27): $k_1/k_2 \gg 1$ gives a large quantity of $B$; $k_1/k_2 \sim 1$ a moderate one; $k_1/k_2 \ll 1$ (first reaction slow, second fast) very little. In every case a \emph{long} reaction time in batch or a \emph{long} tubular reactor converts $B$ onward to $C$ --- which is why the optimum is interior.
-\item Verified numerically in \S4.6: $t_{\max} = 0.693$~h gives $C_{B,\max} = 1.250$.
+\item Verified numerically in \S4.12: $t_{\max} = 0.693$~h gives $C_{B,\max} = 1.250$.
 \end{itemize}
 
 \spsub{6.6 \enspace Product distribution --- the quantitative treatment}
@@ -2044,8 +2453,8 @@ C_{WP} &= \frac{(-r_A')_{\text{obs}}R^{2}}{D_eC_{As}} && n = \frac{t_m^{2}}{\sig
 \textbf{Question} & \textbf{Better} & \textbf{From}\\
 \midrule
 Same conversion, one vessel: PFR or CSTR? & PFR & \S2.6 ($2.165$ vs $6.40$~m$^3$)\\
-Same total volume, two CSTRs in series or parallel? & series & \S4.6 ($0.900$ vs $0.813$)\\
-PBR then CSTR, or CSTR then PBR? & CSTR first & \S4.6 ($0.690$ vs $0.598$)\\
+Same total volume, two CSTRs in series or parallel? & series & \S4.9 ($0.900$ vs $0.813$)\\
+PBR then CSTR, or CSTR then PBR? & CSTR first & \S4.13 ($0.756$ vs $0.629$)\\
 Real vessel, or an ideal limit? & neither & \S9.8 ($0.679$ vs $0.720$ / $0.560$)\\
 \bottomrule
 \end{tabularx}
@@ -2053,6 +2462,6 @@ Real vessel, or an ideal limit? & neither & \S9.8 ($0.679$ vs $0.720$ / $0.560$)
 \vspace{3mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}
-\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Four places where the source itself is inconsistent are reported rather than corrected: the pressure-drop length in \S4.6, the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, and two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
+\notetext{Prepared from the nine CHE F311 slide decks named in the box on page~1; every formula above is the form taught in the deck heading its section, and every number is reproduced by \texttt{krd-answers-check.py}, which exits~0. Structure and depth follow the course standard set by \texttt{SP2-notes.tex} (CHE F313). Five places where the source itself is inconsistent are reported rather than corrected: the pressure-drop figures in \S4.14, the fit annotations in \S4.8 (both Ch4), the graduate (CHE~G641) heading on \texttt{Non\_ideal\_KRD.pdf}, and two Ch6 sentences --- the concentration verb on slide~18 (\S6.3) and the Case-IV opening on slide~25 (\S6.4). Symbols: $X$ conversion, $-r_A$ rate of disappearance of A, $-r_A'$ rate per catalyst mass, $F_{A0}$ inlet molar flow of A, $C_A$ concentration, $\Theta_i$ feed ratio $C_{i0}/C_{A0}$, $\varepsilon$ volume-change factor, $\delta$ mole-change number, $V$ volume, $W$ catalyst mass, $\tau$ space time, $Da$ Damk\"ohler number, $k$ rate constant, $A$ pre-exponential factor, $E$ activation energy, $K_C$ equilibrium constant, $X_e$ equilibrium conversion, $\Delta H_{Rx}$ heat of reaction, $Ua$ heat-transfer coefficient times area, $T_a$ coolant temperature, $p$ reduced pressure $P/P_0$, $\alpha$ pressure-drop parameter, $\phi$ bed porosity or Thiele modulus as the section states, $\eta$ effectiveness factor, $D_e$ effective diffusivity, $C_{WP}$ Weisz--Prater number, $E(t)$ residence-time distribution, $F(t)$ cumulative RTD, $t_m$ mean residence time, $\sigma^2$ variance, $Pe$ P\'eclet number, $n$ tanks-in-series number, $S_{D/U}$ selectivity, $\tilde{Y}_D$ yield.}
 
 \end{document}

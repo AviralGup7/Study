@@ -118,7 +118,7 @@
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0.4pt}
-\fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} SEPARATION PROCESSES II --- Short Notes \& Formula Sheet}
+\fancyfoot[L]{\footnotesize\color{notecol}CHE F313 \textperiodcentered{} Separation Processes II --- Short Notes \& Formula Sheet}
 \fancyfoot[R]{\footnotesize\color{notecol}Page \thepage}
 
 \begin{document}
@@ -134,7 +134,7 @@
 
 \vspace{2mm}
 \begin{daybox}
-\textbf{Compiled from:} Module 1 Lectures 1--6 and Module 2 Lectures 1--2 --- the course slide decks (\texttt{Mod1-Lecture 1--5.pptx}, \texttt{Mod1-Lecture 6-compressed.pdf}, \texttt{Mod 2-Lecture 1-compressed.pdf}, \texttt{Mod 2-Lecture 2.pptx}).\\[2pt]
+\textbf{Compiled from:} Module 1 Lectures 1--6 and Module 2 Lectures 1--8 --- the course slide decks (\texttt{Mod1-Lecture 1--5.pptx}, \texttt{Mod1-Lecture 6-compressed.pdf}, \texttt{Mod 2-Lecture 1-compressed.pdf} \dots{} \texttt{Mod 2-Lecture 8-compressed.pdf}).\\[2pt]
 \textbf{Reference texts:} McCabe, Smith \& Harriott, \emph{Unit Operations of Chemical Engineering}, 7e (Ch.~28, 29); Swain, Patra \& Roy, \emph{Mechanical Operations}, Tata McGraw Hill.
 \end{daybox}
 
@@ -726,132 +726,214 @@ The same result may also be written as
 % ---- Module 2, Lecture 3 : pressure drop through the filter cake ----
 \spsection{MODULE 2 \textperiodcentered{} LECTURE 3 --- Pressure Drop Through the Filter Cake}
 
-\spsub{The model: flow through a bundle of channels}
-\begin{itemize}
-  \item A cake is a bed of particles, so the pressure drop needed to push filtrate through it is found from the pressure drop for flow through a \emph{pipe}, and the pipe is then replaced by the equivalent parallel channels of the bed.
-  \item Flow of liquid through a single pipe is given by the \textbf{Hagen--Poiseuille} equation,
-\end{itemize}
+\spsub{What this lecture does --- the plan in six steps}
+The cake is a bed of fine particles and the filter medium is a cloth or screen; filtrate has to be pushed through both. This lecture builds one equation for that pressure drop from first principles, so that $\Delta P$ can be predicted from things we can measure --- particle size, bed porosity and filtrate rate.
+
 \begin{formulabox}
-\begin{align*}
-\Delta P_s &= \frac{32\,\Delta L\,\bar{V}\,\mu}{g_c\,D^2}
-   &&\text{Hagen--Poiseuille (laminar, one pipe of diameter }D)\\[3pt]
-\Phi_s &= \frac{6/D_p}{s_p/v_p}=\frac{6v_p}{D_ps_p}
-   &&\Longrightarrow\qquad \frac{s_p}{v_p}=\frac{6}{\Phi_sD_p}\tag{1}
-\end{align*}
-\vspace{1pt}
-$s_p/v_p$ = surface-to-volume ratio of the particle; for granular solids $\Phi_s$ ranges from $0.6$ to $0.95$.
+{\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Step} & \textbf{What is done}\\
+\midrule
+1 & Treat the cake as a bundle of $n$ parallel channels of length $L$ (the tortuous paths between the particles).\\
+2 & Write the pressure drop for flow through \emph{one} channel --- Hagen--Poiseuille, laminar flow.\\
+3 & Find the surface area the particles present to the flow, using sphericity $\Phi_s$.\\
+4 & Find the \emph{equivalent} channel diameter $D_{eq}$ by matching the two things we know about the bundle: its wetted surface (eq.~2) and its void volume (eq.~3).\\
+5 & Convert the velocity inside a channel, $\bar V$, into the velocity we actually measure --- the superficial (empty-tower) velocity $v_0$.\\
+6 & Substitute steps 2--5 into one another: the result is the \textbf{Kozeny--Carman equation}.\\
+\bottomrule
+\end{tabularx}}
+\vspace{2pt}
+{\small Every symbol used along the way is listed in the symbol box at the end of the section.}
 \end{formulabox}
 
-\spsub{Equivalent channel diameter $D_{eq}$}
+\spsub{Step 1 --- the picture of the cake}
 \begin{itemize}
-  \item Let $\varepsilon$ = porosity and $1-\varepsilon$ = the volume fraction of particles in the bed (the \emph{external} void fraction of the bed, not the total porosity): if the particles are porous, their pores are generally too small to permit any significant flow through them, so they are not counted.
-  \item The solid surface presented to the flow, for $n$ parallel channels of length $L$, is the surface-to-volume ratio times the particle volume, $S_0L(1-\varepsilon)\cdot\dfrac{6}{\Phi_sD_p}$, and it must equal the wetted surface of the $n$ channels:
+  \item The pores of a filter cake are the irregular, tortuous, interconnected gaps between the particles. They are replaced by a \emph{model}: $n$ parallel channels, each of length $L$ (the cake thickness) and diameter $D_{eq}$.
+  \item Why this is legitimate: what the fluid feels is the total \emph{wetted surface} it rubs against and the total \emph{free volume} it flows through. The model is given the same two totals as the real cake, so it should give the same pressure drop. Steps 3 and 4 do exactly that matching.
+  \item The porosity is split into two kinds. With $\varepsilon$ the porosity and $1-\varepsilon$ the volume fraction of particles,
+  \[
+  \varepsilon=\frac{\text{void volume}}{\text{total cake volume}},\qquad 1-\varepsilon=\frac{\text{solid volume}}{\text{total cake volume}}
+  \]
+  \item \textbf{Pores inside the particles are ignored.} If the particles are porous, their internal pores are generally far too small to permit any significant flow, so $\varepsilon$ is taken as the \emph{external} void fraction of the bed, not the total porosity. This is why the surface-area term below uses the \emph{external} surface of the particles.
+\end{itemize}
+
+\spsub{Step 2 --- flow through one channel: Hagen--Poiseuille}
+\begin{itemize}
+  \item For laminar flow of a liquid through a single straight pipe of diameter $D$ over a length $\Delta L$, the pressure drop is
 \end{itemize}
 \begin{formulabox}
-\begin{align*}
-n\pi D_{eq}L &= S_0L(1-\varepsilon)\,\frac{6}{\Phi_sD_p}\tag{2}\\[2pt]
-S_0L\varepsilon &= \frac{\pi}{4}\,nD_{eq}^2L\tag{3}
-   &&\text{(void volume of the bed = total volume of the }n\text{ channels)}
-\end{align*}
-Eliminating $S_0$ between (2) and (3):
-\[
-n\pi D_{eq}L=\frac{\frac{\pi}{4}nD_{eq}^2L}{\varepsilon}\times\frac{1-\varepsilon}{L}\times\frac{6}{\Phi_sD_p}
-\qquad\Longrightarrow\qquad \boxed{\;D_{eq}=\frac{2}{3}\,\Phi_sD_p\left(\frac{\varepsilon}{1-\varepsilon}\right)\;}
-\]
-Typically $\varepsilon=0.4$, so $D_{eq}=0.44\,\Phi_sD_p$ --- the equivalent diameter is roughly \emph{half the particle size}.
+\[\Delta P_s=\frac{32\,\Delta L\,\bar V\,\mu}{g_c\,D^2}
+\qquad\text{\textbf{Hagen--Poiseuille equation}}\]
+\vspace{2pt}
+{\small $\bar V$ = average velocity of the liquid in the pipe; $\mu$ = viscosity; $g_c$ = Newton's-law proportionality constant ($=1$ in SI, $32.174$ in lb-mass$\cdot$ft/lb-force$\cdot$s$^2$); $\Delta P_s$ = pressure drop over the pipe. For the cake, take $\Delta L\simeq L$ and $D=D_{eq}$ (step 6). Read the equation as a \emph{ladder}: $\Delta P_s$ rises in direct proportion to the length and to the viscosity, in direct proportion to the velocity, and as the \emph{square} of the diameter in the denominator --- halve the channel, quadruple the pressure drop.}
 \end{formulabox}
 
-\spsub{From channel velocity to the empty-tower velocity}
+\spsub{Step 3 --- the surface the particles present: sphericity}
 \begin{itemize}
-  \item $\bar{V}$ = average velocity in the channels (it depends on the pressure drop); $v_0$ = velocity based on the empty tower (superficial velocity).
-  \item The flow splits between the channels, so $\bar{V}$ falls as $\varepsilon$ rises: $\bar{V}\propto v_0$ and $\bar{V}\propto 1/\varepsilon$, hence
-  \[\bar{V}=\frac{v_0}{\varepsilon}\]
-  \item $v_0$, $D_p$ and $\varepsilon$ are tangible parameters of the bed --- once they are known the pressure drop can be calculated.
+  \item For a \emph{sphere} of diameter $D_p$, the surface-to-volume ratio is easy:
+  \[
+  \frac{s_p}{v_p}=\frac{\pi D_p^2}{(\pi/6)D_p^3}=\frac{6}{D_p}
+  \]
+  \item A real particle of the same volume has \emph{more} surface than the sphere. The penalty factor is captured by the sphericity, defined as the ratio of the surface of the equivalent sphere to the actual surface of the particle:
+  \end{itemize}
+\begin{formulabox}
+\begin{align*}
+\Phi_s &=\frac{\text{surface of the sphere of the same volume}}{\text{actual surface of the particle}}
+ =\frac{6/D_p}{s_p/v_p}
+ \qquad\Longrightarrow\qquad
+ \boxed{\;\frac{s_p}{v_p}=\frac{6}{\Phi_sD_p}\;}\tag{1}
+\end{align*}
+\vspace{2pt}
+{\small $\Phi_s$ is a pure number, always $\le1$: $\Phi_s=1$ only for a sphere, and for granular solids the deck quotes $\Phi_s=0.6$--$0.95$. The rougher the grain, the smaller $\Phi_s$ and the larger $s_p/v_p$, hence the greater the drag. Equation (1) is the translation key used in steps 4 and 6 to turn a particle diameter into a surface per unit volume.}
+\end{formulabox}
+
+\spsub{Step 4 --- the equivalent channel diameter $D_{eq}$}
+\begin{itemize}
+  \item Two things are known about the bundle, and each gives one equation. \textbf{First, the surface:} the fluid rubs against the particles' \emph{external} surface, which for $n$ channels must equal the wetted surface of the channels:
+  \[
+  n\pi D_{eq}L=\underbrace{S_0L(1-\varepsilon)\cdot\frac{6}{\Phi_sD_p}}_{\text{external surface of the particles in the cake}}\tag{2}
+  \]
+  $S_0$ = cross-sectional area of the bed, so $S_0L$ = total cake volume; times $(1-\varepsilon)$ = volume of solids; times the surface per unit volume from eq.~(1) = surface exposed to the flow.
+  \item \textbf{Second, the volume:} the void volume of the bed \emph{is} the total volume of the $n$ channels:
+  \[
+  S_0L\varepsilon=\frac{\pi}{4}nD_{eq}^2L\tag{3}
+  \]
+  \item Now eliminate the unknown $S_0$ between (2) and (3). From (3),
+  \[
+  S_0=\frac{\pi}{4}\,\frac{nD_{eq}^2}{\varepsilon}
+  \]
+  and substituting this $S_0$ into (2),
+  \[
+  n\pi D_{eq}L=\left[\frac{\pi}{4}\frac{nD_{eq}^2}{\varepsilon}\right]L(1-\varepsilon)\frac{6}{\Phi_sD_p}
+  \]
+  Cancel $n$, $L$ and one power of $D_{eq}$ from both sides (and use $\frac{1}{4}\cdot6=\frac{3}{2}$):
+  \[
+  1=\frac{3}{2}\,\frac{D_{eq}(1-\varepsilon)}{\varepsilon\,\Phi_sD_p}
+  \qquad\Longrightarrow\qquad
+  \boxed{\;D_{eq}=\frac{2}{3}\,\Phi_sD_p\left(\frac{\varepsilon}{1-\varepsilon}\right)\;}
+  \]
+  \item \textbf{Sanity check on the size.} With the typical cake porosity $\varepsilon=0.4$,
+  \[
+  \frac{\varepsilon}{1-\varepsilon}=\frac{0.4}{0.6}=0.667
+  \qquad\Rightarrow\qquad
+  D_{eq}=0.44\,\Phi_sD_p
+  \]
+  so the equivalent channel is roughly \emph{half the particle size}. This is physically what one expects: in a loose packing of spheres the gaps between particles are of the order of the particle radius.
+  \item Notice the two competing trends in $D_{eq}$: a denser cake (smaller $\varepsilon$) has \emph{narrower} channels, while smaller particles make $D_{eq}$ smaller in direct proportion --- both push the pressure drop up, and both appear in the final equation.
 \end{itemize}
 
-\spsub{Kozeny--Carman equation}
+\spsub{Step 5 --- channel velocity from the superficial velocity}
+\begin{itemize}
+  \item Two velocities appear in what follows, and they must not be mixed up:
+  \begin{itemize}
+    \item $\bar V$ = the average velocity \emph{inside the channels} --- the real speed of the filtrate in the gaps;
+    \item $v_0$ = the velocity based on the \emph{empty tower} (also called the superficial velocity), $v_0=\dfrac{1}{S_0}\dfrac{\mathrm{d}V}{\mathrm{d}t}$ --- what an observer outside the cake measures.
+  \end{itemize}
+  \item The same volumetric flow passes through a smaller area, so by continuity
+  \[
+  \bar V=\frac{v_0}{\varepsilon}
+  \]
+  The filtrate is faster inside the cake than outside it by exactly the factor $1/\varepsilon$ (about $2.5$ for $\varepsilon=0.4$). The deck records the proportionality $\bar V\propto v_0$ and $\bar V\propto 1/\varepsilon$ and then combines them.
+  \item \textbf{Why this is worth a step of its own:} $v_0$, $D_p$ and $\varepsilon$ are all \emph{tangible} parameters --- measurable on the bench --- whereas $\bar V$ and $D_{eq}$ are not. Steps 4 and 5 are the substitutions that make the final equation speak in measurable quantities.
+\end{itemize}
+
+\spsub{Step 6 --- Kozeny--Carman equation}
 \begin{formulabox}
-At a very low Reynolds number ($Re\simeq1.0$) use Hagen--Poiseuille with $\Delta L\simeq L$ and $D=D_{eq}$, and substitute $\bar{V}=v_0/\varepsilon$:
+At very low Reynolds number ($Re\simeq1.0$) the flow in every channel is laminar, so use Hagen--Poiseuille (step 2) with $\Delta L\simeq L$ and $D=D_{eq}$ (step 4), and put $\bar V=v_0/\varepsilon$ (step 5):
 \begin{align*}
-\frac{\Delta P}{L}&\simeq\frac{32\,\mu\,\bar{V}}{g_cD_{eq}^2}
- =\frac{32\,\mu\,\dfrac{v_0}{\varepsilon}}{g_c\left[\dfrac{2}{3}\Phi_sD_p\left(\dfrac{\varepsilon}{1-\varepsilon}\right)\right]^{2}}
- =\frac{72\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
+\frac{\Delta P}{L}&=\frac{32\,\mu\,\bar V}{g_cD_{eq}^2}
+ =\frac{32\,\mu\,\dfrac{v_0}{\varepsilon}}
+ {g_c\left[\dfrac{2}{3}\Phi_sD_p\left(\dfrac{\varepsilon}{1-\varepsilon}\right)\right]^{2}}\\[3pt]
+ &=\frac{32\,\mu\,v_0}{\varepsilon}\cdot
+ \frac{1}{g_c}\cdot\frac{9}{4}\cdot\frac{(1-\varepsilon)^2}{\Phi_s^2D_p^2\,\varepsilon^2}
+ =72\,\frac{v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
 \end{align*}
-A correction factor $\lambda_1$ is introduced because the channels are actually \emph{tortuous}, not straight. Experiments show the constant is $150$, so
+A correction factor $\lambda_1$ is then introduced to account for the fact that the real channels are \emph{tortuous and not straight and parallel} --- the fluid has to travel further, and at an angle, along paths that are not the clean channels of the model. Experiments reveal that the constant is $150$:
 \[\boxed{\;\frac{\Delta P}{L}=150\,\frac{v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}\;}
 \qquad\text{\textbf{Kozeny--Carman equation (valid for }$Re\simeq1$\textbf{)}}\]
-Flow is proportional to the pressure drop and inversely proportional to the fluid viscosity --- this is \textbf{Darcy's law}, used to explain the flow of liquids through porous media.
+\vspace{2pt}
+{\small The numbers in the derivation: $\left(\frac{2}{3}\right)^2=\frac{4}{9}$ in the denominator becomes $\frac{9}{4}$ when it is brought to the numerator; $32\times\frac{9}{4}=72$; and the two powers of $\varepsilon$ from $D_{eq}^2$ combine with the $\varepsilon$ underneath $\bar V$ to give $\varepsilon^3$. The experimental constant $150$ replaces the theoretical $72\lambda_1$ --- the difference is the tortuosity and the fact that real channels are neither circular nor equal.}
 \end{formulabox}
+\begin{itemize}
+  \item \textbf{How to read the result.} The pressure drop rises with the filtrate rate ($v_0$) and the viscosity, and falls with the square of the particle size --- but the porosity terms $\dfrac{(1-\varepsilon)^2}{\varepsilon^3}$ dominate in practice: packing a cake from $\varepsilon=0.4$ to $\varepsilon=0.3$ multiplies this group by roughly $6$, for the same particles and the same flow.
+  \item Flow proportional to the pressure drop and inversely proportional to the fluid viscosity is \textbf{Darcy's law}, used to explain the flow of liquids through porous media --- the Kozeny--Carman equation is a way of \emph{predicting} Darcy's constant from the particle size and porosity instead of measuring it.
+\end{itemize}
 
 \spsub{Burke--Plummer equation (high flow rate)}
 \begin{itemize}
-  \item As the flow rate increases, the pressure drop eventually rises faster than linearly: at very high Reynolds number $\Delta P\propto v_0^{1.8\text{ or }2}$, which gives the \emph{empirical} result
+  \item As the flow rate is increased the Reynolds number rises and the flow stops being purely viscous: experiments show the pressure drop then rises faster than linearly, $\Delta P\propto v_0^{\,1.8\text{ or }2}$ (the kinetic-energy or ``inertial'' loss of the filtrate as it is repeatedly forced to change direction in the bed).
+  \item Repeating the same matching procedure for this regime gives the \emph{empirical} result
 \end{itemize}
 \begin{formulabox}
 \[\boxed{\;\frac{\Delta P}{L}=1.75\,\frac{\rho\,v_0^2}{g_c\,\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}\;}
 \qquad\text{\textbf{Burke--Plummer equation (}$Re>1000$\textbf{)}}\]
+\vspace{2pt}
+{\small $\rho$ = density of the filtrate. Compare the structure with Kozeny--Carman: the same $D_p^{-1}$ and $\varepsilon^{-3}$ dependence, the same $(1-\varepsilon)$-type matching, but the \emph{square} of the velocity and the fluid \emph{density} in place of $\mu$. Which of the two applies is decided by the particle Reynolds number of the bed, $Re=\dfrac{D_pv_0\rho}{\mu}$ --- under about $1$ use Kozeny--Carman, above about $1000$ use Burke--Plummer.}
 \end{formulabox}
 
-\spsub{Ergun equation (entire range of flow rates)}
+\spsub{Ergun equation (the entire range of flow rates)}
 \begin{itemize}
-  \item For the entire range of flow rates the equation is obtained by adding the two effects: the \emph{viscous loss} and the \emph{kinetic-energy loss}.
+  \item For the entire range of flow rates the two effects are simply added --- the \textbf{viscous loss} and the \textbf{kinetic-energy loss} --- and the result covers both limits, reducing to Kozeny--Carman when $v_0$ is small and to Burke--Plummer when $v_0$ is large:
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
 \frac{\Delta P}{L}&=
- \underbrace{\frac{150\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}}_{\text{viscous loss}}
- +\underbrace{\frac{1.75\,\rho\,v_0^2}{g_c\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}}_{\text{kinetic-energy loss}}
+ \underbrace{\frac{150\,v_0\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}}_{\text{viscous loss (Kozeny--Carman)}}
+ +\underbrace{\frac{1.75\,\rho\,v_0^2}{g_c\Phi_sD_p}\,\frac{1-\varepsilon}{\varepsilon^3}}_{\text{kinetic-energy loss (Burke--Plummer)}}
  &&\text{\textbf{Ergun equation}}
 \end{align*}
 \end{formulabox}
 
-\spsub{Overall pressure drop at any time}
+\spsub{Overall pressure drop at any time: cake plus medium}
 \begin{itemize}
-  \item The overall drop is the drop over the medium \emph{plus} the drop over the cake:
-  \[\Delta P=P_a-P_b=(P_a-P')+(P'-P_b)=\Delta P_c+\Delta P_m\]
-  with $P_a$ the inlet pressure, $P_b$ the outlet pressure and $P'$ the pressure at the boundary between cake and medium.
-  \item $\Delta P_c$ is written with the Kozeny--Karman equation, $v_0\to u$ and $\Delta P/L\to \mathrm{d}P/\mathrm{d}L$ (the differential form):
+  \item The one equation above still contains $L$, the cake thickness, which grows during filtration and is not measured directly. The rest of the lecture removes $L$ in favour of two measurable quantities: the volume of filtrate and the cake resistance.
+  \item The overall drop is the drop over the cake \emph{plus} the drop over the medium:
+  \[
+  \Delta P=P_a-P_b=(P_a-P')+(P'-P_b)=\Delta P_c+\Delta P_m
+  \]
+  with $P_a$ = inlet pressure, $P_b$ = outlet pressure, $P'$ = pressure at the boundary between cake and medium (see the section through the cake and medium in the figure).
+  \item $\Delta P_c$ is written with the Kozeny--Carman equation, with $v_0\to u$ and $\Delta P/L\to \mathrm{d}P/\mathrm{d}L$ (its \emph{differential} form --- the drop across a thin slice of cake at thickness $L$):
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
 \frac{\mathrm{d}P}{\mathrm{d}L}&=\frac{150\,u\,\mu}{g_c\Phi_s^2D_p^2}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
- &&\text{then put } \Phi_sD_p=\frac{6v_p}{s_p}\\[2pt]
+ &&\text{now put } \Phi_sD_p=\frac{6v_p}{s_p}\ \text{(eq.~1 rearranged)}\\[2pt]
 &=\frac{150\,u\,\mu\,s_p^2(1-\varepsilon)^2}{g_c\,36\,v_p^2\varepsilon^3}
  =\boxed{\;4.17\,\frac{\mu\,u}{g_c}\,\frac{(1-\varepsilon)^2}{\varepsilon^3}
    \left(\frac{s_p}{v_p}\right)^{2}\;}
 \end{align*}
 \vspace{2pt}
-{\small
-$\mathrm{d}P/\mathrm{d}L$ = pressure gradient at thickness $L$; \quad
-$\mu$ = viscosity of the filtrate; \quad
-$u$ = linear velocity of the filtrate, based on the \emph{filter} area; \quad
-$s_p$ = surface area of a single particle; \quad
-$v_p$ = volume of a single particle; \quad
-$\varepsilon$ = porosity of the cake; \quad
-$g_c$ = Newton's law proportionality constant; \quad
-usually the coefficient is $4.17$.}
+{\small The coefficient is $\dfrac{150}{36}=4.166\ldots$, rounded to $4.17$; the original $150$ is kept inside the bracket and $4.17$ written in front of it. \textbf{Why the substitution is made:} a cake may be described either by a particle diameter $D_p$ (for regular particles) or by the surface-to-volume ratio $s_p/v_p$ (for irregular ones) --- this step allows the equation to be used with whichever data the laboratory has.}
 \end{formulabox}
 
-\spsub{Mass balance over the cake (eliminating $\mathrm{d}L$)}
+\spsub{Mass balance over the cake, and the elimination of $\mathrm{d}L$}
 \begin{itemize}
-  \item For beds of \emph{compressible} particles (beds with a very low void fraction) write the filtrate flux as
-  \[u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t},\qquad V=\text{volume of filtrate collected from the start of filtration to time }t\]
-  \item Volume of solids in a layer of thickness $\mathrm{d}L$ is $A(1-\varepsilon)\,\mathrm{d}L$, so with $\rho_p$ the density of the particles,
-  \[\mathrm{d}m=\rho_pA(1-\varepsilon)\,\mathrm{d}L\qquad\text{(}m\text{ = mass of solids in the layer)}\]
-\end{itemize}
+  \item Write the filtrate flux as
+  \[
+  u=\frac{1}{A}\frac{\mathrm{d}V}{\mathrm{d}t},
+  \qquad V=\text{volume of filtrate collected from the start of filtration to time }t
+  \]
+  \item Consider a thin slice of cake of thickness $\mathrm{d}L$ and face area $A$ (anywhere in the cake --- for beds of compressible particles, i.e.\ beds with a very low void fraction, the slice is representative). Its volume is $A\,\mathrm{d}L$, of which the solid part is $A(1-\varepsilon)\,\mathrm{d}L$. With $\rho_p$ the density of the particles, the \emph{mass} of solids in the slice is
+  \end{itemize}
 \begin{formulabox}
-Eliminating $\mathrm{d}L$ by dividing the differential pressure drop by the mass balance,
+\[\mathrm{d}m=\rho_pA(1-\varepsilon)\,\mathrm{d}L
+\qquad\text{\textbf{mass balance over the cake}}\]
+Eliminating $\mathrm{d}L$ between the differential pressure drop and this mass balance --- divide the first by the second:
 \begin{align*}
 \mathrm{d}P&=\frac{4.17\,\mu\,u\,(1-\varepsilon)^2}{g_c\,\varepsilon^3}
    \left(\frac{s_p}{v_p}\right)^{2}\cdot\frac{\mathrm{d}m}{\rho_pA(1-\varepsilon)}\\[2pt]
 &=\boxed{\;\frac{k_1\,\mu\,u\,(1-\varepsilon)}{g_c\,\rho_pA\,\varepsilon^3}
-   \left(\frac{s_p}{v_p}\right)^{2}\mathrm{d}m\;}\qquad (k_1 \text{ used instead of } 4.17)
+   \left(\frac{s_p}{v_p}\right)^{2}\mathrm{d}m\;}
+\qquad (k_1 \text{ written in place of } 4.17)
 \end{align*}
+\vspace{2pt}
+{\small One power of $(1-\varepsilon)$ cancels. \textbf{Why this is the key move of the lecture:} the cake thickness $L$ --- which is neither known in advance nor measurable during a run --- has disappeared; the equation is now written per unit \emph{mass} of deposited solids, and that mass is obtained from the filtrate volume, which is what the operator actually measures.}
 \end{formulabox}
 
-\spsub{Compressible and incompressible filter cakes}
+\spsub{Integration: the drop across the cake}
 \begin{itemize}
-  \item For low pressure-drop filtration of slurries \emph{all} the factors are independent of $L$ except $m_c$, so the equation integrates immediately from $m=0$ to $m=m_c$:
+  \item For low-pressure-drop filtration of slurries, all the factors are independent of $L$ (equivalently of $m$) \emph{except} $m_c$: the cake is incompressible, so $\varepsilon$ does not change from point to point. The variables therefore separate, and the equation integrates immediately from $m=0$ (the medium) to $m=m_c$ (the whole cake):
 \end{itemize}
 \begin{formulabox}
 \[\int_{P'}^{P_a}\mathrm{d}P=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
@@ -859,11 +941,13 @@ Eliminating $\mathrm{d}L$ by dividing the differential pressure drop by the mass
 \qquad\Longrightarrow\qquad
 \boxed{\;\Delta P_c=P_a-P'=\frac{k_1\mu u(1-\varepsilon)}{g_c\rho_pA\varepsilon^3}
   \left(\frac{s_p}{v_p}\right)^{2}m_c\;}\]
+\vspace{2pt}
+{\small $\Delta P_c$ = pressure drop over the cake; $m_c$ = total mass of solids in the cake. Note that the drop grows in proportion to $m_c$: as filtration proceeds, the same pressure difference must drive the same rate through an ever-thicker cake, or the rate must fall. That is the physical reason a cake filter slows down.}
 \end{formulabox}
 
 \spsub{Specific cake resistance $\alpha$}
 \begin{itemize}
-  \item For cakes that are incompressible the group in front of $m_c$ is a constant of the cake and the slurry:
+  \item The group in front of $m_c$ contains a mixture of slurry properties (particle size, porosity, density) and the filter area. It is collected into a single measurable quantity, defined by
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
@@ -873,10 +957,14 @@ Eliminating $\mathrm{d}L$ by dividing the differential pressure drop by the mass
 \;;\qquad \text{if the particle diameter is given,}\qquad
 \alpha=\frac{k_2(1-\varepsilon)}{\varepsilon^3\rho_p(\Phi_sD_p)^2}
 \end{align*}
-$\alpha$ is independent of the pressure drop and of the position in the cake.
+\vspace{2pt}
+{\small \textbf{What $\alpha$ means:} the pressure loss per unit viscosity, per unit filtrate velocity, per unit mass of solids deposited per unit area. Its SI unit is m/kg. For an incompressible cake, $\alpha$ is a constant of the cake and the slurry --- \emph{independent of the pressure drop and of the position in the cake} --- so it can be measured once in a bench test and then used for design. The two forms are equivalent: use the first when the surface-to-volume ratio of the grains is known, the second when a particle diameter and sphericity are given.}
 \end{formulabox}
 
 \spsub{Filter medium resistance $R_m$}
+\begin{itemize}
+  \item The medium is treated the same way: its resistance is defined by the pressure drop across it at the same filtrate velocity,
+  \end{itemize}
 \begin{formulabox}
 \begin{align*}
 R_m&=\frac{(P'-P_b)\,g_c}{\mu\,u}=\frac{(\Delta P_m)\,g_c}{\mu\,u}
@@ -885,11 +973,13 @@ R_m&=\frac{(P'-P_b)\,g_c}{\mu\,u}=\frac{(\Delta P_m)\,g_c}{\mu\,u}
  =\left(\frac{\alpha\,\mu\,u\,m_c}{g_c\,A}\right)+\left(\frac{\mu\,u\,R_m}{g_c}\right)
  =\boxed{\;\frac{\mu\,u}{g_c}\left[\frac{\alpha\,m_c}{A}+R_m\right]\;}
 \end{align*}
+\vspace{2pt}
+{\small The two resistances are in \emph{series} and the pressure drops add, in the same way that the cake drop grows with $m_c$ while the medium contribution stays fixed. The medium resistance is usually measured, not predicted: it is the intercept of the plot of the next paragraph.}
 \end{formulabox}
 
 \spsub{Working form and the constant-pressure straight line}
 \begin{itemize}
-  \item If $c$ is the mass of particles deposited on the filter \emph{per unit volume of filtrate}, then the mass of solids at any time is $m_c=Vc$. Substituting $u=\dfrac{1}{A}\dfrac{\mathrm{d}V}{\mathrm{d}t}$,
+  \item Let $c$ be the mass of particles deposited on the filter \emph{per unit volume of filtrate} (a property of the slurry, measured once). Then the mass of solids at any time is $m_c=Vc$. Substituting $u=\dfrac{1}{A}\dfrac{\mathrm{d}V}{\mathrm{d}t}$ and $m_c=Vc$,
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
@@ -897,7 +987,8 @@ R_m&=\frac{(P'-P_b)\,g_c}{\mu\,u}=\frac{(\Delta P_m)\,g_c}{\mu\,u}
    \left[\frac{\alpha\,Vc}{A}+R_m\right]
 \qquad\Longrightarrow\qquad
 \boxed{\;\frac{\mathrm{d}t}{\mathrm{d}V}=\frac{\mu}{A(\Delta P)g_c}\left[\frac{Vc\alpha}{A}+R_m\right]\;}\\[4pt]
-\text{Constant }\Delta P:\quad & \left(\frac{\mathrm{d}t}{\mathrm{d}V}\right)_{0}
+\text{Constant }\Delta P:\quad
+& \left(\frac{\mathrm{d}t}{\mathrm{d}V}\right)_{0}
    =\frac{\mu R_m}{A(\Delta P_m)g_c}=\frac{1}{q_0}
    \qquad (t=0,\;V=0,\;\Delta P=\Delta P_m \text{ --- medium only})\\[3pt]
 & \frac{\mathrm{d}t}{\mathrm{d}V}=\frac{1}{q}=k_cV+\frac{1}{q_0},
@@ -906,16 +997,52 @@ R_m&=\frac{(P'-P_b)\,g_c}{\mu\,u}=\frac{(\Delta P_m)\,g_c}{\mu\,u}
    \qquad\text{straight line } y=mx+c:\quad \text{slope}=\frac{k_c}{2},\quad
    \text{intercept}=\frac{1}{q_0}
 \end{align*}
+\vspace{2pt}
+{\small \textbf{Where each line comes from.} The first line is the working form, with $\Delta P$ at the left. In a \emph{constant-pressure} filtration $\Delta P$ is fixed, so the only variables on the right are $t$ and $V$: at time zero there is no cake ($V=0$), so the whole of $\Delta P$ is spent on the medium --- this gives the intercept $1/q_0$ (that is why $q_0$ is called the initial rate). Integrating $\mathrm{d}t/\mathrm{d}V=k_cV+1/q_0$ with respect to $V$ gives $t=\frac{k_c}{2}V^2+\frac{V}{q_0}$, and dividing by $V$ gives the straight-line form.}
 \end{formulabox}
-\notetext{From the plot of $t/V$ against $V$ both $\alpha$ (through the slope, hence $k_c$) and $R_m$ (through the intercept, hence $q_0$) can be calculated. The same plot is the bridge to the constant-rate and continuous cases of the next section.}
+\begin{itemize}
+  \item \textbf{How the line is used.} A constant-pressure run is plotted as $t/V$ against $V$:
+  \begin{itemize}
+    \item the \textbf{intercept} $1/q_0$ gives $R_m$ (through $q_0$ and the known $\Delta P_m$);
+    \item the \textbf{slope} $k_c/2$ gives $k_c$ and hence $\alpha$ (through $\mu$, $A$, $c$ and $\Delta P$);
+    \item the same two numbers then predict $V$ against $t$ for any other pressure, area or cake thickness --- which is what the next lecture (constant-rate filtration) and the continuous filter of Lecture 5 need.
+  \end{itemize}
+  \item If the plot is not a straight line, the cake is compressible --- $\alpha$ is not a constant --- which is what the last equation of the lecture allows for.
+\end{itemize}
 
 \spsub{Compressibility of the cake}
+\begin{itemize}
+  \item A compressible cake is squashed by the pressure applied to it, so its porosity falls and $\alpha$ rises as $\Delta P$ rises. The deck uses the empirical relation
+\end{itemize}
 \begin{formulabox}
-\textbf{Empirical equation for cake resistance:}\qquad
 \[\boxed{\;\alpha=\alpha_0(\Delta P)^{s}\;}\]
-$\alpha_0$ and $s$ are empirical constants, determined purely by experiments. $s$ is the \textbf{compressibility coefficient}: $s=0$ for incompressible sludges (the cake resistance does not change with pressure), and $s$ is positive for a compressible cake, typically $0.2$--$0.8$.
+\vspace{2pt}
+{\small $\alpha_0$ and $s$ are \emph{empirical constants}, determined purely by experiments --- they are not predicted by the theory. $s$ is the \textbf{compressibility coefficient}: $s=0$ for incompressible sludges (the cake resistance does not change with pressure --- the constant $\alpha$ of the earlier derivation), and $s$ is positive for a compressible cake, typically $0.2$--$0.8$. Because $\alpha$ now depends on $\Delta P$, the integration in constant-pressure filtration is done with $\alpha=\alpha_0(\Delta P)^s$ in place of the constant $\alpha$; the straight line of $t/V$ against $V$ then has a pressure-dependent slope and pressure-dependent intercept.}
 \end{formulabox}
+
+\spsub{Symbols of this lecture}
+\notetext{$\Delta P$ overall pressure drop (=$P_a-P_b$); $\Delta P_c$, $\Delta P_m$ drops over cake and medium; $P_a$, $P_b$ inlet and outlet pressures; $P'$ pressure at the cake--medium boundary. $L$ cake thickness (a slice $\mathrm{d}L$); $S_0$ cross-sectional area of the bed; $A$ filtering (face) area; $n$ number of model channels; $D_{eq}$ equivalent channel diameter; $D$ pipe diameter; $D_p$ particle diameter; $\Phi_s$ sphericity; $s_p$ surface area of a single particle; $v_p$ volume of a single particle; $s_p/v_p$ surface-to-volume ratio. $\varepsilon$ external void fraction (porosity) of the bed; $1-\varepsilon$ volume fraction of particles. $v_0$ superficial (empty-tower) velocity; $\bar V$ average velocity in the channels; $u$ linear velocity of filtrate based on the filter area; $V$ volume of filtrate collected; $t$ time. $\mu$ viscosity of filtrate; $\rho$ density of filtrate; $\rho_p$ density of the particles; $g_c$ Newton's-law proportionality constant. $m_c$ mass of solids in the cake; $\mathrm{d}m$ mass of solids in a slice; $c$ mass of solids deposited per unit volume of filtrate; $\alpha$ specific cake resistance; $\alpha_0$, $s$ empirical cake constants; $R_m$ filter-medium resistance; $q=\mathrm{d}V/\mathrm{d}t$ filtrate rate, $q_0$ initial rate; $k_1$, $k_2$, $k_c$ groups of constants; $\lambda_1$ tortuosity correction factor; $Re$ Reynolds number of the bed.}
+
+\spsub{Illustration --- how the equations are used in practice (numbers chosen to show the arithmetic)}
+\begin{daybox}
+\textbf{Wet-cake pressure drop (Kozeny--Carman).} A cake of $\Phi_s=0.8$ grains of $D_p=100\,\microm$ has porosity $\varepsilon=0.40$; filtrate of $\mu=1\,\mathrm{mPa\,s}$ passes at $v_0=1\,\mathrm{mm/s}$; take $g_c=1$.
+\[\frac{\Delta P}{L}=150\cdot\frac{(10^{-3})(10^{-3})}{(0.8)^2(10^{-4})^2}\cdot\frac{(0.6)^2}{(0.4)^3}
+=150\cdot\frac{10^{-6}}{6.4\times10^{-9}}\cdot5.625
+=1.3\times10^{5}\ \mathrm{Pa/m}\]
+so a $20$\,mm cake costs $\Delta P_c=1.3\times10^5\times0.02\approx2.6\ \mathrm{kPa}$ --- a few per cent of one atmosphere, which is why gravity and small pump pressures suffice for coarse cakes. Reducing $D_p$ to $50\,\microm$ quadruples it, and raising $\varepsilon$ to $0.45$ cuts it by about $40$ per cent: both trends are visible directly in $\varepsilon^{-3}$ and $D_p^{-2}$.
+
+\textbf{Resistances from a bench run.} If a constant-pressure test on the same slurry gives a straight line of $t/V$ against $V$ with intercept $40\ \mathrm{s/m^3}$ and slope $2\times10^{6}\ \mathrm{s/m^6}$, then $q_0=1/40=0.025\ \mathrm{m^3/s}$ at $t=0$, and with $A=0.1\ \mathrm{m^2}$, $c=20\ \mathrm{kg/m^3}$, $\Delta P=10^{5}\ \mathrm{Pa}$, $\mu=10^{-3}\ \mathrm{Pa\,s}$,
+\[k_c=2\times\text{slope}=4\times10^{6}\ \mathrm{s/m^6},
+\qquad
+\alpha=\frac{k_cA^2\Delta P}{\mu c}
+=\frac{(4\times10^6)(10^{-2})(10^5)}{(10^{-3})(20)}
+=2\times10^{11}\ \mathrm{m/kg}\]
+(with $R_m$ following from the intercept). These are the two numbers a designer needs, and they come out of one bench test.
+\end{daybox}
+\notetext{This illustration is \emph{not} from the deck --- the deck works the lecture entirely in symbols. It is included here only to show the arithmetic of the two equations that exams and design problems use.}
+
 \notetext{The deck works this lecture from the hand-written pages numbered ``Lecture 9''; the printed front page titles it Module 2 Lecture 3. Both page numbers are the same lecture.}
+
 
 % ---- Module 2, Lecture 4 : constant-rate filtration ----
 \spsection{MODULE 2 \textperiodcentered{} LECTURE 4 --- Constant-Rate Filtration}
@@ -1057,17 +1184,20 @@ A_T=\text{total area of the continuous filter}
 
 \spsub{Centrifugal filtration --- where it applies}
 \begin{itemize}
-  \item A centrifuge may hold the bowl stationary (sedimentation in a rotated imperforate bowl) or filter through a perforated basket; this section is the \emph{filtering} case --- a perforated basket, a filter cloth, and a cake thrown against the cloth.
-  \item The basic theory of constant-pressure filtration can be modified to apply to filtration in a centrifuge. It applies \emph{after} the cake has been deposited, and during the flow of clear filtrate or fresh water through the cake.
-  \item In the basket (sketch on slide~6): $r_1$ = radius of the inner surface of the liquid, $r_i$ = radius of the inner face of the cake, $r_2$ = inside radius of the basket, $b$ = height of the basket.
+  \item A centrifuge may hold the bowl stationary --- \emph{sedimentation} in a rotated imperforate bowl --- or filter through a perforated basket; this lecture is the \emph{filtering} case: a perforated basket, a filter cloth, and a cake thrown against the cloth.
+  \item The basic theory of \emph{constant-pressure} filtration can be modified to apply to filtration in a centrifuge. It applies \textbf{after the cake has been deposited}, and during the flow of clear filtrate or fresh water through the cake.
+  \item Geometry of the basket (deck figure): $r_1$ = radius of the inner surface of the liquid, $r_i$ = radius of the inner face of the cake, $r_2$ = inside radius of the basket, $b$ = height of the basket. In the radial section drawn from the axis outwards the order is liquid ($r_1$) $\rightarrow$ cake ($r_i$ to $r_2$) $\rightarrow$ basket wall, and the depth of liquid plus cake is measured along $b$.
+  \item The working machine (deck figure): feed slurry is fed to a perforated basket lined with filter cloth, spun by a motor shaft; filtrate passes the cloth and basket and leaves through the casing; the solid cake is cut off by an adjustable unloader knife; solids discharge through a removable valve plate at the bottom.
 \end{itemize}
 
-\spsub{Assumptions}
+\spsub{Assumptions (exactly as the deck lists them)}
 \begin{itemize}
-  \item The effect of gravity and the change in kinetic energy of the liquid are neglected.
+  \item The effect of gravity and the change in kinetic energy of the liquid is neglected.
   \item The pressure drop from the centrifugal action equals the drag of the liquid through the cake.
-  \item The cake is completely filled with liquid; the flow of liquid is laminar.
-  \item The resistance of the filter medium is constant and the cake is nearly incompressible.
+  \item The cake is completely filled with liquid.
+  \item The flow of liquid is laminar.
+  \item The resistance of the filter medium is constant.
+  \item The cake is nearly incompressible.
 \end{itemize}
 
 \spsub{Derivation as printed and worked on the deck}
@@ -1075,7 +1205,7 @@ A_T=\text{total area of the continuous filter}
 \begin{align*}
 \text{Hydrostatic:}\quad
 & \Delta P=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}{2}
- &&\text{(centrifugal field, }\omega=\text{ angular velocity)}\\[2pt]
+ &&\text{(centrifugal field, } \omega=\text{ angular velocity)}\\[2pt]
 \text{Constant-pressure filtration:}\quad
 & \Delta P=\mu u\left(\frac{\alpha\,m_c}{A}+R_m\right)\\[2pt]
 \text{Linear velocity:}\quad
@@ -1094,11 +1224,11 @@ q&=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
  &&\text{(area }A\text{ of the cake taken as constant)}
 \end{align*}
 \end{formulabox}
-\notetext{$\rho$ = density of the liquid, $\omega$ = angular velocity of the basket, $A$ = area of the filtering surface, $m_c$ = mass of solids in the cake, $q$ = volumetric rate of filtrate.}
+\notetext{$\rho$ = density of the liquid, $\omega$ = angular velocity of the basket, $A$ = area of the filtering surface, $m_c$ = mass of solids in the cake, $q$ = volumetric rate of filtrate, $\alpha$ = specific cake resistance, $R_m$ = medium resistance. The hydrostatic step is printed on the deck as ``Eq 33 (McCabe Smith) 7th Ed.''}
 
 \spsub{Case 1 --- the change of area with radius may be neglected}
 \begin{itemize}
-  \item Permissible for a thin cake in a large-diameter centrifuge: the area for flow does not change with radius, so $A$ may be taken out of the integral.
+  \item Permissible for a thin cake in a large-diameter centrifuge: the area for flow does not change with radius, so $A$ may be taken out of the integral. The cake and medium resistances are then written with their own areas.
 \end{itemize}
 \begin{formulabox}
 \[\boxed{\;q=\frac{\rho\,\omega^{2}(r_2^{2}-r_1^{2})}
@@ -1110,11 +1240,13 @@ A_2&=\text{area of filter medium (inside area of the centrifuge basket)}\\
 \overline{A}_a&=\text{arithmetic mean of the cake area}=(r_i+r_2)\pi b\\
 \overline{A}_L&=\text{logarithmic mean of the cake area}=\frac{2\pi b(r_2-r_i)}{\ln(r_2/r_i)}
 \end{align*}
+\vspace{2pt}
+{\small $b$ = height of basket, $r_i$ = inner radius of the cake.}
 \end{formulabox}
 
 \spsub{Case 2 --- the change of area with radius is too large to be neglected}
 \begin{itemize}
-  \item Then the cake area must be carried through the integration as a function of radius and the arithmetic and logarithmic mean areas above are what come out of it: $\overline{A}_a$ from the cake's inner face to the basket wall, $\overline{A}_L$ from the logarithmic mean of the same two radii.
+  \item Then the cake area must be carried through the integration as a function of radius, and the arithmetic and logarithmic mean areas above are what come out of it: $\overline{A}_a$ from the cake's inner face to the basket wall, $\overline{A}_L$ from the logarithmic mean of the same two radii.
 \end{itemize}
 
 \spsub{Limits of the equation (as the deck states them)}
@@ -1122,85 +1254,127 @@ A_2&=\text{area of filter medium (inside area of the centrifuge basket)}\\
   \item It applies to a cake of \emph{definite} mass --- it is not integrable over the entire range starting from the beginning of filtration.
   \item For compressible cakes the specific resistance $\alpha$ increases with the centrifugal force, so $\alpha$ is no longer the constant the equation assumed.
 \end{itemize}
-\notetext{The hydrostatic step is printed on the deck as ``Eq 33 (McCabe Smith) 7th Ed.'' --- the deck's own reference, kept here rather than re-derived.}
 
 \spsub{Washing rates}
 \begin{itemize}
-  \item \textbf{Batch filters}: washing the cake is done at the end of filtration.
-  \item \textbf{Filter press}: the rate of washing is $\tfrac14$ of the normal rate of filtration; the rate of wash water is different from that of the slurry and only half the area is available for washing.
+  \item \textbf{Batch filters}: washing the cake is done at the end of filtration, and the wash rate is not the filtration rate.
+  \item \textbf{Filter press}: the rate of washing is $\tfrac14$ of the normal rate of filtration --- the rate of wash water differs from that of the slurry and only half the area is available for washing.
   \item \textbf{Leaf filter}: washing is done at the \emph{same} pressure as filtration and the rate of washing is a \emph{fixed} ratio of the rate of filtration --- the rate of slurry and of wash water is the same, and hence the same area is available for washing.
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
 \left(\frac{\mathrm{d}V}{\mathrm{d}t}\right)_{f}&=f(V)
  &&\text{the filtration rate at the end of the run, } V=\text{final volume collected}\\[3pt]
-\text{Washing time:}\quad & t_w=\frac{V_w}{\text{rate of washing}}
- &&\text{(}V_w=\text{volume of wash water)}\\[2pt]
-& \boxed{\;t_w=\frac{V_w}{(\mathrm{d}V/\mathrm{d}t)_{\text{washing}}}\;}
-\end{align*}
-\begin{align*}
-\text{Idle time }(t_i)&=\text{time for dismantling, dumping, reassembling}\\
-\text{Filtration time }(t_f)&=\text{time required for filtration}\\[2pt]
-\text{Cycle time:}\quad & \boxed{\;t_c=t_f+t_w+t_i\;}\\[2pt]
-\text{Cycles per day:}\quad & n_{\text{cyc}}=\frac{24\;\ensuremath{\mathrm{ h}}}{t_c\;(\ensuremath{\mathrm{ h}})}\\[2pt]
-\text{Daily filtrate:}\quad & V_{\text{day}}=\frac{24\;V_f}{t_c}
- &&\text{(}V_f=\text{filtrate per cycle)}
+\text{Washing time:}\quad t_w&=\frac{V_w}{\text{rate of washing}}
+ &&(V_w=\text{volume of wash water})\\[3pt]
+&\boxed{\;t_w=\frac{V_w}{(\mathrm{d}V/\mathrm{d}t)_{\text{washing}}}\;}
+&&\text{the deck's working form}
 \end{align*}
 \end{formulabox}
+
+\spsub{Cycle time and daily output (from the deck's ink slide)}
+\begin{formulabox}
+\begin{align*}
+\text{Cycle time:}\quad
+t_c&=t_f+t_w+t_i\\[2pt]
+\text{Cycles per day:}\quad
+n_{cyc}&=\frac{24\ \text{h}}{t_c\ (\text{in h})}\\[2pt]
+\text{Daily output of filtrate:}\quad
+V_{\text{day}}&=\frac{24\,V_f}{t_c}
+ &&\bigg[V_f=\text{final volume of filtrate collected per cycle}\bigg]
+\end{align*}
+\vspace{2pt}
+{\small $t_f$ = filtration time; $t_w$ = washing time; $t_i$ = idle time for dismantling, dumping and reassembling.}
+\end{formulabox}
+\notetext{For a batch machine the cycle is filtration $\rightarrow$ washing $\rightarrow$ idle, so the daily output falls as any of the three times lengthens: cutting the idle time raises the output without touching the filtration itself.}
 
 \spsub{Continuous filter}
 \begin{itemize}
   \item Here washing is an \emph{integral part} of filtration --- the rotary-drum filter of Lecture 5 washes the cake as it turns, before the doctor blade removes it; there is no separate washing step to be timed.
 \end{itemize}
+\notetext{Symbols: $\rho$ liquid density; $\omega$ angular velocity of the basket; $r_1$ inner radius of the liquid; $r_i$ inner radius of the cake; $r_2$ inside radius of the basket; $b$ basket height; $A_2$ filter-medium area; $\overline{A}_a$, $\overline{A}_L$ arithmetic and logarithmic mean cake areas; $m_c$ mass of solids in the cake; $\alpha$ specific cake resistance; $R_m$ medium resistance; $q$ filtrate rate; $V$, $V_f$ filtrate volume; $V_w$ wash-water volume; $t_f$, $t_w$, $t_i$, $t_c$ filtration, washing, idle and cycle times.}
 
 % ---- Module 2, Lecture 7 (a) : clarifying, crossflow and membrane filters ----
 \spsection{MODULE 2 \textperiodcentered{} LECTURE 7 --- Clarifying Filters, Crossflow and Membrane Filters; Sedimentation}
 
+%================================================================ (a) FILTRATION
 \spsub{Clarifying filters}
 \begin{itemize}
-  \item Clarifying filters remove \emph{small amounts} of solids or liquid droplets from either liquids or gases.
+  \item Clarifying filters remove \emph{small amounts} of solids or liquid droplets from either liquids or gases; the wanted product is the \emph{clear fluid}, not a cake.
   \item The particles are caught by \emph{surface forces} and immobilised on the surfaces or within the flow channels. They reduce the effective diameter of the channels but usually do not block them completely.
-  \item Clarification differs from screening in that the pores in the filter medium are larger --- sometimes much larger --- than the particles to be removed.
-  \item \textbf{Liquid clarification}: clarifying filters for liquids include the gravity-bed filters used in water treatment; cake filters are also used extensively for clarification. In batch units the filtration rate and the filtration efficiency stay constant for a long period, and eventually reach a \textbf{breakthrough} value, after which backwashing or replacement becomes necessary.
-  \item \textbf{Gas cleaning}: filters for gas cleaning include pad filters for atmospheric dust, and granular beds and bag filters for process dusts. Air is cleaned by passing it through pads of cellulose pulp, cotton, felt, glass fibre or metal screening; the pad material may be dry or coated with a viscous oil to act as a dust holder.
+  \item Clarification differs from screening in that the pores of the filter medium are larger --- sometimes much larger --- than the particles to be removed. Screening is a \emph{size} separation; clarification is a \emph{capture} separation, in which a particle far smaller than the pore is still held by adhesion to the medium.
+  \item Clarification is therefore a \emph{polishing} duty, and the load on the unit is small by definition.
 \end{itemize}
 
-\spsub{Principles of clarification}
+\spsub{Liquid clarification}
 \begin{itemize}
-  \item \textbf{Direct sieving}: the solid particles being removed completely plug the pores of the filter medium, and the rate of plugging is constant with time.
-  \item \textbf{Standard blocking}: the particles partially block the pores, giving a gradual reduction in pore size.
-  \item \textbf{Impingement}: in cleaning gases the separation is by impingement of the particles against a solid surface placed in the flowing stream. The particles, because of their inertia, are expected to cross the streamlines of the fluid, strike the solid, and adhere to it, from which they can subsequently be removed.
+  \item Clarifying filters for liquids include the gravity-bed filters used in water treatment; cake filters are also used extensively for clarification.
+  \item In batch units the filtration rate and the filtration efficiency stay constant for a long period. Eventually the unit reaches a \textbf{breakthrough} value, after which backwashing or replacement of the medium becomes necessary.
+  \item Breakthrough --- solids or haze appearing in the effluent --- is what ends the cycle, not a rising pressure drop: the open area is only partly closed, so the flow stays nearly constant until the bed has to be cleaned.
 \end{itemize}
+
+\spsub{Gas cleaning}
+\begin{itemize}
+  \item Filters for gas cleaning include pad filters for atmospheric dust, and granular beds and bag filters for process dusts.
+  \item Air is cleaned by passing it through pads of cellulose pulp, cotton, felt, glass fibre or metal screening; the pad material may be dry or coated with a viscous oil to act as a dust holder.
+\end{itemize}
+
+\spsub{Three principles of clarification}
+\begin{itemize}
+  \item \textbf{Direct sieving}: the solid particles being removed completely plug the pores of the filter medium, and the rate of plugging is constant with time --- the open area falls at a steady rate as filtrate passes.
+  \item \textbf{Standard blocking}: the particles partially block the pores, giving a gradual reduction in pore size; the particle lodges in the channel instead of sealing it.
+  \item \textbf{Impingement}: in cleaning gases, the separation is by impingement of the particles against a solid surface placed in the flowing stream. The particles, because of their inertia, are expected to cross the streamlines of the fluid, strike the solid, and adhere to it, from which they can subsequently be removed.
+  \item The first two are the liquid-phase mechanisms and the third is the gas-phase mechanism; a real bed usually shows all three at different depths.
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+\textbf{Mechanism} & \textbf{What the pore does} & \textbf{Rate of plugging}\\
+\midrule
+Direct sieving (liquids) & the particle seals the pore completely & constant with time (linear in the volume filtered)\\
+Standard blocking (liquids) & the particle lines / partly blocks the pore; the pore narrows gradually & starts like sieving and slows as the channel closes\\
+Impingement (gases) & the particle leaves the streamline by inertia and strikes a solid surface in the stream & independent of the pore --- the deposit is cleaned off the surface\\
+\bottomrule
+\end{tabularx}}
+\end{formulabox}
+
+\notetext{The deck's impingement figure is the classic picture of the mechanism: the fluid streamlines A and B bend round a particle of diameter $D_p$ placed in the stream, while the dashed \emph{particle path} is deflected out of A, crosses the streamlines and meets the surface --- the particle has too much inertia to follow the gas. The finer the particle (or the lower the gas velocity) the more closely it follows the streamlines and the less likely it is to be caught, which is why a gas filter works best on the larger dust and why a pre-coat or an oiled pad is used for the finest.}
 
 \spsub{Crossflow filtration}
 \begin{itemize}
-  \item The feed is passed through a membrane or bed, the solids being trapped in the filter and the filtrate released at the other end.
-  \item The majority of the feed flow travels \emph{tangentially across the surface} of the filter, rather than into the filter.
-  \item The principal advantage is that the filter cake is substantially washed away during the filtration process, increasing the length of time that a filter unit can stay operational --- compare the dead-end arrangement, where all the feed is forced through the medium and the cake builds up on it.
-  \item Applied to concentrate suspensions of fine particles or colloidal particles.
+  \item The feed is passed through a membrane or bed, the solids being trapped in the filter and the filtrate --- the \textbf{permeate} --- being released at the other end.
+  \item The majority of the feed flow travels \emph{tangentially across the surface} of the filter, rather than into the filter; the stream that leaves the unit still carrying the rejected solids is the \textbf{retentate} (concentrate).
+  \item The principal advantage is that the filter cake is substantially washed away during the filtration process, increasing the length of time that a filter unit can stay operational --- compare the \textbf{dead-end} arrangement, where all the feed is forced through the medium, all of it becomes filtrate, and the cake builds up on the medium until the flow has to be stopped.
+  \item Because the cake never grows thick, crossflow filtration is applied to concentrate suspensions of fine particles or colloidal particles, which would blind a dead-end medium almost immediately.
 \end{itemize}
+\notetext{In the deck's figure the two arrangements are drawn side by side: (a) crossflow --- feed flows along the membrane, permeate is drawn off through it at a steady rate and the cake is swept away; (b) dead-end --- the whole feed is pushed into the medium and the cake accumulates on the surface. The same permeate flux is obtained in (a) for far longer.}
 
 \spsub{Membrane filters}
 \begin{itemize}
   \item \textbf{Types of membranes}: polymer membranes (cellulose acetate, polyacrylonitrile, polysulfone, polyether sulfone, polyamide, etc.); metallic membranes (sintered stainless steel or other metals); inorganic membranes (porous carbon or alumina).
+  \item The membrane is classified by the size of the species it rejects; the four families used in water treatment are microfiltration, ultrafiltration, nanofiltration, and hyperfiltration (reverse osmosis).
 \end{itemize}
 \begin{formulabox}
 {\small
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Technique} & \textbf{Pore size and what is retained}\\
+\textbf{Technique} & \textbf{Pore size, and what passes and what is held back}\\
 \midrule
-Microfiltration (MF) & \ensuremath{10\,\mathrm{\mu m}}--\ensuremath{0.1\,\mathrm{\mu m}} (100\,nm): suspended solids, bacteria/algae and viruses are held back; water and dissolved ions pass.\\
-Ultrafiltration (UF) & \ensuremath{0.1\,\mathrm{\mu m}}--\ensuremath{0.01\,\mathrm{\mu m}} (10\,nm): as MF, with viruses rejected more completely; ions still pass.\\
-Nanofiltration (NF) & \ensuremath{10} nm--\ensuremath{1} nm: multivalent ions, viruses, bacteria/algae and suspended solids are rejected; monovalent ions and water pass.\\
-Hyperfiltration / reverse osmosis (RO) & $<\ensuremath{1} nm$: water passes and essentially everything else is rejected --- monovalent ions, multivalent ions, viruses, bacteria/algae and suspended solids.\\
+Microfiltration (MF) & \ensuremath{10\,\mathrm{\mu m}}--\ensuremath{0.1\,\mathrm{\mu m}} (100\,nm): water, monovalent ions, multivalent ions and viruses pass through; bacteria/algae and suspended solids are held back.\\
+Ultrafiltration (UF) & \ensuremath{0.1\,\mathrm{\mu m}}--\ensuremath{0.01\,\mathrm{\mu m}} (10\,nm): as MF, with viruses now rejected as well; water and ions still pass.\\
+Nanofiltration (NF) & \ensuremath{10\,n\,m}--\ensuremath{1\,n\,m}: water and monovalent ions pass; multivalent ions are rejected, together with viruses, bacteria/algae and suspended solids.\\
+Hyperfiltration / reverse osmosis (RO) & $<\ensuremath{1\,n\,m}$: water passes and essentially everything else is rejected --- monovalent ions, multivalent ions, viruses, bacteria/algae and suspended solids.\\
 \bottomrule
 \end{tabularx}}
+\vspace{2pt}
+{\small Read the deck's chart arrow by arrow: a green arrow through the membrane means the species passes, a red arrow turned back means it is rejected, and the split blue arrow for the multivalent ions at NF means they are only partly rejected. \textbf{MF is the row to be careful with:} viruses pass the MF membrane on the deck's chart (they are of the order of the 100\,nm cut-off and smaller) and are turned back first at UF.}
 \end{formulabox}
 
 \spsub{General equation for ultrafiltration}
 \begin{itemize}
-  \item The \textbf{volume flux} is the superficial permeate velocity normal to the surface:
+  \item The \textbf{volume flux} $J_v$ is the superficial permeate velocity normal to the surface --- the volumetric permeate rate divided by the membrane area.
+  \item Two resistances oppose it: the membrane itself, $R_m$, and the gel layer that builds up on it, $R_{gel}$. The driving force is the applied trans-membrane pressure drop less the osmotic pressure drop of the rejected solute.
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
@@ -1217,22 +1391,40 @@ $\mu$ = viscosity of the permeate at the operating temperature; \quad
 $\mu_0$ = viscosity of water at room temperature. \quad
 The membrane resistance is corrected by the permeate-to-water viscosity ratio $\mu/\mu_0$; the deck writes that factor in the denominator of the bracketed form.}
 \end{formulabox}
+\notetext{The deck writes $V$ (or $v$) for the volume flux; $J_v$ is used here and in the correlations below. A positive $J_v$ requires $\Delta P>\Delta\pi$ --- for a concentrated solution the osmotic pressure can be a large part of the applied pressure, which is why RO needs high pressures and UF (whose solutes are macromolecules of low osmotic pressure) does not.}
 
 \spsub{Concentration polarization}
 \begin{itemize}
-  \item As permeate is drawn through the membrane, solute is carried towards the surface faster than it can diffuse back, so the concentration at the surface rises above the bulk value. In \textbf{RO} the surface concentration is only moderately higher than the bulk concentration; in \textbf{UF} the surface concentration is large, and a gel layer forms.
-  \item The boundary layer has thickness $\delta$. Writing $C_s$ for the concentration at the surface ($x=0$) and $C_1$ for the bulk concentration at $x=\delta$, with $C_2$ the solute concentration in the permeate:
+  \item As permeate is drawn through the membrane, solute is carried towards the surface by the permeate flow faster than it can diffuse back into the bulk, so the concentration at the surface rises above the bulk value.
+  \item In \textbf{RO} the surface concentration is only moderately higher than the bulk concentration; in \textbf{UF} the surface concentration is large and a gel layer forms --- the $R_{gel}$ of the flux equation.
+  \item The boundary layer has thickness $\delta$. The concentration is $C_s$ at the surface ($x=0$) and $C_1$ in the bulk at $x=\delta$; $C_2$ is the solute concentration in the permeate. Within the layer the solute is carried to the membrane by the convective flux $J_vC$ and back by diffusion, and the steady balance is
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
-J_v&=K_c\ln\frac{C_s-C_2}{C_1-C_2}
- &&\text{volume flux with concentration polarization}
+J_vC_2 &= J_vC-D_v\frac{\mathrm{d}C}{\mathrm{d}x}
+ \qquad\Longrightarrow\qquad
+ \frac{\mathrm{d}C}{C-C_2}=\frac{J_v}{D_v}\,\mathrm{d}x\\[3pt]
+\int_{C_s}^{C_1}\frac{\mathrm{d}C}{C-C_2}
+ &=\frac{J_v}{D_v}\int_{0}^{\delta}\mathrm{d}x
+ \qquad\Longrightarrow\qquad
+ J_v=\frac{D_v}{\delta}\ln\frac{C_s-C_2}{C_1-C_2}\\[3pt]
+&\boxed{\;J_v=K_c\ln\frac{C_s-C_2}{C_1-C_2}\;}
 \end{align*}
 \vspace{2pt}
-{\small $C_s$ = concentration at the surface ($x=0$);\quad $C_1$ = bulk concentration at $x=\delta$, the edge of the gel boundary layer;\quad $C_2$ = solute concentration in the permeate.}
+{\small $C_s$ = concentration at the surface ($x=0$);\quad $C_1$ = bulk concentration at $x=\delta$, the edge of the concentration boundary layer;\quad $C_2$ = solute concentration in the permeate;\quad $D_v$ = diffusivity of the solute.}
 \end{formulabox}
+\begin{itemize}
+  \item The result says the flux is \emph{logarithmic} in the concentrations, and is \emph{set by mass transfer in the boundary layer}, not by the applied pressure: pushing harder raises $J_v$ until more solute is brought to the surface, the concentration $C_s$ rises, and the log term falls --- the two effects cancel.
+  \item If the surface concentration reaches the \textbf{gel concentration} $C_g$ the layer stops getting more concentrated, and the flux becomes independent of $\Delta P$ altogether:
+  \[J_v=K_c\ln\frac{C_g}{C_1}\]
+  This is the gel-polarization limit; it is the reason a UF membrane cannot be driven arbitrarily hard.
+  \item The practical remedy is to raise $K_c$ --- that is, to raise the mass-transfer coefficient by increasing the crossflow velocity or by promoting turbulence at the membrane surface.
+\end{itemize}
 
 \spsub{Mass-transfer coefficient and the Sherwood correlation}
+\begin{itemize}
+  \item The group $D_v/\delta$ is written as a single mass-transfer coefficient $K_c$; the boundary-layer thickness $\delta$ is not measured directly but is obtained from a dimensionless correlation for the Sherwood number.
+\end{itemize}
 \begin{formulabox}
 \begin{align*}
 K_c&=\frac{D_v}{\delta}
@@ -1242,8 +1434,9 @@ Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
 &\boxed{\;Sh=0.0096\,Re^{\,0.913}Sc^{\,0.346}\;}
 \end{align*}
 \vspace{2pt}
-{\small $K_c$ in \ensuremath{\mathrm{c m}/\mathrm{ s}}, $D_v$ (diffusivity) in \ensuremath{\mathrm{c m}^{2}/\mathrm{ s}}, $L$ a characteristic length; the boxed correlation is the one the deck uses to get $K_c$.}
+{\small $K_c$ in \ensuremath{\mathrm{c m}/\mathrm{ s}}, $D_v$ (diffusivity) in \ensuremath{\mathrm{c m}^{2}/\mathrm{ s}}, $L$ a characteristic length; the boxed correlation is the one the deck uses to get $K_c$, with $Re=Lu\rho/\mu$ and $Sc=\mu/(\rho D_v)$ formed on the same length $L$ and velocity $u$.}
 \end{formulabox}
+\notetext{How the pieces fit together: $Re$ and $Sc$ are known from the flow and the solution $\rightarrow$ $Sh$ from the boxed correlation $\rightarrow$ $K_c$ from $Sh\,D_v/L$ $\rightarrow$ the flux from the logarithmic equation $\rightarrow$ the required membrane area from the permeate rate.}
 
 \spsub{Complete solute rejection}
 \begin{itemize}
@@ -1252,11 +1445,230 @@ Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
 \begin{formulabox}
 \[J_v=K_c\ln\frac{C_s}{C_1}\]
 \end{formulabox}
+\notetext{For complete rejection the log term is simply the concentration ratio at the surface. Since $C_s>C_1$, $J_v>0$ for any positive $K_c$: the flux is limited only by how fast the surface layer can return the solute to the bulk.}
 
 \spsub{Applications of ultrafiltration (from the deck)}
 \begin{itemize}
   \item Food processing and pharmacy; textile and paper industry; wastewater treatment and water purification; dairy industry.
 \end{itemize}
+
+%============================================================= (b) SEDIMENTATION
+\spsub{Gravity sedimentation --- what it is and where it is used}
+\notetext{From here to the end of the lecture the deck follows K.~A.~Gavhane, \emph{Unit Operations-I (Fluid Flow and Mechanical Operations)}, which it names on the title slide of this part; the notation of the ink slides ($\rho_p$, $\rho_f$, $\mu_f$, $C_D$, $v_t$) is kept below.}
+\begin{itemize}
+  \item \textbf{Sedimentation} is the separation of solids from a suspension in a liquid by gravity settling; the gravity force is responsible for the motion of the solids through the liquid.
+  \item Applications: removal of solids from liquid sewage wastes (waste-water treatment); removal of suspended impurities from water to be used for domestic and industrial purposes (water treatment).
+  \item Two names are used for settling equipment, and the deck distinguishes them by \emph{which stream is the product}:
+  \begin{itemize}
+    \item \textbf{Clarifier}: a settler that removes virtually all the particles from a liquid --- the product is the clear liquid.
+    \item \textbf{Classifier}: a device that separates the solids into two fractions --- the product is a classified (sized or sorted) solid.
+  \end{itemize}
+  \item A \textbf{thickener} is worked the other way round again: a dilute slurry is converted into a clarified liquid \emph{and} a concentrated solids suspension (the underflow).
+\end{itemize}
+
+\spsub{Gravity classifiers: sink-and-float and differential settling}
+\begin{itemize}
+  \item \textbf{Sink-and-float methods (heavy-fluid separation)}: a liquid sorting medium is used whose density lies \emph{between} that of the light material and that of the heavy one. The heavy particles then settle through the medium and the lighter ones float, and a separation is obtained.
+  \begin{itemize}
+    \item \textbf{Advantage}: the separation depends only on the difference in the densities of the two substances and is \emph{independent of the particle size} --- exactly what is wanted when the size ranges of the two materials overlap. The practical limits are the cost of the medium and its recovery from the products.
+  \end{itemize}
+  \item \textbf{Differential settling methods}: these utilise the difference in terminal velocities that can exist between substances of different density. Here the density of the medium is \emph{less} than that of either substance, so both materials settle --- the denser one faster.
+  \begin{itemize}
+    \item \textbf{Disadvantage}: since the mixture of materials to be separated covers a range of particle sizes, the larger, light particles settle at the same rate as the smaller, heavy ones, and a mixed fraction is obtained. A differential-settling classifier cuts on \emph{settling rate}, which depends on size as well as density; a narrow size range in the feed (pre-screened) is what makes a clean density separation possible.
+  \end{itemize}
+  \item Summary of the two cuts: sink-and-float needs $\rho_{\text{light}}<\rho_{\text{medium}}<\rho_{\text{heavy}}$ and cuts on density alone; differential settling needs $\rho_{\text{medium}}<\rho_{\text{light}}<\rho_{\text{heavy}}$ and cuts on density \emph{and} size together.
+\end{itemize}
+
+\spsub{Free settling and hindered settling}
+\begin{itemize}
+  \item \textbf{Free settling}: the fall of the particle in the gravitational field through a stationary fluid is not affected by the other particles or by the wall of the container. It is possible only if the concentration of particulate solids in the suspension is very low.
+  \item \textbf{Hindered settling}: the fall of the particle through the same stationary fluid \emph{is} affected by the other particles and by the wall of the container. It is encountered when the concentration of solids in the suspension is large, and the settling velocity is considerably less than the terminal falling velocity under free-settling conditions.
+  \item The two regimes need different design methods: the settling theory of the next pages is free settling, whereas the batch settling test and the thickener operate in hindered settling.
+\end{itemize}
+
+\spsub{The gravity settling tank}
+\begin{itemize}
+  \item The deck's figure shows the classical tank: fluid in at one end carrying a \emph{wide range of particle sizes}, fluid out at the other end carrying the fines, and three collecting pockets A, B, C along the floor. The coarsest particles settle first and are caught nearest the inlet (A = coarse particles); B and C catch progressively finer particles (B = intermediate, C = small), and only the fines leave with the fluid out.
+  \item Every particle whose terminal velocity is large enough to carry it to the floor before the fluid reaches the outlet is removed; the tank therefore sorts the feed by settling velocity along its length.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{overflow rate (ideal tank):}\quad
+ u_t&=\frac{Q}{A}=\frac{Q}{B\,L}
+ &&\text{superficial velocity through the tank}\\[3pt]
+\text{particles with } u_t\ge Q/A &: \text{ all removed}\\[2pt]
+\text{particles with } u_t<Q/A &: \text{ removed in the fraction } \frac{u_t}{Q/A}
+\end{align*}
+\vspace{2pt}
+{\small $Q$ = volumetric feed rate; $A=BL$ = plan (surface) area of the tank, $B$ its width and $L$ its length.}
+\end{formulabox}
+\notetext{This is the textbook ideal-tank statement that goes with the deck's diagram: the \emph{surface area} of the tank fixes its duty and the depth only fixes the residence time --- which is why settling tanks are wide and shallow, and why the same result (the cut velocity) reappears as the $\Sigma$ of centrifugal sedimentation in Lecture 8.}
+
+\spsub{Sedimentation theory --- assumptions}
+The deck's derivation is built on five assumptions:
+\begin{itemize}
+  \item[(i)] the particles are \emph{spherical};
+  \item[(ii)] the particles are \emph{non-porous}, \emph{incompressible} and \emph{chemically inert} with the fluid;
+  \item[(iii)] $\mu$ and $\rho$ of the fluid are \emph{constant} --- in particular the settling does not change the properties of the medium;
+  \item[(iv)] the particle is \emph{freely settling} under gravity;
+  \item[(v)] the fluid is an \emph{infinite medium} --- no wall effect and no interference by neighbouring particles.
+\end{itemize}
+\notetext{These are the free-settling assumptions of the section above, written out: (i) fixes the shape factors, (iii) keeps $C_D$ a function of $Re$ alone, (iv) and (v) remove the concentration and wall corrections, and (ii) is what makes one particle representative of the whole suspension.}
+
+\spsub{Forces on a settling particle}
+Three forces act on the particle (as drawn in the deck's free-body sketch):
+\begin{itemize}
+  \item[(1)] \textbf{gravity}, downwards --- the weight of the particle, $mg$;
+  \item[(2)] \textbf{buoyancy}, upwards --- equal to the weight of the fluid displaced by the particle, $(m/\rho_p)\rho g$;
+  \item[(3)] \textbf{drag force} offered by the fluid on the particle, acting opposite to the motion --- $C_DA_p\rho v^{2}/2$.
+\end{itemize}
+Here $m$ is the mass of the particle, $v$ its velocity, $A_p$ its projected area normal to the motion, $C_D$ the drag coefficient, $\rho_p$ the density of the particle and $\rho$ (elsewhere written $\rho_f$ in these notes) the density of the fluid.
+
+\spsub{The force balance and the terminal velocity}
+\begin{formulabox}
+\begin{align*}
+m\frac{\mathrm{d}v}{\mathrm{d}t}&=F_g-F_b-F_d\\[2pt]
+&=mg-\Big(\frac{m}{\rho_p}\Big)\rho g-\Big(C_DA_p\frac{\rho v^{2}}{2}\Big)\\[2pt]
+\text{at terminal velocity}\quad \frac{\mathrm{d}v}{\mathrm{d}t}&=0 \;\Rightarrow\; v=\text{constant}=v_t:\\[2pt]
+0&=mg-\Big(\frac{m}{\rho_p}\Big)\rho g-C_DA_p\frac{\rho v_t^{2}}{2}\\[2pt]
+C_DA_p\frac{\rho v_t^{2}}{2}&=mg\Big(1-\frac{\rho}{\rho_p}\Big)
+ =mg\Big(\frac{\rho_p-\rho}{\rho_p}\Big)\\[3pt]
+&\boxed{\;v_t=\sqrt{\frac{2mg(\rho_p-\rho)}{\rho_p\,\rho\,C_DA_p}}\;}
+\end{align*}
+\vspace{2pt}
+{\small $v_t$ = terminal settling velocity; the boxed form is the deck's general result, valid for any shape once $m$, $A_p$ and $C_D$ are known.}
+\end{formulabox}
+
+\spsub{Terminal velocity for spherical particles}
+\begin{formulabox}
+\begin{align*}
+\text{for a sphere:}\qquad
+ m&=\frac{\pi}{6}D_p^{3}\rho_p,
+ &A_p&=\frac{\pi}{4}D_p^{2}\\[3pt]
+v_t&=\sqrt{\frac{2\times\frac{\pi}{6}D_p^{3}\rho_p\,g(\rho_p-\rho_f)}
+ {\rho_p\,\rho_f\,C_D\times\frac{\pi}{4}D_p^{2}}}\\[3pt]
+&\boxed{\;v_t=\sqrt{\frac{4}{3}\,\frac{D_p\,g(\rho_p-\rho_f)}{C_D\,\rho_f}}\;}
+\end{align*}
+\vspace{2pt}
+{\small $D_p$ = particle diameter; $(\pi/6)$ and $(\pi/4)$ are the volume and projected-area shape factors of a sphere; the $\rho_p$ in the numerator cancels the $\rho_p$ in the denominator group, and the fluid density is written $\rho_f$ from here on.}
+\end{formulabox}
+\notetext{The general and sphere forms are the same statement: the terminal velocity is proportional to $\sqrt{D_p(\rho_p-\rho_f)/C_D}$. The only quantity that is not known in advance is $C_D$, and $C_D$ is a function of the particle Reynolds number --- which itself contains $v_t$. That is why the calculation is done by choosing a settling region.}
+
+\spsub{Drag coefficient and the four settling regions}
+\begin{itemize}
+  \item $C_D$ is \emph{not} a constant: it is a function of the particle Reynolds number, $C_D=N(Re)$ with
+  \[Re=\frac{\rho_fvD_p}{\mu_f}\]
+  \item The deck's chart (``Drag coefficients versus Reynolds number'', following chapter 7, pages 168--170) plots $C_D$ against $Re$ on logarithmic axes and marks the two branches that can be written down: the \emph{Stokes' law} line $C_D=24/Re$ at small $Re$, and the flat \emph{Newton's law} line $C_D\approx0.44$ at large $Re$.
+  \item The curve is therefore broken into four regions; each region has its own $C_D$ and, except for the intermediate one, its own explicit terminal-velocity formula.
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l X@{}}
+\toprule
+\textbf{Region} & \textbf{$Re$ range} & \textbf{$C_D$} & \textbf{$v_t$}\\
+\midrule
+I --- Stokes' law regime & $10^{-4}<Re<0.2$ & $\dfrac{24}{Re}$ & $\dfrac{D_p^{2}(\rho_p-\rho_f)g}{18\mu_f}$\\[8pt]
+II --- intermediate (transition) & $0.2<Re<500$--$1000$ & $\dfrac{24}{Re}+0.44$ & no explicit form: obtained from the balance above using $C_D$ at the prevailing $Re$ (trial and error, since $Re$ contains $v_t$)\\[6pt]
+III --- Newton's law regime & $500$--$1000<Re<2\times10^{5}$ & $0.44$ & $\sqrt{\dfrac{3.03\,D_p(\rho_p-\rho_f)g}{\rho_f}}$\\[8pt]
+IV --- beyond Newton & $Re>2\times10^{5}$ & $0.1$ & $\sqrt{\dfrac{13.33\,D_p(\rho_p-\rho_f)g}{\rho_f}}$\\
+\bottomrule
+\end{tabularx}}
+\vspace{2pt}
+{\small Region III and Region IV follow by putting $C_D=0.44$ and $C_D=0.1$ into the spherical-particle result: $\sqrt{4/(3C_D)}=\sqrt{3.03}$ for $C_D=0.44$ and $\sqrt{13.33}$ for $C_D=0.1$. The boundaries are the ones written on the deck; the literature often quotes the Stokes limit as $Re<1$ and the top of Newton's law as $2\times10^5$--$3\times10^5$, and the chart's own axis begins at $Re=1$, so Regions I and IV lie largely off its ends.}
+\end{formulabox}
+\notetext{Reading the chart: at small $Re$ the curve is the straight Stokes line of slope $-1$ on log--log paper; it then bends over and flattens onto $C_D\approx0.44$, which is Newton's law; above about $2\times10^{5}$ the boundary layer on the sphere becomes turbulent, the drag falls sharply, and $C_D$ drops to about $0.1$. Every terminal-velocity problem in this lecture is therefore: \emph{guess the region} $\rightarrow$ take $C_D$ $\rightarrow$ compute $v_t$ $\rightarrow$ check $Re$ lies in that region; if it does not, move to the neighbouring region.}
+
+\spsub{Equal-settling particles and the free-settling ratio}
+\begin{itemize}
+  \item Consider particles of two materials A and B settling through a medium of density $\rho$. Two particles are \textbf{equal-settling} when their terminal velocities are equal, $v_{tA}=v_{tB}$. Writing that equality out gives the ratio of the diameters of the two materials --- the \textbf{free-settling ratio}, which is what a differential-settling classifier cuts on.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Stokes' law regime:}\quad
+ v_{tA}&=\frac{gD_{pA}^{2}(\rho_{pA}-\rho)}{18\mu},
+ &v_{tB}&=\frac{gD_{pB}^{2}(\rho_{pB}-\rho)}{18\mu}\\[3pt]
+v_{tA}=v_{tB}\;\Longrightarrow\quad
+ &\boxed{\;\frac{D_{pA}}{D_{pB}}=\sqrt{\frac{\rho_{pB}-\rho}{\rho_{pA}-\rho}}\;}\\[6pt]
+\text{Newton's law regime:}\quad
+ v_{tA}&=1.75\sqrt{\frac{gD_{pA}(\rho_{pA}-\rho)}{\rho}},
+ &v_{tB}&=1.75\sqrt{\frac{gD_{pB}(\rho_{pB}-\rho)}{\rho}}\\[3pt]
+v_{tA}=v_{tB}\;\Longrightarrow\quad
+ &\boxed{\;\frac{D_{pA}}{D_{pB}}=\frac{\rho_{pB}-\rho}{\rho_{pA}-\rho}\;}
+\end{align*}
+\vspace{2pt}
+{\small $D_{pA},D_{pB}$ = diameters of the equal-settling particles of A and B; $\rho_{pA},\rho_{pB}$ = their densities; $\rho$ = density of the medium. The denser material is the one with the smaller equal-settling diameter.}
+\end{formulabox}
+\begin{itemize}
+  \item The deck works the two cases separately because they lead to different powers of the density difference: a \emph{square root} in the Stokes regime and the \emph{first power} in the Newton regime. (In the intermediate regime there is no closed form on the deck; the same idea is applied with whatever $v_t$ relation holds.)
+  \item Reading the deck's $v_t$--$D_p$ graph: the upper curve is the denser material A, the lower curve the lighter material B. The two curves are drawn for the \emph{whole} range of sizes, and at one and the same diameter A settles faster than any particle of B (\emph{``settles faster than any of B''}); equally, a fine particle of B settles more slowly than any particle of A drawn on the figure (\emph{``settles slower than any of A''}).
+  \item A horizontal line drawn at the chosen cut velocity crosses the two curves at two different diameters, $D_{pA}$ and $D_{pB}$ with $D_{pA}<D_{pB}$. Everything coarser than $D_{pA}$ of material A, and everything coarser than $D_{pB}$ of material B, settles into the underflow; everything finer goes to the overflow. Material A lying below $D_{pA}$ and material B lying above $D_{pB}$ therefore report to the \emph{wrong} product --- the mixed fraction of the disadvantage above. A clean cut needs the feed to be screened to a narrow size band first, or the two size distributions to be separated by the cut band.
+\end{itemize}
+\notetext{This is the relation the practice problem on the hydraulic classifier uses (Q15 in the questions document): a \ensuremath{1\,m\,m} ore particle of specific gravity 2.1 settles at the same rate as a \ensuremath{0.5\,m\,m} rock particle of specific gravity 5.4 in water, so setting the cut at the \ensuremath{1\,m\,m}-ore velocity retains rock of \ensuremath{0.5\,m\,m} and coarser and washes the rest away.}
+
+\spsub{Clarifiers and thickeners}
+\begin{itemize}
+  \item Gravity separation under \emph{hindered} settling conditions is often used to convert a dilute slurry of fine particles into a clarified liquid and a concentrated suspension.
+  \item This process is carried out in large open tanks called thickeners or clarifiers.
+  \item The clarified liquid is free or nearly free of suspended particles, and it may be reused as process water or discharged as waste.
+  \item The concentrated suspension leaves from the bottom (the underflow); in a thickener it is the product, in a clarifier it is the waste.
+\end{itemize}
+
+\spsub{Flocculation}
+\begin{itemize}
+  \item If the solids in a suspension are mainly individual particles only a few micrometers in diameter, the gravity settling rate would be very low and perhaps too low for practical operation.
+  \item In many fine suspensions, the particles form agglomerates or clusters of particles that settle at reasonable rates.
+  \item Agglomeration is sometimes promoted by adding \textbf{flocculating agents}:
+  \begin{itemize}
+    \item strong electrolytes, which reduce the repulsive forces between the charged particles; or
+    \item polymeric flocculants, which may be cationic, anionic or non-ionic in character.
+  \end{itemize}
+  \item Flocculation is also carried out by adding inexpensive materials such as lime, alumina or sodium silicate, which form loose agglomerates that carry the fines down with them.
+  \item The physical effect is the one the settling-region formulas already show: the agglomerate is a single particle of larger $D_p$ and (because it traps liquid) lower effective density, and it settles by the region-I or region-II law at a rate far above that of the individual fines.
+\end{itemize}
+
+\spsub{Batch sedimentation --- the four zones}
+\begin{itemize}
+  \item In a batch settling test a suspension of \emph{uniform} solids concentration is left to stand in a vertical vessel and the height of the clear-liquid interface is read against time. The deck's figure shows the five consecutive sketches of the vessel, lettered A, B, C, D, and the settling curve beside them.
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Zone} & \textbf{What it is}\\
+\midrule
+A & clear liquid at the top --- free or nearly free of particles; its boundary with B is the interface that is plotted against time\\
+B & the suspension still at its original, uniform concentration --- settling \emph{as a whole}\\
+C & the transition zone, of variable concentration, between the original suspension and the settled sludge\\
+D & the compressed sediment (compression zone) at the bottom, through which the liquid is squeezed out\\
+\bottomrule
+\end{tabularx}}
+\vspace{2pt}
+{\small Order from the top: A -- B -- C -- D. The sketches on the deck's slide show, left to right, the growth of the clear zone A, the arrival of the transition zone C at the interface, the collapse of B, and the final state with only the clear liquid and the settled sludge.}
+\end{formulabox}
+\begin{itemize}
+  \item The settling curve (clear-liquid interface height against time) has three parts: an initial \emph{straight} section, in which the interface falls at a constant rate --- this slope is the free-settling velocity of the suspension at its original concentration; a \emph{transition} in which the curve bends as zone C reaches the interface and the falling rate decays; and a final \emph{compression} section, in which the interface creeps asymptotically to the \textbf{ultimate height} of the sludge.
+  \item A batch settling test therefore gives two numbers that the design of a gravity thickener needs: the settling rate of the suspension (the initial slope) and the ultimate height (the underflow concentration). It is also the standard way of comparing flocculants.
+\end{itemize}
+
+\spsub{Sedimentation versus filtration}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}XX@{}}
+\toprule
+\textbf{Sedimentation} & \textbf{Filtration}\\
+\midrule
+1. Sedimentation is defined as the removal of solid particles from a suspension by settling under gravity. & 1. Filtration is defined as the separation of solid particles from a suspension by using a porous medium which retains the solid particles and allows the liquid to pass through it.\\
+2. The gravitational force --- the force due to gravity --- is responsible for the separation. & 2. The pressure difference across the filter medium is responsible for the separation.\\
+3. A filter medium is not required. & 3. A filter medium is required.\\
+4. The concentration of solids is very low in the suspension to be handled. & 4. The concentration of solids is very large in the suspension to be handled in cake filtration.\\
+5. A clear liquid is the product of the operation. & 5. A wet cake of solids is the product of the operation.\\
+6. Sedimentation basins and thickeners are the equipment used. & 6. Filter presses, rotary drum filters, etc.\ are the equipment used.\\
+7. Usually a sludge is discarded from sedimentation. & 7. Usually a filtrate is discarded from filtration.\\
+\bottomrule
+\end{tabularx}}
+\end{formulabox}
+
+\notetext{Symbols of this lecture: $J_v$ volume (permeate) flux; $\Delta P$ trans-membrane pressure drop; $\Delta\pi$ osmotic pressure drop; $R_m$, $R_{gel}$ membrane and gel-layer resistance; $\mu$, $\mu_0$ permeate and reference (water) viscosity; $K_c$ mass-transfer coefficient; $D_v$ diffusivity; $\delta$ boundary-layer thickness; $C_s$, $C_1$, $C_2$ surface, bulk and permeate concentrations; $C_g$ gel concentration; $Sh$ Sherwood number; $Re$ Reynolds number; $Sc$ Schmidt number. Sedimentation: $D_p$ particle diameter; $\rho_p$ particle density; $\rho$ (or $\rho_f$) medium density; $\mu_f$ medium viscosity; $m$ particle mass; $A_p$ projected area; $C_D$ drag coefficient; $v_t$ (or $u_t$) terminal settling velocity; $g$ gravitational acceleration; $Q$ feed rate; $A$, $B$, $L$ plan area, width and length of a settling tank. The deck writes the volume flux as $V$, the terminal velocity as $V_t$ or $v_t$, and the fluid density as $\rho$; the names are used interchangeably above.}
 
 % ---- Module 2, Lecture 8 : centrifugal sedimentation ----
 \spsection{MODULE 2 \textperiodcentered{} LECTURE 8 --- Centrifugal Sedimentation}
@@ -1314,16 +1726,16 @@ Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
 
 \spsub{Principle of centrifugal sedimentation}
 \begin{itemize}
-  \item A particle of a given size is \emph{removed} when it reaches the wall of the separator bowl. The particle moves radially outward with its terminal velocity, and the diameter of the smallest particle that is removed is what the design calculates.
+  \item A particle of a given size is \emph{removed} when it reaches the wall of the separator bowl. The particle moves \emph{radially outward} with its terminal velocity, and the diameter of the smallest particle that is removed is what the design calculates.
   \item Feed enters at the bottom, liquid discharges at the top; the liquid moves upward through the bowl at a constant velocity, carrying the solid particles with it.
-  \item Geometry: $r_1$ = radius of the inner surface of the liquid (the liquid interface), $r_2$ = inside radius of the bowl, $r_A$ = radius at which the feed enters, $r_B$ = radial position reached by the particle at the end of settling, $b$ = height of the bowl.
-  \item If $r_B<r_2$ the particle leaves the bowl with the liquid, i.e.\ it is \emph{not} removed. If $r_B=r_2$ the particle has been deposited on the bowl wall and is removed from the liquid.
+  \item Geometry (deck figure): $r_1$ = radius of the inner surface of the liquid (the liquid interface), $r_2$ = inside radius of the bowl, $r_A$ = radius at which the feed enters, $r_B$ = radial position reached by the particle at the end of settling, $b$ = height of the bowl.
+  \item The figure traces one \emph{trajectory}: a particle enters with the feed at radius $r_A$ and travels on a curve that is the sum of the two motions --- radially outward at its terminal velocity and upward with the liquid --- until it reaches $r_B$ at the end of the settling time. If $r_B<r_2$ the particle leaves the bowl with the liquid, i.e.\ it is \emph{not} removed; if $r_B=r_2$ the particle has been deposited on the bowl wall and is removed from the liquid.
 \end{itemize}
 
 \spsub{Residence time and settling time --- Stokes' law regime}
 \begin{formulabox}
 \begin{align*}
-\text{Terminal velocity at radius }r:\quad & u_t=\frac{\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}
+\text{Terminal velocity at radius }r:\quad & u_t=\frac{\omega^{2}r(\rho_p-\rho)D_p^{2}}{18\mu}
  &&\text{(Stokes' law regime)}\\[3pt]
 & u_t=\frac{\mathrm{d}r}{\mathrm{d}t}
  \qquad\Longrightarrow\qquad
@@ -1336,11 +1748,11 @@ Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
  &&\text{residence time}
 \end{align*}
 \end{formulabox}
-\notetext{$\omega$ = angular velocity of the bowl (rad/s), $\rho_p$ = particle density, $\rho$ = liquid density, $\mu$ = liquid viscosity, $D_p$ = particle diameter. The settling time available is limited by the residence time of the liquid in the bowl; a particle is removed only if the two are comparable in the way the design requires.}
+\notetext{$\omega$ = angular velocity of the bowl (rad/s), $\rho_p$ = particle density, $\rho$ = liquid density, $\mu$ = liquid viscosity, $D_p$ = particle diameter. The settling time available is limited by the residence time of the liquid in the bowl: a particle is removed only if it can complete the radial journey within the time the liquid takes to pass through the bowl.}
 
 \spsub{Volumetric flow rate and the cut point}
 \begin{formulabox}
-Equating the two times gives the volumetric flow rate for a given cut size:
+Equating the two times gives the volumetric flow rate for a given particle size:
 \begin{align*}
 \frac{\pi b\left(r_2^{2}-r_1^{2}\right)}{q}
  =\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\ln\frac{r_B}{r_A}
@@ -1348,13 +1760,15 @@ Equating the two times gives the volumetric flow rate for a given cut size:
  q=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}\,
     \frac{r_2^{2}-r_1^{2}}{\ln\left(r_B/r_A\right)}
 \end{align*}
-\textbf{Cut point} $D_{pc}$: the diameter of the particle that reaches \emph{half} the distance between $r_1$ and $r_2$ during the settling time, i.e.
+\textbf{Cut point} $D_{pc}$ (deck definition): the diameter of the particle which reaches \emph{one half} the
+distance between $r_1$ and $r_2$ --- that is, over the settling time it travels $y=\dfrac{r_2-r_1}{2}$.
+If a particle of size $D_{pc}$ is to be removed, it must reach the bowl wall in the available time, so
 \[r_B=r_2,\qquad r_A=\frac{r_1+r_2}{2}\]
-so that
-\[\boxed{\;q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
-   \frac{r_2^{2}-r_1^{2}}{\ln\left[\dfrac{2r_2}{r_1+r_2}\right]}\;}
-\]
-Particles larger than $D_{pc}$ are removed at this flow rate; particles smaller than $D_{pc}$ stay in the liquid.
+and the volumetric flow rate corresponding to the cut-point diameter is
+\[q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
+   \frac{r_2^{2}-r_1^{2}}{\ln\left[2r_2/(r_1+r_2)\right]}\]
+\textbf{Reading $q_c$}: it is the flow rate at which a particle of the cut size just fails to be carried out.
+At this flow rate particles \emph{above} $D_{pc}$ are removed, and particles smaller than $D_{pc}$ stay in the liquid.
 \end{formulabox}
 
 \spsub{Thin liquid layer --- the simple scaling form}
@@ -1363,11 +1777,20 @@ Particles larger than $D_{pc}$ are removed at this flow rate; particles smaller 
 \end{itemize}
 \begin{formulabox}
 \[u_t=\frac{D_p^{2}(\rho_p-\rho)\omega^{2}r_2}{18\mu}\]
-Writing $s$ for the settling distance and $t_T$ for the settling time, $u_t=\dfrac{s}{t_T}$ and $t_T=\dfrac{V}{q_c}$, so
-\[q_c=\frac{2V\,u_t}{s}
- =\frac{2V}{\omega^{2}}\cdot\frac{\omega^{2}D_p^{2}(\rho_p-\rho)r_2}{18\mu\,s}
- =\boxed{\;\frac{2V\omega^{2}r_2D_p^{2}(\rho_p-\rho)}{18\mu\,s}\;}\]
+The settling \emph{distance} for a particle of size $D_{pc}$ is half the liquid-layer thickness, $s/2$
+(one half is the mean path of the particles in the layer), so with $s$ = thickness of the liquid layer,
+\[u_t=\frac{s/2}{t_T}=\frac{s}{2t_T}
+ \qquad\text{and}\qquad
+ t_T=\frac{V}{q_c}
+ \qquad\Longrightarrow\qquad
+ u_t=\frac{s\,q_c}{2V}
+\]
+\[q_c=\frac{2V u_t}{s}
+ =\boxed{\;\frac{2V D_p^{2}(\rho_p-\rho)\omega^{2}r_2}{18\mu\,s}\;}
+\]
 \end{formulabox}
+\notetext{The factor 2 in $q_c=2Vu_t/s$ is exactly this half-layer: the cut-size particle has to traverse
+$s/2$, not $s$, in the residence time.}
 
 \spsub{Sigma value and scale-up}
 \begin{itemize}
@@ -1384,7 +1807,26 @@ u_g&=\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
 \end{align*}
 $\Sigma$ is the \emph{cross-sectional area of a gravity settling tank of the same separation capacity as the centrifuge}.
 \end{formulabox}
-\notetext{Because $q_c=2\Sigma u_g$, a centrifuge and a gravity settler that must do the same job are compared through $\Sigma$ alone: double $\Sigma$ and the same cut is achieved at double the flow rate. The deck's Table 30.5 lists $\Sigma$ values for commercial sedimenting centrifuges (tubular, disk, helical-conveyor, axial-flow-conveyor types) against bowl diameter and speed.}
+\notetext{Because $q_c=2\Sigma u_g$ the whole machine collapses into one number: a centrifuge and a gravity settler that must do the same job are compared through $\Sigma$ alone, and the same cut is achieved at a flow rate proportional to $\Sigma$. Scale-up between two geometrically similar centrifuges is therefore $\dfrac{q_{c1}}{\Sigma_1}=\dfrac{q_{c2}}{\Sigma_2}$ at the same cut size.}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l l@{}}
+\toprule
+\textbf{Type} & \textbf{Bowl diameter / in.} & \textbf{Speed / r/min} & \textbf{$\Sigma$ / ft$^{2}\times10^{-4}$}\\
+\midrule
+Tubular & 4.125 & 15{,}000 & 2.7\\
+Disk & 9.5 & 6{,}500 & 21.5\\
+Disk & 13.7 & 4{,}650 & 39.3\\
+Disk & 19.5 & 4{,}240 & 105\\
+Helical conveyor & 14 & 4{,}000 & 1.34\\
+Helical conveyor & 25 & 3{,}000 & 6.1\\
+Axial-flow conveyor, no vanes & 29 & 2{,}600 & 4.05\\
+Axial-flow conveyor, 96 vanes & 29 & 2{,}600 & 12.7\\
+\bottomrule
+\end{tabularx}}
+\vspace{2pt}
+{\small The deck's Table 30.5 (characteristics of sedimenting centrifuges). Note the last two rows: the same 29-in.\ bowl carries three times the $\Sigma$ when 96 vanes are fitted --- $\Sigma$ is a property of the \emph{internals} as much as of the bowl, and the disk machine's many thin channels are what give it the largest $\Sigma$ per unit size.}
+\end{formulabox}
 
 \spsub{Worked problem set by the deck (Mod 2 Lec 8, slide 26)}
 \begin{daybox}
@@ -1467,6 +1909,6 @@ $E=E_AE_B=0.67$, i.e.\ about 67\,\%.}
 \vspace{3mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}
-\notetext{Prepared from the Module 1 (Lectures 1--6) and Module 2 (Lectures 1--2) slide decks of the course. Results follow the notation used on the slides; where a slide carried a hand-worked derivation, the intermediate steps are reproduced above. Symbols: $D_p$ particle diameter, $D_{pc}$ cut diameter of a screen, $F$, $D$, $B$ feed, overflow and underflow mass flow rates, $x_F$, $x_D$, $x_B$ mass fractions of oversize in feed, overflow and underflow, $E_A$, $E_B$, $E$ screen effectiveness, $n_c$ ball-mill critical speed, $\Phi_s$ sphericity, $\rho_p$ particle density, $s_p$ surface area of a particle, $v_p$ volume of a particle, $x_i$ mass fraction, $N_i$ particles in a fraction, $N_T$ total number, $A_w$ specific surface area, $N_w$ particles per unit mass, $a$ volume shape factor, $W_i$ work index, $\eta_c$ crushing efficiency, $\eta_m$ mechanical efficiency, $\varepsilon$ bed porosity, $K_R,K_k,K_b$ the Rittinger, Kick and Bond constants.}
+\notetext{Prepared from the Module 1 (Lectures 1--6) and Module 2 (Lectures 1--8) slide decks of the course. Results follow the notation used on the slides; where a slide carried a hand-worked derivation, the intermediate steps are reproduced above. Symbols: $D_p$ particle diameter, $D_{pc}$ cut diameter of a screen, $F$, $D$, $B$ feed, overflow and underflow mass flow rates, $x_F$, $x_D$, $x_B$ mass fractions of oversize in feed, overflow and underflow, $E_A$, $E_B$, $E$ screen effectiveness, $n_c$ ball-mill critical speed, $\Phi_s$ sphericity, $\rho_p$ particle density, $s_p$ surface area of a particle, $v_p$ volume of a particle, $x_i$ mass fraction, $N_i$ particles in a fraction, $N_T$ total number, $A_w$ specific surface area, $N_w$ particles per unit mass, $a$ volume shape factor, $W_i$ work index, $\eta_c$ crushing efficiency, $\eta_m$ mechanical efficiency, $\varepsilon$ bed porosity, $K_R,K_k,K_b$ the Rittinger, Kick and Bond constants.}
 
 \end{document}

@@ -46,20 +46,59 @@
 
 - `SP2-notes.tex` — short notes + formula sheet, covering **all 14 lecture decks**: Module 1
   Lectures 1–6 and Module 2 Lectures 1–8. Definitions, the derivation steps (including the
-  hand-worked Lecture 3, Lecture 5 and Mod 2 Lecture 1 derivations), every formula on the
-  slides, and the practice problems.
+  hand-worked Mod 2 Lecture 3 (considerably expanded), Lecture 5, Mod 2 Lecture 1 and Mod 2 Lecture 7 derivations), every
+  formula on the slides, and the practice problems.
   **This is the canonical standard** for notes structure, style and depth across the whole
   repository; the other subjects' notes are built to match it. It is written for XeLaTeX with a
   full TeX Live (`xcolor`, `tcolorbox`, `siunitx`, `booktabs`, `enumitem`, `mathtools`, `multirow`).
+- **Module 2 Lecture 3** (`Mod 2-Lecture 3 - Copy.pptx`) is almost entirely hand-written: slides 4--23
+  carry no text at all, only ink pages, and were read as images (the ink is white-on-transparent, so
+  the page images had to be flattened before reading). That section of `SP2-notes.tex` was then
+  rewritten as a **step-by-step derivation** rather than a list of results: a six-step plan box, the
+  bundle-of-channels model and its justification, the two sphericity equations, the elimination of
+  $S_0$ between the surface balance (eq. 2) and the void-volume balance (eq. 3) shown line by line,
+  the equivalent diameter checked at $\varepsilon=0.4$ ($D_{eq}=0.44\,\Phi_sD_p$), the channel-to-superficial
+  velocity step, the Kozeny--Carman substitution with the arithmetic ($32\times\tfrac94=72$) and the
+  $\lambda_1$/150 correction explained, Burke--Plummer and the Ergun sum, the cake-plus-medium split,
+  the mass balance that removes $\mathrm{d}L$, the integration to $\Delta P_c$, the definitions of $\alpha$
+  and $R_m$, the working form and how the $t/V$-against-$V$ line gives both $\alpha$ and $R_m$, the
+  compressibility relation $\alpha=\alpha_0(\Delta P)^{s}$, a symbol list for the lecture, and one
+  worked numerical illustration (marked as not from the deck).
+- **Module 2 Lecture 6** (`Mod 2-Lecture 6.pptx`) is likewise picture-heavy: the radial-section and
+  working-machine figures, the ``Summary'' slide's working equation, and the cycle-time / daily-output
+  ink slide carry the content. That section now states the basket geometry and the machine, the six
+  assumptions as listed on the deck, the derivation from the centrifugal pressure drop to $q$, both
+  cases (thin cake, and cake area carried through the integration) with $\overline{A}_a$ and
+  $\overline{A}_L$, the two limits, the filter-press / leaf-filter wash rates, the washing-time form,
+  and the cycle-time and daily-output relations. It remains deliberately short, following the deck.
+- **Module 2 Lecture 8** (`Mod 2-Lecture 8-compressed.pdf`) is a compressed PDF whose pages 15--21 and
+  23--24 have **no text layer at all** --- the derivation lives there as scans/ink. Those pages were
+  read as images and the section rebuilt: the trajectory geometry, the settling-time integral in full,
+  the cut point and $q_c$ with the deck's own reading of both, the **thin-layer derivation with the
+  $s/2$ settling distance** (the factor 2 in $q_c=2Vu_t/s$ was previously left unexplained and the old
+  algebra for it was inconsistent), the $\Sigma$ scale-up with the deck's Table 30.5, and the
+  $q_c=2\Sigma u_g$ collapse.
+- **Module 2 Lecture 7** (`Mod 2-Lecture 7.pptx`, 17-09-2026) is mostly *handwritten*: slides 9–12,
+  19–24, 26–28, 31 and 33 carry the content as ink pictures, not as text. That section of
+  `SP2-notes.tex` was transcribed from those pictures and is written out in full — the
+  clarification mechanisms and their plugging rates, the crossflow/dead-end comparison, the
+  membrane cut-off chart row by row, the volume-flux equation with concentration polarization
+  *derived* (convective flux balanced by back-diffusion, $J_v=K_c\ln[(C_s-C_2)/(C_1-C_2)]$, the gel
+  limit and complete rejection), the Sherwood correlation, the five sedimentation assumptions, the
+  force balance and its two terminal-velocity forms, $C_D$ and the four settling regions, the
+  equal-settling (free-settling) diameter ratios in both the Stokes and Newton regimes, the batch
+  sedimentation zones and curve, and the sedimentation-versus-filtration table. The only thing not
+  reproduced is the deck's embedded demo video (slide 32), which is a link, not content.
 - `SP2-Short-Notes-and-Formula-Sheet.tex` — the same document **ported to the base TeX tree**, so
   it rebuilds with `tools/latex` like every other subject's notes. Produced by
   `tools/latex/port.py` from `SP2-notes.tex`; edit `SP2-notes.tex` and re-port rather
   than editing this file. Verified equivalent: rebuilding through `tools/latex/gen.py`
-  reproduces the committed PDF word for word (25 pp, 0 errors, 0 overfull).
+  reproduces the committed PDF word for word (35 pp, 0 errors, 0 overfull).
   (The standalone file briefly carried a generator regression — `port.py` dropped the
   `\begin{document}` line; fixed 20-09-2026, and the file now also compiles on its own:
-  25 pp, 0 errors, 0 overfull.)
-- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 25-page A4 PDF.
+  35 pp, 0 errors, 0 overfull.)
+- `SP2-notes.pdf` / `SP2-Short-Notes-and-Formula-Sheet.pdf` — 35-page A4 PDF (the two are the same
+  document: the canonical source and its base-TeX-tree port, both compiled here from the port).
 - `SP2-Problems-and-Solutions.tex` — **every numerical question in the uploaded slides, tutorials,
   tests and `Problems.pptx`, with its solution** (Q1–Q15, each followed by its `Ans` block,
   segregated by source; Part D holds the Module 2 / `Problems.pptx` problems Q12–Q15).

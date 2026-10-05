@@ -51,6 +51,13 @@
   **This is the canonical standard** for notes structure, style and depth across the whole
   repository; the other subjects' notes are built to match it. It is written for XeLaTeX with a
   full TeX Live (`xcolor`, `tcolorbox`, `siunitx`, `booktabs`, `enumitem`, `mathtools`, `multirow`).
+- **Module 2 Lecture 6** (`Mod 2-Lecture 6.pptx`) is likewise picture-heavy: the radial-section and
+  working-machine figures, the ``Summary'' slide's working equation, and the cycle-time / daily-output
+  ink slide carry the content. That section now states the basket geometry and the machine, the six
+  assumptions as listed on the deck, the derivation from the centrifugal pressure drop to $q$, both
+  cases (thin cake, and cake area carried through the integration) with $\overline{A}_a$ and
+  $\overline{A}_L$, the two limits, the filter-press / leaf-filter wash rates, the washing-time form,
+  and the cycle-time and daily-output relations. It remains deliberately short, following the deck.
 - **Module 2 Lecture 7** (`Mod 2-Lecture 7.pptx`, 17-09-2026) is mostly *handwritten*: slides 9–12,
   19–24, 26–28, 31 and 33 carry the content as ink pictures, not as text. That section of
   `SP2-notes.tex` was transcribed from those pictures and is written out in full — the

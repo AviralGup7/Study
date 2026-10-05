@@ -81,7 +81,7 @@
 
 \vspace{2mm}
 \begin{daybox}
-\textbf{Compiled from:} Module 1 Lectures 1--6 and Module 2 Lectures 1--2 --- the course slide decks (\texttt{Mod1-Lecture 1--5.pptx}, \texttt{Mod1-Lecture 6-compressed.pdf}, \texttt{Mod 2-Lecture 1-compressed.pdf}, \texttt{Mod 2-Lecture 2.pptx}).\\[2pt]
+\textbf{Compiled from:} Module 1 Lectures 1--6 and Module 2 Lectures 1--8 --- the course slide decks (\texttt{Mod1-Lecture 1--5.pptx}, \texttt{Mod1-Lecture 6-compressed.pdf}, \texttt{Mod 2-Lecture 1-compressed.pdf} \dots{} \texttt{Mod 2-Lecture 8-compressed.pdf}).\\[2pt]
 \textbf{Reference texts:} McCabe, Smith \& Harriott, \emph{Unit Operations of Chemical Engineering}, 7e (Ch.~28, 29); Swain, Patra \& Roy, \emph{Mechanical Operations}, Tata McGraw Hill.
 \end{daybox}
 
@@ -1103,51 +1103,84 @@ A_2&=\text{area of filter medium (inside area of the centrifuge basket)}\\
 % ---- Module 2, Lecture 7 (a) : clarifying, crossflow and membrane filters ----
 \spsection{MODULE 2 \textperiodcentered{} LECTURE 7 --- Clarifying Filters, Crossflow and Membrane Filters; Sedimentation}
 
+%================================================================ (a) FILTRATION
 \spsub{Clarifying filters}
 \begin{itemize}
-  \item Clarifying filters remove \emph{small amounts} of solids or liquid droplets from either liquids or gases.
+  \item Clarifying filters remove \emph{small amounts} of solids or liquid droplets from either liquids or gases; the wanted product is the \emph{clear fluid}, not a cake.
   \item The particles are caught by \emph{surface forces} and immobilised on the surfaces or within the flow channels. They reduce the effective diameter of the channels but usually do not block them completely.
-  \item Clarification differs from screening in that the pores in the filter medium are larger --- sometimes much larger --- than the particles to be removed.
-  \item \textbf{Liquid clarification}: clarifying filters for liquids include the gravity-bed filters used in water treatment; cake filters are also used extensively for clarification. In batch units the filtration rate and the filtration efficiency stay constant for a long period, and eventually reach a \textbf{breakthrough} value, after which backwashing or replacement becomes necessary.
-  \item \textbf{Gas cleaning}: filters for gas cleaning include pad filters for atmospheric dust, and granular beds and bag filters for process dusts. Air is cleaned by passing it through pads of cellulose pulp, cotton, felt, glass fibre or metal screening; the pad material may be dry or coated with a viscous oil to act as a dust holder.
+  \item Clarification differs from screening in that the pores of the filter medium are larger --- sometimes much larger --- than the particles to be removed. Screening is a \emph{size} separation; clarification is a \emph{capture} separation, in which a particle far smaller than the pore is still held by adhesion to the medium.
+  \item Clarification is therefore a \emph{polishing} duty, and the load on the unit is small by definition.
 \end{itemize}
 
-\spsub{Principles of clarification}
+\spsub{Liquid clarification}
 \begin{itemize}
-  \item \textbf{Direct sieving}: the solid particles being removed completely plug the pores of the filter medium, and the rate of plugging is constant with time.
-  \item \textbf{Standard blocking}: the particles partially block the pores, giving a gradual reduction in pore size.
-  \item \textbf{Impingement}: in cleaning gases the separation is by impingement of the particles against a solid surface placed in the flowing stream. The particles, because of their inertia, are expected to cross the streamlines of the fluid, strike the solid, and adhere to it, from which they can subsequently be removed.
+  \item Clarifying filters for liquids include the gravity-bed filters used in water treatment; cake filters are also used extensively for clarification.
+  \item In batch units the filtration rate and the filtration efficiency stay constant for a long period. Eventually the unit reaches a \textbf{breakthrough} value, after which backwashing or replacement of the medium becomes necessary.
+  \item Breakthrough --- solids or haze appearing in the effluent --- is what ends the cycle, not a rising pressure drop: the open area is only partly closed, so the flow stays nearly constant until the bed has to be cleaned.
 \end{itemize}
+
+\spsub{Gas cleaning}
+\begin{itemize}
+  \item Filters for gas cleaning include pad filters for atmospheric dust, and granular beds and bag filters for process dusts.
+  \item Air is cleaned by passing it through pads of cellulose pulp, cotton, felt, glass fibre or metal screening; the pad material may be dry or coated with a viscous oil to act as a dust holder.
+\end{itemize}
+
+\spsub{Three principles of clarification}
+\begin{itemize}
+  \item \textbf{Direct sieving}: the solid particles being removed completely plug the pores of the filter medium, and the rate of plugging is constant with time --- the open area falls at a steady rate as filtrate passes.
+  \item \textbf{Standard blocking}: the particles partially block the pores, giving a gradual reduction in pore size; the particle lodges in the channel instead of sealing it.
+  \item \textbf{Impingement}: in cleaning gases, the separation is by impingement of the particles against a solid surface placed in the flowing stream. The particles, because of their inertia, are expected to cross the streamlines of the fluid, strike the solid, and adhere to it, from which they can subsequently be removed.
+  \item The first two are the liquid-phase mechanisms and the third is the gas-phase mechanism; a real bed usually shows all three at different depths.
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+\textbf{Mechanism} & \textbf{What the pore does} & \textbf{Rate of plugging}\\
+\midrule
+Direct sieving (liquids) & the particle seals the pore completely & constant with time (linear in the volume filtered)\\
+Standard blocking (liquids) & the particle lines / partly blocks the pore; the pore narrows gradually & starts like sieving and slows as the channel closes\\
+Impingement (gases) & the particle leaves the streamline by inertia and strikes a solid surface in the stream & independent of the pore --- the deposit is cleaned off the surface\\
+\bottomrule
+\end{tabularx}}
+\end{formulabox}
+
+\notetext{The deck's impingement figure is the classic picture of the mechanism: the fluid streamlines A and B bend round a particle of diameter $D_p$ placed in the stream, while the dashed \emph{particle path} is deflected out of A, crosses the streamlines and meets the surface --- the particle has too much inertia to follow the gas. The finer the particle (or the lower the gas velocity) the more closely it follows the streamlines and the less likely it is to be caught, which is why a gas filter works best on the larger dust and why a pre-coat or an oiled pad is used for the finest.}
 
 \spsub{Crossflow filtration}
 \begin{itemize}
-  \item The feed is passed through a membrane or bed, the solids being trapped in the filter and the filtrate released at the other end.
-  \item The majority of the feed flow travels \emph{tangentially across the surface} of the filter, rather than into the filter.
-  \item The principal advantage is that the filter cake is substantially washed away during the filtration process, increasing the length of time that a filter unit can stay operational --- compare the dead-end arrangement, where all the feed is forced through the medium and the cake builds up on it.
-  \item Applied to concentrate suspensions of fine particles or colloidal particles.
+  \item The feed is passed through a membrane or bed, the solids being trapped in the filter and the filtrate --- the \textbf{permeate} --- being released at the other end.
+  \item The majority of the feed flow travels \emph{tangentially across the surface} of the filter, rather than into the filter; the stream that leaves the unit still carrying the rejected solids is the \textbf{retentate} (concentrate).
+  \item The principal advantage is that the filter cake is substantially washed away during the filtration process, increasing the length of time that a filter unit can stay operational --- compare the \textbf{dead-end} arrangement, where all the feed is forced through the medium, all of it becomes filtrate, and the cake builds up on the medium until the flow has to be stopped.
+  \item Because the cake never grows thick, crossflow filtration is applied to concentrate suspensions of fine particles or colloidal particles, which would blind a dead-end medium almost immediately.
 \end{itemize}
+\notetext{In the deck's figure the two arrangements are drawn side by side: (a) crossflow --- feed flows along the membrane, permeate is drawn off through it at a steady rate and the cake is swept away; (b) dead-end --- the whole feed is pushed into the medium and the cake accumulates on the surface. The same permeate flux is obtained in (a) for far longer.}
 
 \spsub{Membrane filters}
 \begin{itemize}
   \item \textbf{Types of membranes}: polymer membranes (cellulose acetate, polyacrylonitrile, polysulfone, polyether sulfone, polyamide, etc.); metallic membranes (sintered stainless steel or other metals); inorganic membranes (porous carbon or alumina).
+  \item The membrane is classified by the size of the species it rejects; the four families used in water treatment are microfiltration, ultrafiltration, nanofiltration, and hyperfiltration (reverse osmosis).
 \end{itemize}
 \begin{formulabox}
 {\small
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Technique} & \textbf{Pore size and what is retained}\\
+\textbf{Technique} & \textbf{Pore size, and what passes and what is held back}\\
 \midrule
-Microfiltration (MF) & \SI{10}{\micro\meter}--\SI{0.1}{\micro\meter} (100\,nm): suspended solids, bacteria/algae and viruses are held back; water and dissolved ions pass.\\
-Ultrafiltration (UF) & \SI{0.1}{\micro\meter}--\SI{0.01}{\micro\meter} (10\,nm): as MF, with viruses rejected more completely; ions still pass.\\
-Nanofiltration (NF) & \SI{10}{} nm--\SI{1}{} nm: multivalent ions, viruses, bacteria/algae and suspended solids are rejected; monovalent ions and water pass.\\
-Hyperfiltration / reverse osmosis (RO) & $<\SI{1}{} nm$: water passes and essentially everything else is rejected --- monovalent ions, multivalent ions, viruses, bacteria/algae and suspended solids.\\
+Microfiltration (MF) & \SI{10}{\micro\meter}--\SI{0.1}{\micro\meter} (100\,nm): water, monovalent ions, multivalent ions and viruses pass through; bacteria/algae and suspended solids are held back.\\
+Ultrafiltration (UF) & \SI{0.1}{\micro\meter}--\SI{0.01}{\micro\meter} (10\,nm): as MF, with viruses now rejected as well; water and ions still pass.\\
+Nanofiltration (NF) & \SI{10}{nm}--\SI{1}{nm}: water and monovalent ions pass; multivalent ions are rejected, together with viruses, bacteria/algae and suspended solids.\\
+Hyperfiltration / reverse osmosis (RO) & $<\SI{1}{nm}$: water passes and essentially everything else is rejected --- monovalent ions, multivalent ions, viruses, bacteria/algae and suspended solids.\\
 \bottomrule
 \end{tabularx}}
+\vspace{2pt}
+{\small Read the deck's chart arrow by arrow: a green arrow through the membrane means the species passes, a red arrow turned back means it is rejected, and the split blue arrow for the multivalent ions at NF means they are only partly rejected. \textbf{MF is the row to be careful with:} viruses pass the MF membrane on the deck's chart (they are of the order of the 100\,nm cut-off and smaller) and are turned back first at UF.}
 \end{formulabox}
 
 \spsub{General equation for ultrafiltration}
 \begin{itemize}
-  \item The \textbf{volume flux} is the superficial permeate velocity normal to the surface:
+  \item The \textbf{volume flux} $J_v$ is the superficial permeate velocity normal to the surface --- the volumetric permeate rate divided by the membrane area.
+  \item Two resistances oppose it: the membrane itself, $R_m$, and the gel layer that builds up on it, $R_{gel}$. The driving force is the applied trans-membrane pressure drop less the osmotic pressure drop of the rejected solute.
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
@@ -1164,22 +1197,40 @@ $\mu$ = viscosity of the permeate at the operating temperature; \quad
 $\mu_0$ = viscosity of water at room temperature. \quad
 The membrane resistance is corrected by the permeate-to-water viscosity ratio $\mu/\mu_0$; the deck writes that factor in the denominator of the bracketed form.}
 \end{formulabox}
+\notetext{The deck writes $V$ (or $v$) for the volume flux; $J_v$ is used here and in the correlations below. A positive $J_v$ requires $\Delta P>\Delta\pi$ --- for a concentrated solution the osmotic pressure can be a large part of the applied pressure, which is why RO needs high pressures and UF (whose solutes are macromolecules of low osmotic pressure) does not.}
 
 \spsub{Concentration polarization}
 \begin{itemize}
-  \item As permeate is drawn through the membrane, solute is carried towards the surface faster than it can diffuse back, so the concentration at the surface rises above the bulk value. In \textbf{RO} the surface concentration is only moderately higher than the bulk concentration; in \textbf{UF} the surface concentration is large, and a gel layer forms.
-  \item The boundary layer has thickness $\delta$. Writing $C_s$ for the concentration at the surface ($x=0$) and $C_1$ for the bulk concentration at $x=\delta$, with $C_2$ the solute concentration in the permeate:
+  \item As permeate is drawn through the membrane, solute is carried towards the surface by the permeate flow faster than it can diffuse back into the bulk, so the concentration at the surface rises above the bulk value.
+  \item In \textbf{RO} the surface concentration is only moderately higher than the bulk concentration; in \textbf{UF} the surface concentration is large and a gel layer forms --- the $R_{gel}$ of the flux equation.
+  \item The boundary layer has thickness $\delta$. The concentration is $C_s$ at the surface ($x=0$) and $C_1$ in the bulk at $x=\delta$; $C_2$ is the solute concentration in the permeate. Within the layer the solute is carried to the membrane by the convective flux $J_vC$ and back by diffusion, and the steady balance is
 \end{itemize}
 \begin{formulabox}
 \begin{align*}
-J_v&=K_c\ln\frac{C_s-C_2}{C_1-C_2}
- &&\text{volume flux with concentration polarization}
+J_vC_2 &= J_vC-D_v\frac{\mathrm{d}C}{\mathrm{d}x}
+ \qquad\Longrightarrow\qquad
+ \frac{\mathrm{d}C}{C-C_2}=\frac{J_v}{D_v}\,\mathrm{d}x\\[3pt]
+\int_{C_s}^{C_1}\frac{\mathrm{d}C}{C-C_2}
+ &=\frac{J_v}{D_v}\int_{0}^{\delta}\mathrm{d}x
+ \qquad\Longrightarrow\qquad
+ J_v=\frac{D_v}{\delta}\ln\frac{C_s-C_2}{C_1-C_2}\\[3pt]
+&\boxed{\;J_v=K_c\ln\frac{C_s-C_2}{C_1-C_2}\;}
 \end{align*}
 \vspace{2pt}
-{\small $C_s$ = concentration at the surface ($x=0$);\quad $C_1$ = bulk concentration at $x=\delta$, the edge of the gel boundary layer;\quad $C_2$ = solute concentration in the permeate.}
+{\small $C_s$ = concentration at the surface ($x=0$);\quad $C_1$ = bulk concentration at $x=\delta$, the edge of the concentration boundary layer;\quad $C_2$ = solute concentration in the permeate;\quad $D_v$ = diffusivity of the solute.}
 \end{formulabox}
+\begin{itemize}
+  \item The result says the flux is \emph{logarithmic} in the concentrations, and is \emph{set by mass transfer in the boundary layer}, not by the applied pressure: pushing harder raises $J_v$ until more solute is brought to the surface, the concentration $C_s$ rises, and the log term falls --- the two effects cancel.
+  \item If the surface concentration reaches the \textbf{gel concentration} $C_g$ the layer stops getting more concentrated, and the flux becomes independent of $\Delta P$ altogether:
+  \[J_v=K_c\ln\frac{C_g}{C_1}\]
+  This is the gel-polarization limit; it is the reason a UF membrane cannot be driven arbitrarily hard.
+  \item The practical remedy is to raise $K_c$ --- that is, to raise the mass-transfer coefficient by increasing the crossflow velocity or by promoting turbulence at the membrane surface.
+\end{itemize}
 
 \spsub{Mass-transfer coefficient and the Sherwood correlation}
+\begin{itemize}
+  \item The group $D_v/\delta$ is written as a single mass-transfer coefficient $K_c$; the boundary-layer thickness $\delta$ is not measured directly but is obtained from a dimensionless correlation for the Sherwood number.
+\end{itemize}
 \begin{formulabox}
 \begin{align*}
 K_c&=\frac{D_v}{\delta}
@@ -1189,8 +1240,9 @@ Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
 &\boxed{\;Sh=0.0096\,Re^{\,0.913}Sc^{\,0.346}\;}
 \end{align*}
 \vspace{2pt}
-{\small $K_c$ in \si{\centi\meter\per\second}, $D_v$ (diffusivity) in \si{\square\centi\meter\per\second}, $L$ a characteristic length; the boxed correlation is the one the deck uses to get $K_c$.}
+{\small $K_c$ in \si{\centi\meter\per\second}, $D_v$ (diffusivity) in \si{\square\centi\meter\per\second}, $L$ a characteristic length; the boxed correlation is the one the deck uses to get $K_c$, with $Re=Lu\rho/\mu$ and $Sc=\mu/(\rho D_v)$ formed on the same length $L$ and velocity $u$.}
 \end{formulabox}
+\notetext{How the pieces fit together: $Re$ and $Sc$ are known from the flow and the solution $\rightarrow$ $Sh$ from the boxed correlation $\rightarrow$ $K_c$ from $Sh\,D_v/L$ $\rightarrow$ the flux from the logarithmic equation $\rightarrow$ the required membrane area from the permeate rate.}
 
 \spsub{Complete solute rejection}
 \begin{itemize}
@@ -1199,11 +1251,230 @@ Sh&=\frac{K_cL}{D_v},\qquad K_c=\frac{Sh\,D_v}{L}
 \begin{formulabox}
 \[J_v=K_c\ln\frac{C_s}{C_1}\]
 \end{formulabox}
+\notetext{For complete rejection the log term is simply the concentration ratio at the surface. Since $C_s>C_1$, $J_v>0$ for any positive $K_c$: the flux is limited only by how fast the surface layer can return the solute to the bulk.}
 
 \spsub{Applications of ultrafiltration (from the deck)}
 \begin{itemize}
   \item Food processing and pharmacy; textile and paper industry; wastewater treatment and water purification; dairy industry.
 \end{itemize}
+
+%============================================================= (b) SEDIMENTATION
+\spsub{Gravity sedimentation --- what it is and where it is used}
+\notetext{From here to the end of the lecture the deck follows K.~A.~Gavhane, \emph{Unit Operations-I (Fluid Flow and Mechanical Operations)}, which it names on the title slide of this part; the notation of the ink slides ($\rho_p$, $\rho_f$, $\mu_f$, $C_D$, $v_t$) is kept below.}
+\begin{itemize}
+  \item \textbf{Sedimentation} is the separation of solids from a suspension in a liquid by gravity settling; the gravity force is responsible for the motion of the solids through the liquid.
+  \item Applications: removal of solids from liquid sewage wastes (waste-water treatment); removal of suspended impurities from water to be used for domestic and industrial purposes (water treatment).
+  \item Two names are used for settling equipment, and the deck distinguishes them by \emph{which stream is the product}:
+  \begin{itemize}
+    \item \textbf{Clarifier}: a settler that removes virtually all the particles from a liquid --- the product is the clear liquid.
+    \item \textbf{Classifier}: a device that separates the solids into two fractions --- the product is a classified (sized or sorted) solid.
+  \end{itemize}
+  \item A \textbf{thickener} is worked the other way round again: a dilute slurry is converted into a clarified liquid \emph{and} a concentrated solids suspension (the underflow).
+\end{itemize}
+
+\spsub{Gravity classifiers: sink-and-float and differential settling}
+\begin{itemize}
+  \item \textbf{Sink-and-float methods (heavy-fluid separation)}: a liquid sorting medium is used whose density lies \emph{between} that of the light material and that of the heavy one. The heavy particles then settle through the medium and the lighter ones float, and a separation is obtained.
+  \begin{itemize}
+    \item \textbf{Advantage}: the separation depends only on the difference in the densities of the two substances and is \emph{independent of the particle size} --- exactly what is wanted when the size ranges of the two materials overlap. The practical limits are the cost of the medium and its recovery from the products.
+  \end{itemize}
+  \item \textbf{Differential settling methods}: these utilise the difference in terminal velocities that can exist between substances of different density. Here the density of the medium is \emph{less} than that of either substance, so both materials settle --- the denser one faster.
+  \begin{itemize}
+    \item \textbf{Disadvantage}: since the mixture of materials to be separated covers a range of particle sizes, the larger, light particles settle at the same rate as the smaller, heavy ones, and a mixed fraction is obtained. A differential-settling classifier cuts on \emph{settling rate}, which depends on size as well as density; a narrow size range in the feed (pre-screened) is what makes a clean density separation possible.
+  \end{itemize}
+  \item Summary of the two cuts: sink-and-float needs $\rho_{\text{light}}<\rho_{\text{medium}}<\rho_{\text{heavy}}$ and cuts on density alone; differential settling needs $\rho_{\text{medium}}<\rho_{\text{light}}<\rho_{\text{heavy}}$ and cuts on density \emph{and} size together.
+\end{itemize}
+
+\spsub{Free settling and hindered settling}
+\begin{itemize}
+  \item \textbf{Free settling}: the fall of the particle in the gravitational field through a stationary fluid is not affected by the other particles or by the wall of the container. It is possible only if the concentration of particulate solids in the suspension is very low.
+  \item \textbf{Hindered settling}: the fall of the particle through the same stationary fluid \emph{is} affected by the other particles and by the wall of the container. It is encountered when the concentration of solids in the suspension is large, and the settling velocity is considerably less than the terminal falling velocity under free-settling conditions.
+  \item The two regimes need different design methods: the settling theory of the next pages is free settling, whereas the batch settling test and the thickener operate in hindered settling.
+\end{itemize}
+
+\spsub{The gravity settling tank}
+\begin{itemize}
+  \item The deck's figure shows the classical tank: fluid in at one end carrying a \emph{wide range of particle sizes}, fluid out at the other end carrying the fines, and three collecting pockets A, B, C along the floor. The coarsest particles settle first and are caught nearest the inlet (A = coarse particles); B and C catch progressively finer particles (B = intermediate, C = small), and only the fines leave with the fluid out.
+  \item Every particle whose terminal velocity is large enough to carry it to the floor before the fluid reaches the outlet is removed; the tank therefore sorts the feed by settling velocity along its length.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{overflow rate (ideal tank):}\quad
+ u_t&=\frac{Q}{A}=\frac{Q}{B\,L}
+ &&\text{superficial velocity through the tank}\\[3pt]
+\text{particles with } u_t\ge Q/A &: \text{ all removed}\\[2pt]
+\text{particles with } u_t<Q/A &: \text{ removed in the fraction } \frac{u_t}{Q/A}
+\end{align*}
+\vspace{2pt}
+{\small $Q$ = volumetric feed rate; $A=BL$ = plan (surface) area of the tank, $B$ its width and $L$ its length.}
+\end{formulabox}
+\notetext{This is the textbook ideal-tank statement that goes with the deck's diagram: the \emph{surface area} of the tank fixes its duty and the depth only fixes the residence time --- which is why settling tanks are wide and shallow, and why the same result (the cut velocity) reappears as the $\Sigma$ of centrifugal sedimentation in Lecture 8.}
+
+\spsub{Sedimentation theory --- assumptions}
+The deck's derivation is built on five assumptions:
+\begin{itemize}
+  \item[(i)] the particles are \emph{spherical};
+  \item[(ii)] the particles are \emph{non-porous}, \emph{incompressible} and \emph{chemically inert} with the fluid;
+  \item[(iii)] $\mu$ and $\rho$ of the fluid are \emph{constant} --- in particular the settling does not change the properties of the medium;
+  \item[(iv)] the particle is \emph{freely settling} under gravity;
+  \item[(v)] the fluid is an \emph{infinite medium} --- no wall effect and no interference by neighbouring particles.
+\end{itemize}
+\notetext{These are the free-settling assumptions of the section above, written out: (i) fixes the shape factors, (iii) keeps $C_D$ a function of $Re$ alone, (iv) and (v) remove the concentration and wall corrections, and (ii) is what makes one particle representative of the whole suspension.}
+
+\spsub{Forces on a settling particle}
+Three forces act on the particle (as drawn in the deck's free-body sketch):
+\begin{itemize}
+  \item[(1)] \textbf{gravity}, downwards --- the weight of the particle, $mg$;
+  \item[(2)] \textbf{buoyancy}, upwards --- equal to the weight of the fluid displaced by the particle, $(m/\rho_p)\rho g$;
+  \item[(3)] \textbf{drag force} offered by the fluid on the particle, acting opposite to the motion --- $C_DA_p\rho v^{2}/2$.
+\end{itemize}
+Here $m$ is the mass of the particle, $v$ its velocity, $A_p$ its projected area normal to the motion, $C_D$ the drag coefficient, $\rho_p$ the density of the particle and $\rho$ (elsewhere written $\rho_f$ in these notes) the density of the fluid.
+
+\spsub{The force balance and the terminal velocity}
+\begin{formulabox}
+\begin{align*}
+m\frac{\mathrm{d}v}{\mathrm{d}t}&=F_g-F_b-F_d\\[2pt]
+&=mg-\Big(\frac{m}{\rho_p}\Big)\rho g-\Big(C_DA_p\frac{\rho v^{2}}{2}\Big)\\[2pt]
+\text{at terminal velocity}\quad \frac{\mathrm{d}v}{\mathrm{d}t}&=0 \;\Rightarrow\; v=\text{constant}=v_t:\\[2pt]
+0&=mg-\Big(\frac{m}{\rho_p}\Big)\rho g-C_DA_p\frac{\rho v_t^{2}}{2}\\[2pt]
+C_DA_p\frac{\rho v_t^{2}}{2}&=mg\Big(1-\frac{\rho}{\rho_p}\Big)
+ =mg\Big(\frac{\rho_p-\rho}{\rho_p}\Big)\\[3pt]
+&\boxed{\;v_t=\sqrt{\frac{2mg(\rho_p-\rho)}{\rho_p\,\rho\,C_DA_p}}\;}
+\end{align*}
+\vspace{2pt}
+{\small $v_t$ = terminal settling velocity; the boxed form is the deck's general result, valid for any shape once $m$, $A_p$ and $C_D$ are known.}
+\end{formulabox}
+
+\spsub{Terminal velocity for spherical particles}
+\begin{formulabox}
+\begin{align*}
+\text{for a sphere:}\qquad
+ m&=\frac{\pi}{6}D_p^{3}\rho_p,
+ &A_p&=\frac{\pi}{4}D_p^{2}\\[3pt]
+v_t&=\sqrt{\frac{2\times\frac{\pi}{6}D_p^{3}\rho_p\,g(\rho_p-\rho_f)}
+ {\rho_p\,\rho_f\,C_D\times\frac{\pi}{4}D_p^{2}}}\\[3pt]
+&\boxed{\;v_t=\sqrt{\frac{4}{3}\,\frac{D_p\,g(\rho_p-\rho_f)}{C_D\,\rho_f}}\;}
+\end{align*}
+\vspace{2pt}
+{\small $D_p$ = particle diameter; $(\pi/6)$ and $(\pi/4)$ are the volume and projected-area shape factors of a sphere; the $\rho_p$ in the numerator cancels the $\rho_p$ in the denominator group, and the fluid density is written $\rho_f$ from here on.}
+\end{formulabox}
+\notetext{The general and sphere forms are the same statement: the terminal velocity is proportional to $\sqrt{D_p(\rho_p-\rho_f)/C_D}$. The only quantity that is not known in advance is $C_D$, and $C_D$ is a function of the particle Reynolds number --- which itself contains $v_t$. That is why the calculation is done by choosing a settling region.}
+
+\spsub{Drag coefficient and the four settling regions}
+\begin{itemize}
+  \item $C_D$ is \emph{not} a constant: it is a function of the particle Reynolds number, $C_D=N(Re)$ with
+  \[Re=\frac{\rho_fvD_p}{\mu_f}\]
+  \item The deck's chart (``Drag coefficients versus Reynolds number'', following chapter 7, pages 168--170) plots $C_D$ against $Re$ on logarithmic axes and marks the two branches that can be written down: the \emph{Stokes' law} line $C_D=24/Re$ at small $Re$, and the flat \emph{Newton's law} line $C_D\approx0.44$ at large $Re$.
+  \item The curve is therefore broken into four regions; each region has its own $C_D$ and, except for the intermediate one, its own explicit terminal-velocity formula.
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l X@{}}
+\toprule
+\textbf{Region} & \textbf{$Re$ range} & \textbf{$C_D$} & \textbf{$v_t$}\\
+\midrule
+I --- Stokes' law regime & $10^{-4}<Re<0.2$ & $\dfrac{24}{Re}$ & $\dfrac{D_p^{2}(\rho_p-\rho_f)g}{18\mu_f}$\\[8pt]
+II --- intermediate (transition) & $0.2<Re<500$--$1000$ & $\dfrac{24}{Re}+0.44$ & no explicit form: obtained from the balance above using $C_D$ at the prevailing $Re$ (trial and error, since $Re$ contains $v_t$)\\[6pt]
+III --- Newton's law regime & $500$--$1000<Re<2\times10^{5}$ & $0.44$ & $\sqrt{\dfrac{3.03\,D_p(\rho_p-\rho_f)g}{\rho_f}}$\\[8pt]
+IV --- beyond Newton & $Re>2\times10^{5}$ & $0.1$ & $\sqrt{\dfrac{13.33\,D_p(\rho_p-\rho_f)g}{\rho_f}}$\\
+\bottomrule
+\end{tabularx}}
+\vspace{2pt}
+{\small Region III and Region IV follow by putting $C_D=0.44$ and $C_D=0.1$ into the spherical-particle result: $\sqrt{4/(3C_D)}=\sqrt{3.03}$ for $C_D=0.44$ and $\sqrt{13.33}$ for $C_D=0.1$. The boundaries are the ones written on the deck; the literature often quotes the Stokes limit as $Re<1$ and the top of Newton's law as $2\times10^5$--$3\times10^5$, and the chart's own axis begins at $Re=1$, so Regions I and IV lie largely off its ends.}
+\end{formulabox}
+\notetext{Reading the chart: at small $Re$ the curve is the straight Stokes line of slope $-1$ on log--log paper; it then bends over and flattens onto $C_D\approx0.44$, which is Newton's law; above about $2\times10^{5}$ the boundary layer on the sphere becomes turbulent, the drag falls sharply, and $C_D$ drops to about $0.1$. Every terminal-velocity problem in this lecture is therefore: \emph{guess the region} $\rightarrow$ take $C_D$ $\rightarrow$ compute $v_t$ $\rightarrow$ check $Re$ lies in that region; if it does not, move to the neighbouring region.}
+
+\spsub{Equal-settling particles and the free-settling ratio}
+\begin{itemize}
+  \item Consider particles of two materials A and B settling through a medium of density $\rho$. Two particles are \textbf{equal-settling} when their terminal velocities are equal, $v_{tA}=v_{tB}$. Writing that equality out gives the ratio of the diameters of the two materials --- the \textbf{free-settling ratio}, which is what a differential-settling classifier cuts on.
+\end{itemize}
+\begin{formulabox}
+\begin{align*}
+\text{Stokes' law regime:}\quad
+ v_{tA}&=\frac{gD_{pA}^{2}(\rho_{pA}-\rho)}{18\mu},
+ &v_{tB}&=\frac{gD_{pB}^{2}(\rho_{pB}-\rho)}{18\mu}\\[3pt]
+v_{tA}=v_{tB}\;\Longrightarrow\quad
+ &\boxed{\;\frac{D_{pA}}{D_{pB}}=\sqrt{\frac{\rho_{pB}-\rho}{\rho_{pA}-\rho}}\;}\\[6pt]
+\text{Newton's law regime:}\quad
+ v_{tA}&=1.75\sqrt{\frac{gD_{pA}(\rho_{pA}-\rho)}{\rho}},
+ &v_{tB}&=1.75\sqrt{\frac{gD_{pB}(\rho_{pB}-\rho)}{\rho}}\\[3pt]
+v_{tA}=v_{tB}\;\Longrightarrow\quad
+ &\boxed{\;\frac{D_{pA}}{D_{pB}}=\frac{\rho_{pB}-\rho}{\rho_{pA}-\rho}\;}
+\end{align*}
+\vspace{2pt}
+{\small $D_{pA},D_{pB}$ = diameters of the equal-settling particles of A and B; $\rho_{pA},\rho_{pB}$ = their densities; $\rho$ = density of the medium. The denser material is the one with the smaller equal-settling diameter.}
+\end{formulabox}
+\begin{itemize}
+  \item The deck works the two cases separately because they lead to different powers of the density difference: a \emph{square root} in the Stokes regime and the \emph{first power} in the Newton regime. (In the intermediate regime there is no closed form on the deck; the same idea is applied with whatever $v_t$ relation holds.)
+  \item Reading the deck's $v_t$--$D_p$ graph: the upper curve is the denser material A, the lower curve the lighter material B. The two curves are drawn for the \emph{whole} range of sizes, and at one and the same diameter A settles faster than any particle of B (\emph{``settles faster than any of B''}); equally, a fine particle of B settles more slowly than any particle of A drawn on the figure (\emph{``settles slower than any of A''}).
+  \item A horizontal line drawn at the chosen cut velocity crosses the two curves at two different diameters, $D_{pA}$ and $D_{pB}$ with $D_{pA}<D_{pB}$. Everything coarser than $D_{pA}$ of material A, and everything coarser than $D_{pB}$ of material B, settles into the underflow; everything finer goes to the overflow. Material A lying below $D_{pA}$ and material B lying above $D_{pB}$ therefore report to the \emph{wrong} product --- the mixed fraction of the disadvantage above. A clean cut needs the feed to be screened to a narrow size band first, or the two size distributions to be separated by the cut band.
+\end{itemize}
+\notetext{This is the relation the practice problem on the hydraulic classifier uses (Q15 in the questions document): a \SI{1}{mm} ore particle of specific gravity 2.1 settles at the same rate as a \SI{0.5}{mm} rock particle of specific gravity 5.4 in water, so setting the cut at the \SI{1}{mm}-ore velocity retains rock of \SI{0.5}{mm} and coarser and washes the rest away.}
+
+\spsub{Clarifiers and thickeners}
+\begin{itemize}
+  \item Gravity separation under \emph{hindered} settling conditions is often used to convert a dilute slurry of fine particles into a clarified liquid and a concentrated suspension.
+  \item This process is carried out in large open tanks called thickeners or clarifiers.
+  \item The clarified liquid is free or nearly free of suspended particles, and it may be reused as process water or discharged as waste.
+  \item The concentrated suspension leaves from the bottom (the underflow); in a thickener it is the product, in a clarifier it is the waste.
+\end{itemize}
+
+\spsub{Flocculation}
+\begin{itemize}
+  \item If the solids in a suspension are mainly individual particles only a few micrometers in diameter, the gravity settling rate would be very low and perhaps too low for practical operation.
+  \item In many fine suspensions, the particles form agglomerates or clusters of particles that settle at reasonable rates.
+  \item Agglomeration is sometimes promoted by adding \textbf{flocculating agents}:
+  \begin{itemize}
+    \item strong electrolytes, which reduce the repulsive forces between the charged particles; or
+    \item polymeric flocculants, which may be cationic, anionic or non-ionic in character.
+  \end{itemize}
+  \item Flocculation is also carried out by adding inexpensive materials such as lime, alumina or sodium silicate, which form loose agglomerates that carry the fines down with them.
+  \item The physical effect is the one the settling-region formulas already show: the agglomerate is a single particle of larger $D_p$ and (because it traps liquid) lower effective density, and it settles by the region-I or region-II law at a rate far above that of the individual fines.
+\end{itemize}
+
+\spsub{Batch sedimentation --- the four zones}
+\begin{itemize}
+  \item In a batch settling test a suspension of \emph{uniform} solids concentration is left to stand in a vertical vessel and the height of the clear-liquid interface is read against time. The deck's figure shows the five consecutive sketches of the vessel, lettered A, B, C, D, and the settling curve beside them.
+\end{itemize}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Zone} & \textbf{What it is}\\
+\midrule
+A & clear liquid at the top --- free or nearly free of particles; its boundary with B is the interface that is plotted against time\\
+B & the suspension still at its original, uniform concentration --- settling \emph{as a whole}\\
+C & the transition zone, of variable concentration, between the original suspension and the settled sludge\\
+D & the compressed sediment (compression zone) at the bottom, through which the liquid is squeezed out\\
+\bottomrule
+\end{tabularx}}
+\vspace{2pt}
+{\small Order from the top: A -- B -- C -- D. The sketches on the deck's slide show, left to right, the growth of the clear zone A, the arrival of the transition zone C at the interface, the collapse of B, and the final state with only the clear liquid and the settled sludge.}
+\end{formulabox}
+\begin{itemize}
+  \item The settling curve (clear-liquid interface height against time) has three parts: an initial \emph{straight} section, in which the interface falls at a constant rate --- this slope is the free-settling velocity of the suspension at its original concentration; a \emph{transition} in which the curve bends as zone C reaches the interface and the falling rate decays; and a final \emph{compression} section, in which the interface creeps asymptotically to the \textbf{ultimate height} of the sludge.
+  \item A batch settling test therefore gives two numbers that the design of a gravity thickener needs: the settling rate of the suspension (the initial slope) and the ultimate height (the underflow concentration). It is also the standard way of comparing flocculants.
+\end{itemize}
+
+\spsub{Sedimentation versus filtration}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}XX@{}}
+\toprule
+\textbf{Sedimentation} & \textbf{Filtration}\\
+\midrule
+1. Sedimentation is defined as the removal of solid particles from a suspension by settling under gravity. & 1. Filtration is defined as the separation of solid particles from a suspension by using a porous medium which retains the solid particles and allows the liquid to pass through it.\\
+2. The gravitational force --- the force due to gravity --- is responsible for the separation. & 2. The pressure difference across the filter medium is responsible for the separation.\\
+3. A filter medium is not required. & 3. A filter medium is required.\\
+4. The concentration of solids is very low in the suspension to be handled. & 4. The concentration of solids is very large in the suspension to be handled in cake filtration.\\
+5. A clear liquid is the product of the operation. & 5. A wet cake of solids is the product of the operation.\\
+6. Sedimentation basins and thickeners are the equipment used. & 6. Filter presses, rotary drum filters, etc.\ are the equipment used.\\
+7. Usually a sludge is discarded from sedimentation. & 7. Usually a filtrate is discarded from filtration.\\
+\bottomrule
+\end{tabularx}}
+\end{formulabox}
+
+\notetext{Symbols of this lecture: $J_v$ volume (permeate) flux; $\Delta P$ trans-membrane pressure drop; $\Delta\pi$ osmotic pressure drop; $R_m$, $R_{gel}$ membrane and gel-layer resistance; $\mu$, $\mu_0$ permeate and reference (water) viscosity; $K_c$ mass-transfer coefficient; $D_v$ diffusivity; $\delta$ boundary-layer thickness; $C_s$, $C_1$, $C_2$ surface, bulk and permeate concentrations; $C_g$ gel concentration; $Sh$ Sherwood number; $Re$ Reynolds number; $Sc$ Schmidt number. Sedimentation: $D_p$ particle diameter; $\rho_p$ particle density; $\rho$ (or $\rho_f$) medium density; $\mu_f$ medium viscosity; $m$ particle mass; $A_p$ projected area; $C_D$ drag coefficient; $v_t$ (or $u_t$) terminal settling velocity; $g$ gravitational acceleration; $Q$ feed rate; $A$, $B$, $L$ plan area, width and length of a settling tank. The deck writes the volume flux as $V$, the terminal velocity as $V_t$ or $v_t$, and the fluid density as $\rho$; the names are used interchangeably above.}
 
 % ---- Module 2, Lecture 8 : centrifugal sedimentation ----
 \spsection{MODULE 2 \textperiodcentered{} LECTURE 8 --- Centrifugal Sedimentation}
@@ -1414,6 +1685,6 @@ $E=E_AE_B=0.67$, i.e.\ about 67\,\%.}
 \vspace{3mm}
 {\color{rule}\hrule height 0.6pt}
 \vspace{2mm}
-\notetext{Prepared from the Module 1 (Lectures 1--6) and Module 2 (Lectures 1--2) slide decks of the course. Results follow the notation used on the slides; where a slide carried a hand-worked derivation, the intermediate steps are reproduced above. Symbols: $D_p$ particle diameter, $D_{pc}$ cut diameter of a screen, $F$, $D$, $B$ feed, overflow and underflow mass flow rates, $x_F$, $x_D$, $x_B$ mass fractions of oversize in feed, overflow and underflow, $E_A$, $E_B$, $E$ screen effectiveness, $n_c$ ball-mill critical speed, $\Phi_s$ sphericity, $\rho_p$ particle density, $s_p$ surface area of a particle, $v_p$ volume of a particle, $x_i$ mass fraction, $N_i$ particles in a fraction, $N_T$ total number, $A_w$ specific surface area, $N_w$ particles per unit mass, $a$ volume shape factor, $W_i$ work index, $\eta_c$ crushing efficiency, $\eta_m$ mechanical efficiency, $\varepsilon$ bed porosity, $K_R,K_k,K_b$ the Rittinger, Kick and Bond constants.}
+\notetext{Prepared from the Module 1 (Lectures 1--6) and Module 2 (Lectures 1--8) slide decks of the course. Results follow the notation used on the slides; where a slide carried a hand-worked derivation, the intermediate steps are reproduced above. Symbols: $D_p$ particle diameter, $D_{pc}$ cut diameter of a screen, $F$, $D$, $B$ feed, overflow and underflow mass flow rates, $x_F$, $x_D$, $x_B$ mass fractions of oversize in feed, overflow and underflow, $E_A$, $E_B$, $E$ screen effectiveness, $n_c$ ball-mill critical speed, $\Phi_s$ sphericity, $\rho_p$ particle density, $s_p$ surface area of a particle, $v_p$ volume of a particle, $x_i$ mass fraction, $N_i$ particles in a fraction, $N_T$ total number, $A_w$ specific surface area, $N_w$ particles per unit mass, $a$ volume shape factor, $W_i$ work index, $\eta_c$ crushing efficiency, $\eta_m$ mechanical efficiency, $\varepsilon$ bed porosity, $K_R,K_k,K_b$ the Rittinger, Kick and Bond constants.}
 
 \end{document}

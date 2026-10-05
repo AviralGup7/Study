@@ -46,20 +46,32 @@
 
 - `SP2-notes.tex` — short notes + formula sheet, covering **all 14 lecture decks**: Module 1
   Lectures 1–6 and Module 2 Lectures 1–8. Definitions, the derivation steps (including the
-  hand-worked Lecture 3, Lecture 5 and Mod 2 Lecture 1 derivations), every formula on the
-  slides, and the practice problems.
+  hand-worked Lecture 3, Lecture 5, Mod 2 Lecture 1 and Mod 2 Lecture 7 derivations), every
+  formula on the slides, and the practice problems.
   **This is the canonical standard** for notes structure, style and depth across the whole
   repository; the other subjects' notes are built to match it. It is written for XeLaTeX with a
   full TeX Live (`xcolor`, `tcolorbox`, `siunitx`, `booktabs`, `enumitem`, `mathtools`, `multirow`).
+- **Module 2 Lecture 7** (`Mod 2-Lecture 7.pptx`, 17-09-2026) is mostly *handwritten*: slides 9–12,
+  19–24, 26–28, 31 and 33 carry the content as ink pictures, not as text. That section of
+  `SP2-notes.tex` was transcribed from those pictures and is written out in full — the
+  clarification mechanisms and their plugging rates, the crossflow/dead-end comparison, the
+  membrane cut-off chart row by row, the volume-flux equation with concentration polarization
+  *derived* (convective flux balanced by back-diffusion, $J_v=K_c\ln[(C_s-C_2)/(C_1-C_2)]$, the gel
+  limit and complete rejection), the Sherwood correlation, the five sedimentation assumptions, the
+  force balance and its two terminal-velocity forms, $C_D$ and the four settling regions, the
+  equal-settling (free-settling) diameter ratios in both the Stokes and Newton regimes, the batch
+  sedimentation zones and curve, and the sedimentation-versus-filtration table. The only thing not
+  reproduced is the deck's embedded demo video (slide 32), which is a link, not content.
 - `SP2-Short-Notes-and-Formula-Sheet.tex` — the same document **ported to the base TeX tree**, so
   it rebuilds with `tools/latex` like every other subject's notes. Produced by
   `tools/latex/port.py` from `SP2-notes.tex`; edit `SP2-notes.tex` and re-port rather
   than editing this file. Verified equivalent: rebuilding through `tools/latex/gen.py`
-  reproduces the committed PDF word for word (25 pp, 0 errors, 0 overfull).
+  reproduces the committed PDF word for word (32 pp, 0 errors, 0 overfull).
   (The standalone file briefly carried a generator regression — `port.py` dropped the
   `\begin{document}` line; fixed 20-09-2026, and the file now also compiles on its own:
-  25 pp, 0 errors, 0 overfull.)
-- `SP2-Short-Notes-and-Formula-Sheet.pdf` — 25-page A4 PDF.
+  32 pp, 0 errors, 0 overfull.)
+- `SP2-notes.pdf` / `SP2-Short-Notes-and-Formula-Sheet.pdf` — 32-page A4 PDF (the two are the same
+  document: the canonical source and its base-TeX-tree port, both compiled here from the port).
 - `SP2-Problems-and-Solutions.tex` — **every numerical question in the uploaded slides, tutorials,
   tests and `Problems.pptx`, with its solution** (Q1–Q15, each followed by its `Ans` block,
   segregated by source; Part D holds the Module 2 / `Problems.pptx` problems Q12–Q15).

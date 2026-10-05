@@ -58,6 +58,13 @@
   cases (thin cake, and cake area carried through the integration) with $\overline{A}_a$ and
   $\overline{A}_L$, the two limits, the filter-press / leaf-filter wash rates, the washing-time form,
   and the cycle-time and daily-output relations. It remains deliberately short, following the deck.
+- **Module 2 Lecture 8** (`Mod 2-Lecture 8-compressed.pdf`) is a compressed PDF whose pages 15--21 and
+  23--24 have **no text layer at all** --- the derivation lives there as scans/ink. Those pages were
+  read as images and the section rebuilt: the trajectory geometry, the settling-time integral in full,
+  the cut point and $q_c$ with the deck's own reading of both, the **thin-layer derivation with the
+  $s/2$ settling distance** (the factor 2 in $q_c=2Vu_t/s$ was previously left unexplained and the old
+  algebra for it was inconsistent), the $\Sigma$ scale-up with the deck's Table 30.5, and the
+  $q_c=2\Sigma u_g$ collapse.
 - **Module 2 Lecture 7** (`Mod 2-Lecture 7.pptx`, 17-09-2026) is mostly *handwritten*: slides 9–12,
   19–24, 26–28, 31 and 33 carry the content as ink pictures, not as text. That section of
   `SP2-notes.tex` was transcribed from those pictures and is written out in full — the

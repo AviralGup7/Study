@@ -1599,16 +1599,16 @@ D & the compressed sediment (compression zone) at the bottom, through which the 
 
 \spsub{Principle of centrifugal sedimentation}
 \begin{itemize}
-  \item A particle of a given size is \emph{removed} when it reaches the wall of the separator bowl. The particle moves radially outward with its terminal velocity, and the diameter of the smallest particle that is removed is what the design calculates.
+  \item A particle of a given size is \emph{removed} when it reaches the wall of the separator bowl. The particle moves \emph{radially outward} with its terminal velocity, and the diameter of the smallest particle that is removed is what the design calculates.
   \item Feed enters at the bottom, liquid discharges at the top; the liquid moves upward through the bowl at a constant velocity, carrying the solid particles with it.
-  \item Geometry: $r_1$ = radius of the inner surface of the liquid (the liquid interface), $r_2$ = inside radius of the bowl, $r_A$ = radius at which the feed enters, $r_B$ = radial position reached by the particle at the end of settling, $b$ = height of the bowl.
-  \item If $r_B<r_2$ the particle leaves the bowl with the liquid, i.e.\ it is \emph{not} removed. If $r_B=r_2$ the particle has been deposited on the bowl wall and is removed from the liquid.
+  \item Geometry (deck figure): $r_1$ = radius of the inner surface of the liquid (the liquid interface), $r_2$ = inside radius of the bowl, $r_A$ = radius at which the feed enters, $r_B$ = radial position reached by the particle at the end of settling, $b$ = height of the bowl.
+  \item The figure traces one \emph{trajectory}: a particle enters with the feed at radius $r_A$ and travels on a curve that is the sum of the two motions --- radially outward at its terminal velocity and upward with the liquid --- until it reaches $r_B$ at the end of the settling time. If $r_B<r_2$ the particle leaves the bowl with the liquid, i.e.\ it is \emph{not} removed; if $r_B=r_2$ the particle has been deposited on the bowl wall and is removed from the liquid.
 \end{itemize}
 
 \spsub{Residence time and settling time --- Stokes' law regime}
 \begin{formulabox}
 \begin{align*}
-\text{Terminal velocity at radius }r:\quad & u_t=\frac{\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}
+\text{Terminal velocity at radius }r:\quad & u_t=\frac{\omega^{2}r(\rho_p-\rho)D_p^{2}}{18\mu}
  &&\text{(Stokes' law regime)}\\[3pt]
 & u_t=\frac{\mathrm{d}r}{\mathrm{d}t}
  \qquad\Longrightarrow\qquad
@@ -1621,11 +1621,11 @@ D & the compressed sediment (compression zone) at the bottom, through which the 
  &&\text{residence time}
 \end{align*}
 \end{formulabox}
-\notetext{$\omega$ = angular velocity of the bowl (rad/s), $\rho_p$ = particle density, $\rho$ = liquid density, $\mu$ = liquid viscosity, $D_p$ = particle diameter. The settling time available is limited by the residence time of the liquid in the bowl; a particle is removed only if the two are comparable in the way the design requires.}
+\notetext{$\omega$ = angular velocity of the bowl (rad/s), $\rho_p$ = particle density, $\rho$ = liquid density, $\mu$ = liquid viscosity, $D_p$ = particle diameter. The settling time available is limited by the residence time of the liquid in the bowl: a particle is removed only if it can complete the radial journey within the time the liquid takes to pass through the bowl.}
 
 \spsub{Volumetric flow rate and the cut point}
 \begin{formulabox}
-Equating the two times gives the volumetric flow rate for a given cut size:
+Equating the two times gives the volumetric flow rate for a given particle size:
 \begin{align*}
 \frac{\pi b\left(r_2^{2}-r_1^{2}\right)}{q}
  =\frac{18\mu}{\omega^{2}(\rho_p-\rho)D_p^{2}}\ln\frac{r_B}{r_A}
@@ -1633,13 +1633,15 @@ Equating the two times gives the volumetric flow rate for a given cut size:
  q=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_p^{2}}{18\mu}\,
     \frac{r_2^{2}-r_1^{2}}{\ln\left(r_B/r_A\right)}
 \end{align*}
-\textbf{Cut point} $D_{pc}$: the diameter of the particle that reaches \emph{half} the distance between $r_1$ and $r_2$ during the settling time, i.e.
+\textbf{Cut point} $D_{pc}$ (deck definition): the diameter of the particle which reaches \emph{one half} the
+distance between $r_1$ and $r_2$ --- that is, over the settling time it travels $y=\dfrac{r_2-r_1}{2}$.
+If a particle of size $D_{pc}$ is to be removed, it must reach the bowl wall in the available time, so
 \[r_B=r_2,\qquad r_A=\frac{r_1+r_2}{2}\]
-so that
-\[\boxed{\;q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
-   \frac{r_2^{2}-r_1^{2}}{\ln\left[\dfrac{2r_2}{r_1+r_2}\right]}\;}
-\]
-Particles larger than $D_{pc}$ are removed at this flow rate; particles smaller than $D_{pc}$ stay in the liquid.
+and the volumetric flow rate corresponding to the cut-point diameter is
+\[q_c=\frac{\pi b\,\omega^{2}(\rho_p-\rho)D_{pc}^{2}}{18\mu}\,
+   \frac{r_2^{2}-r_1^{2}}{\ln\left[2r_2/(r_1+r_2)\right]}\]
+\textbf{Reading $q_c$}: it is the flow rate at which a particle of the cut size just fails to be carried out.
+At this flow rate particles \emph{above} $D_{pc}$ are removed, and particles smaller than $D_{pc}$ stay in the liquid.
 \end{formulabox}
 
 \spsub{Thin liquid layer --- the simple scaling form}
@@ -1648,11 +1650,20 @@ Particles larger than $D_{pc}$ are removed at this flow rate; particles smaller 
 \end{itemize}
 \begin{formulabox}
 \[u_t=\frac{D_p^{2}(\rho_p-\rho)\omega^{2}r_2}{18\mu}\]
-Writing $s$ for the settling distance and $t_T$ for the settling time, $u_t=\dfrac{s}{t_T}$ and $t_T=\dfrac{V}{q_c}$, so
-\[q_c=\frac{2V\,u_t}{s}
- =\frac{2V}{\omega^{2}}\cdot\frac{\omega^{2}D_p^{2}(\rho_p-\rho)r_2}{18\mu\,s}
- =\boxed{\;\frac{2V\omega^{2}r_2D_p^{2}(\rho_p-\rho)}{18\mu\,s}\;}\]
+The settling \emph{distance} for a particle of size $D_{pc}$ is half the liquid-layer thickness, $s/2$
+(one half is the mean path of the particles in the layer), so with $s$ = thickness of the liquid layer,
+\[u_t=\frac{s/2}{t_T}=\frac{s}{2t_T}
+ \qquad\text{and}\qquad
+ t_T=\frac{V}{q_c}
+ \qquad\Longrightarrow\qquad
+ u_t=\frac{s\,q_c}{2V}
+\]
+\[q_c=\frac{2V u_t}{s}
+ =\boxed{\;\frac{2V D_p^{2}(\rho_p-\rho)\omega^{2}r_2}{18\mu\,s}\;}
+\]
 \end{formulabox}
+\notetext{The factor 2 in $q_c=2Vu_t/s$ is exactly this half-layer: the cut-size particle has to traverse
+$s/2$, not $s$, in the residence time.}
 
 \spsub{Sigma value and scale-up}
 \begin{itemize}
@@ -1669,7 +1680,26 @@ u_g&=\frac{D_p^{2}(\rho_p-\rho)g}{18\mu}
 \end{align*}
 $\Sigma$ is the \emph{cross-sectional area of a gravity settling tank of the same separation capacity as the centrifuge}.
 \end{formulabox}
-\notetext{Because $q_c=2\Sigma u_g$, a centrifuge and a gravity settler that must do the same job are compared through $\Sigma$ alone: double $\Sigma$ and the same cut is achieved at double the flow rate. The deck's Table 30.5 lists $\Sigma$ values for commercial sedimenting centrifuges (tubular, disk, helical-conveyor, axial-flow-conveyor types) against bowl diameter and speed.}
+\notetext{Because $q_c=2\Sigma u_g$ the whole machine collapses into one number: a centrifuge and a gravity settler that must do the same job are compared through $\Sigma$ alone, and the same cut is achieved at a flow rate proportional to $\Sigma$. Scale-up between two geometrically similar centrifuges is therefore $\dfrac{q_{c1}}{\Sigma_1}=\dfrac{q_{c2}}{\Sigma_2}$ at the same cut size.}
+\begin{formulabox}
+{\small
+\begin{tabularx}{\linewidth}{@{}l l l l@{}}
+\toprule
+\textbf{Type} & \textbf{Bowl diameter / in.} & \textbf{Speed / r/min} & \textbf{$\Sigma$ / ft$^{2}\times10^{-4}$}\\
+\midrule
+Tubular & 4.125 & 15{,}000 & 2.7\\
+Disk & 9.5 & 6{,}500 & 21.5\\
+Disk & 13.7 & 4{,}650 & 39.3\\
+Disk & 19.5 & 4{,}240 & 105\\
+Helical conveyor & 14 & 4{,}000 & 1.34\\
+Helical conveyor & 25 & 3{,}000 & 6.1\\
+Axial-flow conveyor, no vanes & 29 & 2{,}600 & 4.05\\
+Axial-flow conveyor, 96 vanes & 29 & 2{,}600 & 12.7\\
+\bottomrule
+\end{tabularx}}
+\vspace{2pt}
+{\small The deck's Table 30.5 (characteristics of sedimenting centrifuges). Note the last two rows: the same 29-in.\ bowl carries three times the $\Sigma$ when 96 vanes are fitted --- $\Sigma$ is a property of the \emph{internals} as much as of the bowl, and the disk machine's many thin channels are what give it the largest $\Sigma$ per unit size.}
+\end{formulabox}
 
 \spsub{Worked problem set by the deck (Mod 2 Lec 8, slide 26)}
 \begin{daybox}
